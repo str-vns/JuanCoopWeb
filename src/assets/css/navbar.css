@@ -1,0 +1,142 @@
+/* General navbar styles */
+.navbar {
+    background-color: #ebece0; 
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0.75rem 2rem; 
+    width: 100%; 
+    box-shadow: 0 4px 6px rgba(248, 248, 248, 0.1);
+}
+.navbar .flex-1 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; 
+}
+
+.navbar .flex-1 a {
+    font-size: 1.5rem; 
+    font-weight: bold;
+    color: #000000; 
+    text-decoration: none;
+}
+
+/* navbar.css */
+.brand {
+    font-size: 1.5rem; /* Equivalent to text-2xl */
+    font-weight: 600; /* Equivalent to font-semibold */
+    font-family: 'Inter', sans-serif;
+    color: black;
+    line-height: 2.25rem; /* Equivalent to leading-9 */
+    margin-left: 0.5rem; /* Add spacing between logo and brand */
+  }
+  .brand:hover {
+    color: rgb(255, 145, 0); /* Change text color to blue on hover */
+  }
+  .navbar img {
+    height: 50px;
+    width: 50px;
+    margin-right: 0.25rem; /* Adjust spacing between logo and text */
+  }
+  
+/* Centered menu */
+.navbar-center {
+    display: flex; /* Enable flexbox for its children */
+    justify-content: flex-start; /* Align items to the start (left) */
+    flex-grow: 1; /* Allow it to take up space in the flex container */
+    margin-left: 0; /* Reset margins */
+    padding-left: 1rem; /* Add space from the left edge */
+}
+.navbar-center li a {
+    color: #000000; 
+    font-weight: 500; 
+    text-decoration: none;
+    padding: 0.5rem 0.75rem; 
+    border-radius: 0.25rem; 
+    transition: background-color 0.3s ease; 
+    font-size: 16px;
+}
+
+
+
+/* Right side - Cart and Profile */
+.navbar .flex-none {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; 
+}
+
+/* Cart Icon */
+.navbar .dropdown-end .indicator {
+    position: relative;
+    cursor: pointer;
+}
+
+
+/* Avatar */
+.navbar .avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF; 
+}
+
+/* Dropdown menu */
+.navbar .dropdown-end ul {
+    background-color: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 0.5rem;
+    margin-top: 0.75rem;
+    width: 12rem; /* Adjusted width */
+}
+
+.navbar .dropdown-end ul li {
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .dropdown-end ul li a {
+    color: #000000; /* Black text for dropdown items */
+    text-decoration: none;
+}
+
+.navbar .dropdown-end ul li a:hover {
+  
+    color: #000000; /* White text on hover */
+}
+
+.indicator {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 85px;
+    bottom: 48px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #ff4500; /* Your preferred background color */
+    color: white;
+    font-size: 16px;
+  }
+  
+  .indicator .count {
+    position: absolute;
+    top: -2px;
+    right: 3.5px;
+    font-size: 12px; /* Adjust size of the number */
+    font-weight: bold;
+  }
+  
+  .indicator i {
+    font-size: 20px; /* Adjust the size of the shopping cart icon */
+    margin-top: 5px;
+  }
+
+  

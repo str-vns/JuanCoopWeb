@@ -1,0 +1,102 @@
+.order-container .order-card {
+  width: 600px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  margin: 30px auto; /* Center horizontally */
+  padding-top: 20px;
+}
+.order-container {
+  padding-top: 80px;
+  padding-bottom: 30px;
+}
+.order-container button {
+  outline: none;
+}
+.order-container .order-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.order-container .order-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.order-container .product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.order-container .product-details {
+  flex: 1;
+}
+
+.order-container .product-price {
+  font-weight: bold;
+  color: #000000;
+}
+
+.order-container .order-status {
+  font-weight: bold;
+}
+
+
+.order-container .expand-button {
+  background-color: 	#696969;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.order-container .expand-button:hover {
+  background-color: 	#a0a0a0;
+}
+
+
+
+.order-container .loading-spinner {
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+}
+
+.order-container .no-orders {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+}
+
+.order-id{
+  font-weight: bold;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
+  color: #f5f5f5;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow */
+}
+.cancel-button {
+  background-color: #ff4d4d; /* Initial background color */
+  color: white; /* Initial text color */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f; /* Hover background color */
+  color: #f5f5f5; /* Hover text color */
+}

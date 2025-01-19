@@ -1,0 +1,372 @@
+/* Container styling */
+.product-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 50px; /* Equal padding on all sides */
+  gap: 32px; /* Maintains gap between image and details */
+  box-sizing: border-box; /* Ensures padding doesn't affect the overall width/height */
+  
+}
+
+/* Container */
+.product-carousel {
+  position: relative;
+  width: 400px; /* Carousel width */
+  height: 400px; /* Carousel height */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 5;
+}
+
+.stock-Label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 10px;
+}
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
+.product-carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(238, 184, 36, 0.5);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(233, 190, 71, 0.7);
+}
+
+.left-btn {
+  left: 10px;
+}
+
+.right-btn {
+  right: 10px;
+}
+
+/* Details Section */
+.product-details {
+  flex: 1;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left; /* Aligns all text to the left */
+  align-items: flex-start; /* Aligns child elements to the left */
+}
+
+/* Title */
+.product-title {
+  font-size: 36px; /* Larger font size for title */
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 16px; /* Increased bottom margin */
+}
+
+/* Price Section */
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Increased spacing between price and original price */
+  margin-bottom: 16px;
+}
+
+.current-price {
+  font-size: 28px; /* Larger font size for current price */
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.original-price {
+  font-size: 20px; /* Larger font size for original price */
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+/* Reviews */
+.reviews {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Increased gap between stars and review count */
+  margin-bottom: 24px;
+}
+
+.stars {
+  color: #f59e0b;
+  font-size: 24px; /* Larger stars size */
+}
+
+.review-count {
+  font-size: 18px; /* Larger font size for review count */
+  color: #6b7280;
+}
+
+/* Product Description */
+.product-description {
+  font-size: 18px; /* Larger font size for description */
+  color: #4b5563;
+  margin-bottom: 32px; /* Increased bottom margin for spacing */
+  line-height: 1.8; /* Improved readability with line height */
+}
+
+/* Add to Cart Section */
+.add-to-cart {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* Increased spacing between quantity selector and button */
+}
+
+/* Quantity Selector */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Increased gap between buttons and input */
+}
+
+.quantity-btn {
+  padding: 12px 20px; /* Larger button size */
+  border: 1px solid #d1d5db;
+  border-radius: 6px; /* Slightly rounded buttons */
+  background-color: #ffffff;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 18px; /* Larger font size */
+}
+
+.quantity-input {
+  width: 64px; /* Wider input box */
+  height: 48px; /* Taller input box */
+  text-align: center;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #6b7280;
+  font-size: 18px; /* Larger font size for input */
+}
+
+/* Add to Cart Button */
+.add-button {
+  background-color: #f59e0b;
+  color: #ffffff;
+  padding: 16px 48px; /* Larger button with increased padding */
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px; /* Larger font size */
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #d97706;
+}
+.partition-line {
+  border: none; /* Remove default border */
+  border-top: 1px solid #ddd; /* Create a thin gray line */
+  margin: 20px 0; /* Add spacing above and below the line */
+}
+
+.comment-reviews-container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.comment-reviews-container h3 {
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: left; /* Ensure the title aligns left */
+  font-weight: bold;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.review-header {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 15px;
+}
+
+.profile-picture {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 4px; /* Make it square by reducing border-radius */
+}
+
+.review h4 {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+  text-align: left; /* Ensure text aligns left */
+}
+
+.stars {
+  font-size: 16px;
+  color: #ffc107;
+  margin-top: 5px;
+  text-align: left; /* Ensure text aligns left */
+}
+
+.review p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.5;
+  margin: 0; /* Remove any unnecessary margin */
+  text-align: left; /* Align text to the left */
+}
+
+.stock-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stock-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  min-width: 70px;
+  text-align: center;
+}
+
+.stock-box {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: white; /* Default background color */
+  transition: background-color 0.3s ease;
+}
+
+.stock-box.selected {
+  background-color: orange; /* Highlight the selected box */
+  border-color: orange; /* Optional: Change the border color */
+}
+
+.out-of-stock {
+  background-color: #fbe4e4;
+  border: 1px solid #d32f2f;
+}
+
+.stock-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.stock-info .stock-count {
+  font-size: 14px;
+  color: #555; /* Subtle gray for the stock count */
+  margin-left: 10px;
+}
+
+.size-selection {
+  margin-top: 20px;
+}
+
+.size-selection h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.sizes {
+  display: flex;
+  gap: 10px;
+}
+
+.size-btn {
+  padding: 12px 24px; /* Added more padding for a comfortable clickable area */
+  border: 2px solid orange; /* Changed border color to orange */
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.size-btn:hover {
+  background-color: #ecab66; /* Light orange background on hover */
+}
+
+.size-btn.selected {
+  background-color: orange; /* Orange background for selected state */
+  color: #fff; /* White text for contrast */
+  border-color: orange; /* Ensures border matches the background */
+}
+
+.stock-inventory {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.product-attributes {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.reviewer-profile-picture{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+}

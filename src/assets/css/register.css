@@ -1,0 +1,142 @@
+
+
+.register-signup-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: flex-start;
+    transform: scale(1.0); /* Scale everything down to 85% of its original size */
+    transform-origin: top center; /* Keeps the scaling centered at the top */
+    gap: 3rem;
+    padding-top: 30px;
+}
+
+.imageR-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #e6b8005e;
+    height: 570px; /* Adjust the height value as needed */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(156, 124, 124, 0.1); /* Shadow effect */
+}
+
+  
+  .register-signup-card {
+   
+    padding: 1.5rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(156, 124, 124, 0.1); /* Shadow effect */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+ 
+  }
+  
+
+.register-form-title {
+    font-size: 2rem; /* Reduced font size for the title */
+    font-weight: bold;
+    text-align: left; /* Ensures the title is left-aligned */
+    padding-bottom: 8px; /* Adjusted padding */
+}
+
+.register-form-description {
+    font-size: 0.875rem; /* Smaller font size for the description */
+    color: #777;
+    text-align: left;
+    margin-bottom: 0.75rem; /* Reduced margin */
+}
+
+.register-form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem; /* Reduced margin between rows */
+}
+
+.register-form-group {
+    width: 48%; /* Two fields per row */
+    margin-bottom: 0.5rem; /* Reduced margin for form groups */
+}
+
+.register-form-container {
+    width: 100%;
+    max-width: 22rem; /* Reduced max width */
+}
+
+.register-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+.register-form-input {
+    width: 100%;
+    padding: 0.5rem; /* Reduced padding for smaller inputs */
+    border: 1px solid #dcdcdc;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    outline: none;
+    text-align: left;
+}
+
+.register-form-input:focus {
+    border-color: #e6b800;
+}
+
+.register-form-label {
+    display: block;
+    font-size: 0.75rem; /* Smaller label font size */
+    font-weight: 500;
+    color: #4a4a4a;
+    text-align: left;
+    margin-bottom: 6px; /* Adjusted margin */
+}
+
+
+.register-submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #f7b900;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.0rem; /* Smaller font size for button */
+}
+
+.register-submit-btn:hover {
+    background-color: #e6b800;
+}
+
+.register-checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.register-checkbox-group input {
+    margin-right: 0.5rem;
+}
+
+.register-extra-links {
+    
+    text-align: center;
+    margin-top: 0.75rem; /* Reduced margin */
+}
+
+.register-extra-links .link {
+    color: #e6b800;
+}
+
+.register-extra-links .link:hover {
+    text-decoration: underline;
+}

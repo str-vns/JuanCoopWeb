@@ -1,0 +1,176 @@
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 450px;
+  max-height: 80%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.modal-container h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-group input[type="file"] {
+  padding: 0;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+.btn-submit-product {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #008cba;
+  color: white;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-submit-product:hover {
+  background-color: #007bb5;
+}
+
+.btn-close-product {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.btn-close-product:hover {
+  background-color: #e53935;
+}
+
+.close-btn {
+  background-color: #f44336;
+  margin-top: 10px;
+}
+
+.close-btn:hover {
+  background-color: #e53935;
+}
+
+.image-preview {
+  margin-top: 15px;
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.product-form-group {
+  margin-bottom: 20px;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.selected-summary {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.product-btn-submit-product {
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.product-btn-submit-product:hover {
+  background-color: #45a049;
+}
+
+.product-btn-close-product {
+  padding: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.product-btn-close-product:hover {
+  background-color: #d32f2f;
+}

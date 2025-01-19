@@ -1,0 +1,158 @@
+/* Container for the wishlist grid */
+.wishlist-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  padding-top: 100px;
+}
+
+/* Wishlist Grid Layout - 2 Columns */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
+  gap: 40px 30px; /* Increased row (40px) and column (30px) spacing */
+  width: 100%;
+  max-width: 600px; /* Adjust grid max width */
+  margin: 0 auto; /* Center the grid */
+}
+
+
+/* Wishlist Card */
+/* Wishlist Card */
+.wishlist-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  width: 100%; /* Card takes full column width */
+  height: 120px; /* Fixed card height */
+  box-sizing: border-box; /* Includes padding in width/height */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.wishlist-card:hover {
+  transform: scale(1.05);
+}
+
+/* Wishlist Name - Truncate Long Titles */
+.wishlist-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Hides overflow text */
+  text-overflow: ellipsis; /* Adds "..." for overflowing text */
+  max-width: 120px; /* Adjust width to control title truncation */
+}
+
+
+/* Wishlist Image */
+.wishlist-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Wishlist Info */
+.wishlist-info {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.wishlist-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.wishlist-price {
+  margin: 5px 0 0;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Wishlist Icons */
+.wishlist-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.icon {
+  font-size: 20px;
+  color: #f5b301;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: #ff9900;
+}
+
+/* Pagination Controls */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.pagination button {
+  background-color: #f5b301;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #ff9900;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 16px;
+  color: #333;
+}
+
+/* General Icon Styles */
+/* General Icon Styles */
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Specific Styles for Trash Icon */
+.trash-icon {
+  color: rgba(0, 128, 0, 0.767);
+}
+
+.trash-icon:hover {
+  color: darkgreen;
+}
+
+/* Specific Styles for Basket Icon */
+.basket-icon {
+  color: #ff9900;
+}
+
+.basket-icon:hover {
+  color: darkorange;
+}

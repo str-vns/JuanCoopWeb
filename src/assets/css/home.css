@@ -1,0 +1,195 @@
+/* home.css */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    width: 100%; /* Ensures full width */
+    max-width: 1200px; /* Optional: Constrains the width to a maximum value */
+    margin: 0 auto; /* Centers the content */
+    padding-top: 50px;
+  }
+  
+  
+  .product-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .product-card {
+    width: 19%; /* Fixed width to prevent resizing */
+    min-width: 200px; /* Ensure the card doesn't shrink too much */
+    max-width: 350px;
+    height: 350px; /* Fixed height for consistency */
+    border: 1px solid #cccccc;
+    padding: 1px;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Ensure proper alignment of content */
+    justify-content: space-between; /* Evenly space content vertically */
+  }
+  
+  
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .product-card img {
+    width: 100%; /* Make the image span the width of the container */
+    height: 250px; /* Set a fixed height for all images */
+    object-fit: cover; /* Crop the image to fit within the dimensions */
+    display: block; /* Remove default inline spacing */
+  }
+  .product-card-content {
+    padding: 10px;
+  }
+  
+  .product-card-brand {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .product-card-name {
+    font-size: 1.0em;
+    margin-bottom: 8px;
+    color: #000000;
+  }
+  
+  .product-card-price {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+  }
+  
+  .product-card-price-current {
+    font-size: 1.0em;
+    color: #000000;
+    margin-right: 8px;
+  }
+  .product-card-add-to-cart {
+    position: absolute;
+    bottom: 10px; /* Positioning the icon in the bottom-right corner */
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color:  #f7b900;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better design */
+  }
+  
+  .product-card-add-to-cart:hover {
+    background-color:  #f7b9006b; /* Slightly darker yellow on hover */
+    color: #000; /* Darker text color */
+  }
+
+/* Search bar container */
+.search-bar-container {
+      margin-top: 20px; /* Add margin to push the search bar below the navbar */
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  background-color: #f9f9f9;
+
+  }
+  
+  /* Search bar input */
+  .search-bar {
+    width: 50%; /* Make the input field 50% of the page width */
+    padding: 10px 40px 10px 10px; /* Space for the icon inside */
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Icon inside the search bar */
+  .search-icon {
+    position: absolute;
+    right: 27%; /* Adjusted for the input field alignment */
+    font-size: 1.2em;
+    color: #666;
+    margin-left: -30px; /* Align the icon inside the input box */
+  }
+  
+  .search-bar:focus {
+    outline: none;
+    border-color: #c7c7c7; /* Highlight border when focused */
+
+  }
+  
+  /* Product container */
+  .product-container {
+    margin-top: 70px; /* Add margin to push content below the fixed search bar */
+  }
+
+/* Category Section Container */
+.category-section {
+  padding: 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background-color: #ffffff;
+  width: 100%; /* Full width for one-row layout */
+  margin: 0 auto; /* Center if needed */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Add horizontal scrolling if items overflow */
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping for single row */
+  gap: 16px; /* Space between items */
+  align-items: center; 
+
+}
+
+
+
+
+/* Category Header */
+.category-header {
+  text-align: center;
+  margin-bottom: 16px;
+  width: 100%; /* Ensure header spans full width */
+}
+
+.category-header h1 {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* Category Item */
+.category-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 8px; /* Space between category items */
+}
+
+/* Category Image */
+.category-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #dddddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+}
+
+/* Category Name */
+.category-item p {
+  font-size: 0.9em;
+  color: #555555;
+  margin: 0;
+}
+

@@ -1,0 +1,114 @@
+
+  /* Expanded state */
+  .section-content.open {
+    height: auto; /* Expanded height */
+    padding: 20px;
+    padding-top: 50px;
+  }
+  .address-section {
+    margin-top: 70px; /* Adjust based on Navbar's height */
+    padding-top: 20px; /* Additional padding if needed */
+  }
+  
+  .address-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+     
+  }
+  
+  .address-box {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .address-box:hover {
+    border-color: #007bff;
+  }
+  
+  .address-box input {
+    transform: scale(1.2);
+    margin-right: 10px;
+  }
+  
+  .address-details p {
+    margin: 5px 0;
+  }
+  
+  .address-box.selected {
+    border-color: #007bff;
+    background-color: #e6f0ff;
+  }
+  
+  
+  .add-address {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    color: #007bff;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-address:hover {
+    background-color: #e6f0ff;
+  }
+  
+  /* Add Address Form */
+  .add-address-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .add-address-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  .section-content {
+    max-height: 400px; /* Adjust this value as needed */
+    overflow-y: auto; /* Enables scrolling */
+    padding-right: 10px;
+  }
+ 
+  .form-row {
+    margin-top: 20px; /* Space between Add Address and form */
+    padding: 20px 10px; /* Add padding for the top and bottom */
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-label {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 50px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

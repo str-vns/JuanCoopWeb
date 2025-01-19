@@ -1,0 +1,78 @@
+.receipt-email-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-left: 30rem;
+  }
+  
+  .receipt-email-header {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .receipt-email-logo {
+    height: 50px;
+  }
+  
+  .receipt-email-title {
+    font-size: 24px;
+    color: #ff9900; /* Yellow */
+  }
+  
+  .receipt-email-body {
+    margin-top: 20px;
+  }
+  
+  .receipt-email-items {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .receipt-email-item {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .receipt-email-item-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  
+  .receipt-email-item-info {
+    flex: 1;
+  }
+  
+  .receipt-email-item-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .receipt-email-item-quantity,
+  .receipt-email-item-price {
+    display: block;
+    margin-top: 5px;
+  }
+  
+  .receipt-email-total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff9900; /* Yellow */
+    margin-top: 20px;
+  }
+  
+  .receipt-email-footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .receipt-email-footer a {
+    color: #ff9900;
+  }  

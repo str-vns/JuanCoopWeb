@@ -1,0 +1,143 @@
+/* General Styling */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f9fafb;
+}
+
+.coop-dashboard-container {
+  display: flex;
+  flex-wrap: wrap; /* Ensure items wrap when needed */
+  /* height: 100vh;
+  width: 100vw; */
+}
+/* Title Styling */
+.coop-dashboard-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.coop-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #f7f8fa;
+}
+
+/* Title Styling */
+.coop-dashboard-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Wrapper for both charts */
+.coop-dashboard-chart-wrapper {
+  display: flex;
+  gap: 16px; /* Space between the charts */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Chart Container */
+.coop-dashboard-chart-container {
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1 1 45%; 
+  width: auto; 
+  justify-items: center;
+}
+
+.coop-dashboard-sections-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Space between the sections */
+}
+
+.coop-dashboard-section {
+  flex: 1 1 48%; /* Make each section take 48% of the container width */
+  min-width: 300px; /* Ensures sections don't get too small */
+  margin-top: 1rem;
+}
+
+.coop-dashboard-table-container {
+  margin-top: 1rem;
+}
+
+.coop-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.coop-table th, .coop-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.coop-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.coop-table-striped tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.coop-table-zebra tr:nth-child(odd) {
+  background-color: #f4f4f4;
+}
+
+/* Product Management Section */
+.coop-dashboard-grid {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of cards */
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.coop-dashboard-card {
+  flex: 1 1 200px; /* Allows the card to shrink and grow with a min width */
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 200px; /* Ensures each card has a minimum width */
+}
+
+.coop-dashboard-card h1 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.coop-dashboard-card-highlight {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2196f3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .coop-dashboard-container {
+    flex-direction: column; /* Stacks sections vertically on small screens */
+  }
+
+  .coop-dashboard-grid {
+    flex-direction: column; /* Stack cards vertically on small screens */
+  }
+
+  .coop-dashboard-section-title {
+    font-size: 1.2rem;
+  }
+
+  .coop-table th, .coop-table td {
+    padding: 8px; /* Reduce padding for smaller screens */
+  }
+}

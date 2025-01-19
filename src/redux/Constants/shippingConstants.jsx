@@ -1,0 +1,3 @@
+export const ADD_SHIPPING = 'ADD_SHIPPING';
+export const CLEAR_SHIPPING = 'CLEAR_CART';
+export const SET_SHIPPING = 'SET_SHIPPING';

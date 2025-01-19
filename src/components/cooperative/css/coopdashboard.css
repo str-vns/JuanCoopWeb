@@ -1,0 +1,135 @@
+
+
+.coop-dashboard-container {
+  display: flex;
+  flex-wrap: wrap; /* Ensure items wrap when needed */
+  height: 100vh;
+}
+
+.coop-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #f7f8fa;
+}
+
+/* Title Styling */
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.dashboard-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Wrapper for both charts */
+.dashboard-chart-wrapper {
+  display: flex;
+  gap: 16px; /* Space between the charts */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Chart Container */
+.dashboard-chart-container {
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1 1 45%; 
+  width: auto; 
+  justify-items: center;
+}
+
+.dashboard-sections-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Space between the sections */
+}
+
+.dashboard-section {
+  flex: 1 1 48%; /* Make each section take 48% of the container width */
+  min-width: 300px; /* Ensures sections don't get too small */
+  margin-top: 1rem;
+}
+
+.dashboard-table-container {
+  margin-top: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.table-striped tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-zebra tr:nth-child(odd) {
+  background-color: #f4f4f4;
+}
+
+/* Product Management Section */
+.dashboard-grid {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of cards */
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.dashboard-card {
+  flex: 1 1 200px; /* Allows the card to shrink and grow with a min width */
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 200px; /* Ensures each card has a minimum width */
+}
+
+.dashboard-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-card-highlight {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2196f3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .coop-dashboard-container {
+    flex-direction: column; /* Stacks sections vertically on small screens */
+  }
+
+  .dashboard-grid {
+    flex-direction: column; /* Stack cards vertically on small screens */
+  }
+
+  .dashboard-section-title {
+    font-size: 1.2rem;
+  }
+
+  .table th, .table td {
+    padding: 8px; /* Reduce padding for smaller screens */
+  }
+}

@@ -1,0 +1,125 @@
+/* General styles for the receipt container */
+.receipt-container {
+    background-color: #fef9c3; /* light yellow */
+    min-height: 100vh;
+    width: 100vm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  /* Card styles */
+  .receipt-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 1.5rem;
+    background-color: #fefce8; /* soft yellow */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+  }
+  
+  /* Header styles */
+  .receipt-header {
+    text-align: center;
+  }
+  
+  .receipt-title {
+    color: #f59e0b; /* orange-yellow */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .receipt-subtitle {
+    color: #d97706; /* darker orange-yellow */
+    font-size: 0.875rem;
+  }
+  
+  /* Divider */
+  .receipt-divider {
+    border-top: 1px solid #fde047; /* bright yellow */
+    margin: 1rem 0;
+  }
+  
+  /* Section styles */
+  .receipt-section {
+    margin-bottom: 1rem;
+  }
+  
+  .receipt-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+  }
+  
+  .receipt-row-label {
+    font-weight: 600;
+  }
+  
+  /* Item row */
+  .receipt-item-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+  }
+  
+  /* Total row */
+  .receipt-total-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  /* Footer */
+  .receipt-footer {
+    text-align: center;
+  }
+  
+  .receipt-footer-text {
+    font-size: 0.875rem;
+    color: #ca8a04; /* deep yellow */
+  }  
+
+  /* Company Info */
+.receipt-company {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .receipt-logo {
+    width: 80px;
+    height: auto;
+    margin: 0 auto 0.5rem;
+  }
+  
+  .receipt-company-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #f59e0b;
+  }
+  
+  .receipt-contact-info {
+    font-size: 0.875rem;
+    color: #d97706;
+  }
+  
+  .receipt-address {
+    font-size: 0.875rem;
+    color: #ca8a04;
+  }
+  
+  /* Product Image */
+  .receipt-product {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .receipt-product-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+  }  

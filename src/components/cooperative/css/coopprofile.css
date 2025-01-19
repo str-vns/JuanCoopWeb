@@ -1,0 +1,33 @@
+
+  
+  .message-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f87171;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+  }  
+
+  .btn {
+    display: block;
+    width: auto;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  .btn-ghost {
+    background-color: rgb(243, 81, 81);
+    color: #555;
+    border: 1px solid #ccc;
+  }
+  
+  .btn-primary {
+    background-color: rgb(226, 195, 21);
+    color: #fff;
+    border: 1px solid #ccc;
+  }  

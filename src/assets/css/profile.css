@@ -1,0 +1,74 @@
+/* Profile container styles */
+.usercontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  padding-top: 100px;
+}
+
+/* Profile section styles */
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.emailText {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Input field styles */
+.input {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Error message styles */
+.errorText {
+  color: red;
+}
+
+/* Update button styles */
+.update-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #686767;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+
+/* Cooperative link styles */
+.coop-link-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.coop-link {
+  font-size: 0.9rem;
+  color: #000000;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+

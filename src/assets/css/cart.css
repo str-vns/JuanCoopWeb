@@ -1,0 +1,256 @@
+/* cart.css */
+
+/* General Cart Section Styles */
+.cart-section {
+  padding: 2rem;
+  margin-top: 30px;
+}
+
+.cart-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column; /* Align side-by-side */
+  gap: 2rem;
+}
+
+.cart-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.cart-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 2;
+}
+
+/* Cart Items Section */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  ;
+}
+
+.cart-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  align-items: center;
+  background-color: #fefefe;
+}
+
+.cart-item-details {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cart-item-image img {
+  max-width: 80px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.cart-item-info {
+  flex-grow: 1;
+}
+
+.cart-item-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1a202c;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 5px;
+}
+
+.action-btn {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  background-color: #edf2f7;
+  color: #1a202c;
+  transition: background-color 0.3s;
+}
+
+.action-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.quantity-btn {
+  padding: 0.6rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.quantity-btn:hover {
+  background-color: #f7fafc;
+}
+
+.quantity-input {
+  width: 50px;
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.cart-item-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+/* Order Summary Section */
+.order-summary {
+  background-color: #fefefe;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  flex: 1;
+  height: fit-content;
+}
+
+.summary-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #4a5568;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color:  #f59e0b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
+}
+
+
+
+.checkout-btn:hover {
+  background-color:  #f59f0bc0;
+}
+
+
+/* Primary Button Styles */
+.button-proceed-checkout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 0.5rem; /* Rounded corners */
+  background-color: #1d4ed8; /* Primary color (blue) */
+  padding: 0.625rem 1.25rem; /* Padding */
+  font-size: 0.875rem; /* Text size */
+  font-weight: 500; /* Medium font weight */
+  color: white; /* White text */
+  text-decoration: none; /* Remove underline */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover Effects */
+.button-proceed-checkout:hover {
+  background-color: #1e40af; /* Darker shade for hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
+
+/* Focus Effects */
+.button-proceed-checkout:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5); /* Focus ring */
+}
+
+/* Dark Mode Styles */
+.dark .button-proceed-checkout {
+  background-color: #2563eb; /* Primary color for dark mode */
+}
+
+.dark .button-proceed-checkout:hover {
+  background-color: #1e3a8a; /* Darker hover for dark mode */
+}
+
+.dark .button-proceed-checkout:focus {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.5); /* Focus ring in dark mode */
+}
+
+
+/* Button row container */
+.button-row {
+  display: flex;
+  justify-content: space-between; /* Space between buttons */
+  gap: 10px; /* Adjust spacing between buttons */
+  margin-top: 20px; /* Optional: Add some margin above the row */
+}
+
+.button-proceed-checkout.disabled {
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.total-text
+{
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+

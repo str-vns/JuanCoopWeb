@@ -1,0 +1,63 @@
+/* Container for the header */
+.header-container {
+  padding-left: 40px;
+  background-color: #f5f0b1; /* Background color */
+  color: white;
+  height: 85px;
+  /* width: 1470px; */
+  display: flex;
+  justify-content: space-between; /* Distribute space between content */
+  align-items: center; /* Align items vertically */
+
+  box-sizing: border-box; /* Ensure padding is considered in width */
+}
+
+/* Content inside header (can be logo or title) */
+.header-content {
+  flex: 1; /* Allow this to take up the remaining space */
+  display: flex;
+  justify-content: center; /* Center the content */
+}
+
+.header-title {
+  font-size: 1.5rem; /* Title font size */
+  font-weight: bold;
+  text-align: center; /* Center the title */
+  margin: 0;
+}
+
+/* Right-side icons */
+.header-icons {
+  display: flex; /* Align buttons in a row */
+  gap: 10px; /* Add spacing between buttons */
+  padding-right: 25px;
+}
+
+.header-icons button {
+  background: none;
+  border: none; /* Remove default button border */
+  padding: 10px; /* Add padding for better click area */
+  cursor: pointer; /* Add pointer cursor for buttons */
+  color: black; /* Default icon color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* For the badge positioning */
+  transition: color 0.3s ease; /* Smooth hover transition */
+}
+
+.header-icons button:hover {
+  color: #1b1e1c; /* Hover color */
+}
+
+.message-badge {
+  background-color: #ef4444; /* Badge color */
+  color: white; /* Badge text color */
+  font-size: 12px; /* Badge font size */
+  border-radius: 50%; /* Make it circular */
+  padding: 3px 7px; /* Adjust size */
+  position: absolute; /* Position relative to button */
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%); /* Adjust positioning */
+}

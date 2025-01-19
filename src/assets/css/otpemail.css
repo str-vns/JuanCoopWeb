@@ -1,0 +1,42 @@
+.otp-email-container {
+    background-color: #fff7db;
+    padding: 10rem;
+    font-family: Arial, sans-serif;
+  }
+  .otp-email-header {
+    text-align: center;
+  }
+  .otp-email-logo {
+    width: 100px;
+    margin: 0 auto;
+  }
+  .otp-email-title {
+    color: #d4af37;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .otp-email-body {
+    margin-top: 1rem;
+  }
+  .otp-email-message {
+    font-size: 1rem;
+    color: #333;
+  }
+  .otp-email-code {
+    background-color: #ffd966;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 1rem auto;
+    display: inline-block;
+  }
+  .otp-email-validity {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  .otp-email-footer {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }  

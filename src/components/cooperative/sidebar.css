@@ -1,0 +1,50 @@
+.sidebar.always-visible {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: auto; /* Adjust as needed */
+  background-color: #f8f9fa; /* Customize background */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.sidebar-content {
+  padding: 1rem;
+}
+
+.sidebar-logo {
+  width: 100px; /* Adjust as needed */
+  height: auto;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.sidebar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-link {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: #f6cf5b;
+}
+
+.sidebar-link:hover {
+  background-color: #f8f660;
+}
+
+.sidebar-icon {
+  font-size:2rem;
+}

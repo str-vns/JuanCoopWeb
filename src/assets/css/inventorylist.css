@@ -1,0 +1,74 @@
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100vm;
+    background-color: #f4f7fc;
+  }
+
+.inventory-list-container {
+    background-color: #ffffff;
+    padding-left: 30px;
+      /* padding: 20px 40px; */
+      min-height: 100vh;
+      /* box-sizing: border-box; */
+      margin: 0; /* Remove extra space */
+    overflow-x: hidden; /* Handle horizontal scrollbar */
+    overflow-y: auto; /* Handle vertical scrollbar */
+    width: 100%; /* Ensure it takes full width */
+    box-sizing: border-box; 
+  }
+  
+  .inventory-list-content {
+    background-color: #ffffff;
+  /* padding-left: 90px; */
+    /* padding: 20px 40px; */
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin: 0; /* Remove extra space */
+  overflow-x: hidden; /* Handle horizontal scrollbar */
+  overflow-y: auto; /* Handle vertical scrollbar */
+  /* width: 100%; Ensure it takes full width */
+  box-sizing: border-box; 
+  }
+  
+  .inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .inventory-table th,
+  .inventory-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .inventory-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .inventory-table img {
+    border-radius: 5px;
+  }
+  
+  .inventory-view-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .inventory-view-button:hover {
+    background-color: #0056b3;
+  }  

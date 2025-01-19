@@ -1,0 +1,69 @@
+/* InventoryUpdate.css */
+.inv-update-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .inv-update-modal-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inv-update-modal-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .inv-update-modal-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inv-update-modal-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .inv-update-modal-container input,
+  .inv-update-modal-container select {
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .inv-update-modal-container .error {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .inv-update-modal-container button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .inv-update-modal-container button:disabled {
+    background-color: #ccc;
+  }
+  
+  .inv-update-modal-container button + button {
+    background-color: #f44336;
+  }  
