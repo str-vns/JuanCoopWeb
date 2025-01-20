@@ -33,9 +33,7 @@ const Navbar = () => {
       if (type === "order")
       {
         navigate("/cart");
-    
       }
-      
       
     } catch (error) {
       console.error("Error marking as read: ", error);

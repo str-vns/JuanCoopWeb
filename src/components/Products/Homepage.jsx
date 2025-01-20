@@ -136,12 +136,13 @@ const ProductList = () => {
           const matchingInventory = fetchedInventory.find(
             (item) => item.productId.toString() === product._id.toString()
           );
+
           return {
             ...product,
-            price: matchingInventory?.price || "N/A", // Attach price if available
-            quantity: matchingInventory?.quantity || 0, // Attach quantity if available
-            metricUnit: matchingInventory?.metricUnit || "", // Attach metric unit if available
-            unitName: matchingInventory?.unitName || "", // Attach unit name if available
+            price: matchingInventory?.price || "N/A",
+            quantity: matchingInventory?.quantity || 0, 
+            metricUnit: matchingInventory?.metricUnit || "", 
+            unitName: matchingInventory?.unitName || "", 
           };
         });
   

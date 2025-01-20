@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "../../assets/css/forgotpassword.css";
 import Password from "../../assets/img/forgot.png";
-
+import { otpForgotPassword } from "@redux/actions/userActions";
+import { useDispatch } from "react-redux";
 const ForgotPassword = () => {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(otpForgotPassword(email))
     setMessage(`A reset link has been sent to ${email}`);
   };
 

@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "@utils/helpers";
 import { toast } from "react-toastify";
-
+import { GoogleLogin } from "@react-oauth/google";
+import { googleLogin1 } from "@redux/Actions/userActions";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -22,7 +23,6 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
- 
   useEffect(() => {
 
       if (userError) {
@@ -40,7 +40,7 @@ const Login = () => {
           closeButton: false,
         });
       }
-  }, [userError]);
+  }, []);
 
   const loginHandler = (e) => {
     const user = { 
@@ -67,6 +67,10 @@ const Login = () => {
     }
   }, [currentUser, navigate]);
 
+  const handleGoogleLogin = (response) => {
+    dispatch(googleLogin1(response));
+    navigate('/');
+  }
   return (
     <div className="login-container">
       <div className="login-form">
@@ -129,9 +133,21 @@ const Login = () => {
             <span>OR</span>
           </div>
 
-          <button type="button" className="google-button">
-            <img src={googleLogo} alt="Google logo" className="google-logo" />
-          </button>
+
+            <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={() => console.log('Login google failed')}
+            cookiePolicy={"single_host_origin"}
+            render = {(renderProps) => (
+              <button
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+               type="button" className="google-button">
+              <img src={googleLogo} alt="Google logo" className="google-logo" />
+              </button>
+            )}
+            />
+           
 
           <p className="signup-link">
             No account?{" "}

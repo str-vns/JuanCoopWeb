@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast} from 'react-toastify';
+import { gapi } from 'gapi-script';
 import 'react-toastify/dist/ReactToastify.css';
 // import Sidebar from "./Components/layout/sidebar"; // Capitalized Sidebar
 import Register from "./Components/User/Register";
@@ -34,6 +35,7 @@ import CoopLogin from "./Components/Cooperative/Registration/CoopLogin";
 import FarmRegistration from "./Components/Cooperative/Registration/FarmRegistration";
 import GoogleLogin from "./Components/Cooperative/Registration/GoogleLogin";
 import Messenger from './Components/Chatime/messenger/Messenger';
+import CoopMessenger from './components/cooperative/Chatime/messenger/Messenger'
 import  Shipping from "./Components/Cart/Address";
 import Payment from "./Components/Cart/Payment";
 import Address from "./components/Address/addressList"
@@ -48,8 +50,7 @@ import InventoryList from "./Components/Cooperative/Inventory/InventoryList";
 import InventoryDetail from "./Components/Cooperative/Inventory/InventoryDetail";
 import InventoryCreate from "./Components/Cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "./Components/Cooperative/Inventory/InventoryUpdate";
-
-
+import PasswordReset from "@components/user/passwordReset";
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -74,6 +75,17 @@ const isTokenExpired = () => {
 
 function App() {
   const dispatch = useDispatch();
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT,
+        scope: "",
+      })
+    }
+    
+    gapi.load("client:auth2", start)
+  },[])
+
   useEffect(() => {
     if (isTokenExpired()) {
       dispatch(logoutUser())
@@ -112,7 +124,7 @@ function App() {
           <Route path="/payment" element={<Payment/>} />
           <Route path="/orders" element={<Orders/>} />
           <Route path="/wishlist" element={<WishList/>} />
-            
+          <Route path="/resetPassword/:id" element={<PasswordReset/>} />
           <Route path="/confirm" element={<OrderConfirmation />} />
           <Route path="/checkout" element={<CheckoutAccordion/>} />
           <Route path="/prod" element={<SingleProduct/>} />
@@ -138,6 +150,7 @@ function App() {
           <Route path="/inventorycreate" element={<InventoryCreate/>} />
           <Route path="/inventoryupdate" element={<InventoryUpdate/>} />
           <Route path="/cooporderlist" element={<CoopOrderList/>} />
+          <Route path="/messenger" element={<CoopMessenger/>} />
           {/* <Route path="/orderlist" element={<OrderList/>} /> */}
 
           {/* User address */}

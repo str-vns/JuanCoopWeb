@@ -50,10 +50,14 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
+  GOOGLE_LOGIN_WEB_REQUEST,
+  GOOGLE_LOGIN_WEB_SUCCESS,
+  GOOGLE_LOGIN_WEB_FAIL,
 } from "../Constants/userConstants";
 import baseURL from '@Commons/baseUrl'; 
 import { toast } from 'react-toastify';
 import { login } from "@redux/actions/authActions";
+import { authenticated } from '@utils/helpers';
 
 export const registeruser = (userData) => async (dispatch) => {
 
@@ -115,18 +119,18 @@ export const registeruser = (userData) => async (dispatch) => {
       payload: errorMessage,
     });
 
-     toast.error("Regsiter Failed. Please try again.", {
-          theme: "dark",
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: "unSuccess_01",
-          toastId: 'sessionExpired',
-          closeButton: false,
-          });
+    //  toast.error("Regsiter Failed. Please try again.", {
+    //       theme: "dark",
+    //       position: "top-right",
+    //       autoClose: 5000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: "unSuccess_01",
+    //       toastId: 'sessionExpired',
+    //       closeButton: false,
+    //       });
 
     console.log("Error from Register", errorMessage);
   }
@@ -306,3 +310,132 @@ export const checkEmail = (email) => async (dispatch) => {
     });
   }
 };
+
+export const googleLogin1 = (response) => async (dispatch) => {
+  console.log("Google Response", response);
+  try {
+
+    dispatch({ type: GOOGLE_LOGIN_WEB_REQUEST });
+
+
+    const { data } = await axios.post(`${baseURL}google-login-web`, response);
+
+    console.log("Data from googleLogin1:", data.details);
+    dispatch({
+      type: GOOGLE_LOGIN_WEB_SUCCESS,
+      payload: data.details,
+    });
+    toast.success("Login successfully!", {
+      theme: "dark",
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      toastId: 'sessionExpired',
+      closeButton: false,
+      });
+      authenticated(data.details);
+  } catch (error) {
+    dispatch({
+      type: GOOGLE_LOGIN_WEB_FAIL,
+      payload: error.response && error.response.data
+        ? error.response.data.details.message
+        : error.message,
+    });
+    console.log("Error from googleLogin1:", error);
+  }
+}
+
+export const otpForgotPassword = (email) => async (dispatch) => {
+   console.log("Email from otpForgotPassword:", email);
+
+  try {
+    dispatch({ type: OTP_FORGOT_PASSWORD_REQUEST });
+
+    const { data } = await axios.post(`${baseURL}reset-Password-Web`, { email });
+    dispatch({
+      type: OTP_FORGOT_PASSWORD_SUCCESS,
+      payload: data,
+    });
+    
+    toast.success("Email send successfully!", {
+      theme: "dark",
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      toastId: 'sessionExpired',
+      closeButton: false,
+      });
+  } catch (error) {
+    console.log("Error from otpForgotPassword:", error.message);
+    dispatch({
+      type: OTP_FORGOT_PASSWORD_FAIL,
+      payload: error.response && error.response.data
+        ? error.response.data.message
+        : error.message,
+    });
+    toast.error("Email send Unsuccessfully!", {
+      theme: "dark",
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      toastId: 'sessionExpired',
+      closeButton: false,
+      });
+  }
+}
+
+export const resetPassword = (passwordData, token) => async (dispatch) => {
+  console.log("Password Data", passwordData)
+  try {
+    dispatch({ type: RESET_PASSWORD_REQUEST });
+
+    const { data } = await axios.post(`${baseURL}/resetPassword/${token}`, passwordData);
+    console.log("Data from resetPassword:", data);
+    dispatch({
+      type: RESET_PASSWORD_SUCCESS,
+      payload: data.details,
+    });
+
+    toast.success("Password reset successfully!", {
+      theme: "dark",
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      toastId: 'sessionExpired',
+      closeButton: false,
+      });
+  }
+  catch (error) {
+    console.log("Error from resetPassword:", error.message);
+    dispatch({
+      type: RESET_PASSWORD_FAIL,
+      payload: error.response && error.response.data
+        ? error.response.data.message
+        : error.message,
+    });
+
+    toast.error("Password reset Unsuccessfully!", {
+      theme: "dark",
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      toastId: 'sessionExpired',
+      closeButton: false,
+      });
+  }
+}

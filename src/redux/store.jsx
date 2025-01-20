@@ -8,7 +8,7 @@ import cartItems from "@redux/Reducers/cartReducers";
 import payItems from "@redux/Reducers/paymentReducers";
 import shipItems from "@redux/Reducers/shippingReducers";
 import { authReducer } from "@redux/Reducers/authReducers";
-import { OTPReducer, RegisterReducer, userReducer, EditProfileReducer, getUsersReducers, AllUsersReducer,  checkEmailReducer } from "@redux/Reducers/userReducers";
+import { OTPReducer, RegisterReducer, userReducer, EditProfileReducer, getUsersReducers, AllUsersReducer, checkEmailReducer, otpForgotPasswordReducer, googleLoginReducer } from "@redux/Reducers/userReducers";
 import { addressReducers } from "@redux/Reducers/addressReducers";
 import {
   orderReducer,
@@ -84,6 +84,8 @@ const reducers = combineReducers({
   EditProfile: EditProfileReducer,
   allUsers: AllUsersReducer,
   checkDuplication: checkEmailReducer,
+  googleLogin: googleLoginReducer,
+  otpForgot: otpForgotPasswordReducer,
 });
 
 let initialState = {

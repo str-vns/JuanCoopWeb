@@ -10,8 +10,27 @@ import {
   FaBoxes,
 } from "react-icons/fa";
 import "./sidebar.css";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "@redux/actions/authActions";
+import Cookies from 'js-cookie';
 
 const Sidebar = () => {
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+
+  const handleLogout = () => {
+      navigate("/");
+  
+      dispatch(logoutUser());
+      localStorage.removeItem('jwt');
+          localStorage.removeItem('user');
+          localStorage.removeItem('token_expiry');
+          localStorage.removeItem('isAuth');
+          localStorage.removeItem('cartItems');
+          Cookies.remove('jwt');
+      window.location.reload();
+    };
   return (
     <div className="sidebar always-visible">
       {/* Sidebar Content */}
@@ -45,7 +64,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a href="/messagelist" className="sidebar-link">
+            <a href="/messenger" className="sidebar-link">
               <FaComment className="sidebar-icon" /> Messages
             </a>
           </li>
@@ -65,7 +84,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a href="/cooplogin" className="sidebar-link">
+            <a href="#" onClick={handleLogout} className="sidebar-link">
               <i className="fa-solid fa-right-from-bracket sidebar-icon"></i>{" "}
               Logout
             </a>
