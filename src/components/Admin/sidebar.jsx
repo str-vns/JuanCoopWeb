@@ -40,7 +40,7 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/profile">
+              <a className="sidebar-link" href="/userlist">
                 <i className="fas fa-user-circle sidebar-icon"></i>
                 <span className="sidebar-text">User</span>
               </a>
@@ -76,7 +76,7 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/track-order">
+              <a className="sidebar-link" href="/typelist">
                 <i className="fas fa-layer-group sidebar-icon"></i>
                 <span className="sidebar-text">Types</span>
               </a>
