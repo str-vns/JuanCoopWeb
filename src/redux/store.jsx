@@ -41,8 +41,10 @@ import { HereMapReducer, MapBoxRouteReducer } from "@redux/Reducers/locationRedu
 
 import { reducerProduct, reducerCoop, reducerCoopProduct, reducerCreateProduct, reducerEditProduct, reducerDelResProduct } from "@redux/Reducers/productReducers";
 import { categoryListReducer} from "@redux/Reducers/categoryReducers";
-import { typeListReducer} from "@redux/Reducers/typeReducers";
+import { typeListReducer, typeCreateReducer,typeUpdateReducer,typeDeleteReducer} from "@redux/Reducers/typeReducers";
 import { inventoryCreateReducer, singleInventoryReducer } from "@redux/Reducers/inventoryReducers";
+import { reducerBlog, reducerSingleBlog, reducerCreateBlog, reducerEditBlog, reducerDelBlog } from "@redux/Reducers/blogReducer";
+
 const reducers = combineReducers({
   cartItems: cartItems,
   payItems: payItems,
@@ -75,6 +77,9 @@ const reducers = combineReducers({
   ResDelProduct: reducerDelResProduct,
   categories: categoryListReducer, 
   types: typeListReducer, 
+  typesCreate: typeCreateReducer,
+  typesUpdate: typeUpdateReducer,
+  typesDelete: typeDeleteReducer,
   invent: inventoryCreateReducer,
   sinvent: singleInventoryReducer,
   Geolocation: HereMapReducer,
@@ -86,6 +91,12 @@ const reducers = combineReducers({
   checkDuplication: checkEmailReducer,
   googleLogin: googleLoginReducer,
   otpForgot: otpForgotPasswordReducer,
+
+  allBlogs: reducerBlog, 
+  singleBlog: reducerSingleBlog, 
+  createBlog: reducerCreateBlog, 
+  updateBlog: reducerEditBlog, 
+  deleteBlog: reducerDelBlog, 
 });
 
 let initialState = {

@@ -21,19 +21,19 @@ import Profile from "./Components/User/Profile";
 import WishList from "./Components/User/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
 import Orders from "./Components/Order/Orders";
-import CoopDashboard from "./Components/Cooperative/Dashboard/CoopDashboard";
-import ProductList from "./Components/Cooperative/Product/ProductList";
-import BlogList from "./Components/Cooperative/Blog/BlogList";
-import ForumPostList from "./Components/Cooperative/Forum/ForumPostList";
-import CoopProfileEdit from "./Components/Cooperative/Profile/editProfile";
-import ForumList from "./Components/Cooperative/Forum/ForumList";
-import ProductArchive from "./Components/Cooperative/Product/ProductArchive";
+import CoopDashboard from "./components/Cooperative/Dashboard/CoopDashboard";
+import ProductList from "./components/Cooperative/Product/ProductList";
+import BlogList from "./components/Cooperative/Blog/BlogList";
+import ForumPostList from "./components/Cooperative/Forum/ForumPostList";
+import CoopProfileEdit from "./components/Cooperative/Profile/editProfile";
+import ForumList from "./components/Cooperative/Forum/ForumList";
+import ProductArchive from "./components/Cooperative/Product/ProductArchive";
 // import ForumPost from "./Components/Cooperative/Forum/ForumPost";
-import CoopOrderList from "./Components/Cooperative/Order/OrderList";
-import MessageList from "./Components/Cooperative/Messages/MessageList";
-import CoopLogin from "./Components/Cooperative/Registration/CoopLogin";
-import FarmRegistration from "./Components/Cooperative/Registration/FarmRegistration";
-import GoogleLogin from "./Components/Cooperative/Registration/GoogleLogin";
+import CoopOrderList from "./components/Cooperative/Order/OrderList";
+import MessageList from "./components/Cooperative/Messages/MessageList";
+import CoopLogin from "./components/Cooperative/Registration/CoopLogin";
+import FarmRegistration from "./components/Cooperative/Registration/FarmRegistration";
+import GoogleLogin from "./components/Cooperative/Registration/GoogleLogin";
 import Messenger from './Components/Chatime/messenger/Messenger';
 import CoopMessenger from './components/cooperative/Chatime/messenger/Messenger'
 import  Shipping from "./Components/Cart/Address";
@@ -46,10 +46,14 @@ import { logoutUser } from "@redux/actions/authActions";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-import InventoryList from "./Components/Cooperative/Inventory/InventoryList";
-import InventoryDetail from "./Components/Cooperative/Inventory/InventoryDetail";
-import InventoryCreate from "./Components/Cooperative/Inventory/InventoryCreate";
+import InventoryList from "./components/Cooperative/Inventory/InventoryList";
+import InventoryDetail from "./components/Cooperative/Inventory/InventoryDetail";
+import InventoryCreate from "./components/Cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "./Components/Cooperative/Inventory/InventoryUpdate";
+
+import UserList from "./Components/Admin/User/UserList";
+import TypeList from "./Components/Admin/Types/TypeList";
+
 import PasswordReset from "@components/user/passwordReset";
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
@@ -132,6 +136,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/otp" element={<RegisterRoute> <OtpRegister /> </RegisterRoute>} />
           {/* <Route path="/forgot" element={<ForgotPassword />} /> */}
+
+
+          <Route path="/userlist" element={<UserList/>} />
+          <Route path="/typelist" element={<TypeList/>} />
 
           <Route path="/cooplogin" element={<CoopLogin/>} />
           <Route path="/googlelogin" element={<GoogleLogin/>} />
