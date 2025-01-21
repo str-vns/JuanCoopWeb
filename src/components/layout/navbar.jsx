@@ -143,7 +143,7 @@ const Navbar = () => {
       {/* Left side with logo, search bar, and AgriCoop */}
       <div className="flex items-center">
         <img src={logo} alt="AgriCoop Logo" className="h-10 w-10 mr-2" />
-        <a className="brand">AgriKooP</a>
+        <a className="brand">JuanKooP</a>
       </div>
 
       {/* Centered menu items */}

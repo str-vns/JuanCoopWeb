@@ -58,6 +58,7 @@ import baseURL from '@Commons/baseUrl';
 import { toast } from 'react-toastify';
 import { login } from "@redux/actions/authActions";
 import { authenticated, getToken } from '@utils/helpers';
+import mime from "mime";
 
 export const registeruser = (userData) => async (dispatch) => {
 
@@ -561,5 +562,75 @@ export const restoreUser = (id) => async (dispatch) => {
       type: USER_RESTORE_FAIL,
       payload: error.response ? error.response.data.message : error.message,
     });
+  }
+};
+
+export const ProfileEdit = (userDataId, token, userData) => async (dispatch) => {
+  console.log("UserData being saved:", userData);
+  
+  try {
+      dispatch({ type: EDIT_PROFILE_REQUEST });
+
+      const formData = new FormData();
+      formData.append("firstName", userData?.firstName);
+      formData.append("lastName", userData?.lastName);
+      formData.append("phoneNum", userData?.phoneNumber);
+      formData.append("gender", userData?.gender);
+
+      // Handle image only if it's not null
+      if (userData?.image) {
+          if (typeof userData.image === "string") {
+              formData.append("image", userData.image);
+          } else {
+              formData.append("image", userData.image);
+          }
+      }
+
+      const config = {
+          headers: {
+
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+          },
+          timeout: 10000,
+      };
+
+      const { data } = await axios.put(`${baseURL}users/${userDataId}`, formData, config);
+
+      dispatch({
+          type: EDIT_PROFILE_SUCCESS,
+          payload: data.details,
+      });
+
+      toast.success("Profile Updated Successfully", {
+        topOffset: 60,
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        toastId: 'profileUpdateSuccess',
+        closeButton: false,
+      });
+  } catch (error) {
+      console.error("Error updating profile:", error);
+
+      dispatch({
+          type: EDIT_PROFILE_FAIL,
+          payload: error.response ? error.response.data : { message: error.message },
+      });
+
+      toast.error("Profile Update Failed", {
+        topOffset: 60,
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        toastId: 'profileUpdateError',
+        closeButton: false,
+      });
   }
 };

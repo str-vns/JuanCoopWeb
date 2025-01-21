@@ -5,6 +5,7 @@ import AuthGlobal from "../../redux/Store/AuthGlobal";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import { matchCooperative } from "@redux/Actions/coopActions";
 // import { memberAllList } from '@redux/Actions/memberActions';
+import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/navbar";
 import "../../assets/css/profile.css";
 
@@ -15,7 +16,7 @@ const Profile = () => {
   const storedToken = getToken(); 
   const userId = currentUser?._id;
   const { coops } = useSelector((state) => state.allofCoops);
-
+  const navigate = useNavigate();
   const { loading, user, error } = useSelector((state) => state.userOnly);
 
   const [loadError, setLoadError] = useState(null);
@@ -53,7 +54,7 @@ const Profile = () => {
   }, [userId, dispatch]);
 
   const handleUpdateProfile = () => {
-    console.log("Update profile clicked!");
+    navigate("/editprofile");
   };
 
   return (

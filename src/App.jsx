@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast} from 'react-toastify';
 import { gapi } from 'gapi-script';
 import 'react-toastify/dist/ReactToastify.css';
+
 // import Sidebar from "./Components/layout/sidebar"; // Capitalized Sidebar
 import Register from "./Components/User/Register";
-import Login from "./Components/User/Login";
+import Login from "@components/User/Login";
 import ForgotPassword from "./Components/User/forgotPassword";
 import SingleProduct from "./Components/Products/SingleProduct";
 import Homepage from "./Components/Products/Homepage";
@@ -48,13 +49,16 @@ import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
 import InventoryList from "./components/Cooperative/Inventory/InventoryList";
 import InventoryDetail from "./components/Cooperative/Inventory/InventoryDetail";
-import InventoryCreate from "./components/Cooperative/Inventory/InventoryCreate";
+import InventoryCreate from "@components/Cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "./Components/Cooperative/Inventory/InventoryUpdate";
 
 import UserList from "./Components/Admin/User/UserList";
 import TypeList from "./Components/Admin/Types/TypeList";
 
 import PasswordReset from "@components/user/passwordReset";
+import EditProfile from "@components/user/EditProfile";
+import AdminDashboard from "@components/Admin/admin";
+
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -121,6 +125,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/product/:id" element={<ProductCard />} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/location" element={<CoopLocation/>} />
           <Route path="/m" element={<Messenger/>}/>
           <Route path="/cart" element={<Carts/>} />
@@ -165,6 +170,11 @@ function App() {
           <Route path="/addressList" element={<Address  />} />
           <Route path="/address/create" element={<AddressCreate />} />
           <Route path="/address/edit/:id" element={<AddressEdit  />} />
+
+
+          {/* Admin */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          
         </Routes>
       </div>
     </Router>
