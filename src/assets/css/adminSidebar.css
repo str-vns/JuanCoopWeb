@@ -1,0 +1,109 @@
+
+.sidebar-header {
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: #ffffff; /* Header background */
+  }
+  
+
+  .sidebar-nav {
+    flex-grow: 1;
+    padding: 1rem 0;
+  }
+  
+  .sidebar-item {
+    list-style: none;
+  }
+  
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: #333333;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .sidebar-link:hover {
+    background-color: #FAFAFA; /* Light yellow hover background */
+    color: #ffcc00; /* Yellow text on hover */
+  }
+  
+  .sidebar-icon {
+    margin-right: 1rem;
+  }
+
+  .sidebar-footer {
+    padding: 2rem;
+    background-color: #ffffff;
+    
+  
+  }
+  
+  .sidebar-button {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: #ffcc00; /* Yellow button background */
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 10px; /* Rounded corners */
+    gap: 1rem; /* Space between the icon and text */
+  }
+  
+  .sidebar-button:hover {
+    background-color: #e6b800; /* Darker yellow */
+  }
+  
+  .sidebar-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-bottom: auto;
+  }
+  
+  .sidebar-text {
+    margin-left: 0.5rem; /* Adds space between the icon and text */
+    margin-top: 0.15rem; /* Moves the text lower */
+  }
+  
+  
+  .sidebar-button .sidebar-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem; /* Adjusted to match spacing in links */
+  }
+  
+  .logo-image {
+    max-width: 50%; /* Keep the logo smaller */
+    height: auto;
+    display: inline-block; /* Allow text to sit beside it */
+    margin: 0; /* Remove extra margins */
+    vertical-align: middle; /* Align logo with text vertically */
+  }
+
+  /* Make sure the sidebar content is scrollable but without showing the scrollbar */
+.sidebar {
+  overflow: hidden; /* Prevents the scrollbar from appearing */
+}
+
+/* Alternatively, hide the scrollbar while keeping the content scrollable */
+.sidebar-content {
+  overflow-y: scroll; /* Enables scrolling, but hides the scrollbar */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar in Webkit browsers (Chrome, Safari) */
+}
+
+.sidebar {
+  scrollbar-width: none; /* Hides the scrollbar in Firefox */
+}
