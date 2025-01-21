@@ -57,7 +57,7 @@ import {
 import baseURL from '@Commons/baseUrl'; 
 import { toast } from 'react-toastify';
 import { login } from "@redux/actions/authActions";
-import { authenticated } from '@utils/helpers';
+import { authenticated, getToken } from '@utils/helpers';
 
 export const registeruser = (userData) => async (dispatch) => {
 
@@ -439,3 +439,127 @@ export const resetPassword = (passwordData, token) => async (dispatch) => {
       });
   }
 }
+
+export const getAllUsers = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_USERS_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(`${baseURL}users`, config);
+
+    dispatch({
+      type: GET_ALL_USERS_SUCCESS,
+      payload: data.details,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: GET_ALL_USERS_FAIL,
+      payload: errorMessage,
+    });
+
+    console.log("Error from getAllUsers", errorMessage);
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DELETE_REQUEST });
+
+    // Use DELETE method for hard delete (adjust endpoint as necessary)
+    await axios.delete(`${baseURL}users/${id}`);
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+      payload: id, // ID of the deleted user
+    });
+    return Promise.resolve(); // Indicate success
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAIL,
+      payload: error.response ? error.response.data : error.message,
+    });
+    return Promise.reject(error); // Indicate failure
+  }
+};
+
+export const softDeleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_SOFTDELETE_REQUEST });
+
+    // Retrieve the token from AsyncStorage
+    const token = getToken();
+    if (!token) {
+      // If no token, dispatch an error action and return
+      dispatch({
+        type: USER_SOFTDELETE_FAIL,
+        payload: 'Please log in first.',
+      });
+      return;
+    }
+
+    // Make the request with the token in the headers
+    const response = await axios.patch(
+      `${baseURL}users/${id}`,
+      {}, // You might need to pass data depending on the API
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token here
+        },
+      }
+    );
+
+    dispatch({
+      type: USER_SOFTDELETE_SUCCESS,
+      payload: id, // ID of the soft-deleted user
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_SOFTDELETE_FAIL,
+      payload: error.response ? error.response.data : error.message,
+    });
+  }
+};
+
+export const restoreUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_RESTORE_REQUEST });
+
+    // Retrieve the token from AsyncStorage
+    const token = getToken();
+    if (!token) {
+      dispatch({
+        type: USER_RESTORE_FAIL,
+        payload: 'Please log in first.',
+      });
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.patch(`${baseURL}restore/users/${id}`, {}, config);
+
+    dispatch({
+      type: USER_RESTORE_SUCCESS,
+      payload: id,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_RESTORE_FAIL,
+      payload: error.response ? error.response.data.message : error.message,
+    });
+  }
+};
