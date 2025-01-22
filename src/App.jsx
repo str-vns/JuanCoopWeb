@@ -53,7 +53,9 @@ import InventoryCreate from "@components/Cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "./Components/Cooperative/Inventory/InventoryUpdate";
 
 import UserList from "./Components/Admin/User/UserList";
-import TypeList from "./Components/Admin/Types/TypeList";
+import TypeList from "@components/Admin/Types/TypeList";
+import CategoryList from "./components/Admin/Categories/CategoryList";
+import BlogLists from "@components/Admin/Blogs/Bloglist";
 
 import PasswordReset from "@components/user/passwordReset";
 import EditProfile from "@components/user/EditProfile";
@@ -126,48 +128,51 @@ function App() {
       <div>
         {/* <Sidebar /> Uncomment if you need the Sidebar */}
         <Routes>
-         {/* Public */}
-          <Route path="/" element={<RoleBaseRoute/>} />
-          <Route path="/home" element={<Homepage/>} />
+          <Route path="/" element={<Homepage/>} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/product/:id" element={<ProductCard />} />
-          <Route path="/profile" element={<Profile/>} />
           <Route path="/editprofile" element={<EditProfile />} />
-          <Route path="/location" element={<CoopLocation/>} />
-          <Route path="/cart" element={<Carts/>} />
           <Route path="/resetPassword/:id" element={<PasswordReset/>} />
-          <Route path="/prod" element={<SingleProduct/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/otp" element={<RegisterRoute> <OtpRegister /> </RegisterRoute>} />
-          
-        {/* User */}
-        <Route path="/farmregistration" element={<ProtectedRoute isCustomer={true}><FarmRegistration/></ProtectedRoute>} />
-        <Route path="/m" element={<ProtectedRoute isCustomer={true}><Messenger/></ProtectedRoute>}/>
-        <Route path="/wishlist" element={<ProtectedRoute isCustomer={true}><WishList/></ProtectedRoute>} />
-        <Route path="/payment" element={<ProtectedRoute isCustomer={true}><Payment/></ProtectedRoute>} />
-        <Route path="/orders" element={<ProtectedRoute isCustomer={true}><Orders/></ProtectedRoute>} />
-        <Route path="/shipping" element={<ProtectedRoute isCustomer={true}><Shipping/></ProtectedRoute>} />
-        <Route path="/confirm" element={<ProtectedRoute isCustomer={true}><OrderConfirmation /></ProtectedRoute>} />
-        <Route path="/checkout" element={<ProtectedRoute isCustomer={true}><CheckoutAccordion/></ProtectedRoute>} />
-          {/* <Route path="/forgot" element={<ForgotPassword />} /> */}
-    {/* Cooperative */}
-          <Route path="/cooplogin" element={<CoopLogin/>} />
+          <Route path="/m" element={<Messenger/>}/>
           <Route path="/googlelogin" element={<GoogleLogin/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
-          <Route path="/coopdashboard" element={<ProtectedRoute isCooperative={true}><CoopDashboard/></ProtectedRoute>} />
-          <Route path="/coopprofileedit" element={<ProtectedRoute isCooperative={true}><CoopProfileEdit/></ProtectedRoute>} />
-          <Route path="/productlist" element={<ProtectedRoute isCooperative={true}><ProductList/></ProtectedRoute>} />
-          <Route path="/messagelist" element={<ProtectedRoute isCooperative={true}><MessageList/></ProtectedRoute>} />
-          <Route path="/productarchive" element={<ProtectedRoute isCooperative={true}><ProductArchive/></ProtectedRoute>} />
-          <Route path="/bloglist" element={<ProtectedRoute isCooperative={true}><BlogList/></ProtectedRoute>} />
-          <Route path="/forumlist" element={<ProtectedRoute isCooperative={true}><ForumList/></ProtectedRoute>} />
-          <Route path="/forumpostlist" element={<ProtectedRoute isCooperative={true}><ForumPostList/></ProtectedRoute>} />
-          <Route path="/inventorylist" element={<ProtectedRoute isCooperative={true}><InventoryList/></ProtectedRoute>} />
-          <Route path="/inventorydetail" element={<ProtectedRoute isCooperative={true}><InventoryDetail/></ProtectedRoute>} />
-          <Route path="/inventorycreate" element={<ProtectedRoute isCooperative={true}><InventoryCreate/></ProtectedRoute>} />
-          <Route path="/inventoryupdate" element={<ProtectedRoute isCooperative={true}><InventoryUpdate/></ProtectedRoute>} />
-          <Route path="/cooporderlist" element={<ProtectedRoute isCooperative={true}><CoopOrderList/></ProtectedRoute>} />
-          <Route path="/messenger" element={<ProtectedRoute isCooperative={true}><CoopMessenger/></ProtectedRoute>} />
+
+          {/* Order Routes */}
+          <Route path="/product/:id" element={<ProductCard />} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/cart" element={<Carts/>} />
+          <Route path="/shipping" element={<Shipping/>} />
+          <Route path="/payment" element={<Payment/>} />
+          <Route path="/orders" element={<Orders/>} />
+          <Route path="/wishlist" element={<WishList/>} />
+          <Route path="/confirm" element={<OrderConfirmation />} />
+          <Route path="/checkout" element={<CheckoutAccordion/>} />
+          <Route path="/prod" element={<SingleProduct/>} />
+        
+         
+          {/* <Route path="/forgot" element={<ForgotPassword />} /> */}
+
+
+          <Route path="/location" element={<CoopLocation/>} />
+          <Route path="/cooplogin" element={<CoopLogin/>} />
+          <Route path="/farmregistration" element={<FarmRegistration/>} />
+          <Route path="/coopdashboard" element={<CoopDashboard/>} />
+          <Route path="/coopprofileedit" element={<CoopProfileEdit/>} />
+          <Route path="/productlist" element={<ProductList/>} />
+          <Route path="/messagelist" element={<MessageList/>} />
+          <Route path="/productarchive" element={<ProductArchive/>} />
+          <Route path="/forumlist" element={<ForumList/>} />
+          <Route path="/forumpostlist" element={<ForumPostList/>} />
+
+          {/* Inventory */}
+          <Route path="/inventorylist" element={<InventoryList/>} />
+          <Route path="/inventorydetail" element={<InventoryDetail/>} />
+          <Route path="/inventorycreate" element={<InventoryCreate/>} />
+          <Route path="/inventoryupdate" element={<InventoryUpdate/>} />
+          <Route path="/cooporderlist" element={<CoopOrderList/>} />
+          <Route path="/messenger" element={<CoopMessenger/>} />
+
           {/* <Route path="/orderlist" element={<OrderList/>} /> */}
 
           {/* User address */}
@@ -177,8 +182,13 @@ function App() {
 
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/userlist" element={<ProtectedRoute isAdmin={true}><UserList/></ProtectedRoute>} />
-          <Route path="/typelist" element={<ProtectedRoute isAdmin={true}><TypeList/></ProtectedRoute>} />
+          <Route path="/userlist" element={<UserList/>} />
+          <Route path="/typelist" element={<TypeList/>} />
+          <Route path="/bloglist" element={<BlogList/>} />
+
+        <Route path="/bloglists" element={<BlogLists/>} />
+          <Route path="/categorylist" element={<CategoryList/>} />
+          
         </Routes>
       </div>
     </Router>

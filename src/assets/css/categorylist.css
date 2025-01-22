@@ -1,4 +1,4 @@
-.type-list-container {
+.category-list-container {
   height: 100vh;
   width: calc(100% - 300px); /* Adjust width to not overlap with sidebar */
   margin-left: 300px; /* Align next to the sidebar */
@@ -126,12 +126,12 @@
   color: #ef4444;
 }
 
-.type-container {
+.category-container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.type-title {
+.category-title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
@@ -139,14 +139,14 @@
 }
 
 /* Grid Layout */
-.type-grid {
+.category-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
 }
 
 @media (min-width: 640px) {
-  .type-grid {
+  .category-grid {
     grid-template-columns: repeat(2, 1fr); /* Limit to 2 columns */
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../sidebar";
+import Sidebar from "@components/Admin/sidebar";
 import "../../../assets/css/typelist.css";
-import TypeAddUpdate from "./TypeAddUpdate"; 
+import TypeAddUpdate from "./TypeAddUpdate";
 import { useDispatch, useSelector } from "react-redux";
 import { typeList, typeDelete } from "@redux/Actions/typeActions";
 
@@ -10,10 +10,14 @@ const TypeList = () => {
 
   // Redux state
   const { loading, types = [], error } = useSelector((state) => state.types);
-  const { success: deleteSuccess, error: deleteError } = useSelector((state) => state.typesDelete);
+  const { success: deleteSuccess, error: deleteError } = useSelector(
+    (state) => state.typesDelete
+  );
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editType, setEditType] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // Current page
+  const itemsPerPage = 10; // Items per page
 
   useEffect(() => {
     dispatch(typeList());
@@ -40,11 +44,22 @@ const TypeList = () => {
     }
   };
 
+  // Calculate pagination
+  const totalPages = Math.ceil(types.length / itemsPerPage);
+  const paginatedTypes = types.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   return (
     <div className="type-list-container">
       <Sidebar />
       <div className="flex flex-col w-full">
-        <div className="flex-1 bg-gray-100 p-6">
+        <div className="flex-1 bg-white-100 p-6">
           <div className="type-list-header">
             <h1 className="type-title ">Type List</h1>
             <button className="btn-primary" onClick={() => openModal()}>
@@ -62,23 +77,69 @@ const TypeList = () => {
               {types.length === 0 ? (
                 <p className="loading-text">No types available.</p>
               ) : (
-                <div className="type-container">
-                  <div className="type-grid">
-                  {types.map((type) => (
-                    <div key={type._id} className="type-item p-4 border-b flex justify-between items-center">
-                      <span className="text-gray-800 font-medium">{type.typeName}</span>
-                      <div className="actions flex space-x-2">
-                        <button className="btn-secondary" onClick={() => openModal(type)}>
-                          Edit
-                        </button>
-                        <button className="btn-danger" onClick={() => handleDelete(type._id)}>
-                          Delete
-                        </button>
-                      </div>
+                <>
+                  <div className="type-container">
+                    <div className="type-grid">
+                      {paginatedTypes.map((type) => (
+                        <div
+                          key={type._id}
+                          className="p-4 border-b flex justify-between items-center"
+                        >
+                          <span className="text-gray-800 font-medium">
+                            {type.typeName}
+                          </span>
+                          <div className="actions flex space-x-2">
+                            <div className="actions flex space-x-2">
+                              <i
+                                className="fa-regular fa-pen-to-square text-yellow-500 cursor-pointer"
+                                title="Edit"
+                                onClick={() =>
+                                  console.log("Edit clicked", type)
+                                }
+                              ></i>
+                              <i
+                                className="fa-solid fa-trash text-red-500 cursor-pointer"
+                                title="Delete"
+                                onClick={() => handleDelete(type._id)}
+                              ></i>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                </div>
+                  </div>
+
+                  {/* Pagination */}
+                  <div className="pagination flex justify-center items-center mt-4 space-x-2">
+                    <button
+                      className="btn-secondary"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => (
+                        <button
+                          key={page}
+                          className={`btn-page ${
+                            page === currentPage ? "btn-active" : ""
+                          }`}
+                          onClick={() => handlePageChange(page)}
+                        >
+                          {page}
+                        </button>
+                      )
+                    )}
+                    <button
+                      className="btn-secondary"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      Next
+                    </button>
+                  </div>
+                </>
               )}
             </div>
           )}

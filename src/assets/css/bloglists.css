@@ -1,4 +1,4 @@
-.type-list-container {
+.blog-list-container {
   height: 100vh;
   width: calc(100% - 300px); /* Adjust width to not overlap with sidebar */
   margin-left: 300px; /* Align next to the sidebar */
@@ -12,7 +12,7 @@
   overflow: hidden; /* Prevent scrollbars */
   padding-top: 40px
 }
-.type-list-header {
+.blog-list-header {
   display: flex;
   justify-content: space-between; /* Align header title and button to opposite ends */
   align-items: center; /* Vertically center items */
@@ -24,7 +24,7 @@
   border-radius: 8px; /* Rounded corners */
 }
 
-.type-title {
+.blog-title {
   font-size: 1.8rem; /* Larger font size for the title */
   font-weight: 600; /* Semi-bold weight */
   color: #1f2937; /* Dark gray color */
@@ -56,15 +56,15 @@
   gap: 8px; /* Consistent spacing between buttons */
   overflow: hidden; /* Prevent scrollbar */
 }
-.type-item {
+.blog-item {
   transition: box-shadow 0.2s ease-in-out;
 }
 
-.type-item:hover {
+.blog-item:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.type-list-header {
+.blog-list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -126,12 +126,12 @@
   color: #ef4444;
 }
 
-.type-container {
+.blog-container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.type-title {
+.blog-title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
@@ -139,14 +139,14 @@
 }
 
 /* Grid Layout */
-.type-grid {
+.blog-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
 }
 
 @media (min-width: 640px) {
-  .type-grid {
+  .blog-grid {
     grid-template-columns: repeat(2, 1fr); /* Limit to 2 columns */
   }
 }
