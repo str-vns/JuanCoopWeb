@@ -19,6 +19,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const { loading, user, error } = useSelector((state) => state.userOnly);
 
+  console.log(getCurrentUser())
   const [loadError, setLoadError] = useState(null);
   const filterUser = Array.isArray(coops)
   ? coops.filter((coop) => coop?.user?._id === userId)
@@ -29,7 +30,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
        // Use helper to get the token
-
+    
         if (storedToken) {
           if (userId) {
             dispatch(Profileuser(userId, storedToken)); 
@@ -55,6 +56,7 @@ const Profile = () => {
 
   const handleUpdateProfile = () => {
     navigate("/editprofile");
+
   };
 
   return (

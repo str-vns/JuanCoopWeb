@@ -6,6 +6,7 @@ import store from '@redux/store'
 import './index.css'
 import App from './App.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import RoleBaseRoute from '@route/RoleBaseRoute.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

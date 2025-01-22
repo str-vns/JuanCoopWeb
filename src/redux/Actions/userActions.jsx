@@ -58,7 +58,6 @@ import baseURL from '@Commons/baseUrl';
 import { toast } from 'react-toastify';
 import { login } from "@redux/actions/authActions";
 import { authenticated, getToken } from '@utils/helpers';
-import mime from "mime";
 
 export const registeruser = (userData) => async (dispatch) => {
 
@@ -613,6 +612,7 @@ export const ProfileEdit = (userDataId, token, userData) => async (dispatch) => 
         toastId: 'profileUpdateSuccess',
         closeButton: false,
       });
+      localStorage.setItem("user", JSON.stringify(data.details));
   } catch (error) {
       console.error("Error updating profile:", error);
 

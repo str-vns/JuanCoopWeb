@@ -111,7 +111,7 @@ const Navbar = () => {
   }, [socket]);
 
   const handleLogout = () => {
-    navigate("/");
+    navigate("/home");
 
     dispatch(logoutUser());
     localStorage.removeItem('jwt');

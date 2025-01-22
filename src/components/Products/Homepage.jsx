@@ -55,6 +55,9 @@ const CategorySection = ({ categories }) => {
 // Product Card Component
 const Homepage = ({ image, name, price, id }) => {
   const navigate = useNavigate();
+
+ 
+
   const handleAddToCart = () => {
     // Retrieve cart from local storage or initialize as empty array
     let cart = JSON.parse(localStorage.getItem("cart")) || [];

@@ -23,7 +23,7 @@ const OrderConfirmation = () => {
       dispatch(clearCart());
       dispatch(clearShip());
       dispatch(clearPay());
-      navigate("/");
+      navigate("/home");
     alert("Navigating back to Home...");
   };
 
