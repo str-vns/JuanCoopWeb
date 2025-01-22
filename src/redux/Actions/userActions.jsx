@@ -612,7 +612,8 @@ export const ProfileEdit = (userDataId, token, userData) => async (dispatch) => 
         toastId: 'profileUpdateSuccess',
         closeButton: false,
       });
-      localStorage.setItem("user", JSON.stringify(data.details));
+
+      authenticated(data.details);
   } catch (error) {
       console.error("Error updating profile:", error);
 
@@ -621,16 +622,16 @@ export const ProfileEdit = (userDataId, token, userData) => async (dispatch) => 
           payload: error.response ? error.response.data : { message: error.message },
       });
 
-      toast.error("Profile Update Failed", {
-        topOffset: 60,
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        toastId: 'profileUpdateError',
-        closeButton: false,
-      });
+      // toast.error("Profile Update Failed", {
+      //   topOffset: 60,
+      //   position: "top-right",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   toastId: 'profileUpdateError',
+      //   closeButton: false,
+      // });
   }
 };

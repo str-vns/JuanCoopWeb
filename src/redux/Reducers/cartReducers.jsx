@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, UPDATE_CART_QUANTITY, SET_CART_ITEMS } from "@redux/Constants/cartConstants";
+import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, UPDATE_CART_QUANTITY, SET_CART_ITEMS, UPDATE_CART_INV } from "@redux/Constants/cartConstants";
 
 const cartItems = (state = [], action) => {
     switch (action.type) {
@@ -12,6 +12,12 @@ const cartItems = (state = [], action) => {
             return state.map(item =>
                 item.inventoryId === action.payload.inventoryId ?
                     { ...item, quantity: action.payload.quantity } :
+                    item
+            );
+        case UPDATE_CART_INV:
+            return state.map(item =>
+                item.inventoryId === action.payload.inventoryId ?
+                    { ...item, quantity: action.payload.quantity, maxQuantity: action.payload.maxQuantity } :
                     item
             );
         case SET_CART_ITEMS:

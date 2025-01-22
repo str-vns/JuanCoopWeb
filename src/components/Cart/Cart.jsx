@@ -2,12 +2,17 @@ import Navbar from "../layout/navbar";
 import "../../assets/css/cart.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {updateCartQuantity, removeFromCart } from "@redux/actions/cartActions";
-import { isAuth } from "@utils/helpers";
+import {updateCartQuantity, removeFromCart, updateCartInv } from "@redux/actions/cartActions";
+import { isAuth, getToken } from "@utils/helpers";
+import baseURL from '@Commons/baseUrl';
+import axios from "axios";
+import { toast } from "react-toastify";
+
 const Carts = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const auth = isAuth();
+  const token = getToken();
   const cartItems = useSelector((state) => state.cartItems);
   const totalPrice = cartItems.reduce((acc, item) => acc + item.pricing * item.quantity, 0);
   console.log("Cart Items:", cartItems);
@@ -29,10 +34,52 @@ const Carts = () => {
     dispatch(removeFromCart(item.inventoryId));
   };
 
-  const checkoutHandler = () => {
-    navigate('/login?redirect=shippings')
-}
+  const checkoutHandler = async () => {
+    const orderItems = {
+      orderItems: cartItems.map((item) => ({
+        product: item.productId,
+        inventoryId: item.inventoryId,
+        quantity: item.quantity,
+      })),
+      totalPrice,
+    };
+  
+    try {
+      const { data } = await axios.post(`${baseURL}inventory/stock`, orderItems, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        timeout: 10000,
+      });
+  
+      console.log("Checkout Data:", data);
+      if (data?.details?.success === true) {
+        toast.success("Order placed successfully!");
+         navigate("/shipping");
+      } else {
+  
+        data?.details?.lowStockItems?.forEach((item) => {
+          console.log("Low Stock Item:", item);
+          if (item.reason === "out_of_stock") {
+            toast.error(`${item.productName} ${item.unitName} ${item.metricUnit} is out of stock and has been removed from your cart.`);
+            dispatch(removeFromCart(item.inventoryId));
+          } else if (item.reason === "low_stock") {
+            toast.warning(
+              `Quantity for ${item.productName} ${item.unitName} ${item.metricUnit} has been adjusted to ${item.currentStock} due to stock availability.`
+            );
+            dispatch(updateCartInv(item.inventoryId, item.currentStock, item.currentStock));
+          }
+        });
+      }
+    } catch (error) {
+      toast.error("Something went wrong while placing the order.");
+      console.error("Checkout Error:", error);
+    }
+  };
 
+  const isLoggedIn = async () =>  {
+        navigate("/login?redirect=shippings");
+  }
   return (
 
     <section className="cart-section">
@@ -127,13 +174,16 @@ const Carts = () => {
     Continue Shopping
   </a>
   {cartItems.length > 0 && auth ? (
-    <a href="/shipping" className="button-proceed-checkout" >
+    <a 
+    // href="/shipping" 
+    onClick={checkoutHandler}
+    className="button-proceed-checkout" >
       Proceed to Checkout
     </a>
   ) : (
     <button
       className="button-proceed-checkout"
-      onClick={checkoutHandler}
+      onClick={isLoggedIn}
     >
       Proceed to Checkout
     </button>

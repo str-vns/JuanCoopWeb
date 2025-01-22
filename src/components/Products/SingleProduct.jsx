@@ -22,7 +22,7 @@ const ProductCard = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedStock, setSelectedStock] = useState(product?.stock[0]);
   const [quantity, setQuantity] = useState(1); 
-  console.log(localStorage.getItem("cartItems"));
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -189,23 +189,25 @@ const ProductCard = () => {
           <p className="product-description">{product.description}</p>
 
           <div className="product-attributes">Stock: 
-          {selectedStock?.quantity ? ` ${selectedStock?.quantity}` : "N/A"} </div>
+          {selectedStock?.quantity ? ` ${selectedStock?.quantity}` : " 0"} </div>
               
           <div className="stock-Label">Product Size:</div>
           <div className="stock-info">
-  {product.stock && product.stock.length > 0 ? (
-    product.stock.map((item, index) => (
+          {product.stock && product.stock.length > 0 ? (
+  product.stock
+    .filter((item) => item.quantity > 0) 
+    .map((item, index) => (
       <button
-                  key={index}
-                  className={`stock-box stock-label ${
-                    selectedStock === item ? "selected" : ""
-                  }`}
-                  onClick={() => handleStockSelect(item)}
-                >
-                  {item.unitName} {item.metricUnit}
-                </button>
+        key={index}
+        className={`stock-box stock-label ${
+          selectedStock === item ? "selected" : ""
+        }`}
+        onClick={() => handleStockSelect(item)}
+      >
+        {item.unitName} {item.metricUnit}
+      </button>
     ))
-  ) : (
+): (
      <span className="stock-label">No Stock Available</span>
       
   )}
