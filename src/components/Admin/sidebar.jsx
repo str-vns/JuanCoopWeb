@@ -11,7 +11,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/home");
+    navigate("/");
 
     dispatch(logoutUser());
     localStorage.removeItem("jwt");

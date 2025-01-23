@@ -5,7 +5,7 @@ import Conversation from "../conversations/Conversation";
 import Message from "../message/Message";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { useSocket } from "../../../../../SocketIo";
-import {listMessages} from "@redux/Actions/messageActions";
+import { sendNotifications } from "@redux/Actions/notificationActions";
 import { conversationList } from '@redux/Actions/converstationActions';
 import baseURL from "@Commons/baseUrl";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,13 +21,34 @@ const Messenger = () => {
   const { loading, conversations } = useSelector((state) => state.converList);
   const { users } = useSelector((state) => state.getThemUser);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [arriveMessage, setArriveMessage] = useState(null);
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const scrollRef = useRef();
+
+  
+  useEffect(() => {
+    if (socket && getCurrentUser()) {
+      if (user?._id) {
+        socket.emit("addUser", user._id);
+      }
+  
+      const handleUsers = (users) => {
+        console.log("users", users);
+        const onlineUsers = users.filter(user => user.online && user?._id !== null);
+        setOnlineUsers(onlineUsers);
+      };
+  
+      socket.on("getUsers", handleUsers);
+  
+
+      return () => {
+        socket.off("getUsers", handleUsers);
+      };
+    }
+  }, [socket, user?._id]);
 
   useEffect(() => {
     if (user?._id && token) {
@@ -36,35 +57,21 @@ const Messenger = () => {
   }, [user?._id, token, dispatch]);
 
   useEffect(() => {
-    // Make sure the socket connection is valid
     if (socket) {
       const handleNewMessage = (data) => {
-        // Assuming you have an array of messages, we append the new message to the array
-        setArriveMessage((prevMessages) => [
-          ...prevMessages,
-          {
-            sender: data.senderId,
-            text: data.text,
-            createdAt: Date.now(),
-          },
-        ]);
+        const newMessage = {
+          sender: data.senderId,
+          text: data.text,
+          createdAt: Date.now(),
+        };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
       };
-  
-      // Listen for incoming messages
       socket.on("getMessage", handleNewMessage);
-  
-      // Clean up the event listener when the component is unmounted or socket changes
       return () => {
         socket.off("getMessage", handleNewMessage);
       };
     }
   }, [socket]);
-
-  useEffect(() => {
-    arriveMessage &&
-      currentChat?.members.includes(arriveMessage.sender) &&
-      setMessages((prev) => [...prev, arriveMessage]);
-  }, [arriveMessage, currentChat]);
   
   useEffect(() => {
     // Only fetch messages when currentChat is defined
@@ -92,9 +99,8 @@ const Messenger = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Validate the new message
     if (newMessage === "" || newMessage === null) {
-      return; // Stops execution if newMessage is either an empty string or null
+      return; 
     }
   
     const message = {
@@ -107,13 +113,26 @@ const Messenger = () => {
       (member) => member !== user._id
     );
   
-    // Ensure currentChat and receiverId are valid
     if (!currentChat || !receiverId) {
       console.log("No active chat or receiver!");
-      return; // Exit the function without sending
+      return; 
     }
-  
-    // Emit the new message to the socket
+
+    const isOnlinerUser = onlineUsers.find((user) => user.userId === receiverId);
+    console.log("isOnlinerUser", isOnlinerUser);
+
+    if (!isOnlinerUser) {
+      const notification = {
+        title: `New message`, 
+        content: `You have a new message from ${user?.firstName} ${user?.lastName}`,
+        user: receiverId,
+        url: user?.image?.url,
+        type: "message",
+      }
+      dispatch(sendNotifications(notification , token))
+}
+
+
     socket.emit("sendMessage", {
       senderId: user._id,
       receiverId,
@@ -141,6 +160,7 @@ const Messenger = () => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
   return (
 <section className="flex flex-col h-screen bg-white">
 <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />

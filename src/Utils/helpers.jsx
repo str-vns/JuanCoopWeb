@@ -9,6 +9,7 @@ export const authenticated = (data, next) => {
             email: data.user.email,
             gender: data.user.gender,
             roles: data.user.roles,
+            image: data.user.image,
             wishlist: data.user.wishlist,
             tag: data.user.tag
         }));

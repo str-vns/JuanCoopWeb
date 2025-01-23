@@ -128,7 +128,8 @@ function App() {
       <div>
         {/* <Sidebar /> Uncomment if you need the Sidebar */}
         <Routes>
-          <Route path="/" element={<Homepage/>} />
+          <Route path="/" element={<RoleBaseRoute/>} />
+          <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/resetPassword/:id" element={<PasswordReset/>} />

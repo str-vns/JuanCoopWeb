@@ -33,14 +33,15 @@ const Conversation = ({ conversation, currentUser, onlineUsers }) => {
   }, [token, conversation, currentUser]);
 
   useEffect(() => {
-
    
-    if (friend && onlineUsers.some(user => user.userId === friend.user._id && user.isOnline)) {
+    if (friend && onlineUsers.some(user => user?.userId === friend?._id && user?.online)) {
       setIsOnline(true);
     } else {
       setIsOnline(false);
     }
   }, [friend, onlineUsers]);
+
+
 
   return (
     <div className="conversation border border-gray rounded-2xl relative">

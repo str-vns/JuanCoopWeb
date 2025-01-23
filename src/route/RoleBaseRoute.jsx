@@ -1,31 +1,49 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import Loader from '@components/layout/loader'; // Assuming you have a loader component
+import Loader from '@components/layout/loader'; 
 import { getCurrentUser } from '@utils/helpers';
 
 const RoleBaseRoute = () => {
-    const [loading, setLoading] = useState(getCurrentUser() === false && false )
-    const navigate = useNavigate()
-    const [error, setError] = useState('')
-    const [user, setUser] = useState(getCurrentUser())
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    console.log("User", user)
-    if (loading === false) {
-        // if (!user) {
-        //     return <Navigate to='/login' />
-        // }
-        if ( user.roles === 'Admin') {
-            return <Navigate to='/' />  
-        } else if (user.roles.includes('Customer') && user.roles.includes('Cooperative')) 
-            {
-            return <Navigate to='/coopdashboard' />;
+    const [loading, setLoading] = useState(true); 
+    const [user, setUser] = useState(null); 
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                setUser(currentUser);
+                setLoading(false);
+            } catch (err) {
+                console.error('Error fetching user:', err);
+                setError('Failed to fetch user data');
+                setLoading(false);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+    if (loading) {
+        return <Loader />;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>; 
+    }
+
+    if (user) {
+        if (user.roles === 'Admin') {
+            return <Navigate to="/" />;
+        } else if (user.roles.includes('Customer') && user.roles.includes('Cooperative')) {
+            return <Navigate to="/coopdashboard" />;
         } else {
             return <Navigate to="/home" />;
         }
-
-       
     }
-    return <Loader />;
+
+    return <Navigate to="/home" />;
 };
 
 export default RoleBaseRoute;

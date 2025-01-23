@@ -70,7 +70,7 @@ const FarmRegistration = () => {
     setBusinessPermit(null);
     setCorCDA(null);
     setOrgStructure(null);
-    navigate("/home");
+    navigate("/");
   }
 
    }
