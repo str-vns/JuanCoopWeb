@@ -1,0 +1,156 @@
+/* Ensure full viewport height and centering of content */
+.containerCoop {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 300px); /* Adjust width to not overlap with sidebar */
+  margin-left: 230px; /* Align next to the sidebar */
+  align-items: center;
+
+  min-height: 100vh;
+
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+/* Header */
+.headerCoop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.headerTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Tabs */
+.tabContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.tabButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  margin: 0 10px;
+}
+
+.tabButton:hover {
+  background-color: #f0f0f0;
+}
+
+.activeTab {
+  background-color: #007bff;
+}
+
+.tabText {
+  color: #007bff;
+}
+
+.activeTabText {
+  color: #fff;
+}
+
+/* Loading Spinner */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Empty State */
+.emptyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.emptyText {
+  font-size: 18px;
+  color: #555;
+}
+
+/* List Container */
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.userItem {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.userItem img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; /* Make the image circular */
+  object-fit: cover;
+  margin-right: 20px; /* Space between image and user details */
+}
+
+.userDetails {
+  flex-grow: 1;
+}
+
+.userName {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.userEmail,
+.userRole {
+  font-size: 16px;
+  color: #666;
+}
+
+.viewButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+}
+
+.viewButton:hover {
+  background-color: #0056b3;
+}

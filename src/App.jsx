@@ -51,11 +51,27 @@ import InventoryList from "./components/Cooperative/Inventory/InventoryList";
 import InventoryDetail from "./components/Cooperative/Inventory/InventoryDetail";
 import InventoryCreate from "@components/Cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "./Components/Cooperative/Inventory/InventoryUpdate";
-
+import Dashboard from "@components/Admin/Dashboard";
+import RankedProductsPage from "@components/Admin/rankProduct";
 import UserList from "./Components/Admin/User/UserList";
+
 import TypeList from "@components/Admin/Types/TypeList";
+import TypeCreate from "@components/Admin/Types/TypeCreate";
+import TypeUpdate from "@components/Admin/Types/TypeUpdate";
+
 import CategoryList from "./components/Admin/Categories/CategoryList";
 import BlogLists from "@components/Admin/Blogs/Bloglist";
+import BlogCreate from "@components/Admin/Blogs/BlogCreate";
+
+import DriverList from "@components/Admin/Drivers/Driverlist";
+import DriverDetails from "@components/Admin/Drivers/DriverDetails";
+import DriverNotApproved from "@components/Admin/Drivers/DriverNotApproved";
+
+import Cooplist from "@components/Admin/Coops/CoopList";
+import CoopDetails from "@components/Admin/Coops/CoopDetails";
+import CoopNotApproved from "./components/Admin/Coops/CoopNotApproved";
+
+import PostList from "@components/Admin/Post/Postlist";
 
 import PasswordReset from "@components/user/passwordReset";
 import EditProfile from "@components/user/EditProfile";
@@ -183,12 +199,30 @@ function App() {
 
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/barGraph" element={<RankedProductsPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/userlist" element={<UserList/>} />
+
           <Route path="/typelist" element={<TypeList/>} />
+          <Route path="/typecreate" element={<TypeCreate/>} />
+          <Route path="/typeupdate" element={<TypeUpdate/>} />
+
+          <Route path="/bloglists" element={<BlogLists/>} />
+          <Route path="/blogcreate" element={<BlogCreate/>} />
+    
+          <Route path="/driverlist" element={<DriverList/>} />
+          <Route path="/driverNot" element={<DriverNotApproved/>} />
+          <Route path="/driver-details/:id" element={<DriverDetails />} />
+        
+          <Route path="/cooplist" element={<Cooplist/>} />
+          <Route path="/coopNot" element={<CoopNotApproved/>} />
+          <Route path="/coop-details/:coopId" element={<CoopDetails />} />
+
+          <Route path="/postlist" element={<PostList/>} />
           <Route path="/bloglist" element={<BlogList/>} />
 
-        <Route path="/bloglists" element={<BlogLists/>} />
           <Route path="/categorylist" element={<CategoryList/>} />
+        
           
         </Routes>
       </div>

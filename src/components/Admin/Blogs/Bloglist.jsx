@@ -1,60 +1,54 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getBlog } from "@redux/Actions/blogActions";
-import Sidebar from "../sidebar";
-import BlogInfo from "../../Cooperative/Blog/BlogInfo";
+import Sidebar from "@components/Admin/sidebar";
 import "../../../assets/css/bloglists.css";
+import { getBlog, deleteBlog } from "@redux/Actions/blogActions";
 
 const BlogLists = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
   const dispatch = useDispatch();
-  const { loading, blogs, error } = useSelector((state) => state.allBlogs);
+  const navigate = useNavigate();
 
-  // Fetch blogs when the component loads
+  // Redux state
+  const { loading, blogs = [], error } = useSelector((state) => state.allBlogs);
+  const { success: deleteSuccess, error: deleteError } = useSelector(
+    (state) => state.deleteBlog
+  );
+
+  const [currentPage, setCurrentPage] = useState(1); // Current page
+  const itemsPerPage = 10; // Items per page
+
+  // Fetch blogs
   useEffect(() => {
     dispatch(getBlog());
   }, [dispatch]);
 
-  // Refresh blogs
-  const handleRefresh = useCallback(async () => {
-    setRefreshing(true);
-    try {
-      await dispatch(getBlog());
-    } catch (err) {
-      console.error("Error refreshing blogs:", err);
-    } finally {
-      setRefreshing(false);
+  // Handle success or error after delete
+  useEffect(() => {
+    if (deleteSuccess) {
+      dispatch(getBlog()); // Refresh blogs after delete
+      alert("Blog deleted successfully!");
     }
-  }, [dispatch]);
+    if (deleteError) {
+      alert("Error deleting blog: " + deleteError);
+    }
+  }, [deleteSuccess, deleteError, dispatch]);
 
-  // Handle page change
-  const handlePageChange = (page) => {
-    if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
-    // Update logic for pagination if required
+  const handleDelete = (blogId) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      dispatch(deleteBlog(blogId));
+    }
   };
 
-  // Open modal with selected post
-  const handleReadMoreClick = (post) => {
-    setSelectedPost(post);
-    setIsModalOpen(true);
-  };
+  // Pagination
+  const totalPages = Math.ceil(blogs.length / itemsPerPage);
+  const paginatedBlogs = blogs.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-  // Close modal
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedPost(null);
-  };
-
-  // Placeholder for delete functionality
-  const handleDelete = (id) => {
-    console.log(`Delete blog with ID: ${id}`);
-    // Add your delete logic here
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -64,7 +58,10 @@ const BlogLists = () => {
         <div className="flex-1 bg-white-100 p-6">
           <div className="blog-list-header">
             <h1 className="blog-title">Blog List</h1>
-            <button className="btn-primary" onClick={() => setIsModalOpen(true)}>
+            <button
+              className="btn-primary"
+              onClick={() => navigate("/blogcreate")}
+            >
               Add Blog
             </button>
           </div>
@@ -77,29 +74,32 @@ const BlogLists = () => {
           ) : (
             <div className="bg-white shadow rounded-lg p-4">
               {blogs.length === 0 ? (
-                <p className="loading-text">No Blogs available.</p>
+                <p className="loading-text">No blogs available.</p>
               ) : (
                 <>
                   <div className="blog-container">
                     <div className="blog-grid">
-                      {blogs.map((post) => (
+                      {paginatedBlogs.map((blog) => (
                         <div
-                          key={post._id}
+                          key={blog._id}
                           className="p-4 border-b flex justify-between items-center"
                         >
                           <span className="text-gray-800 font-medium">
-                            {post.title}
+                            {blog.title}
                           </span>
                           <div className="actions flex space-x-2">
                             <i
                               className="fa-regular fa-pen-to-square text-yellow-500 cursor-pointer"
                               title="Edit"
-                              onClick={() => console.log("Edit clicked", post)}
+                              onClick={() =>
+                                navigate("/blogupdate", { state: { blog } })
+                              }
                             ></i>
+
                             <i
                               className="fa-solid fa-trash text-red-500 cursor-pointer"
                               title="Delete"
-                              onClick={() => handleDelete(post._id)}
+                              onClick={() => handleDelete(blog._id)}
                             ></i>
                           </div>
                         </div>
@@ -143,13 +143,6 @@ const BlogLists = () => {
           )}
         </div>
       </div>
-      {isModalOpen && (
-        <BlogInfo
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          post={selectedPost}
-        />
-      )}
     </div>
   );
 };

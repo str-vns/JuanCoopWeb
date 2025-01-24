@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "@components/Admin/sidebar";
 import "../../../assets/css/typelist.css";
-import TypeAddUpdate from "./TypeAddUpdate";
 import { useDispatch, useSelector } from "react-redux";
 import { typeList, typeDelete } from "@redux/Actions/typeActions";
 
 const TypeList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Redux state
   const { loading, types = [], error } = useSelector((state) => state.types);
@@ -14,8 +15,6 @@ const TypeList = () => {
     (state) => state.typesDelete
   );
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editType, setEditType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const itemsPerPage = 10; // Items per page
 
@@ -33,15 +32,14 @@ const TypeList = () => {
     }
   }, [deleteSuccess, deleteError, dispatch]);
 
-  const openModal = (type = null) => {
-    setEditType(type);
-    setModalOpen(true);
-  };
-
   const handleDelete = (typeId) => {
     if (window.confirm("Are you sure you want to delete this type?")) {
       dispatch(typeDelete(typeId));
     }
+  };
+
+  const handleEdit = (type) => {
+    navigate("/typeupdate", { state: { type } }); // Navigate to TypeUpdate with the type object
   };
 
   // Calculate pagination
@@ -61,8 +59,11 @@ const TypeList = () => {
       <div className="flex flex-col w-full">
         <div className="flex-1 bg-white-100 p-6">
           <div className="type-list-header">
-            <h1 className="type-title ">Type List</h1>
-            <button className="btn-primary" onClick={() => openModal()}>
+            <h1 className="type-title">Type List</h1>
+            <button
+              className="btn-primary"
+              onClick={() => navigate("/typecreate")}
+            >
               Add Type
             </button>
           </div>
@@ -89,20 +90,17 @@ const TypeList = () => {
                             {type.typeName}
                           </span>
                           <div className="actions flex space-x-2">
-                            <div className="actions flex space-x-2">
-                              <i
-                                className="fa-regular fa-pen-to-square text-yellow-500 cursor-pointer"
-                                title="Edit"
-                                onClick={() =>
-                                  console.log("Edit clicked", type)
-                                }
-                              ></i>
-                              <i
-                                className="fa-solid fa-trash text-red-500 cursor-pointer"
-                                title="Delete"
-                                onClick={() => handleDelete(type._id)}
-                              ></i>
-                            </div>
+                            <i
+                              className="fa-regular fa-pen-to-square text-yellow-500 cursor-pointer"
+                              title="Edit"
+                              onClick={() => navigate("/typeupdate")}
+                            ></i>
+
+                            <i
+                              className="fa-solid fa-trash text-red-500 cursor-pointer"
+                              title="Delete"
+                              onClick={() => handleDelete(type._id)}
+                            ></i>
                           </div>
                         </div>
                       ))}
@@ -145,14 +143,6 @@ const TypeList = () => {
           )}
         </div>
       </div>
-      {modalOpen && (
-        <TypeAddUpdate
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          type={editType}
-          refreshTypes={() => dispatch(typeList())}
-        />
-      )}
     </div>
   );
 };

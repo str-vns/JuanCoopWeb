@@ -1,0 +1,160 @@
+/* General styles */
+.coopDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    width: calc(100% - 300px); 
+    margin-left: 230px; 
+
+  }
+  
+  /* Loader container */
+  .loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .driverCardTitle {
+    font-size: 2rem; 
+    font-weight: bold; 
+    text-align: center; 
+    color: #333333; 
+    margin: 0.5rem 0; 
+    letter-spacing: 1px; 
+    text-transform: capitalize; 
+    text-align: left;
+  }
+  
+  /* Coop main container */
+  .coopContainer {
+    display: flex;
+    gap: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    width: 80%;
+  }
+  
+  .coopImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .coopDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .fileStatus {
+    color: red;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  .coopName {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .farmName,
+  .coopEmail,
+  .address,
+  .fileLabel {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
+  .status {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .status.notApproved {
+    color: #dc3545;
+  }
+  
+  .status.approved {
+    color: #28a745;
+  }
+  
+  /* File section */
+  .fileSection {
+    margin-top: 20px;
+    width: 80%;
+  }
+  
+  .fileContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .fileButton {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .fileButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Action buttons */
+  .actionButtons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .approveButton,
+  .declineButton {
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .approveButton {
+    background-color: #28a745;
+  }
+  
+  .approveButton:hover {
+    background-color: #218838;
+  }
+  
+  .declineButton {
+    background-color: #dc3545;
+  }
+  
+  .declineButton:hover {
+    background-color: #c82333;
+  }
+  
+  /* Spinner */
+  .spinner-border {
+    margin-left: 8px;
+  }
+  
