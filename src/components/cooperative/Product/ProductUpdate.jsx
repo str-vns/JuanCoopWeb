@@ -1,207 +1,188 @@
 import React, { useState, useEffect } from "react";
-import "../../../assets/css/addupdateproduct.css";
+import Select from "react-select";
+import "../../../assets/css/productcreate.css";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryList } from "../../../redux/Actions/categoryActions";
 import { typeList } from "../../../redux/Actions/typeActions";
 import { updateCoopProducts } from "../../../redux/Actions/productActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
 
-const ProductUpdate = ({ props, show, onClose, product }) => {
-  const singleProduct = props.route.params.item;
+const ProductUpdate = ({ show, onClose, product }) => {
   const dispatch = useDispatch();
+
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
-  const [stock, setStock] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState([]);
-  const [newImage, setNewImage] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  
+  const [imagesPreview, setImagesPreview] = useState([]);
+  const [images, setImages] = useState([]);
+
   const { categories } = useSelector((state) => state.categories);
   const { types } = useSelector((state) => state.types);
 
   const token = getToken();
   const currentUser = getCurrentUser();
   const coopId = currentUser?._id;
-  const productId = singleProduct?._id;
 
   useEffect(() => {
-    const loadProductData = () => {
-      const matchingCats = categories.filter((cat) => product.category.includes(cat._id));
-      setSelectedCategories(matchingCats.map((cat) => ({ id: cat._id, name: cat.categoryName })));
-
-      const matchingTypes = types.filter((type) => product.type.includes(type._id));
-      setSelectedTypes(matchingTypes.map((type) => ({ id: type._id, name: type.typeName })));
-
-      const imageURLs = product.image.map((imageObj) => imageObj.url);
-      setImage(imageURLs);
-    };
-
     if (product) {
-      loadProductData();
+      setProductName(product.productName || "");
+      setDescription(product.description || "");
+      setSelectedCategories(
+        product.category?.map((cat) => ({
+          value: cat._id,
+          label: cat.categoryName,
+        })) || []
+      );
+      setSelectedTypes(
+        product.type?.map((typ) => ({
+          value: typ._id,
+          label: typ.typeName,
+        })) || []
+      );
+      setImagesPreview(product.image || []);
     }
-    setProductName(product.productName);
-    setDescription(product.description);
-  }, [product, categories, types]);
-
-  useEffect(() => {
     dispatch(categoryList());
     dispatch(typeList());
-  }, [dispatch]);
+  }, [dispatch, product]);
 
-  const pickImage = (e) => {
-    const files = Array.from(e.target.files);
-    const newImages = [];
-
-    files.forEach((file) => {
-      const fileURL = URL.createObjectURL(file);
-      if (!image.includes(fileURL)) {
-        newImages.push(fileURL);
-      }
-    });
-
-    setImage((prevImages) => [...prevImages, ...newImages]);
-    setNewImage(newImages);
-  };
-
-  const deleteImage = (index) => {
-    setImage((prevImages) => prevImages.filter((_, i) => i !== index));
-    dispatch(imageDel(productId, imageId));
-  };
-
-  const handleCategoryChange = (categoryId) => {
-    setSelectedCategories((prev) =>
-      prev.some((cat) => cat.id === categoryId)
-        ? prev.filter((cat) => cat.id !== categoryId)
-        : [...prev, { id: categoryId, name: categories.find((cat) => cat._id === categoryId)?.categoryName }]
-    );
-  };
-
-  const handleTypeChange = (typeId) => {
-    setSelectedTypes((prev) =>
-      prev.some((type) => type.id === typeId)
-        ? prev.filter((type) => type.id !== typeId)
-        : [...prev, { id: typeId, name: types.find((type) => type._id === typeId)?.typeName }]
-    );
-  };
-
-  const handleSaveProduct = (e) => {
+  const handleUpdateProduct = (e) => {
     e.preventDefault();
 
-    if (!productName || !description || !image.length) {
-      alert("Please fill in all required fields.");
+    if (!productName || !description || (!imagesPreview.length && !images.length)) {
+      alert("Please fill all the fields");
       return;
     }
 
-    const productItem = {
+    const updatedData = {
       productName,
       description,
-      stock: parseInt(stock),
-      category: selectedCategories.map((cat) => cat.id),
-      type: selectedTypes.map((type) => type.id),
-      pricing: price,
-      image: newImage,
+      category: selectedCategories.map((category) => category.value),
+      type: selectedTypes.map((type) => type.value),
+      image: images.length > 0 ? images : product.image,
+      user: coopId,
     };
 
-    dispatch(updateCoopProducts(productId, productItem, token));
+    console.log("Updating product:", updatedData);
+    dispatch(updateCoopProducts(product._id, updatedData, token));
     onClose();
   };
+
+  const handleCategoryChange = (selectedOptions) => {
+    setSelectedCategories(selectedOptions);
+  };
+
+  const handleTypeChange = (selectedOptions) => {
+    setSelectedTypes(selectedOptions);
+  };
+
+  const onChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImagesPreview([]);
+    setImages([]);
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((prev) => [...prev, reader.result]);
+          setImages((prev) => [...prev, file]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const categoryOptions = categories.map((category) => ({
+    value: category._id,
+    label: category.categoryName,
+  }));
+
+  const typeOptions = types.map((type) => ({
+    value: type._id,
+    label: type.typeName,
+  }));
 
   return (
     show && (
       <div className="product-modal-overlay">
         <div className="product-modal-container">
           <h2>Update Product</h2>
-          <form onSubmit={handleSaveProduct}>
-            <div className="form-group">
+          <form onSubmit={handleUpdateProduct}>
+            <div className="product-form-group">
               <label>Product Name:</label>
               <input
                 type="text"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
-                placeholder="Enter product name"
                 required
+                placeholder="Enter product name"
               />
             </div>
-            <div className="form-group">
+            <div className="product-form-group">
               <label>Description:</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter product description"
                 required
+                placeholder="Enter product description"
               />
             </div>
-            <div className="form-group">
-              <label>Stock:</label>
+            <div className="product-form-group">
+              <label>Select Categories:</label>
+              <Select
+                isMulti
+                value={selectedCategories}
+                onChange={handleCategoryChange}
+                options={categoryOptions}
+                placeholder="Select Categories"
+              />
+            </div>
+            <div className="product-form-group">
+              <label>Select Types:</label>
+              <Select
+                isMulti
+                value={selectedTypes}
+                onChange={handleTypeChange}
+                options={typeOptions}
+                placeholder="Select Types"
+              />
+            </div>
+            <div className="product-form-group">
               <input
-                type="number"
-                value={stock}
-                onChange={(e) => setStock(e.target.value)}
-                placeholder="Enter stock quantity"
+                type="file"
+                name="images"
+                className="custom-file-input hidden"
+                id="customFile"
+                accept="image/*"
+                onChange={onChange}
+                multiple
               />
-            </div>
-            <div className="form-group">
-              <label>Price:</label>
-              <input
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                placeholder="Enter price"
-              />
-            </div>
-            <div className="form-group">
-              <label>Categories:</label>
-              <div className="checkbox-group">
-                {categories.map((cat) => (
-                  <label key={cat._id}>
-                    <input
-                      type="checkbox"
-                      checked={selectedCategories.some((selected) => selected.id === cat._id)}
-                      onChange={() => handleCategoryChange(cat._id)}
-                    />
-                    {cat.categoryName}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="form-group">
-              <label>Types:</label>
-              <div className="checkbox-group">
-                {types.map((type) => (
-                  <label key={type._id}>
-                    <input
-                      type="checkbox"
-                      checked={selectedTypes.some((selected) => selected.id === type._id)}
-                      onChange={() => handleTypeChange(type._id)}
-                    />
-                    {type.typeName}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="form-group">
-              <label>Product Images:</label>
-              <input type="file" onChange={pickImage} multiple />
+              <label
+                htmlFor="customFile"
+                className="px-4 py-2 border-2 border-black rounded-md cursor-pointer bg-white text-black hover:bg-black hover:text-white"
+              >
+                Choose Images
+              </label>
               <div className="image-preview">
-                {image.map((img, index) => (
-                  <div key={index} className="image-item">
-                    <img src={img} alt={`Product Image ${index}`} />
-                    <button type="button" onClick={() => deleteImage(index)}>
-                      Remove
-                    </button>
-                  </div>
+                {imagesPreview.map((img, index) => (
+                  <img
+                    src={img}
+                    key={index}
+                    alt={`Preview ${index}`}
+                    className="my-3 mr-2"
+                    width="55"
+                    height="52"
+                  />
                 ))}
               </div>
             </div>
-            <button type="submit" className="btn btn-primary">
-              Save
-            </button>
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
-              Cancel
+            <button type="submit" className="product-btn-submit-product">
+              Update Product
             </button>
           </form>
+          <button className="product-btn-close-product" onClick={onClose}>
+            Close
+          </button>
         </div>
       </div>
     )

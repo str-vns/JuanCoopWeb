@@ -4,7 +4,7 @@ import {
   getCoopProducts,
   createCoopProducts,
   updateCoopProducts,
-  deleteProducts,
+  soflDelProducts,
 } from "../../../redux/Actions/productActions";
 import ProductUpdate from "./ProductUpdate";
 import Header from "../header";
@@ -13,8 +13,8 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import axios from "axios";
 import baseURL from "@Commons/baseUrl";
-import AddUpdateProduct from "./AddUpdateProduct";
-import "../css/productlist.css";
+import ProductCreate from "./ProductCreate";
+import "../../../assets/css/productlist.css";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -64,13 +64,15 @@ const ProductList = () => {
   const handleDelete = (productId) => {
     const confirm = window.confirm("Are you sure you want to delete this product?");
     if (confirm) {
-      dispatch(deleteProducts(productId));
+      dispatch(soflDelProducts(productId));
     }
   };
 
-  const filteredProducts = coopProducts?.filter((product) =>
+  const filteredProducts = coopProducts
+  ?.filter((product) =>
     product.productName?.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  )
+  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];  // Sort by most recent first
 
   const currentProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
@@ -83,7 +85,7 @@ const ProductList = () => {
   return (
     <div className="product-list-container">
       <Sidebar />
-      <div className="product-list-containertwo flex-1 flex flex-col">
+      <div className="product-list-containertwo">
         <Header />
         <main className="p-6">
           <div className="product-list-header">
@@ -144,9 +146,12 @@ const ProductList = () => {
           </div>
 
           {isAddModalOpen && (
-            <AddUpdateProduct
+            <ProductCreate
               show={isAddModalOpen}
-              onClose={() => setIsAddModalOpen(false)}
+              onClose={() => {
+                setIsAddModalOpen(false);
+                window.location.reload();
+              }}
               onSubmit={handleAddProduct}
             />
           )}

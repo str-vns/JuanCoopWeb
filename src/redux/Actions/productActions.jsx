@@ -42,6 +42,7 @@ import axios from 'axios';
 import baseURL from '@Commons/baseUrl';
 import { toast } from 'react-toastify';
 
+
 export const getProduct = () => async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
@@ -95,6 +96,7 @@ export const getProduct = () => async (dispatch) => {
       dispatch({ type: CREATE_PRODUCT_REQUEST });
   
       const formData = new FormData();
+
       formData.append("productName", product?.productName);
       formData.append("description", product?.description);
       formData.append("stock", product?.stock);
@@ -108,11 +110,8 @@ export const getProduct = () => async (dispatch) => {
         formData.append("type", type);
       });
       product?.image.forEach((image) => {
-        formData.append("image", {
-          uri: image.uri,
-          type: mime.getType(image.uri) || "image/jpeg",
-          name: image.uri.split("/").pop(),
-        });
+        formData.append("image", image);
+        console.log("image", image);
       });
   
       const config = {
@@ -123,6 +122,7 @@ export const getProduct = () => async (dispatch) => {
       };
   
       const { data } = await axios.post(`${baseURL}products`, formData, config);
+      
       dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data.details });
     } catch (error) {
       dispatch({
@@ -200,6 +200,88 @@ export const getProduct = () => async (dispatch) => {
     } catch (error) {
       dispatch({
         type: DELETE_PRODUCT_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  }
+
+  export const soflDelProducts = (productId) => async (dispatch) => {
+    try {
+      dispatch({ type: SOFTDELETE_PRODUCT_REQUEST });
+  
+      await axios.patch(`${baseURL}products/softdel/${productId}`);
+      dispatch({
+        type: SOFTDELETE_PRODUCT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: SOFTDELETE_PRODUCT_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  }
+
+  export const restoreProducts = (productId) => async (dispatch) => {
+    try {
+      dispatch({ type: RESTORE_PRODUCT_REQUEST });
+  
+      await axios.patch(`${baseURL}restore/products/${productId}`);
+      dispatch({
+        type: RESTORE_PRODUCT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: RESTORE_PRODUCT_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  }
+
+  export const activeProduct = (productId) => async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_ACTIVE_REQUEST });
+  
+      await axios.patch(`${baseURL}products/active/${productId}`);
+      dispatch({
+        type: PRODUCT_ACTIVE_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_ACTIVE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  }
+
+  export const archiveProducts = (coopId) => async (dispatch) => {
+    try {
+      dispatch({ type: ARCHIVE_PRODUCT_REQUEST });
+  
+      const {data} = await axios.get(`${baseURL}products/archive/${coopId}`);
+      dispatch({
+        type: ARCHIVE_PRODUCT_SUCCESS,
+        payload: data.details,
+      });
+    } catch (error) {
+      dispatch({
+        type: ARCHIVE_PRODUCT_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  }
+  
+  export const getSingleProduct = (productId) => async (dispatch) => {
+    try {
+      dispatch({ type: GET_SINGLE_PRODUCT_REQUEST });
+  
+      const { data } = await axios.get(`${baseURL}products/${productId}`);
+      dispatch({
+        type: GET_SINGLE_PRODUCT_SUCCESS,
+        payload: data.details,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_SINGLE_PRODUCT_FAIL,
         payload: error.response.data.message,
       });
     }
