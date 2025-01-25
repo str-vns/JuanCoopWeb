@@ -1,48 +1,40 @@
-html, body, #root {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100vm;
-    background-color: #ffffff;
-  }
-
 .inventory-list-container {
-    background-color: #ffffff;
-    padding-left: 30px;
-      /* padding: 20px 40px; */
-      min-height: 100vh;
-      /* box-sizing: border-box; */
-      margin: 0; /* Remove extra space */
-    overflow-x: hidden; /* Handle horizontal scrollbar */
-    overflow-y: auto; /* Handle vertical scrollbar */
-    width: 100%; /* Ensure it takes full width */
-    box-sizing: border-box; 
+  padding-left: 50px;
+  height: 100vh;
+  width: 1480px;
   }
   
   .inventory-list-content {
     background-color: #ffffff;
-  /* padding-left: 90px; */
-    /* padding: 20px 40px; */
-    min-height: 100vh;
     box-sizing: border-box;
     margin: 0; /* Remove extra space */
-  overflow-x: hidden; /* Handle horizontal scrollbar */
-  overflow-y: auto; /* Handle vertical scrollbar */
-  /* width: 100%; Ensure it takes full width */
-  box-sizing: border-box; 
+    overflow-x: hidden; /* Handle horizontal scrollbar */
+    overflow-y: auto; /* Handle vertical scrollbar */
+    /* width: 100%; Ensure it takes full width */
+    box-sizing: border-box; 
   }
   
   .inventory-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .inventory-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #343a40;
+  }
+
+  .inventory-table-container {
+    overflow-x: auto;
   }
   
   .inventory-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 0.5rem;
   }
   
   .inventory-table th,

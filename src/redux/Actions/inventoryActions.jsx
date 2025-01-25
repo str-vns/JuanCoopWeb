@@ -44,7 +44,10 @@ import {
     } catch (error) {
       dispatch({
         type: INVENTORY_CREATE_FAIL,
-        payload: error.response?.data.message || error.message,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
       });
     }
   };

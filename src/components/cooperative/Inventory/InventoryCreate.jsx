@@ -5,8 +5,8 @@ import { createInventory } from "@redux/Actions/inventoryActions";
 import { getToken } from "@utils/helpers";
 import "../../../assets/css/inventorycreate.css";
 
-const InventoryCreate = ({ onClose }) => {
-  const { itemId } = useParams(); // Get itemId from route parameters
+const InventoryCreate = ({ onClose, productId }) => {
+  // const { item } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const InventoryCreate = ({ onClose }) => {
     }
   }, [Inverror]);
 
-  const handleCreateInventory = () => {
+  const handleCreateInventory = (item) => {
     if (!unitName || !unitPrice || !quantity) {
       setError("Please fill all fields.");
     } else if (quantity <= 0) {
@@ -37,19 +37,19 @@ const InventoryCreate = ({ onClose }) => {
     } else if (unitPrice > 20000) {
       setError("Price must not exceed ₱20,000.");
     } else {
-      const inventory = {
+      const data = {
         unitName,
         metricUnit,
         price: unitPrice,
         quantity,
-        productId: itemId, // Use the itemId passed via route
+        productId,
       };
-      console.log(inventory);
-      dispatch(createInventory(inventory, token));
-      navigate(`/inventorydetail`);
+      dispatch(createInventory(data, token));
+      navigate(`/inventorydetail`, { state: { Inv: { _id: productId } } });
     }
 
     setTimeout(() => setError(""), 3000);
+    onClose();
   };
 
   return (

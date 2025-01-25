@@ -8,6 +8,7 @@ import Header from "../header";
 import Sidebar from "../sidebar";
 import "../../../assets/css/inventorylist.css";
 import InventoryCreate from "./InventoryCreate";
+import InventoryUpdate from "./InventoryUpdate";
 
 const InventoryDetail = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const InventoryDetail = () => {
   const token = getToken();
   const { Invloading, Invsuccess } = useSelector((state) => state.sinvent);
   const [isInventoryCreateOpen, setInventoryCreateOpen] = useState(false);
+  const [isInventoryUpdateOpen, setInventoryUpdateOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
@@ -58,12 +60,10 @@ const InventoryDetail = () => {
     }
   };
 
-  const handleCreateProduct = () => {
-    navigate(`/inventorycreate`);
-  };
-
-  const handleCreateInventory = (item) => 
+  const handleCreateInventory = () => {
     setInventoryCreateOpen(true);
+    setSelectedItem(InvItem); 
+  };  
 
   return (
     <div className="inventory-list-container">
@@ -126,10 +126,17 @@ const InventoryDetail = () => {
           )}
           {isInventoryCreateOpen && (
             <InventoryCreate
-                onClose={() => setInventoryCreateOpen(false)}
-                onUpdated={handleRefresh}
+              onClose={() => setInventoryCreateOpen(false)}
+              onUpdated={handleRefresh}
+              productId={selectedItem?._id}
             />
-            )}
+          )}
+          {isInventoryUpdateOpen && (
+            <InventoryUpdate
+              onClose={() => setInventoryUpdateOpen(false)}
+              item={selectedItem}
+            />
+          )}
 
         </div>
       </div>

@@ -5,21 +5,21 @@ import { updateInventory } from "@redux/Actions/inventoryActions";
 import "../../../assets/css/inventoryupdate.css";
 import { getToken } from "@utils/helpers";
 
-const InventoryUpdate = ({ onClose }) => {
+const InventoryUpdate = ({ onClose, item }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = getToken();
-  const { state } = useLocation(); // Access the state passed via navigate
-  const { Invloading, Inverror } = useSelector((state) => state.invent);
 
-  // Access the item from the state object
-  const item = state?.item;
+  const location = useLocation();
+  const InvItem = location.state?.Inv;
+  const { Invloading, Inverror } = useSelector((state) => state.invent);
 
   const [unitName, setUnitName] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [metricUnit, setMetricUnit] = useState("");
   const [errors, setErrors] = useState("");
+
 
   // Ensure the item is present before setting state values
   useEffect(() => {
@@ -32,7 +32,8 @@ const InventoryUpdate = ({ onClose }) => {
     }
   }, [item]);
 
-  const handleUpdateInventory = () => {
+  const handleUpdateInventory = (item, inventoryId) => {
+
     if (!unitName || !unitPrice || !quantity) {
       setErrors("Please fill all fields");
     } else if (quantity <= 0) {
@@ -49,10 +50,10 @@ const InventoryUpdate = ({ onClose }) => {
         metricUnit,
         price: unitPrice,
         quantity,
-        productId: item._id,
+        productId: InvItem._id
       };
 
-      dispatch(updateInventory(inventory, item._id, token));
+      dispatch(updateInventory(inventory, inventoryId, token));
       navigate("/inventorylist");
     }
 
@@ -97,7 +98,7 @@ const InventoryUpdate = ({ onClose }) => {
           />
           {errors && <p className="inv-update-error">{errors}</p>}
         </form>
-        <button disabled={Invloading} onClick={handleUpdateInventory}>
+        <button disabled={Invloading} onClick={() => handleUpdateInventory(item, item._id)}>
           {Invloading ? "Updating..." : "Update"}
         </button>
         <button onClick={onClose}>Cancel</button>

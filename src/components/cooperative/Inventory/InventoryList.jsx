@@ -40,60 +40,64 @@ const InventoryList = () => {
   }, [dispatch, coopId]);
 
   const handleViewDetails = (item) => {
-    navigate("/inventorydetail", { state: { Inv: item } }); // Pass item to InventoryDetail
+    navigate("/inventorydetail", { state: { Inv: item } });
   };
 
   return (
     <div className="inventory-list-container">
       <Sidebar />
-      <div className="inventory-list-content flex-1 flex flex-col">
+      <div className="inventory-list-containertwo">
         <Header />
-        <div className="inventory-header">
-          <h1>Product Inventory List</h1>
-          <button onClick={onRefresh} className="refresh-button">
-            {refreshing ? "Refreshing..." : "Refresh"}
-          </button>
-        </div>
-        {loading ? (
-          <div className="loading-spinner">Loading...</div>
-        ) : error ? (
-          <div className="error-message">{error}</div>
-        ) : (
-          <table className="inventory-table">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {coopProducts?.map((item) => (
-                <tr key={item?._id}>
-                  <td>
-                    <img
-                      src={item?.image[0]?.url || "https://via.placeholder.com/150"}
-                      alt={item?.productName}
-                      className="inventory-image"
-                      style={{ width: "50px", height: "50px" }}
-                    />
-                  </td>
-                  <td>{item?.productName || "Unnamed Product"}</td>
-                  <td>{item?.description || "No description available."}</td>
-                  <td>
-                    <button
-                      className="inventory-view-button"
-                      onClick={() => handleViewDetails(item)}
-                    >
-                      View Details
-                    </button>
-                  </td>
+        <main className="p-6">
+          <div className="inventory-header">
+            <h1>Product Inventory List</h1>
+          </div>
+          {loading ? (
+            <div className="loading-spinner">Loading...</div>
+          ) : error ? (
+            <div className="error-message">{error}</div>
+          ) : (
+            <div className="inventory-table-container">
+              <table className="inventory-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {(coopProducts || [])
+                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by newest first
+                  .map((item) => (
+                    <tr key={item?._id}>
+                      <td>
+                        <img
+                          src={item?.image[0]?.url || "https://via.placeholder.com/150"}
+                          alt={item?.productName}
+                          className="inventory-image"
+                          style={{ width: "50px", height: "50px" }}
+                        />
+                      </td>
+                      <td>{item?.productName || "Unnamed Product"}</td>
+                      <td>{item?.description || "No description available."}</td>
+                      <td>
+                        <button
+                          className="inventory-view-button"
+                          onClick={() => handleViewDetails(item)}
+                        >
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+
+            </table>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
