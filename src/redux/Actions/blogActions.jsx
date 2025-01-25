@@ -73,29 +73,26 @@ export const getBlogById = (id) => async (dispatch) => {
 export const createBlog = (blogData, token) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_BLOG_REQUEST });
-  
+
     const config = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     };
-  
+
     const { data } = await axios.post(`${baseURL}blog`, blogData, config);
-    console.log("Response Data:", data);  // Log the response for debugging
-  
+
     dispatch({
       type: CREATE_BLOG_SUCCESS,
       payload: data.details,
     });
   } catch (error) {
-    console.error("Error creating blog:", error.response ? error.response : error);
     dispatch({
       type: CREATE_BLOG_FAIL,
-      payload: error.response ? error.response.data.message : error.message,
+      payload: error.response.data.message,
     });
   }
-  
 };
 
 // Update a blog
@@ -163,6 +160,10 @@ export const deleteBlog = (blogId, token) => async (dispatch) => {
   }
 };
 
+
+
+
+// Clear Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,

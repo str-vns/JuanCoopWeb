@@ -40,6 +40,10 @@ const BlogLists = () => {
     }
   };
 
+  const handleEdit = (blog) => {
+    navigate(`/blogupdate/${blog._id}`, { state: { blog } }); 
+  };
+  
   // Pagination
   const totalPages = Math.ceil(blogs.length / itemsPerPage);
   const paginatedBlogs = blogs.slice(
@@ -91,9 +95,8 @@ const BlogLists = () => {
                             <i
                               className="fa-regular fa-pen-to-square text-yellow-500 cursor-pointer"
                               title="Edit"
-                              onClick={() =>
-                                navigate("/blogupdate", { state: { blog } })
-                              }
+                              onClick={() => handleEdit(blog)}
+                              
                             ></i>
 
                             <i

@@ -60,8 +60,10 @@ import TypeCreate from "@components/Admin/Types/TypeCreate";
 import TypeUpdate from "@components/Admin/Types/TypeUpdate";
 
 import CategoryList from "./components/Admin/Categories/CategoryList";
+
 import BlogLists from "@components/Admin/Blogs/Bloglist";
 import BlogCreate from "@components/Admin/Blogs/BlogCreate";
+import BlogUpdate from "@components/Admin/Blogs/BlogUpdate";
 
 import DriverList from "@components/Admin/Drivers/Driverlist";
 import DriverDetails from "@components/Admin/Drivers/DriverDetails";
@@ -211,7 +213,8 @@ function App() {
 
           <Route path="/bloglists" element={<BlogLists/>} />
           <Route path="/blogcreate" element={<BlogCreate/>} />
-    
+          <Route path="/blogupdate/:id" element={<BlogUpdate/>} />
+
           <Route path="/driverlist" element={<DriverList/>} />
           <Route path="/driverNot" element={<DriverNotApproved/>} />
           <Route path="/driver-details/:id" element={<DriverDetails />} />
@@ -224,6 +227,7 @@ function App() {
           <Route path="/bloglist" element={<BlogList/>} />
 
           <Route path="/categorylist" element={<CategoryList/>} />
+          
         
           
         </Routes>

@@ -6,7 +6,7 @@ import AuthGlobal from "@redux/Store/AuthGlobal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
-import Sidebar from "./sidebar";
+import Sidebar from "../../components/layout/sidebar";
 
 const Dashboard = () => {
   const dispatch = useDispatch();

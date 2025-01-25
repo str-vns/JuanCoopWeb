@@ -1,111 +1,114 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { createBlog } from "@redux/Actions/blogActions";
-import AuthGlobal from "@redux/Store/AuthGlobal";
 import Sidebar from "@components/Admin/sidebar";
+import { getToken, getCurrentUser } from "@utils/helpers"; 
 
 const BlogCreate = () => {
-    const [title, setTitle] = useState("");
-     const [content, setContent] = useState("");
-     const [link, setLink] = useState("");
-     const [token, setToken] = useState("");
-
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [link, setLink] = useState("");
+  const [token, setToken] = useState("");
+  
+  const currentUser = getCurrentUser(); // Get the current user using the helper function
+  const storedToken = getToken(); // Get the token using the helper function
+  const userId = currentUser?._id; // Extract user ID from the currentUser
+  
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
-  const context = useContext(AuthGlobal);
+  const navigate = useNavigate();
 
-  // Accessing state from Redux store
   const { loading, error, success } = useSelector(
-    (state) => state.typesCreate || {}
+    (state) => state.createBlog || {}
   );
 
   useEffect(() => {
-    // Fetch the token from localStorage for web
-    const fetchToken = () => {
-      try {
-        const jwt = localStorage.getItem("jwt");
-        if (jwt) setToken(jwt);
-      } catch (err) {
-        console.error("Error fetching token:", err);
-      }
-    };
-    fetchToken();
-  }, []);
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      console.error("Token not found in localStorage.");
+    }
+  }, [storedToken]);
 
   useEffect(() => {
-    // Handle success or error after the dispatch
     if (success) {
       alert("Blog created successfully!");
       setTitle("");
       setContent("");
       setLink("");
-      navigate("/bloglists"); // Redirect to TypeList page
+      navigate("/bloglists");
     }
     if (error) {
-      alert(error || "Failed to create type. Please try again.");
+      alert(error || "Failed to create blog. Please try again.");
     }
   }, [success, error, navigate]);
 
   const handleCreateBlog = () => {
-    if (!title || !content || !link) {
-        alert("All fields are required!");
+    if (!userId) {
+        alert("User is not defined. Please log in again.");
         return;
-      }
-  
+    }
 
     const blogData = {
         title,
         content,
         link,
-      user: context?.stateUser?.userProfile?._id,
+        user: userId,
     };
 
-    if (!token) {
-      alert("Error: User is not authenticated. Please log in.");
-      return;
-    }
+    console.log("Creating blog with data:", blogData);
 
-    dispatch(createBlog(blogData, token));
+    dispatch(createBlog(blogData, token))
+        .then(() => {
+            alert("Blog created successfully!");
+            setTitle("");
+            setContent("");
+            setLink("");
+            navigate("/bloglists");
+        })
+        .catch((error) => {
+            console.error("Error creating blog:", error);
+            alert("Error creating blog. Please try again.");
+        });
   };
 
   return (
     <div style={styles.container}>
       <Sidebar />
-      
+
       <button onClick={() => navigate("/bloglists")} style={styles.backButton}>
-        <span style={{ fontSize: "24px" }}></span>
+        <span style={{ fontSize: "24px" }}>Back</span>
       </button>
 
       <h1 style={styles.title}>Create Blog</h1>
 
       <input
-            style={styles.input}
-            type="text"
-            placeholder="Blog Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <textarea
-            style={{ ...styles.input, ...styles.textArea }}
-            placeholder="Blog Content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <input
-            style={styles.input}
-            type="url"
-            placeholder="Link (e.g., https://example.com)"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
+        style={styles.input}
+        type="text"
+        placeholder="Blog Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea
+        style={{ ...styles.input, ...styles.textArea }}
+        placeholder="Blog Content"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+      <input
+        style={styles.input}
+        type="url"
+        placeholder="Link (e.g., https://example.com)"
+        value={link}
+        onChange={(e) => setLink(e.target.value)}
+      />
 
       <button
         style={styles.button}
         onClick={handleCreateBlog}
         disabled={loading}
       >
-        {loading ? "Creating..." : "Create Type"}
+        {loading ? "Creating..." : "Create Blog"}
       </button>
 
       {error && <p style={styles.errorText}>{error}</p>}

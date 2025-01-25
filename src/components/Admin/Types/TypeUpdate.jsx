@@ -7,7 +7,7 @@ import Sidebar from "@components/Admin/sidebar";
 const TypeUpdate = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const singleType = location.state?.type; // Corrected from 'types' to 'type'
+  const singleType = location.state?.type; 
   const dispatch = useDispatch();
 
   const [typeName, setTypeName] = useState(singleType?.typeName || "");
