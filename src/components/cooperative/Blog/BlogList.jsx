@@ -19,20 +19,6 @@ const BlogList = () => {
     dispatch(getBlog());
   }, [dispatch]);
 
-  // Refresh blogs
-  const handleRefresh = useCallback(async () => {
-    setRefreshing(true);
-    try {
-      await dispatch(getBlog());
-    } catch (err) {
-      console.error("Error refreshing blogs:", err);
-    } finally {
-      setRefreshing(false);
-    }
-  }, [dispatch]);
-
-  // const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
   const handleReadMoreClick = (post) => {
     setSelectedPost(post);
     setIsModalOpen(true);
@@ -48,18 +34,9 @@ const BlogList = () => {
       <Sidebar/>
       <div className="flex flex-col w-full">
         <Header />
-        <div className="flex-1 bg-gray-50 p-6">
+        <main className="p-6">
           <div className="content">
             <h1 className="title">Blog Posts</h1>
-
-            {/* Refresh Button */}
-            {/* <button
-              onClick={handleRefresh}
-              className="refresh-btn"
-              disabled={refreshing || loading}
-            >
-              {refreshing || loading ? "Refreshing..." : "Refresh Blogs"}
-            </button> */}
 
             {loading ? (
               <div className="loading">Loading...</div>
@@ -98,7 +75,7 @@ const BlogList = () => {
               </div>
             )}
           </div>
-        </div>
+        </main>
       </div>
 
       {/* Modal */}
