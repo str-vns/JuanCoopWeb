@@ -2,92 +2,63 @@ import React, { useEffect, useState } from "react";
 import Header from "../header";
 import Sidebar from "../sidebar";
 import UpdateOrderStatus from "./UpdateOrderStatus";
-import { fetchCoopOrders } from "@redux/Actions/orderActions"
-import { updateCoopOrders, singleCooperative } from '@redux/Actions/coopActions'
-import { sendNotifications } from '@redux/Actions/notificationActions'
+import { fetchCoopOrders } from "@redux/Actions/orderActions";
+import { singleCooperative } from "@redux/Actions/coopActions";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, getToken } from "@utils/helpers";
-import { useSocket } from "../../../../SocketIo"
+import "../../../assets/css/orderlistcoop.css";
 
 const OrderList = () => {
-  const dispatch = useDispatch()
-  const token = getToken()
-  const socket = useSocket()
-  const userId = getCurrentUser()._id
-  const userName = getCurrentUser().firstName
-  const { cooploading, orders, ordererror } = useSelector((state) => state.coopOrdering)
-  const  { coops } = useSelector((state) => state.allofCoops)
-  const [loading, setLoading] = useState(false)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [selectedOrder, setSelectedOrder] = useState(null); 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const filterOrders = (Array.isArray(orders) ? orders : []).map((order) => 
-  ({...order, orderItems: Array.isArray(order.orderItems) 
-  ? order.orderItems : []})).filter((order) => order.orderItems.length > 0)
-
-  // const order = [
-  //   {
-  //     orderId: "12345",
-  //     customerName: "John Doe",
-  //     email: "johndoe@example.com",
-  //     orderStatus: "Shipped",
-  //     products: [
-  //       { name: "Widget A", quantity: 2, price: 20 },
-  //       { name: "Widget B", quantity: 1, price: 15 },
-  //     ],
-  //     orderTotal: 55,
-  //     orderDate: "2024-12-19",
-  //   },
-  //   {
-  //     orderId: "12346",
-  //     customerName: "Jane Smith",
-  //     email: "janesmith@example.com",
-  //     orderStatus: "Pending",
-  //     products: [
-  //       { name: "Gadget X", quantity: 1, price: 30 },
-  //     ],
-  //     orderTotal: 30,
-  //     orderDate: "2024-12-20",
-  //   },
-  // ];
+  const dispatch = useDispatch();
+  const token = getToken();
+  const userId = getCurrentUser()._id;
+  const { orders } = useSelector((state) => state.coopOrdering);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    dispatch(fetchCoopOrders(userId, token))
-    dispatch(singleCooperative(userId, token))
-  },[dispatch, userId, token])
-  
-  // Handle opening the modal and passing the selected order data
-  const handleViewClick = (order) => {
-    console.log("order", order)
-    setSelectedOrder(order);
-    setIsModalOpen(true);
+    dispatch(fetchCoopOrders(userId, token));
+    dispatch(singleCooperative(userId, token));
+  }, [dispatch, userId, token]);
+
+  const filterOrders = (Array.isArray(orders) ? orders : [])
+    .map((order) => ({
+      ...order,
+      orderItems: Array.isArray(order.orderItems) ? order.orderItems : [],
+    }))
+    .filter((order) => order.orderItems.length > 0)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort by most recent first
+
+  // Pagination logic
+  const indexOfLastOrder = currentPage * itemsPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
+  const currentOrders = filterOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filterOrders.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
-  // Handle status update
-  const handleUpdateStatus = (orderId, newStatus) => {
-    // Logic to update order status, could be an API call
-    console.log(`Order ID: ${orderId} updated to status: ${newStatus}`);
-    // Optionally, update the orders list state with new status
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
-console.log("orders", orders)
+
   return (
-    <div className="h-screen w-screen flex overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-      {/* Main Content */}
-      <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-0"
-        }`}
-      >
+    <div className="order-list-container">
+      <Sidebar />
+      <div className="order-list-containertwo">
         <Header />
-        <div className="flex-1 overflow-y-auto bg-gray-50 p-6">
-          <h2 className="text-xl font-bold mb-4">Order List</h2>
-          
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full">
+        <main className="p-6">
+          <div className="order-list-header">
+            <h1>Order List</h1>
+          </div>
+          <div className="order-table-container">
+            <table className="order-table">
               <thead>
                 <tr>
                   <th>Order ID</th>
@@ -99,43 +70,39 @@ console.log("orders", orders)
                 </tr>
               </thead>
               <tbody>
-                {filterOrders.map((order) => (
+                {currentOrders.map((order) => (
                   <tr key={order?._id}>
                     <td>{order?._id}</td>
                     <td>{order?.user?.firstName} {order?.user?.lastName}</td>
                     <td>
-                    {order?.orderItems?.map((item) => (
-            <tr key={item?._id}>
-              <td>{item?.product?.productName}</td>
-              <td>{item?.inventoryProduct?.unitName} {item?.inventoryProduct?.metricUnit}</td>
-              <td>
-                <span
-                  className={`badge ${
-                    item?.orderStatus === "Delivered"
-                      ? "badge-success"
-                      : item?.orderStatus === "Pending"
-                      ? "badge-warning"
-                      : item?.orderStatus === "Cancelled"
-                      ? "badge-error"
-                       : item?.orderStatus === "Shipping"
-                      ? "badge-info"
-                            : item?.orderStatus === "Processing"
-                      ? "badge-primary"
-                      : ""
-                  }`}
-                >
-                  {item?.orderStatus}
-                </span>
-              </td>
-            </tr>
-          ))}
+                      {order?.orderItems?.map((item) => (
+                        <div key={item?._id}>
+                          <span
+                            className={`badge ${
+                              item?.orderStatus === "Delivered"
+                                ? "badge-success"
+                                : item?.orderStatus === "Pending"
+                                ? "badge-warning"
+                                : item?.orderStatus === "Cancelled"
+                                ? "badge-error"
+                                : item?.orderStatus === "Shipping"
+                                ? "badge-info"
+                                : item?.orderStatus === "Processing"
+                                ? "badge-primary"
+                                : ""
+                            }`}
+                          >
+                            {item?.orderStatus}
+                          </span>
+                        </div>
+                      ))}
                     </td>
                     <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                    <td> ₱ {order.totalPrice}</td>
+                    <td>₱ {order.totalPrice}</td>
                     <td>
                       <button
                         className="btn btn-primary btn-sm"
-                        onClick={() => handleViewClick(order)}
+                        onClick={() => setSelectedOrder(order) || setIsModalOpen(true)}
                       >
                         View
                       </button>
@@ -144,19 +111,22 @@ console.log("orders", orders)
                 ))}
               </tbody>
             </table>
+            <div className="pagination">
+              <button onClick={prevPage} disabled={currentPage === 1}>
+                Previous
+              </button>
+              <span> Page {currentPage} of {Math.ceil(filterOrders.length / itemsPerPage)} </span>
+              <button onClick={nextPage} disabled={currentPage === Math.ceil(filterOrders.length / itemsPerPage)}>
+                Next
+              </button>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
-
-      {/* Order Modal */}
       <UpdateOrderStatus
         isOpen={isModalOpen}
         order={selectedOrder}
-        onClose={() => {
-          setIsModalOpen(false);
-          window.location.reload();
-        }}
-        onUpdateStatus={handleUpdateStatus}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );

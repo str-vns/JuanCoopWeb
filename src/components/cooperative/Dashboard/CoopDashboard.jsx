@@ -1,187 +1,115 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCoopDashboardData } from "@redux/Actions/orderActions";
+import { Bar, Pie } from "react-chartjs-2";
+import { getToken, getCurrentUser } from "@utils/helpers";
+import "../../../assets/css/coopdashboard.css";
 import Header from "../header";
 import Sidebar from "../sidebar";
-import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   BarElement,
-  LineElement,
   CategoryScale,
   LinearScale,
-  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
 } from "chart.js";
-import "../css/coopdashboard.css";
 
-ChartJS.register(LineElement, BarElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const CoopDashboard = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const dispatch = useDispatch();
+  const token = getToken();
+  const currentUser = getCurrentUser();
+  const coopId = currentUser?._id;
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const { coopdashboards: dashboard, coopdashboardloading: loading, coopdashboarderror: error } = useSelector(
+    (state) => state.coopdashboards || {}
+  );
 
-  const salesData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  useEffect(() => {
+    if (coopId) {
+      dispatch(fetchCoopDashboardData(coopId));
+    }
+  }, [dispatch, coopId]);
+
+  if (loading) return <p className="text-center text-gray-500">Loading...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
+
+  const salesTrends = dashboard?.salesTrends || { daily: 0, weekly: 0, monthly: 0 };
+  const rankedProducts = dashboard?.rankedProducts || [];
+
+  const salesTrendsData = {
+    labels: ["Daily", "Weekly", "Monthly"],
     datasets: [
       {
-        label: "Total Sales",
-        data: [500, 700, 800, 600, 900, 1100],
-        borderColor: "#4caf50",
-        backgroundColor: "rgba(76, 175, 80, 0.2)",
-        tension: 0.4,
+        label: "Sales Revenue",
+        data: [salesTrends.daily || 0, salesTrends.weekly || 0, salesTrends.monthly || 0],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
       },
     ],
   };
 
-  const salesOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
+  console.log("Sales Trends Data:", salesTrendsData);
+
+  const topProductsData = {
+    labels: rankedProducts.length > 0 ? rankedProducts.map((p) => p.productName || "Unknown") : ["No Data"],
+    datasets: [
+      {
+        data: rankedProducts.length > 0 ? rankedProducts.map((p) => p.totalQuantitySold || 0) : [0],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
       },
-    },
+    ],
   };
 
+  console.log("Top Products Data:", topProductsData);
+
   return (
-    <div className="h-screen w-screen flex overflow-hidden">
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-0"
-        }`}
-      >
+    <div className="coop-dashboard-container">
+      <Sidebar />
+      <div className="flex flex-col w-full">
         <Header />
-        <div className="flex-1 overflow-y-auto coop-dashboard-container">
-          <div className="coop-main">
-            <main className="coop-main-content">
-              
-              {/* Sales Overview Section */}
-              <section className="dashboard-section">
-                <h3 className="dashboard-section-title">Sales Overview</h3>
-                <div className="dashboard-chart-wrapper flex">
-                  {/* Total Sales Line Chart */}
-                  <div className="dashboard-chart-container">
-                    <Line data={salesData} options={salesOptions} />
-                  </div>
-
-                  {/* Weekly Sales Bar Chart */}
-                  <div className="dashboard-chart-container">
-                    <Bar
-                      data={{
-                        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                        datasets: [
-                          {
-                            label: "Weekly Sales",
-                            data: [100, 150, 200, 250, 300, 350, 400], // Replace with your actual data
-                            backgroundColor: "rgba(33, 150, 243, 0.7)",
-                            borderColor: "#2196f3",
-                            borderWidth: 1,
-                          },
-                        ],
-                      }}
-                      options={{
-                        responsive: true,
-                        plugins: {
-                          legend: {
-                            display: true,
-                            position: "top",
-                          },
-                          tooltip: {
-                            enabled: true,
-                          },
-                        },
-                      }}
-                    />
-                  </div>
-                </div>
-              </section>
-
-              {/* Order Management and Customer Management in One Row */}
-              <section className="dashboard-sections-wrapper">
-                {/* Order Management Section */}
-                <section className="dashboard-section order-management">
-                  <h3 className="dashboard-section-title">Order Management</h3>
-                  <div className="dashboard-table-container">
-                    <table className="table table-zebra w-full">
-                      <thead>
-                        <tr>
-                          <th>Order ID</th>
-                          <th>Status</th>
-                          <th>Date</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>#12345</td>
-                          <td>Shipped</td>
-                          <td>2024-12-18</td>
-                          <td>$150</td>
-                        </tr>
-                        <tr>
-                          <td>#12346</td>
-                          <td>Pending</td>
-                          <td>2024-12-17</td>
-                          <td>$200</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </section>
-
-                {/* Customer Management Section */}
-                <section className="dashboard-section customer-management">
-                  <h3 className="dashboard-section-title">Customer Management</h3>
-                  <div className="dashboard-table-container">
-                    <table className="table table-striped w-full">
-                      <thead>
-                        <tr>
-                          <th>Customer</th>
-                          <th>Email</th>
-                          <th>Total Orders</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>John Doe</td>
-                          <td>john@example.com</td>
-                          <td>5</td>
-                        </tr>
-                        <tr>
-                          <td>Jane Smith</td>
-                          <td>jane@example.com</td>
-                          <td>3</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </section>
-              </section>
-
-
-
-              {/* Product Management Section */}
-              <section className="dashboard-section">
-                <h3 className="dashboard-section-title">Product Management</h3>
-                <div className="dashboard-grid">
-                  <div className="dashboard-card">
-                    <h4>Active Products</h4>
-                    <p className="dashboard-card-highlight">120</p>
-                  </div>
-                  <div className="dashboard-card">
-                    <h4>Inactive Products</h4>
-                    <p className="dashboard-card-highlight">15</p>
-                  </div>
-                  <div className="dashboard-card">
-                    <h4>Low Stock Alerts</h4>
-                    <p className="dashboard-card-highlight">10</p>
-                  </div>
-                </div>
-              </section>
-
-            </main>
+        <div className="flex-1 bg-gray-50 p-6">
+            <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">Cooperative Dashboard</h1>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                <h2 className="text-lg font-semibold text-gray-600">Daily Sales</h2>
+                <p className="text-3xl font-bold text-green-600">₱{salesTrends.daily}</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                <h2 className="text-lg font-semibold text-gray-600">Weekly Sales</h2>
+                <p className="text-3xl font-bold text-blue-600">₱{salesTrends.weekly}</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                <h2 className="text-lg font-semibold text-gray-600">Monthly Sales</h2>
+                <p className="text-3xl font-bold text-yellow-600">₱{salesTrends.monthly}</p>
+              </div>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center border-l-4 border-blue-500">
+              <h2 className="text-2xl font-bold text-gray-700 uppercase tracking-wide">Total Orders</h2>
+              <p className="text-4xl font-extrabold text-blue-500">{dashboard?.totalOrders ?? 0}</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h3 className="text-xl font-semibold text-gray-700 mb-4">Sales Trends</h3>
+                <Bar data={salesTrendsData} />
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h3 className="text-xl font-semibold text-gray-700 mb-4">Top Selling Products</h3>
+                <Pie data={topProductsData} />
+              </div>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );
