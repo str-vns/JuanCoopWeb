@@ -10,7 +10,7 @@ import shipItems from "@redux/Reducers/shippingReducers";
 import { authReducer } from "@redux/Reducers/authReducers";
 import { OTPReducer,RegisterReducer,userReducer,EditProfileReducer,getUsersReducers,AllUsersReducer,checkEmailReducer,otpForgotPasswordReducer,googleLoginReducer} from "@redux/Reducers/userReducers";
 import { addressReducers } from "@redux/Reducers/addressReducers";
-import { orderReducer,orderCoopReducer,orderShippedReducer,historyDeliveryCoopReducer} from "./Reducers/orderReducer";
+import { orderReducer,orderCoopReducer,orderShippedReducer,historyDeliveryCoopReducer, coopdashboardReducer} from "./Reducers/orderReducer";
 import {
   messageListReducer,
   sendMessageReducer,
@@ -39,7 +39,9 @@ import postReducer from "./Reducers/postReducer";
 import salesReducer from "./Reducers/salesReducer"; 
 import rankedReducer from "./Reducers/rankReducers";
 
- 
+ import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
+import { postReducer } from "@redux/Reducers/postReducer";
+
 const reducers = combineReducers({
   sales: salesReducer,
   rank: rankedReducer,
@@ -52,6 +54,7 @@ const reducers = combineReducers({
   orders: orderReducer,
   coopOrdering: orderCoopReducer,
   orderShipped: orderShippedReducer,
+  coopdashboards: coopdashboardReducer,
   deliveredhistory: historyDeliveryCoopReducer,
   getMessages: messageListReducer,
   sendMessages: sendMessageReducer,
@@ -102,6 +105,9 @@ const reducers = combineReducers({
   driverApi: driverApiReducer,
   driverProfile: driverProfileReducer,
 
+  memberList: memberListReducer,
+  memberApi: memberApiReducer,
+  post: postReducer,
 });
 
 let initialState = {

@@ -8,6 +8,10 @@ import {
   FaNewspaper,
   FaWpforms,
   FaBoxes,
+  FaUsers,
+  FaShippingFast,
+  FaRegStar,
+  FaRegBell,
 } from "react-icons/fa";
 import "./sidebar.css";
 import { useDispatch } from "react-redux";
@@ -81,6 +85,26 @@ const Sidebar = () => {
           <li>
             <a href="/forumlist" className="sidebar-link">
               <FaWpforms className="sidebar-icon" /> Community Forum
+            </a>
+          </li>
+          <li>
+            <a href="/memberlist" className="sidebar-link">
+              <FaUsers className="sidebar-icon" /> Members
+            </a>
+          </li>
+          <li>
+            <a href="/forumlist" className="sidebar-link">
+              <FaShippingFast className="sidebar-icon" /> Riders
+            </a>
+          </li>
+          <li>
+            <a href="/forumlist" className="sidebar-link">
+              <FaRegStar className="sidebar-icon" /> Review
+            </a>
+          </li>
+          <li>
+            <a href="/forumlist" className="sidebar-link">
+              <FaRegBell className="sidebar-icon" /> Notifications
             </a>
           </li>
           <li>

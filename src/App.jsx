@@ -50,7 +50,7 @@ import RegisterRoute from "@route/RegisterRoute";
 import InventoryList from "./components/Cooperative/Inventory/InventoryList";
 import InventoryDetail from "./components/Cooperative/Inventory/InventoryDetail";
 import InventoryCreate from "@components/Cooperative/Inventory/InventoryCreate";
-import InventoryUpdate from "./Components/Cooperative/Inventory/InventoryUpdate";
+import InventoryUpdate from "./components/Cooperative/Inventory/InventoryUpdate";
 import Dashboard from "@components/Admin/Dashboard";
 import RankedProductsPage from "@components/Admin/rankProduct";
 import UserList from "./Components/Admin/User/UserList";
@@ -79,6 +79,7 @@ import AdminDashboard from "@components/Admin/admin";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
 
+import MemberList from "./components/Cooperative/Member/MemberList";
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -188,6 +189,7 @@ function App() {
           <Route path="/inventorycreate" element={<InventoryCreate/>} />
           <Route path="/inventoryupdate" element={<InventoryUpdate/>} />
           <Route path="/cooporderlist" element={<CoopOrderList/>} />
+          <Route path="/memberlist" element={<MemberList/>} />
           <Route path="/messenger" element={<CoopMessenger/>} />
 
           {/* <Route path="/orderlist" element={<OrderList/>} /> */}
