@@ -205,7 +205,7 @@ function App() {
 
           <Route path="/typelist" element={<TypeList/>} />
           <Route path="/typecreate" element={<TypeCreate/>} />
-          <Route path="/typeupdate" element={<TypeUpdate/>} />
+          <Route path="/typeupdate/:id" element={<TypeUpdate/>} />
 
           <Route path="/bloglists" element={<BlogLists/>} />
           <Route path="/blogcreate" element={<BlogCreate/>} />

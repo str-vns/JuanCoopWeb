@@ -1,26 +1,35 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { typeUpdate } from "@redux/Actions/typeActions";
-import AuthGlobal from "@redux/Store/AuthGlobal";
 import { useLocation, useNavigate } from "react-router-dom";
+import Sidebar from "@components/Admin/sidebar";
 
 const TypeUpdate = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const singleType = location.state?.types; // Receive the type to update
+  const singleType = location.state?.type; // Corrected from 'types' to 'type'
   const dispatch = useDispatch();
-  const context = useContext(AuthGlobal);
 
   const [typeName, setTypeName] = useState(singleType?.typeName || "");
   const [token, setToken] = useState("");
   const [errors, setErrors] = useState("");
-  const typeId = singleType?._id;
+  const typeId = singleType?._id || null;
+
+  useEffect(() => {
+    console.log("Location state:", location.state);
+    console.log("Single type object:", singleType);
+    console.log("Extracted typeId:", typeId);
+  }, [location, singleType, typeId]);
 
   useEffect(() => {
     const fetchJwt = async () => {
       try {
         const res = localStorage.getItem("jwt");
-        setToken(res);
+        if (res) {
+          setToken(res);
+        } else {
+          console.error("No token found");
+        }
       } catch (error) {
         console.error("Error retrieving JWT: ", error);
       }
@@ -39,26 +48,24 @@ const TypeUpdate = () => {
     };
 
     try {
-      await dispatch(typeUpdate(typeId, typeItem, token));
-      setErrors("");
-      alert("Type updated successfully!");
-      navigate("/type-list");
+      if (token && typeId) {
+        await dispatch(typeUpdate(typeId, typeItem, token));
+        setErrors(""); // Clear previous errors
+        alert("Type updated successfully!");
+        navigate("/typelist"); // Redirect to type list
+      } else {
+        setErrors("Invalid token or type.");
+        console.log("Invalid token or typeId:", token, typeId);
+      }
     } catch (error) {
       console.error("Error updating type:", error);
       setErrors("Failed to update type. Please try again.");
     }
   };
 
-  const backButton = () => {
-    navigate("/type-list");
-  };
-
   return (
     <div style={styles.container}>
-      <button style={styles.backButton} onClick={backButton}>
-        Back
-      </button>
-
+      <Sidebar />
       <h1 style={styles.title}>Update Type</h1>
 
       <div style={styles.scrollView}>
@@ -85,19 +92,11 @@ const TypeUpdate = () => {
 
 const styles = {
   container: {
-    backgroundColor: "#f9f9f9",
     padding: "16px",
-    height: "100vh",
-  },
-  backButton: {
-    position: "absolute",
-    top: "16px",
-    left: "16px",
-    backgroundColor: "transparent",
-    border: "none",
-    color: "#333",
-    fontSize: "24px",
-    cursor: "pointer",
+    maxWidth: "600px",
+    margin: "0 auto",
+    textAlign: "center",
+    paddingLeft: "100px",
   },
   title: {
     fontSize: "24px",

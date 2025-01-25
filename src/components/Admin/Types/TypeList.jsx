@@ -39,7 +39,7 @@ const TypeList = () => {
   };
 
   const handleEdit = (type) => {
-    navigate("/typeupdate", { state: { type } }); // Navigate to TypeUpdate with the type object
+    navigate(`/typeupdate/${type._id}`, { state: { type } }); 
   };
 
   // Calculate pagination
@@ -93,7 +93,7 @@ const TypeList = () => {
                             <i
                               className="fa-regular fa-pen-to-square text-yellow-500 cursor-pointer"
                               title="Edit"
-                              onClick={() => navigate("/typeupdate")}
+                              onClick={() => handleEdit(type)}
                             ></i>
 
                             <i
