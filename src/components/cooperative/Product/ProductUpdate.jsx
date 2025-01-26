@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import "../../../assets/css/productcreate.css";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryList } from "../../../redux/Actions/categoryActions";
-import { typeList } from "../../../redux/Actions/typeActions";
-import { updateCoopProducts } from "../../../redux/Actions/productActions";
+import { categoryList } from "@redux/Actions/categoryActions";
+import { typeList } from "@redux/Actions/typeActions";
+import { updateCoopProducts, imageDel } from "@redux/Actions/productActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
 
 const ProductUpdate = ({ show, onClose, product }) => {
   const dispatch = useDispatch();
-
+  const productId = product._id;
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
   const [images, setImages] = useState([]);
-
+  const [newImages, setNewImages] = useState([]);
+  
   const { categories } = useSelector((state) => state.categories);
   const { types } = useSelector((state) => state.types);
-
   const token = getToken();
   const currentUser = getCurrentUser();
   const coopId = currentUser?._id;
@@ -28,25 +28,24 @@ const ProductUpdate = ({ show, onClose, product }) => {
     if (product) {
       setProductName(product.productName || "");
       setDescription(product.description || "");
+  const matchingCats = categories.filter((cat) => product.category.includes(cat._id));
       setSelectedCategories(
-        product.category?.map((cat) => ({
-          value: cat._id,
-          label: cat.categoryName,
-        })) || []
+        matchingCats.map((cat) => ({ value: cat._id, label: cat.categoryName }))
       );
+      
+      const matchingTypes = types.filter((type) => product.type.includes(type._id));
       setSelectedTypes(
-        product.type?.map((typ) => ({
-          value: typ._id,
-          label: typ.typeName,
-        })) || []
+        matchingTypes.map((type) => ({ value: type._id, label: type.typeName }))
       );
-      setImagesPreview(product.image || []);
+      setImagesPreview(
+        product.image?.map((img) => img.url) || []
+      );
     }
     dispatch(categoryList());
     dispatch(typeList());
   }, [dispatch, product]);
 
-  const handleUpdateProduct = (e) => {
+  const handleUpdateProduct = async(e) => {
     e.preventDefault();
 
     if (!productName || !description || (!imagesPreview.length && !images.length)) {
@@ -59,13 +58,21 @@ const ProductUpdate = ({ show, onClose, product }) => {
       description,
       category: selectedCategories.map((category) => category.value),
       type: selectedTypes.map((type) => type.value),
-      image: images.length > 0 ? images : product.image,
-      user: coopId,
+      image: newImages,
     };
 
     console.log("Updating product:", updatedData);
-    dispatch(updateCoopProducts(product._id, updatedData, token));
-    onClose();
+    const response = await dispatch(updateCoopProducts(product._id, updatedData, token));
+    console.log("response", response);
+    if (response === true) {
+      setTimeout(() => {
+        window.location.reload();
+        onClose();
+      }, 5000);
+  
+    } else {
+      alert("Failed to update product");
+    }
   };
 
   const handleCategoryChange = (selectedOptions) => {
@@ -78,17 +85,19 @@ const ProductUpdate = ({ show, onClose, product }) => {
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
-    setImagesPreview([]);
-    setImages([]);
+  
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
           setImagesPreview((prev) => [...prev, reader.result]);
+  
           setImages((prev) => [...prev, file]);
+  
+          setNewImages((prev) => [...prev, file]);
         }
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file);  
     });
   };
 
@@ -102,9 +111,14 @@ const ProductUpdate = ({ show, onClose, product }) => {
     label: type.typeName,
   }));
 
+  const deleteImage = (imageId, index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    dispatch(imageDel(productId, imageId));
+    window.location.reload();
+  };
   return (
     show && (
-      <div className="product-modal-overlay">
+      <div className="product-modal-overlay ">
         <div className="product-modal-container">
           <h2>Update Product</h2>
           <form onSubmit={handleUpdateProduct}>
@@ -163,18 +177,28 @@ const ProductUpdate = ({ show, onClose, product }) => {
               >
                 Choose Images
               </label>
-              <div className="image-preview">
-                {imagesPreview.map((img, index) => (
-                  <img
-                    src={img}
-                    key={index}
-                    alt={`Preview ${index}`}
-                    className="my-3 mr-2"
-                    width="55"
-                    height="52"
-                  />
-                ))}
-              </div>
+              <div className="flex gap-4 overflow-x-auto">
+  {imagesPreview.length > 0 &&
+    imagesPreview.map((imageUri, index) => {
+      const imageId = product.image[index]?._id; // Safely access image ID
+      return (
+        <div key={imageId || index} className="relative w-36 h-36 flex-shrink-0">
+          <img
+            src={imageUri}
+            alt={`Uploaded ${index}`}
+            className="w-full h-full object-cover rounded-lg"
+          />
+          <button
+            onClick={() => deleteImage(imageId)}
+            className="absolute top-1 right-1 bg-black bg-opacity-60 text-white w-6 h-6 flex items-center justify-center rounded-full hover:bg-opacity-80"
+          >
+            ✖
+          </button>
+        </div>
+      );
+    })}
+</div>
+
             </div>
             <button type="submit" className="product-btn-submit-product">
               Update Product

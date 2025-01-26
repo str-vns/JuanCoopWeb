@@ -142,20 +142,13 @@ export const getProduct = () => async (dispatch) => {
       const formData = new FormData();
       formData.append("productName", product.productName);
       formData.append("description", product.description);
-      formData.append("stock", product.stock);
-      formData.append("pricing", product.pricing);
       product.category.forEach((category) => formData.append("category", category));
       product.type.forEach((type) => formData.append("type", type));
-      if (product.image?.length) {
-        product.image.forEach((imageUri) => {
-          const newImageUri = "file:///" + imageUri.split("file:/").join("");
-          formData.append("image", {
-            uri: newImageUri,
-            type: mime.getType(newImageUri),
-            name: newImageUri.split("/").pop(),
-          });
-        });
-      }
+      product?.image.forEach((image) => {
+        formData.append("image", image);
+        console.log("image", image);
+      });
+    
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -164,12 +157,15 @@ export const getProduct = () => async (dispatch) => {
       };
       const { data } = await axios.put(`${baseURL}products/edit/${productId}`, formData, config);
       dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data });
+
+      return true
     } catch (error) {
         const errorMessage = error.response ? error.response.data.message : error.message;
         dispatch({
           type: CREATE_PRODUCT_FAIL,
           payload: errorMessage,
         });
+        return false
       }      
   };
   
@@ -177,6 +173,8 @@ export const getProduct = () => async (dispatch) => {
    * Delete a product image
    */
   export const imageDel = (productId, imageId) => async (dispatch) => {
+    console.log("imageId", imageId);
+    console.log("productId", productId);
     try {
       dispatch({ type: DELETE_PRODUCT_IMAGE_REQUEST });
       await axios.put(`${baseURL}products/image/${productId}/${imageId}`);

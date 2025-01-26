@@ -107,7 +107,7 @@ const reducers = combineReducers({
 
   memberList: memberListReducer,
   memberApi: memberApiReducer,
-  post: postReducer,
+
 });
 
 let initialState = {
