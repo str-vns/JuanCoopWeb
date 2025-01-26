@@ -28,7 +28,7 @@ const UpdateOrderStatus = ({ isOpen, order, onClose, onUpdateStatus }) => {
 
     order?.orderItems?.forEach(item => {
       if(item.product && item.inventoryProduct){
-        const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit} ${item.inventoryProduct.metricUnit}`
+        const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit}`
         productName.push(productInfo)
       }
     })
@@ -73,7 +73,7 @@ const UpdateOrderStatus = ({ isOpen, order, onClose, onUpdateStatus }) => {
 
     order?.orderItems?.forEach(item => {
       if(item.product && item.inventoryProduct){
-        const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit} ${item.inventoryProduct.metricUnit}`
+        const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit}`
         productName.push(productInfo)
       }
     })
