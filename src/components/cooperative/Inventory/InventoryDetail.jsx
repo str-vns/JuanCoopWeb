@@ -16,7 +16,6 @@ const InventoryDetail = () => {
   const location = useLocation();
   const InvItem = location.state?.Inv;
 
-  const [refreshing, setRefreshing] = useState(false);
   const token = getToken();
   const { Invloading, Invsuccess } = useSelector((state) => state.sinvent);
   const [isInventoryCreateOpen, setInventoryCreateOpen] = useState(false);
@@ -35,19 +34,6 @@ const InventoryDetail = () => {
     }
   }, [dispatch, token, InvItem]);
 
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    try {
-      if (InvItem?._id && token) {
-        await dispatch(inventoryProducts(InvItem._id, token));
-      }
-    } catch (error) {
-      console.error("Error refreshing inventory:", error);
-    } finally {
-      setRefreshing(false);
-    }
-  };
-
   const handleEdit = (item) => {
     setSelectedItem(item); // Set the selected item
     setInventoryUpdateOpen(true); // Open the modal
@@ -56,7 +42,6 @@ const InventoryDetail = () => {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       dispatch(deleteInventory(id, token));
-      handleRefresh();
     }
   };
 
@@ -69,7 +54,7 @@ const InventoryDetail = () => {
     <div className="inventory-list-container">
       <Sidebar />
       <div className="inventory-list-content flex-1 flex flex-col">
-        <Header />
+        {/* <Header /> */}
         <div className="inventory-container">
           <div className="inventory-header">
             <h1>Inventory Detail</h1>
@@ -127,7 +112,6 @@ const InventoryDetail = () => {
           {isInventoryCreateOpen && (
             <InventoryCreate
               onClose={() => setInventoryCreateOpen(false)}
-              onUpdated={handleRefresh}
               productId={selectedItem?._id}
             />
           )}

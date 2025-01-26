@@ -54,7 +54,7 @@ const InventoryUpdate = ({ onClose, item }) => {
       };
 
       dispatch(updateInventory(inventory, inventoryId, token));
-      navigate("/inventorylist");
+      navigate("/inventorydetail");
     }
 
     setTimeout(() => setErrors(""), 3000);

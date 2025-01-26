@@ -182,7 +182,12 @@ const Navbar = () => {
 
           </div>
              )} 
-          <i className="fas fa-shopping-cart fa-lg text-black text-xl"> </i>
+          <i className="fas fa-shopping-cart fa-lg text-black text-xl"> {notifCount > 0 && (
+            <span className="badge badge-sm bg-red-500 text-white ml-1">
+              {notifCount}
+            </span>
+          )} </i>
+          
         </div>
 
         
@@ -194,11 +199,7 @@ const Navbar = () => {
         className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
       >
         <i className="fas fa-bell text-black text-xl"></i>
-        {notifCount > 0 && (
-            <span className="badge badge-sm bg-red-500 text-white ml-1">
-              {notifCount}
-            </span>
-          )}
+        
       </div>
       {isOpen && (
         <ul

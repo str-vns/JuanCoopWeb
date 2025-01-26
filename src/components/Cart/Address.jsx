@@ -73,62 +73,55 @@ const Address = () => {
       <Navbar />
 
       <div className="address-section">
-        <div className="address-container">
-          <h2>Shipping Address</h2>
-
-          {loading ? (
-            <p className="loadingText">Loading...</p>
-          ) : error ? (
-            <p className="errorText">Error: {error.message || "Something went wrong."}</p>
-          ) : (
-            <div className="address-list">
-              {Array.isArray(addresses) && addresses.length > 0 ? (
-                addresses.map((address) => (
-                  <div className="address-box" key={address._id}>
-                    <label className="address-label">
-                      <input
-                        type="radio"
-                        name="address"
-                        value={address._id}
-                        checked={selectedLocationId?._id === address._id}
-                        onChange={() => setSelectedLocationId(address)}
-                        className="address-radio"
-                      />
-                      <div className="address-details">
-                        <p>
-                          <strong>{address.address || "Unnamed Location"}</strong>
-                        </p>
-                        <p>
-                          {address.barangay || "Barangay not specified"},{" "}
-                          {address.city || "City not specified"},{" "}
-                          {address.postalCode || "Postal Code not specified"}
-                        </p>
-                      </div>
-                    </label>
-                    <div className="address-actions">
-                      <button
-                        onClick={() => handleDelete(address._id)}
-                        className="delete-button"
-                        aria-label={`Delete address ${address.address || ""}`}
-                      >
-                        Delete
-                      </button>
+        <h2>Shipping Address</h2>
+        {loading ? (
+          <p className="loadingText">Loading...</p>
+        ) : error ? (
+          <p className="errorText">Error: {error.message || "Something went wrong."}</p>
+        ) : (
+          <div className="address-container">
+            {Array.isArray(addresses) && addresses.length > 0 ? (
+              addresses.map((address) => (
+                <div
+                  className={`address-box ${selectedLocationId?._id === address._id ? "selected" : ""}`}
+                  key={address._id}
+                >
+                  <label className="address-label">
+                    <input
+                      type="radio"
+                      name="address"
+                      value={address._id}
+                      checked={selectedLocationId?._id === address._id}
+                      onChange={() => setSelectedLocationId(address)}
+                    />
+                    <div className="address-details">
+                      <p><strong>{address.address || "Unnamed Location"}</strong></p>
+                      <p>
+                        {address.barangay || "Barangay not specified"},{" "}
+                        {address.city || "City not specified"},{" "}
+                        {address.postalCode || "Postal Code not specified"}
+                      </p>
                     </div>
+                  </label>
+                  <div className="address-actions">
+                    <button onClick={() => handleDelete(address._id)} className="delete-button">
+                      Delete
+                    </button>
                   </div>
-                ))
-              ) : (
-                <p className="noAddressText">No addresses available. Add one to continue.</p>
-              )}
-            </div>
-          )}
-        </div>
-
+                </div>
+              ))
+            ) : (
+              <p className="noAddressText">No addresses available. Add one to continue.</p>
+            )}
+          </div>
+        )}
         <div className="proceed-button-container">
           <button onClick={handleAddressClick} className="proceed-button">
             Proceed To Payment
           </button>
         </div>
       </div>
+
     </div>
   );
 };

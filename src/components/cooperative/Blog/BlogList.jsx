@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBlog } from "@redux/Actions/blogActions";
-import Header from "../header";
+// import Header from "../header";
 import Sidebar from "../sidebar";
 import BlogInfo from "./BlogInfo";
 import "../../../assets/css/coopbloglist.css";
@@ -30,11 +30,11 @@ const BlogList = () => {
   };
 
   return (
-    <div className="blog-list-container">
+    <div className="blog-list-container w-full">
       <Sidebar/>
-      <div className="flex flex-col w-full">
-        <Header />
-        <main className="p-6">
+      <div className="coop-blog-list-containertwo">
+        {/* <Header /> */}
+        {/* <main className="p-6"> */}
           <div className="content">
             <h1 className="title">Blog Posts</h1>
 
@@ -75,7 +75,7 @@ const BlogList = () => {
               </div>
             )}
           </div>
-        </main>
+        {/* </main> */}
       </div>
 
       {/* Modal */}

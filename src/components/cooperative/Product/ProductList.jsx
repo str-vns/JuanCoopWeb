@@ -7,7 +7,7 @@ import {
   soflDelProducts,
 } from "../../../redux/Actions/productActions";
 import ProductUpdate from "./ProductUpdate";
-import Header from "../header";
+// import Header from "../header";
 import Sidebar from "../sidebar";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { getToken, getCurrentUser } from "@utils/helpers";
@@ -86,7 +86,7 @@ const ProductList = () => {
     <div className="product-list-container">
       <Sidebar />
       <div className="product-list-containertwo">
-        <Header />
+        {/* <Header /> */}
         <main className="p-6">
           <div className="product-list-header">
             <h1>All Products</h1>

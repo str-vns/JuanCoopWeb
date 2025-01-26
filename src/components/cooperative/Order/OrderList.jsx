@@ -52,7 +52,7 @@ const OrderList = () => {
     <div className="order-list-container">
       <Sidebar />
       <div className="order-list-containertwo">
-        <Header />
+        {/* <Header /> */}
         <main className="p-6">
           <div className="order-list-header">
             <h1>Order List</h1>

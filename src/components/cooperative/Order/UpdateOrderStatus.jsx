@@ -19,95 +19,115 @@ const UpdateOrderStatus = ({ isOpen, order, onClose, onUpdateStatus }) => {
     setSelectedStatus(e.target.value);
   };
 
- const handlesProcess = (orderId, InvId, order) => {
-  console.log("id:",orderId, "items:", InvId, "order:", order)
-  setLoading(true)
+  const handlesProcess = async (orderId, InvId, order) => {
+    console.log("id:", orderId, "items:", InvId, "order:", order);
+    setLoading(true);
   
-  try{
-    let productName = []
-
-    order?.orderItems?.forEach(item => {
-      if(item.product && item.inventoryProduct){
-        const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit}`
-        productName.push(productInfo)
+    try {
+      let productName = [];
+  
+      order?.orderItems?.forEach((item) => {
+        if (item.product && item.inventoryProduct) {
+          const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit}`;
+          productName.push(productInfo);
+        }
+      });
+  
+      const productList = productName.join(", ");
+  
+      const notification = {
+        title: `Order: ${orderId}`,
+        content: `Your order ${productList} is now being processed.`,
+        url: order?.orderItems[0]?.product?.image[0].url,
+        user: order.user._id,
+        type: "order",
+      };
+  
+      socket.emit("sendNotification", {
+        senderName: userName,
+        receiverName: order?.user?._id,
+        type: "order",
+      });
+  
+      const orderupdateInfo = {
+        InvId,
+        orderStatus: "Processing",
+      };
+  
+      const response = await dispatch(updateCoopOrders(orderId, orderupdateInfo, token));
+      await dispatch(sendNotifications(notification, token));
+  
+      console.log("response", response);
+  
+      if (response) {
+        setTimeout(() => {
+          window.location.reload();
+          onClose();
+        }, 5000);
       }
-    })
-
-    const productList = productName.join(", ")
-
-    const notification = {
-      title: `Order: ${orderId}`, 
-      content: `Your order ${productList} is now being processed.`,
-      url: order?.orderItems[0]?.product?.image[0].url,
-      user: order.user._id,
-      type: "order",
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
 
-    socket.emit("sendNotification", {
-      senderName: userName,
-      receiverName:  order?.user?._id,
-      type: "order",
-    })
-
-    const orderupdateInfo = {
-      InvId,
-      orderStatus: "Processing",
-    }
-
-     dispatch(sendNotifications(notification, token))
-     dispatch(updateCoopOrders(orderId, orderupdateInfo, token))
-    setLoading(false)
-    onClose()
+    onClose();
+  };
   
-  } catch (error) {
-    console.log(error)
-  }
- }
-
- const handlesShipping = (orderId, InvId, order) => {
-  console.log("id:",orderId, "items:", InvId, "order:", order)
-  setLoading(true)
+  const handlesShipping = async (orderId, InvId, order) => {
+    console.log("id:", orderId, "items:", InvId, "order:", order);
+    setLoading(true);
   
-  try{
-    let productName = []
-
-    order?.orderItems?.forEach(item => {
-      if(item.product && item.inventoryProduct){
-        const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit}`
-        productName.push(productInfo)
+    try {
+      let productName = [];
+  
+      order?.orderItems?.forEach((item) => {
+        if (item.product && item.inventoryProduct) {
+          const productInfo = `${item.product.productName} ${item.inventoryProduct.unitName} ${item.inventoryProduct.metricUnit}`;
+          productName.push(productInfo);
+        }
+      });
+  
+      const productList = productName.join(", ");
+  
+      const notification = {
+        title: `Order: ${orderId}`,
+        content: `Your order ${productList} is now being shipped.`,
+        url: order?.orderItems[0]?.product?.image[0].url,
+        user: order.user._id,
+        type: "order",
+      };
+  
+      socket.emit("sendNotification", {
+        senderName: userName,
+        receiverName: order?.user?._id,
+        type: "order",
+      });
+  
+      const orderupdateInfo = {
+        InvId,
+        orderStatus: "Shipping",
+      };
+  
+      const response = await dispatch(updateCoopOrders(orderId, orderupdateInfo, token));
+      await dispatch(sendNotifications(notification, token));
+  
+      console.log("response", response);
+  
+      if (response) {
+        setTimeout(() => {
+          window.location.reload();
+          onClose();
+        }, 5000);
       }
-    })
-
-    const productList = productName.join(", ")
-
-    const notification = {
-      title: `Order: ${orderId}`, 
-      content: `Your order ${productList} is now being processed.`,
-      url: order?.orderItems[0]?.product?.image[0].url,
-      user: order.user._id,
-      type: "order",
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-
-    socket.emit("sendNotification", {
-      senderName: userName,
-      receiverName:  order?.user?._id,
-      type: "order",
-    })
-
-    const orderupdateInfo = {
-      InvId,
-      orderStatus: "Shipping",
-    }
-
-     dispatch(sendNotifications(notification, token))
-     dispatch(updateCoopOrders(orderId, orderupdateInfo, token))
-    setLoading(false)
-    onClose()
+    onClose();
+  };
   
-  } catch (error) {
-    console.log(error)
-  }
- }
 
   return (
     <div className="modal-overlay text-black">

@@ -57,7 +57,7 @@ const ProductArchive = () => {
     <div className="product-archive-list-container">
       <Sidebar />
       <div className="flex flex-col w-full">
-        <Header />
+        {/* <Header /> */}
         <div className="flex-1 bg-gray-50 p-6">
           <div className="archive-card">
             <div className="archive-header">

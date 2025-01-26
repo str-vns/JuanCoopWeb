@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../header";
+// import Header from "../header";
 import Sidebar from "../sidebar";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import { getCoopProducts } from "@redux/Actions/productActions";
@@ -47,7 +47,7 @@ const InventoryList = () => {
     <div className="inventory-list-container">
       <Sidebar />
       <div className="inventory-list-containertwo">
-        <Header />
+        {/* <Header /> */}
         <main className="p-6">
           <div className="inventory-header">
             <h1>Product Inventory List</h1>

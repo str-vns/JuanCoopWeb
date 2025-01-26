@@ -4,7 +4,7 @@ import { fetchCoopDashboardData } from "@redux/Actions/orderActions";
 import { Bar, Pie } from "react-chartjs-2";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import "../../../assets/css/coopdashboard.css";
-import Header from "../header";
+// import Header from "../header";
 import Sidebar from "../sidebar";
 import {
   Chart as ChartJS,
@@ -78,7 +78,7 @@ const CoopDashboard = () => {
     <div className="coop-dashboard-container">
       <Sidebar />
       <div className="flex flex-col w-full">
-        <Header />
+        {/* <Header /> */}
         <div className="flex-1 bg-gray-50 p-6">
             <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">Cooperative Dashboard</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">

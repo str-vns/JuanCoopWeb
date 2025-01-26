@@ -47,7 +47,7 @@ const OrderConfirmation = () => {
 
       {/* Receipt Button */}
       <button style={styles.receiptButton} onClick={handleReceiptClick}>
-        Receipt
+        Order Summary
       </button>
 
       {/* Back to Home */}

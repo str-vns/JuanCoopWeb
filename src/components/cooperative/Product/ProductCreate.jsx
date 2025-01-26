@@ -7,7 +7,7 @@ import { typeList } from "../../../redux/Actions/typeActions";
 import { createCoopProducts } from "../../../redux/Actions/productActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
 
-const ProductCreate = ({ show, onClose, onSubmit, product, action }) => {
+const ProductCreate = ({ show, onClose }) => {
   const dispatch = useDispatch();
 
   const [productName, setProductName] = useState("");
@@ -27,16 +27,17 @@ const ProductCreate = ({ show, onClose, onSubmit, product, action }) => {
   const currentUser = getCurrentUser();
   const coopId = currentUser?._id;
 
-  const handleSaveProduct = (e) => {
+  const handleSaveProduct = async (e) => {
     e.preventDefault();
 
     if (!productName || !description || imagesPreview.length === 0) {
       alert("Please fill all the fields");
       return;
-    }else {
-      const data = {
-      productName: productName,
-      description: description,
+    }
+
+    const data = {
+      productName,
+      description,
       category: selectedCategoryIds,
       type: selectedTypeIds,
       image: images,
@@ -44,10 +45,15 @@ const ProductCreate = ({ show, onClose, onSubmit, product, action }) => {
     };
 
     console.log("Submitting product:", data);
-    dispatch(createCoopProducts(data, token));
-
+    const response = await dispatch(createCoopProducts(data, token));
+    if (response === true) {
+      setTimeout(() => {
+        window.location.reload();
+        onClose();
+      }, 5000);
+    }
     onClose();
-  }}
+  };
 
   useEffect(() => {
     dispatch(categoryList());
@@ -65,13 +71,14 @@ const ProductCreate = ({ show, onClose, onSubmit, product, action }) => {
   const onChange = (e) => {
     const files = Array.from(e.target.files);
     setImagesPreview([]);
-    setImages([])
+    setImages([]);
+
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
           setImagesPreview((oldArray) => [...oldArray, reader.result]);
-          setImages((oldArray) => [...Array.from(e.target.files)])
+          setImages((oldArray) => [...oldArray, file]);
         }
       };
       reader.readAsDataURL(file);
@@ -143,25 +150,13 @@ const ProductCreate = ({ show, onClose, onSubmit, product, action }) => {
                 onChange={onChange}
                 multiple
               />
-              <div className="flex items-center">
-                    <label
-                      htmlFor="customFile"
-                      className="px-4 py-2 border-2 border-black rounded-md cursor-pointer bg-white text-black hover:bg-black hover:text-white"
-                    >
-                      Choose Images
-                    </label>
-                  </div>
+              <label htmlFor="customFile" className="file-upload-btn">
+                Choose Images
+              </label>
               <div className="image-preview">
-                  {imagesPreview.map((img, index) => (
-                    <img
-                      src={img}
-                      key={index}
-                      alt={`Preview ${index}`}
-                      className="my-3 mr-2"
-                      width="55"
-                      height="52"
-                    />
-                  ))}
+                {imagesPreview.map((img, index) => (
+                  <img src={img} key={index} alt={`Preview ${index}`} width="55" height="52" />
+                ))}
               </div>
             </div>
             <button type="submit" className="product-btn-submit-product">
