@@ -1,11 +1,11 @@
 /* Overall layout enhancements */
-.blog-list-container {
+.coop-blog-list-container {
   padding-left: 50px;
-    height: 100vh;
-    width: 1480px;
+  height: 100vh;
+  width: 1480px; 
 }
 
-.blog-list-containertwo {
+.coop-blog-list-containertwo {
   flex-grow: 1;
   background: #fff;
   border-radius: 10px;

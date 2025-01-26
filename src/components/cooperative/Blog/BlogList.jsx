@@ -4,7 +4,7 @@ import { getBlog } from "@redux/Actions/blogActions";
 import Header from "../header";
 import Sidebar from "../sidebar";
 import BlogInfo from "./BlogInfo";
-import "../../../assets/css/bloglist.css";
+import "../../../assets/css/coopbloglist.css";
 
 const BlogList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
