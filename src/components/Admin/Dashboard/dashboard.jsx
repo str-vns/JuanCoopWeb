@@ -4,8 +4,8 @@ import { getDailySales, getWeeklySales, getMonthlySales } from "@redux/Actions/s
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, getToken } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
-import { useSocket } from "../../../SocketIo";
-import Sidebar from "./sidebar";
+import { useSocket } from "../../../../SocketIo";
+import Sidebar from "../sidebar";
 import "@assets/css/adminDashboard.css";
 
 const Dashboard = () => {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getRankedProducts } from "@redux/Actions/rankActions";
 import { useNavigate } from "react-router-dom";
 import BarGraph from "@assets/css/BarGraph";
-import Sidebar from "./sidebar";
+import Sidebar from "../sidebar";
 import "@assets/css/rankProduct.css";
 
 const RrankProduct = () => {
