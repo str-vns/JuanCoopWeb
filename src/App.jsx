@@ -47,7 +47,7 @@ import { logoutUser } from "@redux/Actions/authActions";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-import Adashboard from "../src/components/admin/Adashboard";
+import Dashboard from "./components/admin/dashboard";
 import RrankProduct from "./components/admin/RrankProduct";
 import UserList from "./components/admin/User/UserList";
 import InventoryList from "./components/cooperative/Inventory/InventoryList";
@@ -203,7 +203,7 @@ function App() {
           {/* Admin */}
           {/* <Route path="/admin" element={<AdminDashboard />} /> */}
           <Route path="/barGraph" element={<RrankProduct />} />
-          <Route path="/dashboard" element={<Adashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/userlist" element={<UserList/>} />
 
           <Route path="/typelist" element={<TypeList/>} />

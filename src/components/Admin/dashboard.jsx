@@ -8,7 +8,7 @@ import { useSocket } from "../../../SocketIo";
 import Sidebar from "./sidebar";
 import "@assets/css/adminDashboard.css";
 
-const Adashboard = () => {
+const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const socket = useSocket();
@@ -131,4 +131,4 @@ const Adashboard = () => {
   );
 };
 
-export default Adashboard;
+export default Dashboard;
