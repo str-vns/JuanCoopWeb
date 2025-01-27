@@ -1,0 +1,40 @@
+.container {
+    padding: 16px;
+    background-color: #fff;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    width: calc(100% - 400px); /* Corrected the syntax for `calc` */
+    margin-left: 300px; /* Corrected the syntax for `margin-left` */
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .back-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 10px;
+  }
+  
+  .header-title {
+    font-size: 24px;
+    font-weight: bold;
+    align-items: center;
+  }
+  
+  .loader {
+    font-size: 18px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .error {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+  }
