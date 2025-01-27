@@ -47,8 +47,8 @@ import { logoutUser } from "@redux/Actions/authActions";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-import Dashboard from "./components/admin/Adashboard";
-import RankedProductsPage from "./components/admin/RrankProduct";
+import Adashboard from "./components/admin/Adashboard";
+import RrankProduct from "./components/admin/RrankProduct";
 import UserList from "./components/admin/User/UserList";
 import InventoryList from "./components/cooperative/Inventory/InventoryList";
 import InventoryDetail from "./components/cooperative/Inventory/InventoryDetail";
@@ -202,8 +202,8 @@ function App() {
 
           {/* Admin */}
           {/* <Route path="/admin" element={<AdminDashboard />} /> */}
-          <Route path="/barGraph" element={<RankedProductsPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/barGraph" element={<RrankProduct />} />
+          <Route path="/dashboard" element={<Adashboard />} />
           <Route path="/userlist" element={<UserList/>} />
 
           <Route path="/typelist" element={<TypeList/>} />
