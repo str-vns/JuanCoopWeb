@@ -3,26 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDailySales, getWeeklySales, getMonthlySales } from "@redux/Actions/salesActions";
 import { useNavigate } from "react-router-dom";
 import AuthGlobal from "@redux/Store/AuthGlobal";
-import { getCurrentUser } from "@utils/helpers";
+import { getCurrentUser, getToken } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
 import Sidebar from "../../components/layout/sidebar";
 import styles from "../../assets/css/adminDashboard";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const context = useContext(AuthGlobal);
   const socket = useSocket();
-  const userId = getCurrentUser(); // Call getCurrentUser to get the actual userId
-  console.log(userId);
+  const userId = getCurrentUser(); 
+  const token = getToken();
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { dailySales, weeklySales, monthlySales } = useSelector((state) => state.sales);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
-  const [token, setToken] = useState(null);
 
   useEffect(() => {
     if (!socket) {
@@ -50,13 +48,8 @@ const Dashboard = () => {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-        const res = await AsyncStorage.getItem("jwt");
-        if (res) {
-          setToken(res);
-          dispatch(Profileuser(userId, res));
-        } else {
-          setErrors("No JWT token found.");
-        }
+          dispatch(Profileuser(userId, token));
+      
       } catch (error) {
         console.error("Error retrieving JWT:", error);
         setErrors("Failed to retrieve JWT token.");
@@ -66,7 +59,7 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, [userId, dispatch]);
+  }, [userId, dispatch, token]);
 
   useEffect(() => {
     dispatch(getDailySales());
