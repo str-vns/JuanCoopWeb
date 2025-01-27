@@ -59,7 +59,7 @@ import TypeList from "@components/admin/Types/TypeList";
 import TypeCreate from "@components/admin/Types/TypeCreate";
 import TypeUpdate from "@components/admin/Types/TypeUpdate";
 
-import CategoryList from "./components/admin/Categories/CategoryList";
+import CategoryList from "@components/admin/Categories/CategoryList";
 
 import BlogLists from "@components/admin/Blogs/Bloglist";
 import BlogCreate from "@components/admin/Blogs/BlogCreate";
