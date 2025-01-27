@@ -140,6 +140,8 @@ const Dashboard = () => {
   );
 };
 
+export default Dashboard;
+
 const styles = {
   container: {
     fontFamily: "Arial, sans-serif",
@@ -208,4 +210,4 @@ const styles = {
   },
 };
 
-export default Dashboard;
+
