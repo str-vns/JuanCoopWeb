@@ -13,7 +13,7 @@ import {
   TYPE_UPDATE_FAIL,
 } from "../Constants/typeConstants";
 import axios from "axios";
-import baseURL from "@Commons/baseurl";
+import baseURL from "@Commons/baseUrl";
 
 export const typeList = () => async (dispatch) => {
   try {

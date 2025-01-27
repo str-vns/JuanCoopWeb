@@ -17,7 +17,7 @@ import {
   CLEAR_ERRORS,
 } from "@redux/Constants/blogConstants";
 import axios from "axios";
-import baseURL from "@Commons/baseurl";
+import baseURL from "@Commons/baseUrl";
 
 // Get all blogs
 export const getBlog = () => async (dispatch) => {

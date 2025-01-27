@@ -14,7 +14,7 @@ import {
   CATEGORY_CLEAR_ERRORS,
 } from "../Constants/categoryConstants";
 
-import baseURL from "@Commons/baseurl";
+import baseURL from "@Commons/baseUrl";
 import axios from "axios";
 import mime from "mime"; // Ensure mime package is installed
 

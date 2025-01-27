@@ -1,5 +1,5 @@
 import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS } from "../Constants/categoryConstants";
-import baseURL from "@assets/commons/baseurl";
+import baseURL from "@assets/commons/baseUrl";
 import axios from "axios";
 export const categoryList = () => async (dispatch) => {
     try {

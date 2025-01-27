@@ -5,7 +5,7 @@ import "@assets/css/productcard.css";
 import Navbar from "../layout/navbar";
 import { addToCart } from "@redux/Actions/cartActions";
 import { useDispatch } from "react-redux";
-
+import baseURL from "@Commons/baseUrl";
 const Stars = ({ count }) => {
   const stars = Array(5)
     .fill(0)
@@ -26,7 +26,7 @@ const ProductCard = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const baseURL = import.meta.env.VITE_BASE_URL;
+
 
         // Fetch product details including coop ID
         const productResponse = await axios.get(`${baseURL}products/${id}`);

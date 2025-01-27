@@ -5,7 +5,7 @@ import {
     PRODUCTS_ERROR,
   } from "@redux/Constants/rankConstants";
   import axios from "axios";
-  import baseURL from "@Commons/baseurl";
+  import baseURL from "@Commons/baseUrl";
 
   
   // Action to fetch ranked products

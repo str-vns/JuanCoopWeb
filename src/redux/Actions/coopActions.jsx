@@ -34,7 +34,7 @@ import {
   COOP_DELETE_SUCCESS,
 } from "../Constants/coopConstants";
 import axios from "axios";
-import baseURL from "@Commons/baseurl";
+import baseURL from "@Commons/baseUrl";
 import mime from "mime";
 
 export const registerCoop = (coop, token) => async (dispatch) => {
