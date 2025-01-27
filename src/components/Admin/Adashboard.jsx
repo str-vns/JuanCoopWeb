@@ -1,8 +1,7 @@
-import React, { useCallback, useState, useContext, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDailySales, getWeeklySales, getMonthlySales } from "@redux/Actions/salesActions";
 import { useNavigate } from "react-router-dom";
-import AuthGlobal from "@redux/Store/AuthGlobal";
 import { getCurrentUser, getToken } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
@@ -12,7 +11,6 @@ import styles from "@assets/css/adminDashboard";
 const Adashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const context = useContext(AuthGlobal);
   const socket = useSocket();
   const userId = getCurrentUser(); 
   const token = getToken();
