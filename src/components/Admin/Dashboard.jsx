@@ -7,13 +7,14 @@ import { getCurrentUser } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
 import Sidebar from "../../components/layout/sidebar";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const context = useContext(AuthGlobal);
   const socket = useSocket();
-  const userId = getCurrentUser;
+  const userId = getCurrentUser(); // Call getCurrentUser to get the actual userId
   console.log(userId);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { dailySales, weeklySales, monthlySales } = useSelector((state) => state.sales);
@@ -104,9 +105,8 @@ const Dashboard = () => {
 
   return (
     <div style={styles.container}>
-        <Sidebar/>
+      <Sidebar />
       <div style={styles.header}>
-       
         <h1 style={styles.headerTitle}>Sales Dashboard</h1>
       </div>
 
@@ -134,6 +134,8 @@ const Dashboard = () => {
       <button style={styles.refreshButton} onClick={onRefresh}>
         {refreshing ? "Refreshing..." : "Refresh Sales"}
       </button>
+
+      {errors && <div style={{ color: "red", marginTop: "20px" }}>{errors}</div>} {/* Display errors */}
     </div>
   );
 };
@@ -144,8 +146,8 @@ const styles = {
     margin: "0 auto",
     maxWidth: "800px",
     padding: "20px",
-    width: "calc(100% - 400px)", // Corrected the syntax for `calc`
-    marginLeft: "300px", // Corrected the syntax for `margin-left`
+    width: "calc(100% - 400px)",
+    marginLeft: "300px",
     marginTop: "40px",
   },
   header: {
@@ -192,7 +194,7 @@ const styles = {
     cursor: "pointer",
     fontSize: "16px",
     marginTop: "20px",
-    marginBottom: "10px", // Added marginBottom to create space below the button
+    marginBottom: "10px",
   },
   refreshButton: {
     backgroundColor: "#007BFF",
@@ -204,7 +206,6 @@ const styles = {
     fontSize: "16px",
     marginLeft: "10px",
   },
- 
 };
 
 export default Dashboard;
