@@ -7,7 +7,7 @@ import Sidebar from "./sidebar";
 import { IoArrowBackOutline } from "react-icons/io5"; // Using react-icons for the back button
 import styles from "../../assets/css/rankProduct";
 
-const RankedProductsPage = () => {
+const rankProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,4 +42,4 @@ const RankedProductsPage = () => {
   );
 };
 
-export default RankedProductsPage;
+export default rankProduct;
