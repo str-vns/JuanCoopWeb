@@ -45,8 +45,6 @@ import AddressEdit from "@components/Address/addressEdit";
 import OtpRegister from "@components/user/otpRegister";
 import { logoutUser } from "@redux/Actions/authActions";
 import { useDispatch } from "react-redux";
-import ProtectedRoute from "@route/ProtectedRoute";
-import RegisterRoute from "@route/RegisterRoute";
 import Dashboard from "@components/admin/Adashboard";
 import RankedProductsPage from "@components/admin/RrankProduct";
 import UserList from "@components/admin/User/UserList";
@@ -79,6 +77,8 @@ import EditProfile from "@components/user/EditProfile";
 // import AdminDashboard from "@components/admin/admin";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
+import ProtectedRoute from "@route/ProtectedRoute";
+import RegisterRoute from "@route/RegisterRoute";
 
 import MemberList from "@components/Cooperative/Member/MemberList";
 const isTokenExpired = () => {
