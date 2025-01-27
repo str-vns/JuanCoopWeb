@@ -6,10 +6,10 @@ import AuthGlobal from "@redux/Store/AuthGlobal";
 import { getCurrentUser, getToken } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
-import Sidebar from "../../components/layout/sidebar";
+import Sidebar from "../layout/sidebar";
 import styles from "../../assets/css/adminDashboard";
 
-const Dashboard = () => {
+const Adashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const context = useContext(AuthGlobal);
@@ -134,5 +134,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Adashboard;
 
