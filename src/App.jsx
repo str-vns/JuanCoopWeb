@@ -4,87 +4,75 @@ import { ToastContainer, toast} from 'react-toastify';
 import { gapi } from 'gapi-script';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Importing user-related components
+// import Sidebar from "./Components/layout/sidebar"; // Capitalized Sidebar
 import Register from "@components/user/Register";
 import Login from "@components/user/Login";
-import ForgotPassword from "@components/user/ForgotPassword";
-import PasswordReset from "@components/user/PasswordReset";
-import OtpRegister from "@components/user/OtpRegister";
+import ForgotPassword from "@components/user/ForgotPassword"; // Capitalized
+import SingleProduct from "@components/Products/SingleProduct";
+import Homepage from "@components/Products/Homepage";
+// import Navbar from "./Components/layout/navbar";
+import CoopLocation from "@components/Map/CoopLocation";
+import ProductCard from "@components/Products/SingleProduct";
+import Carts from "@components/Cart/Cart";
+// import Bill from "./Components/Cart/Billing";
+import CheckoutAccordion from "@components/Cart/Checkout"; // Capitalized
+import OrderConfirmation from "@components/Cart/Confirm"; // Capitalized
 import Profile from "@components/user/Profile";
-import EditProfile from "@components/user/EditProfile";
 import WishList from "@components/user/Wishlist";
-
-// Importing product-related components
-import SingleProduct from "@components/products/SingleProduct";
-import Homepage from "@components/products/Homepage";
-import ProductCard from "@components/products/SingleProduct";
-
-// Importing cart-related components
-import Carts from "@components/cart/Cart";
-import CheckoutAccordion from "@components/cart/Checkout";
-import OrderConfirmation from "@components/cart/Confirm";
-import Shipping from "@components/cart/Address";
-import Payment from "@components/cart/Payment";
-
-// Importing address-related components
-import Address from "@components/address/AddressList";
-import AddressCreate from "@components/address/AddressCreate";
-import AddressEdit from "@components/address/AddressEdit";
-
-// Importing order-related components
-import Orders from "@components/order/Orders";
-
-// Importing cooperative-related components
-import CoopDashboard from "@components/cooperative/dashboard/CoopDashboard";
-import ProductList from "@components/cooperative/product/ProductList";
-import ProductArchive from "@components/cooperative/product/ProductArchive";
-import BlogList from "@components/cooperative/blog/BlogList";
-import ForumList from "@components/cooperative/forum/ForumList";
-import ForumPostList from "@components/cooperative/forum/ForumPostList";
-import CoopProfileEdit from "@components/cooperative/profile/EditProfile";
-import CoopOrderList from "@components/cooperative/order/OrderList";
-import MessageList from "@components/cooperative/messages/MessageList";
-import CoopLogin from "@components/cooperative/registration/CoopLogin";
-import FarmRegistration from "@components/cooperative/registration/FarmRegistration";
-import GoogleLogin from "@components/cooperative/registration/GoogleLogin";
-import InventoryList from "@components/cooperative/inventory/InventoryList";
-import InventoryDetail from "@components/cooperative/inventory/InventoryDetail";
-import InventoryCreate from "@components/cooperative/inventory/InventoryCreate";
-import InventoryUpdate from "@components/cooperative/inventory/InventoryUpdate";
-import MemberList from "@components/cooperative/member/MemberList";
-
-// Importing admin-related components
-import Dashboard from "@components/admin/Adashboard";
-import RankedProductsPage from "@components/admin/RankProduct";
-import UserList from "@components/admin/user/UserList";
-import TypeList from "@components/admin/types/TypeList";
-import TypeCreate from "@components/admin/types/TypeCreate";
-import TypeUpdate from "@components/admin/types/TypeUpdate";
-import CategoryList from "@components/admin/categories/CategoryList";
-import BlogLists from "@components/admin/blogs/BlogList";
-import BlogCreate from "@components/admin/blogs/BlogCreate";
-import BlogUpdate from "@components/admin/blogs/BlogUpdate";
-import DriverList from "@components/admin/drivers/DriverList";
-import DriverDetails from "@components/admin/drivers/DriverDetails";
-import DriverNotApproved from "@components/admin/drivers/DriverNotApproved";
-import CoopList from "@components/admin/coops/CoopList";
-import CoopDetails from "@components/admin/coops/CoopDetails";
-import CoopNotApproved from "@components/admin/coops/CoopNotApproved";
-import PostList from "@components/admin/post/PostList";
-
-// Importing utility functions and routes
-import { logoutUser } from "@redux/actions/authActions";
+// import OrderList from "./Components/Order/Orderlist";
+import Orders from "@components/Order/Orders";
+import CoopDashboard from "@components/cooperative/Dashboard/CoopDashboard";
+import ProductList from "@components/cooperative/Product/ProductList";
+import BlogList from "@components/cooperative/Blog/BlogList";
+import ForumPostList from "@components/cooperative/Forum/ForumPostList";
+import CoopProfileEdit from "@components/cooperative/Profile/EditProfile"; // Capitalized
+import ForumList from "@components/cooperative/Forum/ForumList";
+import ProductArchive from "@components/cooperative/Product/ProductArchive";
+// import ForumPost from "./Components/Cooperative/Forum/ForumPost";
+import CoopOrderList from "@components/cooperative/Order/OrderList";
+import MessageList from "@components/cooperative/Messages/MessageList";
+import CoopLogin from "@components/cooperative/Registration/CoopLogin";
+import FarmRegistration from "@components/cooperative/Registration/FarmRegistration";
+import GoogleLogin from "@components/cooperative/Registration/GoogleLogin";
+import Messenger from "@components/Chatime/messenger/Messenger";
+import CoopMessenger from "@components/cooperative/Chatime/messenger/Messenger";
+import Shipping from "@components/Cart/Address"; // Properly aligned
+import Payment from "@components/Cart/Payment";
+import Address from "@components/Address/AddressList"; // Capitalized
+import AddressCreate from "@components/Address/AddressCreate"; // Capitalized
+import AddressEdit from "@components/Address/AddressEdit"; // Capitalized
+import OtpRegister from "@components/user/OtpRegister"; // Capitalized
+import { logoutUser } from "@redux/Actions/authActions";
 import { useDispatch } from "react-redux";
+import Dashboard from "@components/admin/ADashboard"; // Adjusted capitalization
+import RankedProductsPage from "@components/admin/RankProduct"; // Corrected typo
+import UserList from "@components/admin/User/UserList";
+import InventoryList from "@components/cooperative/Inventory/InventoryList";
+import InventoryDetail from "@components/cooperative/Inventory/InventoryDetail";
+import InventoryCreate from "@components/cooperative/Inventory/InventoryCreate";
+import InventoryUpdate from "@components/cooperative/Inventory/InventoryUpdate";
+import TypeList from "@components/admin/Types/TypeList";
+import TypeCreate from "@components/admin/Types/TypeCreate";
+import TypeUpdate from "@components/admin/Types/TypeUpdate";
+import CategoryList from "@components/admin/Categories/CategoryList";
+import BlogLists from "@components/admin/Blogs/BlogList"; // Capitalized
+import BlogCreate from "@components/admin/Blogs/BlogCreate";
+import BlogUpdate from "@components/admin/Blogs/BlogUpdate";
+import DriverList from "@components/admin/Drivers/DriverList"; // Capitalized
+import DriverDetails from "@components/admin/Drivers/DriverDetails";
+import DriverNotApproved from "@components/admin/Drivers/DriverNotApproved";
+import CoopList from "@components/admin/Coops/CoopList"; // Capitalized
+import CoopDetails from "@components/admin/Coops/CoopDetails";
+import CoopNotApproved from "@components/admin/Coops/CoopNotApproved";
+import PostList from "@components/admin/Post/PostList"; // Capitalized
+import PasswordReset from "@components/user/PasswordReset"; // Capitalized
+import EditProfile from "@components/user/EditProfile";
+// import AdminDashboard from "@components/admin/admin";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-
-// Importing chat-related components
-import Messenger from "@components/chatime/messenger/Messenger";
-import CoopMessenger from "@components/cooperative/chatime/messenger/Messenger";
-
-// Importing CSS
+import "./App.css"; 
 
 import MemberList from "@components/Cooperative/Member/MemberList";
 const isTokenExpired = () => {
