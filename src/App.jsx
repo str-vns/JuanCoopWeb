@@ -47,9 +47,6 @@ import { logoutUser } from "@redux/Actions/authActions";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-import Dashboard from "./components/admin/Dashboard/AdminDashboard";
-import RrankProduct from "./components/admin/Dashboard/RrankProduct";
-import UserList from "./components/admin/User/UserList";
 import InventoryList from "./components/cooperative/Inventory/InventoryList";
 import InventoryDetail from "./components/cooperative/Inventory/InventoryDetail";
 import InventoryCreate from "./components/cooperative/Inventory/InventoryCreate";
@@ -79,8 +76,11 @@ import EditProfile from "./components/user/EditProfile";
 // import AdminDashboard from "./components/admin/admin";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
-
 import MemberList from "./components/cooperative/Member/MemberList";
+
+import UserList from "./components/admin/Users/UserList";
+import Dashboard from "./components/admin/Dashboard/AdminDashboard";
+import RrankProduct from "./components/admin/Dashboard/RankProduct";
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
