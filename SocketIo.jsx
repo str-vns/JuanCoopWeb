@@ -7,7 +7,7 @@ export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     useEffect(() => {
 
-      const socketConnection = io(import.meta.env.VITE_IP_LOCAL, {
+      const socketConnection = io(import.meta.env.VITE_IP_RENDERER, {
         transports: ["websocket"],
         cors: {
           origin: [
