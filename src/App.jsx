@@ -5,9 +5,9 @@ import { gapi } from 'gapi-script';
 import 'react-toastify/dist/ReactToastify.css';
 
 // import Sidebar from "./Components/layout/sidebar"; // Capitalized Sidebar
-import Register from "@components/User/Register";
-import Login from "@components/User/Login";
-import ForgotPassword from "@components/User/forgotPassword";
+import Register from "@components/user/Register";
+import Login from "@components/user/Login";
+import ForgotPassword from "@components/user/forgotPassword";
 import SingleProduct from "@components/Products/SingleProduct";
 import Homepage from "@components/Products/Homepage";
 // import Navbar from "./Components/layout/navbar";
@@ -77,7 +77,7 @@ import PostList from "@components/Admin/Post/Postlist";
 
 import PasswordReset from "@components/user/passwordReset";
 import EditProfile from "@components/user/EditProfile";
-import AdminDashboard from "@components/Admin/admin";
+import AdminDashboard from "@components/admin/admin";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
 
