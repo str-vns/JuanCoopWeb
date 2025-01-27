@@ -47,7 +47,7 @@ import { logoutUser } from "@redux/Actions/authActions";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-import Dashboard from "./components/admin/Dashboard/dashboard";
+import Dashboard from "./components/admin/Dashboard/AdminDashboard";
 import RrankProduct from "./components/admin/Dashboard/RrankProduct";
 import UserList from "./components/admin/User/UserList";
 import InventoryList from "./components/cooperative/Inventory/InventoryList";
