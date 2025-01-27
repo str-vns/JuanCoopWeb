@@ -5,7 +5,7 @@ import Sidebar from "../sidebar";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import { getCoopProducts } from "@redux/Actions/productActions";
 import { useNavigate } from "react-router-dom";
-import "../../../assets/css/inventorylist.css";
+import "@assets/css/inventorylist.css";
 
 const InventoryList = () => {
   const dispatch = useDispatch();

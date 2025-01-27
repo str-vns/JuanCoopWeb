@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/css/address.css";
+import "@assets/css/address.css";
 import Navbar from "../layout/navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "@utils/helpers";

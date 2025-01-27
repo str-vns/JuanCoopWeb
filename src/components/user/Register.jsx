@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "../../assets/css/register.css";
-import registerImage from "../../assets/img/login.png"; // Adjust path as per your folder structure
+import "@assets/css/register.css";
+import registerImage from "@assets/img/login.png"; // Adjust path as per your folder structure
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import Navbar from "../layout/navbar";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { OTPregister, checkEmail } from "../../redux/Actions/userActions";
+import { OTPregister, checkEmail } from "@redux/Actions/userActions";
 import { toast } from "react-toastify";
 import axios from "axios";
 import image from "@assets/img/default_avatar.jpg"

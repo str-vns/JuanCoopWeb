@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import "../../assets/css/checkout.css";
+import "@assets/css/checkout.css";
 import Navbar from "../layout/navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom'

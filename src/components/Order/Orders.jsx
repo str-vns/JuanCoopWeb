@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserOrders, updateOrderStatus } from "@redux/actions/orderActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
-import "../../assets/css/orderlist.css";
+import "@assets/css/orderlist.css";
 import Navbar from "../layout/navbar";
 const Orders = () => {
   const dispatch = useDispatch();

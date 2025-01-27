@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import loginImage from "../../assets/img/shop.png";
-import googleLogo from "../../assets/img/google.png";
-import "../../assets/css/login.css";
-import { login } from "@redux/actions/authActions";
+import loginImage from "@assets/img/shop.png";
+import googleLogo from "@assets/img/google.png";
+import "@assets/css/login.css";
+import { login } from "@redux/Actions/authActions";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "@utils/helpers";

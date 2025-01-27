@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthGlobal from '@redux/Store/AuthGlobal';
 import { Profileuser, ProfileEdit } from '@redux/Actions/userActions';
 import { useSocket } from '../../../SocketIo';
-import '../../assets/css/UserEditProfile.css';
+import '@assets/css/UserEditProfile.css';
 
 const UserEditProfile = () => {
   const [firstName, setFirstName] = useState('');

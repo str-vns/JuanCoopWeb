@@ -1,9 +1,9 @@
-import "../../assets/css/navbar.css";
-import logo from "../../assets/img/logo.png";
+import "@assets/css/navbar.css";
+import logo from "@assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getToken, isAuth, getCurrentUser } from "@utils/helpers";
-import { logoutUser } from "@redux/actions/authActions";
+import { logoutUser } from "@redux/Actions/authActions";
 import { setCartItems } from '@redux/Actions/cartActions';
 import { setShippingItems } from '@redux/Actions/shippingActions';
 import { setPayItems } from '@redux/Actions/paymentActions';

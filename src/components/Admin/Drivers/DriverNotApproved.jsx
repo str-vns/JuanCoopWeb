@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { listDriverDisapproved } from "@redux/Actions/driverActions";
 import { getToken } from "@utils/helpers";
 import Sidebar from "@components/Admin/sidebar";
-import "../../../assets/css/driverlist.css";
+import "@assets/css/driverlist.css";
 
 const DriverNotApproved = () => {
   const dispatch = useDispatch();

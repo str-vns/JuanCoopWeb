@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../../assets/css/forgotpassword.css";
-import Password from "../../assets/img/forgot.png";
+import "@assets/css/forgotpassword.css";
+import Password from "@assets/img/forgot.png";
 import { resetPassword } from "@redux/Actions/userActions";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";

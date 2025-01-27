@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { updateInventory } from "@redux/Actions/inventoryActions";
-import "../../../assets/css/inventoryupdate.css";
+import "@assets/css/inventoryupdate.css";
 import { getToken } from "@utils/helpers";
 
 const InventoryUpdate = ({ onClose, item }) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../assets/css/wishlist.css"; // Import CSS file
+import "@assets/css/wishlist.css"; // Import CSS file
 import Navbar from "../layout/navbar";
 
 // Wishlist Component

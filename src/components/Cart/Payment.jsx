@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import "../../assets/css/checkout.css";
+import "@assets/css/checkout.css";
 import Navbar from "../layout/navbar";
 import { toast } from "react-toastify";
 import { addPay } from '@redux/Actions/paymentActions';

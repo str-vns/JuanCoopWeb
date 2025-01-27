@@ -7,7 +7,7 @@ import { getCurrentUser, getToken } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
 import Sidebar from "../layout/sidebar";
-import styles from "../../assets/css/adminDashboard";
+import styles from "@assets/css/adminDashboard";
 
 const Adashboard = () => {
   const dispatch = useDispatch();

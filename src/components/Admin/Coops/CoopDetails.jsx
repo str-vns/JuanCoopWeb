@@ -4,7 +4,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom"; // react
 import { activeCooperative, deleteCooperative } from "@redux/Actions/coopActions"; // Your action imports
 import { Spinner } from "react-bootstrap"; // Use Spinner from react-bootstrap
 import Sidebar from "@components/Admin/sidebar";
-import "../../../assets/css/coopdetail.css";
+import "@assets/css/coopdetail.css";
 
 
 const CoopDetails = () => {

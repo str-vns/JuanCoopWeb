@@ -6,7 +6,7 @@ import { fetchCoopOrders } from "@redux/Actions/orderActions";
 import { singleCooperative } from "@redux/Actions/coopActions";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, getToken } from "@utils/helpers";
-import "../../../assets/css/orderlistcoop.css";
+import "@assets/css/orderlistcoop.css";
 
 const OrderList = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa"; // Import close icon from react-icons/fa
-import "../../../assets/css/bloginfo.css";
+import "@assets/css/bloginfo.css";
 
 const BlogInfo = ({ isOpen, onClose, post }) => {
   if (!isOpen) return null; // If modal is not open, don't render

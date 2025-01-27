@@ -4,9 +4,9 @@ import Sidebar from "../sidebar";
 import { FaRedo } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { memberInactive } from "@redux/Actions/memberActions";
-import AuthGlobal from "../../../redux/Store/AuthGlobal";
+import AuthGlobal from "@redux/Store/AuthGlobal";
 import { getToken, getCurrentUser } from "@utils/helpers";
-import "../../../assets/css/productarchive.css";
+import "@assets/css/productarchive.css";
 
 const MemberList = () => {
   const context = useContext(AuthGlobal);

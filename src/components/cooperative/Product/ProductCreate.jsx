@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import "../../../assets/css/productcreate.css";
+import "@assets/css/productcreate.css";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryList } from "../../../redux/Actions/categoryActions";
-import { typeList } from "../../../redux/Actions/typeActions";
-import { createCoopProducts } from "../../../redux/Actions/productActions";
+import { categoryList } from "@redux/Actions/categoryActions";
+import { typeList } from "@redux/Actions/typeActions";
+import { createCoopProducts } from "@redux/Actions/productActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
 
 const ProductCreate = ({ show, onClose }) => {

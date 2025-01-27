@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { reverseCode, forwardCode } from "@redux/Actions/locationActions";
 import { addAddress } from '@src/redux/Actions/addressActions';
 import { getCurrentUser, getToken } from "@utils/helpers";
-import "../../assets/css/addresscreate.css";
+import "@assets/css/addresscreate.css";
 import Modal from "react-modal";
 import Map, { Marker } from "react-map-gl";
 import "maplibre-gl/dist/maplibre-gl.css";

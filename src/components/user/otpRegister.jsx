@@ -4,7 +4,7 @@ import Navbar from "@components/layout/Navbar";
 import { OTPregister, registeruser } from "@redux/Actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { login } from "@redux/actions/authActions";
+import { login } from "@redux/Actions/authActions";
 
 function OtpRegister() {
   const location = useLocation()

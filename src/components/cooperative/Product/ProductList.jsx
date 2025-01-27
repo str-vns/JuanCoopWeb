@@ -5,7 +5,7 @@ import {
   createCoopProducts,
   updateCoopProducts,
   soflDelProducts,
-} from "../../../redux/Actions/productActions";
+} from "@redux/Actions/productActions";
 import ProductUpdate from "./ProductUpdate";
 // import Header from "../header";
 import Sidebar from "../sidebar";
@@ -14,7 +14,7 @@ import { getToken, getCurrentUser } from "@utils/helpers";
 import axios from "axios";
 import baseURL from "@Commons/baseUrl";
 import ProductCreate from "./ProductCreate";
-import "../../../assets/css/productlist.css";
+import "@assets/css/productlist.css";
 
 const ProductList = () => {
   const dispatch = useDispatch();

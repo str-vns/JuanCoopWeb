@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "@components/Admin/sidebar";
 import { driverApproved, driverRejected } from "@redux/Actions/driverActions";
-import "../../../assets/css/driverdetails.css";
+import "@assets/css/driverdetails.css";
 
 const DriverDetails = () => {
   const location = useLocation();

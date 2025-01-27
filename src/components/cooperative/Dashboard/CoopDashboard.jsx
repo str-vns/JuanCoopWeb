@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCoopDashboardData } from "@redux/Actions/orderActions";
 import { Bar, Pie } from "react-chartjs-2";
 import { getToken, getCurrentUser } from "@utils/helpers";
-import "../../../assets/css/coopdashboard.css";
+import "@assets/css/coopdashboard.css";
 // import Header from "../header";
 import Sidebar from "../sidebar";
 import {

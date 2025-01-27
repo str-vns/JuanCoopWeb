@@ -3,7 +3,7 @@ import { Button, Container, Row, Col, Spinner, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { inactiveCooperative } from "@redux/Actions/coopActions";
-import "../../../assets/css/cooplist.css";
+import "@assets/css/cooplist.css";
 import Sidebar from "@components/Admin/sidebar";
 
 const CoopNotApproved = () => {

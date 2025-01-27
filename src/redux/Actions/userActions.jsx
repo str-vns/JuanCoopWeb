@@ -56,7 +56,7 @@ import {
 } from "../Constants/userConstants";
 import baseURL from '@Commons/baseUrl'; 
 import { toast } from 'react-toastify';
-import { login } from "@redux/actions/authActions";
+import { login } from "@redux/Actions/authActions";
 import { authenticated, getToken } from '@utils/helpers';
 
 export const registeruser = (userData) => async (dispatch) => {

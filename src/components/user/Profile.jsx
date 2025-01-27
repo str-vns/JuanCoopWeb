@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Profileuser } from "@redux/Actions/userActions";
-import AuthGlobal from "../../redux/Store/AuthGlobal";
+import AuthGlobal from "@redux/Store/AuthGlobal";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import { matchCooperative } from "@redux/Actions/coopActions";
 // import { memberAllList } from '@redux/Actions/memberActions';
 import { useNavigate } from "react-router-dom";
 import Navbar from "../layout/navbar";
-import "../../assets/css/profile.css";
+import "@assets/css/profile.css";
 
 const Profile = () => {
   const context = useContext(AuthGlobal);

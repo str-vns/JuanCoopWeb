@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "@components/Admin/sidebar";
-import "../../../assets/css/typelist.css";
+import "@assets/css/typelist.css";
 import { useDispatch, useSelector } from "react-redux";
 import { typeList, typeDelete } from "@redux/Actions/typeActions";
 

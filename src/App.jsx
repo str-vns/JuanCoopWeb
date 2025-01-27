@@ -80,7 +80,7 @@ import EditProfile from "@components/user/EditProfile";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
 
-import MemberList from "@components/Cooperative/Member/MemberList";
+import MemberList from "@components/cooperative/Member/MemberList";
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();

@@ -7,7 +7,7 @@ import { getToken, getCurrentUser } from "@utils/helpers";
 import { useSocket } from "../../../SocketIo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../assets/css/UserEditProfile.css";
+import "@assets/css/UserEditProfile.css";
 import Navbar from "../layout/navbar";
 
 const EditProfile = () => {

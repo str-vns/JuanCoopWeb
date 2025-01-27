@@ -6,7 +6,7 @@ import { inventoryProducts, deleteInventory } from "@redux/Actions/inventoryActi
 import { getToken } from "@utils/helpers";
 import Header from "../header";
 import Sidebar from "../sidebar";
-import "../../../assets/css/inventorylist.css";
+import "@assets/css/inventorylist.css";
 import InventoryCreate from "./InventoryCreate";
 import InventoryUpdate from "./InventoryUpdate";
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createInventory } from "@redux/Actions/inventoryActions";
 import { getToken } from "@utils/helpers";
-import "../../../assets/css/inventorycreate.css";
+import "@assets/css/inventorycreate.css";
 
 const InventoryCreate = ({ onClose, productId }) => {
   const dispatch = useDispatch();

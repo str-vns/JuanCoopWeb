@@ -16,7 +16,7 @@ import {
 import "./sidebar.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logoutUser } from "@redux/actions/authActions";
+import { logoutUser } from "@redux/Actions/authActions";
 import Cookies from 'js-cookie';
 
 const Sidebar = () => {

@@ -6,7 +6,7 @@ import {
   categoryDelete,
 } from "@redux/Actions/categoryActions";
 import Sidebar from "@components/Admin/sidebar";
-import "../../../assets/css/categorylist.css";
+import "@assets/css/categorylist.css";
 
 const CategoryList = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../../assets/css/forgotpassword.css";
-import Password from "../../assets/img/forgot.png";
+import "@assets/css/forgotpassword.css";
+import Password from "@assets/img/forgot.png";
 import { otpForgotPassword } from "@redux/actions/userActions";
 import { useDispatch } from "react-redux";
 const ForgotPassword = () => {

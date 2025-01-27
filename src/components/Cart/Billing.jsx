@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/css/bill.css"; // Ensure the correct CSS path
+import "@assets/css/bill.css"; // Ensure the correct CSS path
 
 const Bill = () => {
   return (

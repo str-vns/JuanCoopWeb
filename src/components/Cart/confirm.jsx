@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import check from "../../assets/img/check.png"; // Import the check image
+import check from "@assets/img/check.png"; // Import the check image
 import Navbar from "../layout/navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from '@redux/Actions/cartActions';

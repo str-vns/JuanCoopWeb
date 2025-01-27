@@ -1,5 +1,5 @@
 import Navbar from "../layout/navbar";
-import "../../assets/css/cart.css";
+import "@assets/css/cart.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {updateCartQuantity, removeFromCart, updateCartInv } from "@redux/actions/cartActions";

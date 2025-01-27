@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers, softDeleteUser, restoreUser } from "@redux/Actions/userActions";
 import Sidebar from "../sidebar";
-import "../../../assets/css/userlist.css";
+import "@assets/css/userlist.css";
 import {getToken} from "@utils/helpers";
 
 const UserList = () => {
