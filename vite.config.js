@@ -27,4 +27,9 @@ export default defineConfig({
       '@Commons': path.resolve(__dirname, './assets'),
     },
   },
+  
+  base: '/',
+  build: {
+    outDir: 'dist', 
+  },
 });
