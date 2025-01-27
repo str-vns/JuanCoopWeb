@@ -51,7 +51,7 @@ import InventoryList from "@components/cooperative/Inventory/InventoryList";
 import InventoryDetail from "@components/cooperative/Inventory/InventoryDetail";
 import InventoryCreate from "@components/cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "@components/cooperative/Inventory/InventoryUpdate";
-import Dashboard from "@components/admin/Dashboard";
+import Dashboard from "../src/components/admin/Dashboard";
 import RankedProductsPage from "@components/admin/rankProduct";
 import UserList from "@components/admin/User/UserList";
 
