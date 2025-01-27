@@ -7,6 +7,7 @@ import { getCurrentUser } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
 import Sidebar from "../../components/layout/sidebar";
+import styles from "../../assets/css/adminDashboard";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 const Dashboard = () => {
@@ -141,73 +142,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-const styles = {
-  container: {
-    fontFamily: "Arial, sans-serif",
-    margin: "0 auto",
-    maxWidth: "800px",
-    padding: "20px",
-    width: "calc(100% - 400px)",
-    marginLeft: "300px",
-    marginTop: "40px",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px",
-    padding: "10px 0",
-    borderBottom: "1px solid #ddd",
-  },
-  menuButton: {
-    backgroundColor: "transparent",
-    border: "none",
-    fontSize: "24px",
-    cursor: "pointer",
-  },
-  headerTitle: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    alignItems: "center",
-  },
-  salesContainer: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-  },
-  salesCard: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  cardTitle: {
-    fontSize: "18px",
-    fontWeight: "bold",
-    marginBottom: "10px",
-  },
-  navigateButton: {
-    backgroundColor: "#f7b900",
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    color: "#fff",
-    cursor: "pointer",
-    fontSize: "16px",
-    marginTop: "20px",
-    marginBottom: "10px",
-  },
-  refreshButton: {
-    backgroundColor: "#007BFF",
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    color: "#fff",
-    cursor: "pointer",
-    fontSize: "16px",
-    marginLeft: "10px",
-  },
-};
-
 
