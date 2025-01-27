@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import Loader from '@components/layout/loader'; 
+import Loader from '../components/layout/loader'; 
 import { getCurrentUser } from '@utils/helpers';
 
 const RoleBaseRoute = () => {
