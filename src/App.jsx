@@ -22,19 +22,19 @@ import Profile from "@components/user/Profile";
 import WishList from "@components/user/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
 import Orders from "@components/Order/Orders";
-import CoopDashboard from "@components/Cooperative/Dashboard/CoopDashboard";
-import ProductList from "@components/Cooperative/Product/ProductList";
-import BlogList from "@components/Cooperative/Blog/BlogList";
-import ForumPostList from "@components/Cooperative/Forum/ForumPostList";
-import CoopProfileEdit from "@components/Cooperative/Profile/editProfile";
-import ForumList from "@components/Cooperative/Forum/ForumList";
-import ProductArchive from "@components/Cooperative/Product/ProductArchive";
+import CoopDashboard from "@components/cooperative/Dashboard/CoopDashboard";
+import ProductList from "@components/cooperative/Product/ProductList";
+import BlogList from "@components/cooperative/Blog/BlogList";
+import ForumPostList from "@components/cooperative/Forum/ForumPostList";
+import CoopProfileEdit from "@components/cooperative/Profile/editProfile";
+import ForumList from "@components/cooperative/Forum/ForumList";
+import ProductArchive from "@components/cooperative/Product/ProductArchive";
 // import ForumPost from "./Components/Cooperative/Forum/ForumPost";
-import CoopOrderList from "@components/Cooperative/Order/OrderList";
-import MessageList from "@components/Cooperative/Messages/MessageList";
-import CoopLogin from "@components/Cooperative/Registration/CoopLogin";
-import FarmRegistration from "@components/Cooperative/Registration/FarmRegistration";
-import GoogleLogin from "@components/Cooperative/Registration/GoogleLogin";
+import CoopOrderList from "@components/cooperative/Order/OrderList";
+import MessageList from "@components/cooperative/Messages/MessageList";
+import CoopLogin from "@components/cooperative/Registration/CoopLogin";
+import FarmRegistration from "@components/cooperative/Registration/FarmRegistration";
+import GoogleLogin from "@components/cooperative/Registration/GoogleLogin";
 import Messenger from '@components/Chatime/messenger/Messenger';
 import CoopMessenger from '@components/cooperative/Chatime/messenger/Messenger'
 import  Shipping from "@components/Cart/Address";
@@ -47,33 +47,33 @@ import { logoutUser } from "@redux/actions/authActions";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-import InventoryList from "@components/Cooperative/Inventory/InventoryList";
-import InventoryDetail from "@components/Cooperative/Inventory/InventoryDetail";
-import InventoryCreate from "@components/Cooperative/Inventory/InventoryCreate";
-import InventoryUpdate from "@components/Cooperative/Inventory/InventoryUpdate";
-import Dashboard from "@components/Admin/Dashboard";
-import RankedProductsPage from "@components/Admin/rankProduct";
-import UserList from "@components/Admin/User/UserList";
+import InventoryList from "@components/cooperative/Inventory/InventoryList";
+import InventoryDetail from "@components/cooperative/Inventory/InventoryDetail";
+import InventoryCreate from "@components/cooperative/Inventory/InventoryCreate";
+import InventoryUpdate from "@components/cooperative/Inventory/InventoryUpdate";
+import Dashboard from "@components/admin/Dashboard";
+import RankedProductsPage from "@components/admin/rankProduct";
+import UserList from "@components/admin/User/UserList";
 
-import TypeList from "@components/Admin/Types/TypeList";
-import TypeCreate from "@components/Admin/Types/TypeCreate";
-import TypeUpdate from "@components/Admin/Types/TypeUpdate";
+import TypeList from "@components/admin/Types/TypeList";
+import TypeCreate from "@components/admin/Types/TypeCreate";
+import TypeUpdate from "@components/admin/Types/TypeUpdate";
 
-import CategoryList from "./components/Admin/Categories/CategoryList";
+import CategoryList from "./components/admin/Categories/CategoryList";
 
-import BlogLists from "@components/Admin/Blogs/Bloglist";
-import BlogCreate from "@components/Admin/Blogs/BlogCreate";
-import BlogUpdate from "@components/Admin/Blogs/BlogUpdate";
+import BlogLists from "@components/admin/Blogs/Bloglist";
+import BlogCreate from "@components/admin/Blogs/BlogCreate";
+import BlogUpdate from "@components/admin/Blogs/BlogUpdate";
 
-import DriverList from "@components/Admin/Drivers/Driverlist";
-import DriverDetails from "@components/Admin/Drivers/DriverDetails";
-import DriverNotApproved from "@components/Admin/Drivers/DriverNotApproved";
+import DriverList from "@components/admin/Drivers/Driverlist";
+import DriverDetails from "@components/admin/Drivers/DriverDetails";
+import DriverNotApproved from "@components/admin/Drivers/DriverNotApproved";
 
-import Cooplist from "@components/Admin/Coops/CoopList";
-import CoopDetails from "@components/Admin/Coops/CoopDetails";
-import CoopNotApproved from "./components/Admin/Coops/CoopNotApproved";
+import Cooplist from "@components/admin/Coops/CoopList";
+import CoopDetails from "@components/admin/Coops/CoopDetails";
+import CoopNotApproved from "@components/admin/Coops/CoopNotApproved";
 
-import PostList from "@components/Admin/Post/Postlist";
+import PostList from "@components/admin/Post/Postlist";
 
 import PasswordReset from "@components/user/passwordReset";
 import EditProfile from "@components/user/EditProfile";
