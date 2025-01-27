@@ -47,29 +47,29 @@ import { logoutUser } from "@redux/Actions/authActions";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
-import InventoryList from "./components/cooperative/Inventory/InventoryList";
-import InventoryDetail from "./components/cooperative/Inventory/InventoryDetail";
-import InventoryCreate from "./components/cooperative/Inventory/InventoryCreate";
-import InventoryUpdate from "./components/cooperative/Inventory/InventoryUpdate";
-import TypeList from "./components/admin/Types/TypeList";
-import TypeCreate from "./components/admin/Types/TypeCreate";
-import TypeUpdate from "./components/admin/Types/TypeUpdate";
+// import InventoryList from "./components/cooperative/Inventory/InventoryList";
+// import InventoryDetail from "./components/cooperative/Inventory/InventoryDetail";
+// import InventoryCreate from "./components/cooperative/Inventory/InventoryCreate";
+// import InventoryUpdate from "./components/cooperative/Inventory/InventoryUpdate";
+// import TypeList from "./components/admin/Types/TypeList";
+// import TypeCreate from "./components/admin/Types/TypeCreate";
+// import TypeUpdate from "./components/admin/Types/TypeUpdate";
 
-import CategoryList from "./components/admin/Categories/CategoryList";
+// import CategoryList from "./components/admin/Categories/CategoryList";
 
-import BlogLists from "./components/admin/Blogs/Bloglist";
-import BlogCreate from "./components/admin/Blogs/BlogCreate";
-import BlogUpdate from "./components/admin/Blogs/BlogUpdate";
+// import BlogLists from "./components/admin/Blogs/Bloglist";
+// import BlogCreate from "./components/admin/Blogs/BlogCreate";
+// import BlogUpdate from "./components/admin/Blogs/BlogUpdate";
 
-import DriverList from "./components/admin/Drivers/Driverlist";
-import DriverDetails from "./components/admin/Drivers/DriverDetails";
-import DriverNotApproved from "./components/admin/Drivers/DriverNotApproved";
+// import DriverList from "./components/admin/Drivers/Driverlist";
+// import DriverDetails from "./components/admin/Drivers/DriverDetails";
+// import DriverNotApproved from "./components/admin/Drivers/DriverNotApproved";
 
-import Cooplist from "./components/admin/Coops/CoopList";
-import CoopDetails from "./components/admin/Coops/CoopDetails";
-import CoopNotApproved from "./components/admin/Coops/CoopNotApproved";
+// import Cooplist from "./components/admin/Coops/CoopList";
+// import CoopDetails from "./components/admin/Coops/CoopDetails";
+// import CoopNotApproved from "./components/admin/Coops/CoopNotApproved";
 
-import PostList from "./components/admin/Post/Postlist";
+// import PostList from "./components/admin/Post/Postlist";
 
 import PasswordReset from "./components/user/passwordReset";
 import EditProfile from "./components/user/EditProfile";
@@ -81,6 +81,7 @@ import MemberList from "./components/cooperative/Member/MemberList";
 import UserList from "./components/admin/Users/UserList";
 import Dashboard from "./components/admin/Dashboard/AdminDashboard";
 import RrankProduct from "./components/admin/Dashboard/RankProduct";
+
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
