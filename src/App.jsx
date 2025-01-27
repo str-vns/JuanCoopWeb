@@ -141,7 +141,7 @@ function App() {
   // localStorage.removeItem('jwt')
  
   return (
-    <Router basename="/JuanCoopWeb">
+    <Router>
        <ToastContainer/>
       <div>
         {/* <Sidebar /> Uncomment if you need the Sidebar */}
