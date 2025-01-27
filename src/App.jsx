@@ -62,10 +62,10 @@ import CategoryList from "./components/admin/Categories/CategoryList";
 
 import BlogLists from "./components/admin/Blogs/Bloglist";
 import BlogCreate from "./components/admin/Blogs/BlogCreate";
-import BlogUpdate from "@./components/admin/Blogs/BlogUpdate";
+import BlogUpdate from "./components/admin/Blogs/BlogUpdate";
 
 import DriverList from "./components/admin/Drivers/Driverlist";
-import DriverDetails from "@./components/admin/Drivers/DriverDetails";
+import DriverDetails from "./components/admin/Drivers/DriverDetails";
 import DriverNotApproved from "./components/admin/Drivers/DriverNotApproved";
 
 import Cooplist from "./components/admin/Coops/CoopList";
@@ -74,7 +74,7 @@ import CoopNotApproved from "./components/admin/Coops/CoopNotApproved";
 
 import PostList from "./components/admin/Post/Postlist";
 
-import PasswordReset from "@./components/user/passwordReset";
+import PasswordReset from "./components/user/passwordReset";
 import EditProfile from "./components/user/EditProfile";
 // import AdminDashboard from "./components/admin/admin";
 import { getCurrentUser } from "@utils/helpers";
