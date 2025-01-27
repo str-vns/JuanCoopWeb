@@ -48,7 +48,7 @@ import { useDispatch } from "react-redux";
 import ProtectedRoute from "@route/ProtectedRoute";
 import RegisterRoute from "@route/RegisterRoute";
 import Dashboard from "./components/admin/dashboard.jsx";
-import RrankProduct from "./components/admin/RrankProduct";
+import RrankProduct from "./components/admin/RrankProduct.jsx";
 import UserList from "./components/admin/User/UserList";
 import InventoryList from "./components/cooperative/Inventory/InventoryList";
 import InventoryDetail from "./components/cooperative/Inventory/InventoryDetail";
