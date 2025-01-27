@@ -4,7 +4,7 @@ import { getRankedProducts } from "@redux/Actions/rankActions";
 import { useNavigate } from "react-router-dom";
 import BarGraph from "@assets/css/BarGraph";
 import Sidebar from "./sidebar";
-import styles from "@assets/css/rankProduct";
+import "@assets/css/rankProduct.css";
 
 const RrankProduct = () => {
   const dispatch = useDispatch();
@@ -24,13 +24,13 @@ const RrankProduct = () => {
     : [];
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       <Sidebar/>
-      <div style={styles.header}>
-        <h1 style={styles.headerTitle}>Ranked Products</h1>
+      <div className="header-title">
+        <h1 className="">Ranked Products</h1>
       </div>
-      {loading && <div style={styles.loader}>Loading...</div>}
-      {error && <p style={styles.error}>{error}</p>}
+      {loading && <div className="loader">Loading...</div>}
+      {error && <p className="error">{error}</p>}
       {!loading && !error && transformedProducts.length > 0 && (
         <BarGraph rankedProducts={transformedProducts} />
       )}

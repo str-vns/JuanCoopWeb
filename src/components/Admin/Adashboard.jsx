@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { getCurrentUser, getToken } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
-import Sidebar from "../layout/sidebar";
-import styles from "@assets/css/adminDashboard";
+import Sidebar from "./sidebar";
+import "@assets/css/adminDashboard.css";
 
 const Adashboard = () => {
   const dispatch = useDispatch();
@@ -46,8 +46,7 @@ const Adashboard = () => {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-          dispatch(Profileuser(userId, token));
-      
+        dispatch(Profileuser(userId, token));
       } catch (error) {
         console.error("Error retrieving JWT:", error);
         setErrors("Failed to retrieve JWT token.");
@@ -84,7 +83,7 @@ const Adashboard = () => {
     }
 
     if (sales.error) {
-      return <div style={{ color: "red" }}>Error: {sales.error}</div>;
+      return <div className="error">Error: {sales.error}</div>;
     }
 
     if (sales.data && sales.data.details && Array.isArray(sales.data.details) && sales.data.details.length > 0) {
@@ -96,41 +95,40 @@ const Adashboard = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       <Sidebar />
-      <div style={styles.header}>
-        <h1 style={styles.headerTitle}>Sales Dashboard</h1>
+      <div className="header">
+        <h1 className="header-title">Sales Dashboard</h1>
       </div>
 
-      <div style={styles.salesContainer}>
-        <div style={styles.salesCard}>
-          <h2 style={styles.cardTitle}>Daily Sales</h2>
+      <div className="sales-container">
+        <div className="sales-card">
+          <h2 className="card-title">Daily Sales</h2>
           {renderSales(dailySales)}
         </div>
 
-        <div style={styles.salesCard}>
-          <h2 style={styles.cardTitle}>Weekly Sales</h2>
+        <div className="sales-card">
+          <h2 className="card-title">Weekly Sales</h2>
           {renderSales(weeklySales)}
         </div>
 
-        <div style={styles.salesCard}>
-          <h2 style={styles.cardTitle}>Monthly Sales</h2>
+        <div className="sales-card">
+          <h2 className="card-title">Monthly Sales</h2>
           {renderSales(monthlySales)}
         </div>
       </div>
 
-      <button style={styles.navigateButton} onClick={() => navigate("/barGraph")}>
+      <button className="navigate-button" onClick={() => navigate("/barGraph")}>
         View Bar Graph
       </button>
 
-      <button style={styles.refreshButton} onClick={onRefresh}>
+      <button className="refresh-button" onClick={onRefresh}>
         {refreshing ? "Refreshing..." : "Refresh Sales"}
       </button>
 
-      {errors && <div style={{ color: "red", marginTop: "20px" }}>{errors}</div>} {/* Display errors */}
+      {errors && <div className="error">{errors}</div>}
     </div>
   );
 };
 
 export default Adashboard;
-

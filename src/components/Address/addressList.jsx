@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import Navbar from '@components/layout/Navbar'
-import Loader from '@components/layout/loader'
+import Navbar from '../../components/layout/navbar'
+import Loader from '../../components/layout/loader'
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser , getToken} from "@utils/helpers";
 import { Link, useNavigate, useParams } from 'react-router-dom';

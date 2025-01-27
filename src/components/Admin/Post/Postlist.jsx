@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPost, approvePost, deletePost } from '@src/redux/Actions/postActions';
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const PostList = () => {
   const dispatch = useDispatch();

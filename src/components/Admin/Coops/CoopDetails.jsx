@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useLocation } from "react-router-dom"; // react-router for web navigation
 import { activeCooperative, deleteCooperative } from "@redux/Actions/coopActions"; // Your action imports
 import { Spinner } from "react-bootstrap"; // Use Spinner from react-bootstrap
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 import "@assets/css/coopdetail.css";
 
 

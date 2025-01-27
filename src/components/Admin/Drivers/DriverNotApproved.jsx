@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { listDriverDisapproved } from "@redux/Actions/driverActions";
 import { getToken } from "@utils/helpers";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 import "@assets/css/driverlist.css";
 
 const DriverNotApproved = () => {

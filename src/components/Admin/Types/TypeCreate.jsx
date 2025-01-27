@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { typeCreate } from "@redux/Actions/typeActions";
 import AuthGlobal from "@redux/Store/AuthGlobal";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const TypeCreate = () => {
   const [typeName, setTypeName] = useState("");

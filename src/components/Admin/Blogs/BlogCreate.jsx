@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createBlog } from "@redux/Actions/blogActions";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 import { getToken, getCurrentUser } from "@utils/helpers"; 
 
 const BlogCreate = () => {

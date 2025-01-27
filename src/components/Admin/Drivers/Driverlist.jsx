@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { listDriver } from "@redux/Actions/driverActions";
 import "@assets/css/driverlist.css";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const DriverList = () => {
   const dispatch = useDispatch();

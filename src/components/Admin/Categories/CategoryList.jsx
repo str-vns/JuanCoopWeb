@@ -5,7 +5,7 @@ import {
   categoryList as getCategories,
   categoryDelete,
 } from "@redux/Actions/categoryActions";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 import "@assets/css/categorylist.css";
 
 const CategoryList = () => {

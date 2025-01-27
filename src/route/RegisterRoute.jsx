@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import Loader from '@components/layout/loader'; 
+import Loader from '../components/layout/loader'; 
 
 const RegisterRoute = ({ children }) => {
     const [loading, setLoading] = useState(true);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '@components/layout/Navbar'
+import Navbar from '../../components/layout/navbar'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from 'react-router-dom';
 import { singleAddress,  updateAddress } from '@redux/Actions/addressActions'

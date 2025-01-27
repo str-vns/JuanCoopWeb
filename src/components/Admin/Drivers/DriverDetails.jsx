@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 import { driverApproved, driverRejected } from "@redux/Actions/driverActions";
 import "@assets/css/driverdetails.css";
 

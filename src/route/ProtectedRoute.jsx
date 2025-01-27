@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import Loader from '@components/layout/loader'; // Assuming you have a loader component
+import Loader from '../components/layout/loader'; // Assuming you have a loader component
 import { getCurrentUser } from '@utils/helpers';
 
 const ProtectedRoute = ({ children, isAdmin = false, isCooperative = false, isCustomer = true }) => {

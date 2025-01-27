@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 import "@assets/css/bloglists.css";
 import { getBlog, deleteBlog } from "@redux/Actions/blogActions";
 

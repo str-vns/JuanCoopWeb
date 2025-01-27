@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { inactiveCooperative } from "@redux/Actions/coopActions";
 import "@assets/css/cooplist.css";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const CoopNotApproved = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "@assets/css/otpRegister.css";
-import Navbar from "@components/layout/Navbar";
+import Navbar from "../layout/navbar";
 import { OTPregister, registeruser } from "@redux/Actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";

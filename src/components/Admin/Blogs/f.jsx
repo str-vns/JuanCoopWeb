@@ -5,7 +5,7 @@ import AuthGlobal from "@redux/Store/AuthGlobal";
 import { useNavigate } from "react-router-dom";
 import { getToken, getCurrentUser } from "@utils/helpers";
 
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const BlogCreate = () => {
     const context = useContext(AuthGlobal); // Initialize context at the top

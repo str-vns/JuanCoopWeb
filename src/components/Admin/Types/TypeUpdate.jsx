@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { typeUpdate } from "@redux/Actions/typeActions";
 import { useLocation, useNavigate } from "react-router-dom";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const TypeUpdate = () => {
   const location = useLocation();

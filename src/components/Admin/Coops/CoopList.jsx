@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { allCoops } from "@redux/Actions/coopActions";
 import { Spinner } from "react-bootstrap";
 import "@assets/css/cooplist.css";
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const Cooplist = () => {
   const dispatch = useDispatch();

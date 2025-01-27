@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { updateBlog } from "@redux/Actions/blogActions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getToken, getCurrentUser } from "@utils/helpers"; // Import helper functions
-import Sidebar from "@components/Admin/sidebar";
+import Sidebar from "../sidebar";
 
 const BlogUpdate = () => {
   const location = useLocation();

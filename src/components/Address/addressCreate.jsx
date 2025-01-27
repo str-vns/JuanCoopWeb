@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '@components/layout/Navbar'
+import Navbar from '../../components/layout/navbar'
 import { useDispatch, useSelector } from "react-redux";
 import { reverseCode, forwardCode } from "@redux/Actions/locationActions";
-import { addAddress } from '@src/redux/Actions/addressActions';
+import { addAddress } from '@redux/Actions/addressActions';
 import { getCurrentUser, getToken } from "@utils/helpers";
 import "@assets/css/addresscreate.css";
 import Modal from "react-modal";

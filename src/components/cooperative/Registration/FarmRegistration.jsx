@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Navbar from "@components/layout/Navbar";
+import Navbar from "../../layout/navbar";
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser , getToken} from '@utils/helpers';
 import { reverseCode, forwardCode } from "@redux/Actions/locationActions";
