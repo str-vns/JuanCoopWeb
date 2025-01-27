@@ -5,7 +5,7 @@ import { gapi } from 'gapi-script';
 import 'react-toastify/dist/ReactToastify.css';
 
 // import Sidebar from "./Components/layout/sidebar"; // Capitalized Sidebar
-import Register from "@components/user/Register";
+import Register from "./components/user/Register";
 import Login from "@components/user/Login";
 import ForgotPassword from "@components/user/forgotPassword";
 import SingleProduct from "@components/Products/SingleProduct";
