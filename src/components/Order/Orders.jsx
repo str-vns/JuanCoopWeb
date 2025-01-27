@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUserOrders, updateOrderStatus } from "@redux/actions/orderActions";
+import { fetchUserOrders, updateOrderStatus } from "@redux/Actions/orderActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import "@assets/css/orderlist.css";
 import Navbar from "../layout/navbar";
