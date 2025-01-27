@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDailySales, getWeeklySales, getMonthlySales } from "@redux/Actions/salesActions";
 import { useNavigate } from "react-router-dom";
 import AuthGlobal from "@redux/Store/AuthGlobal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getCurrentUser } from "@utils/helpers";
 import { Profileuser } from "@redux/Actions/userActions";
 import { useSocket } from "../../../SocketIo";
 import Sidebar from "../../components/layout/sidebar";
@@ -13,7 +13,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const context = useContext(AuthGlobal);
   const socket = useSocket();
-  const userId = context?.stateUser?.userProfile?._id;
+  const userId = getCurrentUser;
+  console.log(userId);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { dailySales, weeklySales, monthlySales } = useSelector((state) => state.sales);
   const [refreshing, setRefreshing] = useState(false);

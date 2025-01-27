@@ -34,8 +34,8 @@ const RoleBaseRoute = () => {
     }
 
     if (user) {
-        if (user.roles === 'Admin') {
-            return <Navigate to="/" />;
+        if (user.roles.includes('Admin')) {
+            return <Navigate to="/dashboard" />;
         } else if (user.roles.includes('Customer') && user.roles.includes('Cooperative')) {
             return <Navigate to="/coopdashboard" />;
         } else {

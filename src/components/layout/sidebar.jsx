@@ -1,8 +1,29 @@
 import React from "react";
 import "../../App.css";
 import logo from "../../assets/img/logo.png";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "@redux/actions/authActions";
+import Cookies from "js-cookie";
 
 const Sidebar = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/");
+
+    dispatch(logoutUser());
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token_expiry");
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("cartItems");
+    Cookies.remove("jwt");
+    window.location.reload();
+  };
+
   return (
     <aside className="sidebar">
       {/* Scrollable Content */}
@@ -58,7 +79,7 @@ const Sidebar = () => {
 
       {/* Fixed Yellow Button */}
       <div className="sidebar-footer">
-        <a href="/cooplogin" className="sidebar-button">
+        <a href="/" onClick={handleLogout} className="sidebar-button">
           <i className="fas fa-sign-out-alt sidebar-icon"></i>
           Logout
         </a>

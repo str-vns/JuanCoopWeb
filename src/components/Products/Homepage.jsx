@@ -5,7 +5,7 @@ import Navbar from "../layout/navbar";
 import axios from "axios";
 import { getCurrentUser } from "@utils/helpers";
 import { useSocket } from "../../../SocketIo";
-
+import baseURL from '@Commons/baseUrl';
 
 
 const CategorySection = ({ categories }) => {
@@ -120,12 +120,11 @@ const ProductList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const baseURL = import.meta.env.VITE_BASE_URL;
   
         // Fetch products
         const productsResponse = await axios.get(`${baseURL}products`);
         const fetchedProducts = productsResponse.data.details || [];
-  
+
         // Fetch inventory
         const inventoryResponse = await axios.get(`${baseURL}inventory`);
         const fetchedInventory = inventoryResponse.data.details || [];

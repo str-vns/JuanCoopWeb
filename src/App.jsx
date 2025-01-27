@@ -51,7 +51,7 @@ import InventoryList from "@components/cooperative/Inventory/InventoryList";
 import InventoryDetail from "@components/cooperative/Inventory/InventoryDetail";
 import InventoryCreate from "@components/cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "@components/cooperative/Inventory/InventoryUpdate";
-import Dashboard from "../src/components/admin/Dashboard";
+import Dashboard from "@components/admin/Dashboard";
 import RankedProductsPage from "@components/admin/rankProduct";
 import UserList from "@components/admin/User/UserList";
 
@@ -77,7 +77,7 @@ import PostList from "@components/admin/Post/Postlist";
 
 import PasswordReset from "@components/user/passwordReset";
 import EditProfile from "@components/user/EditProfile";
-import AdminDashboard from "@components/admin/admin";
+// import AdminDashboard from "@components/admin/admin";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
 
@@ -202,7 +202,7 @@ function App() {
           <Route path="/address/edit/:id" element={ <ProtectedRoute isCustomer={true}><AddressEdit/></ProtectedRoute>} />
 
           {/* Admin */}
-          <Route path="/admin" element={<AdminDashboard />} />
+          {/* <Route path="/admin" element={<AdminDashboard />} /> */}
           <Route path="/barGraph" element={<RankedProductsPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/userlist" element={<UserList/>} />
