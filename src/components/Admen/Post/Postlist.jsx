@@ -12,7 +12,13 @@ const PostList = () => {
   const postsPerPage = 8;
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Separate posts based on their status
+  const unapprovedPosts = posts.filter((post) => post.status !== 'approved');
+  const approvedPosts = posts.filter((post) => post.status === 'approved');
+
+  // Slice for pagination (only for unapproved posts for now)
+  const currentUnapprovedPosts = unapprovedPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
     console.log('Dispatching getPost action');
@@ -46,7 +52,7 @@ const PostList = () => {
     setCurrentPage(pageNumber);
   };
 
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const totalPages = Math.ceil(unapprovedPosts.length / postsPerPage);
 
   return (
     <div style={styles.container}>
@@ -56,10 +62,11 @@ const PostList = () => {
           <span>Loading...</span>
         </div>
       )}
-      {currentPosts && currentPosts.length > 0 ? (
+      {unapprovedPosts.length > 0 ? (
         <>
+          <h2 style={styles.sectionTitle}>Unapproved Posts</h2>
           <div style={styles.postsContainer}>
-            {currentPosts.map((post) => (
+            {currentUnapprovedPosts.map((post) => (
               <div key={post._id} style={styles.postCard}>
                 <div style={styles.imageAndContent}>
                   <img
@@ -80,23 +87,21 @@ const PostList = () => {
                     </p>
                   </div>
                 </div>
-                {post.status !== 'approved' && (
-                  <div style={styles.buttonContainer}>
-                    <button
-                      style={{ ...styles.button, ...styles.approveButton }}
-                      onClick={() => handleApprove(post._id)}
-                    >
-                      Approve
-                    </button>
+                <div style={styles.buttonContainer}>
+                  <button
+                    style={{ ...styles.button, ...styles.approveButton }}
+                    onClick={() => handleApprove(post._id)}
+                  >
+                    Approve
+                  </button>
 
-                    <button
-                      style={{ ...styles.button, ...styles.declineButton }}
-                      onClick={() => handleDecline(post._id)}
-                    >
-                      Decline
-                    </button>
-                  </div>
-                )}
+                  <button
+                    style={{ ...styles.button, ...styles.declineButton }}
+                    onClick={() => handleDecline(post._id)}
+                  >
+                    Decline
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -106,7 +111,7 @@ const PostList = () => {
               disabled={currentPage === 1}
               onClick={() => handlePageChange(currentPage - 1)}
             >
-              Previous
+             <i class="fa-solid fa-arrow-left"></i>
             </button>
             {[...Array(totalPages)].map((_, index) => (
               <button
@@ -122,38 +127,70 @@ const PostList = () => {
               disabled={currentPage === totalPages}
               onClick={() => handlePageChange(currentPage + 1)}
             >
-              Next
+              <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
         </>
       ) : (
-        !loading && <p style={styles.noPostsText}>No posts available.</p>
+        !loading && <p style={styles.noPostsText}>No unapproved posts available.</p>
       )}
+
+      {approvedPosts.length > 0 && (
+        <>
+          <h2 style={styles.sectionTitle}>Approved Posts</h2>
+          <div style={styles.postsContainer}>
+            {approvedPosts.map((post) => (
+              <div key={post._id} style={styles.postCard}>
+                <div style={styles.imageAndContent}>
+                  <img
+                    src={
+                      post.image && post.image.length > 0
+                        ? post.image[0].url
+                        : 'path/to/placeholder/image.png'
+                    }
+                    alt="Post"
+                    style={styles.postImage}
+                  />
+                  <div style={styles.postDetails}>
+                    <p style={styles.postContent}>
+                      {post.content || 'No content available'}
+                    </p>
+                    <p style={styles.postDate}>
+                      Posted on: {new Date(post.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
     </div>
   );
 };
 
 const styles = {
   container: {
-    padding: '20px',
+    padding: '15px', // Adjusted padding for smaller layout
     backgroundColor: '#FFFFFF',
     marginLeft: '250px', // Adjust based on the width of your Sidebar
     overflow: 'hidden', // Remove scrollbar
   },
   loadingIndicator: {
-    margin: '20px 0',
+    margin: '15px 0', // Smaller margin
     textAlign: 'center',
   },
   postsContainer: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '20px',
+    gap: '15px', // Adjusted gap
   },
   postCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: '12px',
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
-    padding: '15px',
+    borderRadius: '8px', // Reduced border radius
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Smaller shadow
+    padding: '12px', // Reduced padding
     border: '1px solid #E0E0E0',
   },
   imageAndContent: {
@@ -161,34 +198,34 @@ const styles = {
     alignItems: 'center',
   },
   postImage: {
-    width: '80px',
-    height: '80px',
-    borderRadius: '12px',
-    marginRight: '15px',
+    width: '60px', // Smaller image size
+    height: '60px', // Smaller image size
+    borderRadius: '8px',
+    marginRight: '12px', // Smaller margin
     backgroundColor: '#F0F0F0',
   },
   postDetails: {
     flex: 1,
   },
   postContent: {
-    fontSize: '16px',
+    fontSize: '14px', // Smaller text size
     fontWeight: '600',
     color: '#333',
-    marginBottom: '8px',
+    marginBottom: '6px', // Smaller margin
   },
   postDate: {
-    fontSize: '14px',
+    fontSize: '12px', // Smaller font size
     color: '#777',
   },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginTop: '15px',
+    marginTop: '12px', // Smaller margin
   },
   button: {
     flex: '0.48',
-    padding: '12px',
-    borderRadius: '8px',
+    padding: '8px', // Smaller padding
+    borderRadius: '6px', // Reduced border radius
     border: 'none',
     cursor: 'pointer',
   },
@@ -204,19 +241,30 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '8px', /* Consistent spacing between buttons */
-    overflow: 'hidden', /* Prevent scrollbar */
-    marginTop: '20px',
+    gap: '6px', // Smaller gap
+    overflow: 'hidden', // Prevent scrollbar
+    marginTop: '15px', // Smaller margin
+    width:'200px',
   },
   paginationButton: {
-    backgroundColor: '#333',
-    color: '#FFFFFF',
+ 
+    backgroundColor: '#C0C0C0',
+    color: '#000000',
+    fontSize: '12px', // Smaller text
+    padding: '6px 12px', // Smaller padding
   },
   noPostsText: {
-    fontSize: '18px',
+    fontSize: '16px', // Smaller font size
     color: '#555',
     textAlign: 'center',
-    marginTop: '30px',
+    marginTop: '25px', // Smaller margin
+  },
+  sectionTitle: {
+    fontSize: '18px', // Smaller title size
+    fontWeight: '600',
+    color: '#333',
+    marginTop: '25px', // Smaller margin
+    textAlign: 'center',
   },
 };
 

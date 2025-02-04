@@ -58,7 +58,7 @@ const Login = () => {
       if (roles.includes("Customer") && roles.includes("Member")) {
         navigate('/');
       } else if (roles.includes("Admin")) {
-        navigate('/dashboard');
+        navigate('/overalldashboard');
       } else if (roles.includes("Cooperative") && roles.includes("Customer")) {
         navigate('/coopdashboard');
       } else {

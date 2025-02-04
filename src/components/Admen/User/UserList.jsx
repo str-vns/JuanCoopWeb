@@ -3,86 +3,103 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers, softDeleteUser, restoreUser } from "@redux/Actions/userActions";
 import Sidebar from "../sidebar";
 import "@assets/css/userlist.css";
-import {getToken} from "@utils/helpers";
+import { getToken } from "@utils/helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faUndo, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const UserList = () => {
   const dispatch = useDispatch();
   const token = getToken();
   const { loading, users, error } = useSelector((state) => state.allUsers);
-  const [isFetched, setIsFetched] = useState(false); // Track if users have been fetched
+  const [isFetched, setIsFetched] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch users only when token changes or component mounts
   useEffect(() => {
     if (token && !isFetched) {
       dispatch(getAllUsers(token));
-      setIsFetched(true); // Mark as fetched after getting the users
+      setIsFetched(true);
     }
   }, [dispatch, token, isFetched]);
 
-  // Soft delete user
   const handleSoftDelete = (userId) => {
-    dispatch(softDeleteUser(userId, token)); // Dispatch the soft delete action
+    dispatch(softDeleteUser(userId, token));
   };
 
-  // Restore user
   const handleRestore = (userId) => {
-    dispatch(restoreUser(userId, token)); // Dispatch the restore action
-    alert("User restored successfully!"); // Notify the user
+    dispatch(restoreUser(userId, token));
+    alert("User restored successfully!");
   };
+
+  const filteredUsers = users.filter((user) =>
+    `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="user-list-container">
       <Sidebar />
-      <div className="flex flex-col w-full">
-        <div className="flex-1 bg-gray-50 p-6">
-          {/* Loader or Error Handling */}
-          {loading ? (
-            <div>Loading...</div>
-          ) : error ? (
-            <div style={{ color: "red" }}>Error: {error}</div>
-          ) : users.length === 0 ? (
-            <div>No users found.</div>
-          ) : (
-            <table className="user-table">
+      <div className="user-list-content">
+        <div className="search-bar-container">
+          <div className="search-bar">
+            <FontAwesomeIcon icon={faSearch} className="search-icon"/>
+            <input
+              type="text"
+              placeholder="Search users by name"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+              style={{ outline: "none" }}
+            />
+          </div>
+        </div>
+        <div className="user-list-table-container">
+          <div className="table-wrapper" style={{ width: "100%", minHeight: "400px" }}>
+            <table className="user-table" style={{ width: "100%", tableLayout: "fixed" }}>
               <thead>
                 <tr>
-                  <th>Profile Image</th>
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Actions</th>
+                  <th style={{ width: "15%" }}>Profile</th>
+                  <th style={{ width: "25%" }}>Full Name</th>
+                  <th style={{ width: "25%" }}>Email</th>
+                  <th style={{ width: "20%" }}>Role</th>
+                  <th style={{ width: "15%" }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user._id} className={user.isDeleted ? "deleted-user" : ""}>
-                    <td>
-                      <img
-                        src={user.image?.url || "https://via.placeholder.com/150"}
-                        alt="Profile"
-                        className="profile-image"
-                      />
-                    </td>
-                    <td>{user.firstName} {user.lastName}</td>
-                    <td>{user.email}</td>
-                    <td>{Array.isArray(user.roles) ? user.roles.join(", ") : user.roles}</td>
-                    <td>
-                      {/* Soft delete or restore */}
-                      {!user.isDeleted ? (
-                        <button onClick={() => handleSoftDelete(user._id)} className="delete-btn">
-                          Soft Delete
-                        </button>
-                      ) : (
-                        <button onClick={() => handleRestore(user._id)} className="restore-btn">
-                          Restore
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                {loading ? (
+                  <tr><td colSpan="5">Loading...</td></tr>
+                ) : error ? (
+                  <tr><td colSpan="5" style={{ color: "red" }}>Error: {error}</td></tr>
+                ) : filteredUsers.length === 0 ? (
+                  <tr><td colSpan="5">No users found.</td></tr>
+                ) : (
+                  filteredUsers.map((user) => (
+                    <tr key={user._id} className={user.isDeleted ? "deleted-user" : ""}>
+                      <td>
+                        <img
+                          src={user.image?.url || "https://via.placeholder.com/150"}
+                          alt="Profile"
+                          className="profile-image"
+                        />
+                      </td>
+                      <td>{user.firstName} {user.lastName}</td>
+                      <td>{user.email}</td>
+                      <td>{Array.isArray(user.roles) ? user.roles.join(", ") : user.roles}</td>
+                      <td>
+                        {!user.isDeleted ? (
+                          <button onClick={() => handleSoftDelete(user._id)} className="delete-btn">
+                            <FontAwesomeIcon icon={faTrash} /> Delete
+                          </button>
+                        ) : (
+                          <button onClick={() => handleRestore(user._id)} className="restore-btn">
+                            <FontAwesomeIcon icon={faUndo} /> Restore
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
-          )}
+          </div>
         </div>
       </div>
     </div>

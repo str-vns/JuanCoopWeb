@@ -34,7 +34,7 @@ const Sidebar = () => {
         <nav className="sidebar-nav">
           <ul>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/dashboard">
+              <a className="sidebar-link" href="/overalldashboard">
                 <i className="fas fa-chart-line sidebar-icon"></i>
                 <span className="sidebar-text">Dashboard</span>
               </a>

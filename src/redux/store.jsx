@@ -10,7 +10,7 @@ import shipItems from "@redux/Reducers/shippingReducers";
 import { authReducer } from "@redux/Reducers/authReducers";
 import { OTPReducer,RegisterReducer,userReducer,EditProfileReducer,getUsersReducers,AllUsersReducer,checkEmailReducer,otpForgotPasswordReducer,googleLoginReducer} from "@redux/Reducers/userReducers";
 import { addressReducers } from "@redux/Reducers/addressReducers";
-import { orderReducer,orderCoopReducer,orderShippedReducer,historyDeliveryCoopReducer, coopdashboardReducer} from "./Reducers/orderReducer";
+import { orderReducer,orderCoopReducer,orderShippedReducer,historyDeliveryCoopReducer, coopdashboardReducer,overalldashboardReducer} from "./Reducers/orderReducer";
 import {
   messageListReducer,
   sendMessageReducer,
@@ -30,7 +30,7 @@ import {
 import {HereMapReducer,MapBoxRouteReducer} from "@redux/Reducers/locationReducers";
 
 import { reducerProduct, reducerCoop, reducerCoopProduct, reducerCreateProduct, reducerEditProduct, reducerDelResProduct } from "@redux/Reducers/productReducers";
-import { categoryListReducer} from "@redux/Reducers/categoryReducers";
+import { categoryListReducer,categoryCreateReducer,categoryEditReducer} from "@redux/Reducers/categoryReducers";
 import { typeListReducer, typeCreateReducer,typeUpdateReducer,typeDeleteReducer} from "@redux/Reducers/typeReducers";
 import { inventoryCreateReducer, singleInventoryReducer } from "@redux/Reducers/inventoryReducers";
 import { reducerBlog, reducerSingleBlog, reducerCreateBlog, reducerEditBlog, reducerDelBlog } from "@redux/Reducers/blogReducer";
@@ -41,6 +41,7 @@ import rankedReducer from "./Reducers/rankReducers";
 
  import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
 import { postReducer } from "@redux/Reducers/postReducer";
+
 
 const reducers = combineReducers({
   sales: salesReducer,
@@ -55,6 +56,7 @@ const reducers = combineReducers({
   coopOrdering: orderCoopReducer,
   orderShipped: orderShippedReducer,
   coopdashboards: coopdashboardReducer,
+  overalldashboards: overalldashboardReducer,
   deliveredhistory: historyDeliveryCoopReducer,
   getMessages: messageListReducer,
   sendMessages: sendMessageReducer,
@@ -76,6 +78,8 @@ const reducers = combineReducers({
   UpdateProduct: reducerEditProduct,
   ResDelProduct: reducerDelResProduct,
   categories: categoryListReducer, 
+  categoriesCreate: categoryCreateReducer,
+  categoriesUpdate: categoryEditReducer,
   types: typeListReducer, 
   typesCreate: typeCreateReducer,
   typesUpdate: typeUpdateReducer,

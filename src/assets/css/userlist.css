@@ -1,9 +1,70 @@
 .user-list-container {
-  padding-left: 50px;
+  width: calc(10%-100px); /* Adjust width to not overlap with sidebar */
+  display: flex;
   height: 100vh;
-  width: 1480px;
-  background-color: #f9f9f9;
   font-family: "Arial", sans-serif;
+  padding-left: 250px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: flex-end;  /* Align content to the right */
+  position: fixed;
+  top: 20px;
+  width: calc(10%-100px); /* Adjust width to not overlap with sidebar */
+  background-color: #fff;
+  z-index: 1000;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  flex: 1;
+}
+input.search-input {
+  transition: box-shadow 0.2s ease-in-out;
+}
+input.search-input:focus {
+  box-shadow: 0 0 0 2px #ffffff;
+}
+.search-icon {
+  margin-left: auto;  /* Push the search icon to the right */
+  color: #afafaf;
+  padding: 5px;
+}
+.user-list-table-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.table-wrapper {
+  width: 800px;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .user-table {
@@ -11,7 +72,7 @@
   border-collapse: collapse;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  table-layout: fixed;
 }
 
 .user-table th,
@@ -19,6 +80,8 @@
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #e0e0e0;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 .user-table th {
@@ -29,6 +92,21 @@
 
 .user-table tr:hover {
   background-color: #f1f1f1;
+}
+
+.user-table tbody tr:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+
+.user-table tbody:empty::before {
+  content: "No users found";
+  display: table-row;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #999;
+  height: 100px;
+  line-height: 100px;
 }
 
 .deleted-user {
@@ -54,6 +132,9 @@
   font-weight: bold;
   color: #ffffff;
   transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .delete-btn {
@@ -77,24 +158,9 @@ button:focus {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-table {
-  margin: 20px 0;
-  border-spacing: 0;
-}
-
-th:first-child,
-td:first-child {
-  border-radius: 10px 0 0 10px;
-}
-
-th:last-child,
-td:last-child {
-  border-radius: 0 10px 10px 0;
-}
-
 @media screen and (max-width: 1024px) {
-  .user-list-container {
-    width: 100%;
+  .user-list-content {
+    padding: 10px;
   }
 
   .user-table {

@@ -23,6 +23,7 @@ import WishList from "./components/user/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
 import Orders from "./components/Order/Orders";
 import CoopDashboard from "./components/cooperative/Dashboard/CoopDashboard";
+import OverallDashboard from "./components/Admen/Dashboard/OverallDashboard";
 import ProductList from "./components/cooperative/Product/ProductList";
 import BlogList from "./components/cooperative/Blog/BlogList";
 import ForumPostList from "./components/cooperative/Forum/ForumPostList";
@@ -59,6 +60,8 @@ import TypeCreate from "./components/Admen/Types/TypeCreate";
 import TypeUpdate from "./components/Admen/Types/TypeUpdate";
 
 import CategoryList from "./components/Admen/Categories/CategoryList";
+import CategoryCreate from "./components/Admen/Categories/CategoryCreate";
+import CategoryUpdate from "./components/Admen/Categories/CategoryUpdate";
 
 import BlogLists from "./components/Admen/Blogs/Bloglist";
 import BlogCreate from "./components/Admen/Blogs/BlogCreate";
@@ -177,6 +180,7 @@ function App() {
           <Route path="/cooplogin" element={<CoopLogin/>} />
           <Route path="/farmregistration" element={<FarmRegistration/>} />
           <Route path="/coopdashboard" element={<CoopDashboard/>} />
+          <Route path="/overalldashboard" element={<OverallDashboard/>} />
           <Route path="/coopprofileedit" element={<CoopProfileEdit/>} />
           <Route path="/productlist" element={<ProductList/>} />
           <Route path="/messagelist" element={<MessageList/>} />
@@ -226,7 +230,8 @@ function App() {
           <Route path="/bloglist" element={<BlogList/>} />
 
           <Route path="/categorylist" element={<CategoryList/>} />
-          
+          <Route path="/category-create" element={<CategoryCreate/>} />
+          <Route path="/category-update/:id" element={<CategoryUpdate/>} />
         
           
         </Routes>

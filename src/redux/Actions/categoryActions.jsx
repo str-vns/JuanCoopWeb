@@ -36,80 +36,81 @@ export const categoryList = () => async (dispatch) => {
   }
 };
 
-export const categoryCreate = (categoryData) => async (dispatch) => {
-  try {
-    const response = await fetch('YOUR_API_ENDPOINT', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(categoryData),
-    });
 
-    if (!response.ok) {
-      throw new Error('Failed to create category');
+export const categoryCreate = (categoryData, image, token) => async (dispatch) => {
+  try {
+    dispatch({ type: "CATEGORY_CREATE_REQUEST" });
+
+    const formData = new FormData();
+    formData.append("categoryName", categoryData.categoryName); // Use "categoryName" instead of "name"
+
+    if (image) {
+      if (image instanceof File) {
+        formData.append("image", image, image.name); // Pass file with name
+      } else {
+        throw new Error("Invalid image file");
+      }
     }
 
-    const data = await response.json();
-    dispatch({
-      type: 'CATEGORY_CREATE_SUCCESS',
-      payload: data,
-    });
+    console.log("FormData before sending:");
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value); 
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data", 
+      },
+    };
+
+    
+    const { data } = await axios.post(`${baseURL}category`, formData, config);
+
+   
+    dispatch({ type: "CATEGORY_CREATE_SUCCESS", payload: data });
   } catch (error) {
-    console.error("Error creating category:", error);
+    console.error("Error creating category:", error.response?.data || error.message);
     dispatch({
-      type: 'CATEGORY_CREATE_FAIL',
-      error: error.message,
+      type: "CATEGORY_CREATE_FAIL",
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
-
-export const categoryEdit = (id, categoryData) => async (dispatch) => {
+//not okay yet
+export const categoryEdit = (id, categoryData, token) => async (dispatch) => {
   try {
     dispatch({ type: CATEGORY_EDIT_REQUEST });
 
-    const { categoryName, image } = categoryData;
-    if (!categoryName) {
-      throw new Error("Category name is required.");
-    }
-
     const formData = new FormData();
-    formData.append("categoryName", categoryName);
+    formData.append("categoryName", categoryData.categoryName);
 
-    // Handle image if available
-    if (image) {
-      const imageUri = image.uri || image;  // Handle both object or string formats for image
-      const imageType = mime.getType(imageUri);
-      const imageName = imageUri.split("/").pop();
+    if (categoryData.image) {
+      const image = categoryData.image;
 
-      const imageData = {
-        uri: imageUri,
-        type: imageType,
-        name: imageName,
-      };
-
-      formData.append("image", imageData);
-      console.log("Image Data being appended:", imageData);  // Debug log
+      if (image instanceof File) {
+        formData.append("image", image, image.name);
+      } else if (typeof image === "string") {
+        formData.append("existingImage", image); // Add the existing image if provided
+      } else {
+        throw new Error("Invalid image format");
+      }
     }
 
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     };
 
-    const { data } = await axios.put(
-      `${baseURL}category/edit/${id}`,
-      formData,
-      config
-    );
+    const { data } = await axios.put(`${baseURL}category/${id}`, formData, config);
 
     dispatch({
       type: CATEGORY_EDIT_SUCCESS,
-      payload: data.details,  // Assuming `data.details` contains the updated category details
+      payload: data,
     });
-    console.log("Category updated successfully:", data.details);  // Debug log
 
   } catch (error) {
     const errorMessage = error.response?.data?.message || error.message;
@@ -117,9 +118,10 @@ export const categoryEdit = (id, categoryData) => async (dispatch) => {
       type: CATEGORY_EDIT_FAIL,
       payload: errorMessage,
     });
-    console.error("Category Edit Error:", errorMessage);  // Detailed error log
   }
 };
+
+
 
 export const categoryDelete = (id) => async (dispatch) => {
   try {
