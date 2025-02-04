@@ -11,9 +11,7 @@ const BlogLists = () => {
   const navigate = useNavigate();
 
   const { loading, blogs = [], error } = useSelector((state) => state.allBlogs);
-  const { success: deleteSuccess, error: deleteError } = useSelector(
-    (state) => state.deleteBlog
-  );
+  const { error: deleteError } = useSelector((state) => state.deleteBlog);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -25,18 +23,15 @@ const BlogLists = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (deleteSuccess) {
-      dispatch(getBlog());
-      alert("Blog deleted successfully!");
-    }
     if (deleteError) {
       alert("Error deleting blog: " + deleteError);
     }
-  }, [deleteSuccess, deleteError, dispatch]);
+  }, [deleteError]);
 
-  const handleDelete = (blogId) => {
+  const handleDelete = async (blogId) => {
     if (window.confirm("Are you sure you want to delete this blog?")) {
-      dispatch(deleteBlog(blogId));
+      await dispatch(deleteBlog(blogId));
+      dispatch(getBlog());
     }
   };
 

@@ -10,73 +10,56 @@ const CategoryCreate = () => {
   const [image, setImage] = useState(null);
   const [token, setToken] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
- const storedToken = getToken();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
- 
   const { loading, error, success } = useSelector(
     (state) => state.categoryCreate || {}
   );
-  console.log("categoryCreate state:", { loading, error, success });
- 
+
   useEffect(() => {
     const jwt = getToken();
     if (jwt) setToken(jwt);
   }, []);
-
-
- useEffect(() => {
-    if (storedToken) {
-      setToken(storedToken);
-    } else {
-      console.error("Token not found in localStorage.");
-    }
-  }, [storedToken]);
 
   useEffect(() => {
     if (success) {
       alert("Category created successfully!");
       setCategoryName("");
       setImage(null);
-      navigate("/categorylist");
+      navigate("/categorylist"); // Redirect after success
     }
     if (error) {
-      alert(error || "Failed to create category. Please try again.");
+      setErrorMessage(error); // Display error message if available
     }
-  }, [success, error, navigate]);
+  }, [success, error, navigate]); // Ensure `navigate` is in the dependency array
 
-  const handleCategoryUpdate = async () => {
-    setErrors("");
-  
+  const handleCategoryCreate = () => {
     if (!categoryName.trim()) {
-      setErrors("Category name is required!");
+      setErrorMessage("Category name is required!");
       return;
     }
-  
-    const formData = new FormData();
-    formData.append("categoryName", categoryName);
-  
-    if (image) formData.append("image", image);
-  
-    try {
-      if (storedToken && categoryId) {
-        await dispatch(categoryEdit(categoryId, formData, storedToken));
-        alert("Category updated successfully!");
-        navigate("/categorylist");
-      } else {
-        setErrors("Invalid token or category ID.");
-      }
-    } catch (error) {
-      setErrors(error.response?.data?.message || "Failed to update category.");
+
+    if (!image) {
+      setErrorMessage("Please upload an image for the category.");
+      return;
     }
+
+    const categoryData = { categoryName };
+
+    if (!token) {
+      setErrorMessage("User is not authenticated. Please log in.");
+      return;
+    }
+
+    dispatch(categoryCreate(categoryData, image, token));
   };
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      
+      // Validate file type and size
       if (!file.type.startsWith("image/")) {
         setErrorMessage("Please upload a valid image file.");
         return;
@@ -86,16 +69,14 @@ const CategoryCreate = () => {
         return;
       }
       setImage(file);
-      setErrorMessage("");
+      setErrorMessage(""); // Clear previous error
     }
   };
 
   return (
     <div style={styles.container}>
       <Sidebar />
-      <button onClick={() => navigate("/categorylist")} style={styles.backButton}>
-        
-      </button>
+      
 
       <h1 style={styles.title}>Create Category</h1>
 
