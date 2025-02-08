@@ -2,31 +2,38 @@ import Navbar from "../layout/navbar";
 import "@assets/css/cart.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {updateCartQuantity, removeFromCart, updateCartInv } from "@redux/Actions/cartActions";
+import {
+  updateCartQuantity,
+  removeFromCart,
+  updateCartInv,
+} from "@redux/Actions/cartActions";
 import { isAuth, getToken } from "@utils/helpers";
-import baseURL from '@Commons/baseUrl';
+import baseURL from "@Commons/baseUrl";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const Carts = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = isAuth();
   const token = getToken();
   const cartItems = useSelector((state) => state.cartItems);
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.pricing * item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (acc, item) => acc + item.pricing * item.quantity,
+    0
+  );
   console.log("Cart Items:", cartItems);
 
   const handleIncrement = (item) => {
-    if (item?.quantity < item?.maxQuantity) { 
+    if (item?.quantity < item?.maxQuantity) {
       dispatch(updateCartQuantity(item?.inventoryId, item?.quantity + 1));
-  }
+    }
   };
 
   const handleDecrement = (item) => {
-    console.log(item?.quantity)
-    if(item?.quantity > 1){
-      dispatch(updateCartQuantity(item?.inventoryId, item?.quantity - 1))
+    console.log(item?.quantity);
+    if (item?.quantity > 1) {
+      dispatch(updateCartQuantity(item?.inventoryId, item?.quantity - 1));
     }
   };
 
@@ -43,31 +50,42 @@ const Carts = () => {
       })),
       totalPrice,
     };
-  
+
     try {
-      const { data } = await axios.post(`${baseURL}inventory/stock`, orderItems, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        timeout: 10000,
-      });
-  
+      const { data } = await axios.post(
+        `${baseURL}inventory/stock`,
+        orderItems,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          timeout: 10000,
+        }
+      );
+
       console.log("Checkout Data:", data);
       if (data?.details?.success === true) {
         toast.success("Order placed successfully!");
-         navigate("/shipping");
+        navigate("/shipping");
       } else {
-  
         data?.details?.lowStockItems?.forEach((item) => {
           console.log("Low Stock Item:", item);
           if (item.reason === "out_of_stock") {
-            toast.error(`${item.productName} ${item.unitName} ${item.metricUnit} is out of stock and has been removed from your cart.`);
+            toast.error(
+              `${item.productName} ${item.unitName} ${item.metricUnit} is out of stock and has been removed from your cart.`
+            );
             dispatch(removeFromCart(item.inventoryId));
           } else if (item.reason === "low_stock") {
             toast.warning(
               `Quantity for ${item.productName} ${item.unitName} ${item.metricUnit} has been adjusted to ${item.currentStock} due to stock availability.`
             );
-            dispatch(updateCartInv(item.inventoryId, item.currentStock, item.currentStock));
+            dispatch(
+              updateCartInv(
+                item.inventoryId,
+                item.currentStock,
+                item.currentStock
+              )
+            );
           }
         });
       }
@@ -77,11 +95,10 @@ const Carts = () => {
     }
   };
 
-  const isLoggedIn = async () =>  {
-        navigate("/login?redirect=shippings");
-  }
+  const isLoggedIn = async () => {
+    navigate("/login?redirect=shippings");
+  };
   return (
-
     <section className="cart-section">
       <Navbar />
       <div className="cart-container">
@@ -102,7 +119,7 @@ const Carts = () => {
                     </a>
                     <div className="cart-item-info">
                       <a href="#" className="cart-item-title">
-                        {item.productName}  {""}
+                        {item.productName} {""}
                       </a>
                       <a href="#" className="cart-item-title">
                         {item.unitName} {item.metricUnit}
@@ -162,33 +179,22 @@ const Carts = () => {
               ))
             )}
           </div>
-          {cartItems?.length > 0
-           ? (
-           <div className="cart-summary"> 
-            <p className="total-text" >Total: ₱ {totalPrice} </p>
-          </div>
-         ) : null }
-          
+          {cartItems.length > 0 && (
+            <div className="cart-summary">
+              <p className="total-text">Total: ₱ {totalPrice} </p>
+            </div>
+          )}
+
           <div className="button-row">
-  <a href="/" className="button-proceed-checkout">
-    Continue Shopping
-  </a>
-  {cartItems.length > 0 && auth ? (
-    <a 
-    // href="/shipping" 
-    onClick={checkoutHandler}
-    className="button-proceed-checkout" >
-      Proceed to Checkout
-    </a>
-  ) : (
-    <button
-      className="button-proceed-checkout"
-      onClick={isLoggedIn}
-    >
-      Proceed to Checkout
-    </button>
-  )}
-</div>
+            <a href="/" className="button-proceed-checkout">
+              Continue Shopping
+            </a>
+            {cartItems.length > 0 && auth && (
+              <a href="/shipping"  className="button-proceed-checkout">
+                Proceed to Checkout
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </section>

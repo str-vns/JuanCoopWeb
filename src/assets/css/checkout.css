@@ -1,19 +1,19 @@
 /* Full-screen container */
 .checkout-container {
   font-family: Arial, sans-serif;
-  position: fixed; /* Stretch relative to the viewport */
+  position: fixed; 
   top: 0;
   left: 0;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  width: 100vw; 
+  height: 100vh; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  background-color: #f9f9f9; /* Optional background color */
-  margin: 0; /* Remove any default margins */
-  padding: 0; /* Ensure no padding restricts size */
-  box-sizing: border-box; /* Include padding in dimensions */
+  justify-content: center; 
+  align-items: center; 
+  background-color: #ffffff;
+  margin: 0; 
+  padding-top: 100px; 
+  box-sizing: border-box; 
 }
 
 .checkout-title {
@@ -271,4 +271,31 @@
 
 .continue-to-payment:hover {
   background-color: #0056b3;
+}
+/* Removed border before Confirm Payment button */
+.proceed-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjusted padding on top */
+}
+
+/* Confirm Payment Button */
+.proceed-button {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 12px 24px; /* Adjusted padding */
+  border: none; /* Removed border */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.proceed-button:hover {
+  background-color: #0056b3;
+}
+.b{
+  font-size: 20px;
+  font-weight: bold;
 }

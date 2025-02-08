@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getToken, isAuth, getCurrentUser } from "@utils/helpers";
 import { logoutUser } from "@redux/Actions/authActions";
-import { setCartItems } from '@redux/Actions/cartActions';
-import { setShippingItems } from '@redux/Actions/shippingActions';
-import { setPayItems } from '@redux/Actions/paymentActions';
-import { singleNotification, readAllNotifications, readNotification } from "@redux/Actions/notificationActions";
+import { setCartItems } from "@redux/Actions/cartActions";
+import { setShippingItems } from "@redux/Actions/shippingActions";
+import { setPayItems } from "@redux/Actions/paymentActions";
+import {
+  singleNotification,
+  readAllNotifications,
+  readNotification,
+} from "@redux/Actions/notificationActions";
 import { useEffect, useState } from "react";
-import { useSocket } from "../../../SocketIo"
-import Cookies from 'js-cookie';
+import { useSocket } from "../../../SocketIo";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -19,32 +23,31 @@ const Navbar = () => {
   const socket = useSocket();
   const token = getToken();
   const auth = isAuth();
-  const { notifloading, notification, notiferror } = useSelector((state) => state.getNotif);
+  const { notifloading, notification, notiferror } = useSelector(
+    (state) => state.getNotif
+  );
   const cartItems = useSelector((state) => state.cartItems);
   const cartItemsCount = cartItems.length;
   const [isOpen, setIsOpen] = useState(false);
   const [notifCount, setNotifCount] = useState(0);
-  
-  const handleRead = async(id, type) => {
 
+  const handleRead = async (id, type) => {
     try {
       dispatch(readNotification(id, token));
-      setNotifCount(0)
-      if (type === "order")
-      {
+      setNotifCount(0);
+      if (type === "order") {
         navigate("/cart");
       }
-      
     } catch (error) {
       console.error("Error marking as read: ", error);
     }
   };
 
-  const handleReadAll = async() => {
-    try{
+  const handleReadAll = async () => {
+    try {
       dispatch(readAllNotifications(user?._id, token));
       setNotifCount(0);
-    }catch (error) {
+    } catch (error) {
       console.error("Error marking all as read: ", error);
     }
   };
@@ -73,7 +76,7 @@ const Navbar = () => {
         }
 
         if (storedPay) {
-          const payItems = JSON.parse(storedPay)
+          const payItems = JSON.parse(storedPay);
           dispatch(setPayItems(payItems));
         }
       } catch (error) {
@@ -87,7 +90,7 @@ const Navbar = () => {
   const fetchNotifications = async () => {
     if (user?._id) {
       const token = getToken();
-       dispatch(singleNotification(user._id, token));
+      dispatch(singleNotification(user._id, token));
     }
   };
 
@@ -99,7 +102,9 @@ const Navbar = () => {
   useEffect(() => {
     if (socket) {
       socket.on("getNotification", (data) => {
-        const unreadCount = notification.filter((notif) => notif.readAt === null).length;
+        const unreadCount = notification.filter(
+          (notif) => notif.readAt === null
+        ).length;
         const notifCount = unreadCount + 1;
         setNotifCount(notifCount);
       });
@@ -114,12 +119,12 @@ const Navbar = () => {
     navigate("/");
 
     dispatch(logoutUser());
-    localStorage.removeItem('jwt');
-        localStorage.removeItem('user');
-        localStorage.removeItem('token_expiry');
-        localStorage.removeItem('isAuth');
-        localStorage.removeItem('cartItems');
-        Cookies.remove('jwt');
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token_expiry");
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("cartItems");
+    Cookies.remove("jwt");
     window.location.reload();
   };
 
@@ -133,7 +138,9 @@ const Navbar = () => {
     if (!isOpen) {
       // Reset notification count and fetch latest state from backend
       await fetchNotifications();
-      const unreadCount = notification.filter((notif) => notif.readAt === null).length;
+      const unreadCount = notification.filter(
+        (notif) => notif.readAt === null
+      ).length;
       setNotifCount(unreadCount);
     }
   };
@@ -175,82 +182,96 @@ const Navbar = () => {
           onClick={() => (window.location.href = "/cart")}
           style={{ cursor: "pointer" }}
         >
-          {cartItemsCount > 0 && (
+          {/* {cartItemsCount > 0 && (
           <div className="indicator">
            
           <span className="count">{cartItemsCount}</span> 
 
           </div>
-             )} 
-          <i className="fas fa-shopping-cart fa-lg text-black text-xl"> {notifCount > 0 && (
-            <span className="badge badge-sm bg-red-500 text-white ml-1">
-              {notifCount}
-            </span>
-          )} </i>
-          
+             )}  */}
+          <i className="fas fa-shopping-cart fa-lg text-black text-xl">
+            {" "}
+            {notifCount > 0 && (
+              <div className="indicator">
+                <span className="count">{notifCount}</span>
+              </div>
+            )}{" "}
+          </i>
         </div>
 
-        
-        <div className="dropdown dropdown-end relative">
-      <div
-        tabIndex={0}
-        role="button"
-        onClick={handleBellClick}
-        className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
-      >
-        <i className="fas fa-bell text-black text-xl"></i>
-        
-      </div>
-      {isOpen && (
-        <ul
-          tabIndex={0}
-          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow absolute right-0"
- 
-        >
-          <li>
-            <h4 className="text-lg font-semibold text-gray-700 mb-2">
-              Notifications
-            </h4>
-            <h4 className="text-lg font-semibold text-gray-700 mb-2">
-              read All
-            </h4>
-          </li>
-          {notification.length > 0 ? (
-            notification.map((notification, index) => (
-              console.log(notification),
-              <li key={index}  className={`border-b last:border-none py-4 px-2 rounded ${
-                notification.readAt === null ?  "bg-yellow-100" : "bg-white" 
-              }`}
-              onClick={() => handleRead(notification._id, notification.type)}>
-                
-            
-              <div className="notification-dropdown">
-                <div className="notification-header ">
-                  <span className="notification-title text-black">{notification.title}</span>
-                  <span className="notification-date text-black">{notification.date}</span>
-                </div>
-            
-                <div className="notification-content text-black">
-                {notification.content}
-                </div>
-                <button className="read-button" onClick={() => handleReadAll()}>Read</button>
-                <button className="read-all-button">Read All</button>
+        <div className="relative font-[sans-serif] w-max mx-auto">
+          <button
+            tabIndex={0}
+            role="button"
+            onClick={handleBellClick}
+            className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:border-none hover:border-none"
+          >
+            <i className="fas fa-bell text-black text-xl"></i>
+            {notifCount > 0 && (
+              <div className="indicator">
+                <span className="count">{notifCount}</span>
               </div>
-              </li>
-            ))
-          ) : (
-            <li className="py-2">
-              <p className="text-sm text-gray-500">No new notifications</p>
-            </li>
-          )}
-        </ul>
-      )}
-    </div>
+            )}
+          </button>
 
+          {isOpen && (
+            <div className="absolute block right-0 bg-white py-4 z-[1000] min-w-full rounded-lg w-[410px] max-h-[500px] overflow-auto mt-2 shadow-lg">
+              <div className="flex items-center justify-between px-4 mb-4">
+                <p
+                  className="text-xs text-blue-600 cursor-pointer"
+                  onClick={handleReadAll}
+                >
+                  Clear all
+                </p>
+                <p
+                  className="text-xs text-blue-600 cursor-pointer"
+                  onClick={handleReadAll}
+                >
+                  Mark as read
+                </p>
+              </div>
+
+              <ul className="divide-y">
+                {notification.length > 0 ? (
+                  notification.map((notification, index) => (
+                    <li
+                      key={index}
+                      className={`p-4 flex items-start hover:bg-gray-50 cursor-pointer ${
+                        notification.readAt === null
+                          ? "bg-yellow-100"
+                          : "bg-white"
+                      }`}
+                      onClick={() =>
+                        handleRead(notification._id, notification.type)
+                      }
+                    >
+                      <div className="ml-6 text-left">
+                        <h3 className="text-sm text-[#333] font-semibold text-left">
+                          {notification.title}
+                        </h3>
+                        <p className="text-xs text-gray-500 mt-2 text-left">
+                          {notification.content}
+                        </p>
+                        <p className="text-xs text-blue-600 leading-3 mt-2 text-left">
+                          {notification.date}
+                        </p>
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <li className="py-2 px-4 text-left">
+                    <p className="text-sm text-gray-500 text-left">
+                      No new notifications
+                    </p>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )}
+        </div>
 
         {/* User Profile Dropdown */}
         {auth ? (
-
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button">
               <div className="w-10 h-10 rounded-full flex items-center justify-center">
@@ -279,14 +300,13 @@ const Navbar = () => {
                 <div className="flex items-center">
                   <i className="fas fa-heart text-black mr-2"></i>
                   <a href="/wishlist">Wishlist</a>
-                 
                 </div>
               </li>
               <li>
                 <div className="flex items-center">
                   <i className="fas fa-box-open text-black mr-2"></i>
                   <a href="/orders" className="text-black hover:underline">
-                  Orders
+                    Orders
                   </a>
                 </div>
               </li>
@@ -294,14 +314,16 @@ const Navbar = () => {
                 <div className="flex items-center">
                   <i className="fas fa-address-book text-black mr-2"></i>
                   <a href="/addressList" className="text-black hover:underline">
-                  Address
+                    Address
                   </a>
                 </div>
               </li>
               <li>
                 <div className="flex items-center">
                   <i className="fas fa-sign-out-alt text-black mr-2"></i>
-                  <a href="#" onClick={handleLogout}>Logout</a>
+                  <a href="#" onClick={handleLogout}>
+                    Logout
+                  </a>
                 </div>
               </li>
             </ul>

@@ -1,0 +1,67 @@
+/* General container */
+.member-registration-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    background-color: white;
+    min-height: 100vh;
+    padding-top:100px;
+}
+
+/* Error text */
+.member-registration-error {
+    color: red;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1%;
+}
+
+/* Input fields */
+.member-registration-input,
+.member-registration-select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* File input */
+.member-registration-file {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Image preview */
+.member-registration-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
+
+/* Button */
+.member-registration-button {
+    width: 100%;
+    background-color: #1d4ed8;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.member-registration-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

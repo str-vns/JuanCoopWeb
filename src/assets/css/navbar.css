@@ -116,21 +116,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 85px;
-    bottom: 48px;
-    width: 15px;
-    height: 15px;
+    right: 90px;
+    bottom: 42px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background-color: #ff4500; /* Your preferred background color */
     color: white;
-    font-size: 16px;
-  }
+    font-size: 10px;  
+}
+
   
   .indicator .count {
     position: absolute;
-    top: -2px;
+    top: 10px;
     right: 3.5px;
-    font-size: 12px; /* Adjust size of the number */
+    font-size: 10px; /* Adjust size of the number */
     font-weight: bold;
   }
   
@@ -139,4 +140,10 @@
     margin-top: 5px;
   }
 
-  
+  button#dropdownToggle {
+    background-color: transparent;
+  }
+
+  button#dropdownToggle:focus {
+    outline: black;
+  }

@@ -1,9 +1,9 @@
 .address-section {
   margin-top: 70px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
 
 .address-container {
@@ -47,7 +47,7 @@
 
 .delete-button {
   padding: 8px 12px;
-  background-color: #ff6b6b;
+  
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -57,29 +57,37 @@
 }
 
 .delete-button:hover {
-  background-color: #e63939;
+  background-color: #f1f1f1;
 }
 
-.proceed-button-container {
+.button-container {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
-  text-align: center;
 }
 
 .proceed-button {
   padding: 12px 20px;
-  background: linear-gradient(to right, #007bff, #0056b3);
+  background: #007bff;
   color: #ffffff;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  flex: 1;
+  margin: 0 10px;
 }
 
 .proceed-button:hover {
   box-shadow: 0 8px 16px rgba(0, 123, 255, 0.3);
 }
+.address-details {
+  text-align: left;
+}
 
+.address-box {
+  text-align: left;
+}
 .loadingText, .errorText, .noAddressText {
   font-size: 16px;
   text-align: center;

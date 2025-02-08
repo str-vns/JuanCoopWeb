@@ -53,6 +53,11 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
+            <a href="/profile" className="sidebar-link">
+              <FaTachometerAlt className="sidebar-icon" /> Profile
+            </a>
+          </li>
+          <li>
             <a href="/productlist" className="sidebar-link">
               <FaBoxOpen className="sidebar-icon" /> Products
             </a>

@@ -18,6 +18,8 @@ import Carts from "./components/Cart/Cart";
 // import Bill from "./Components/Cart/Billing";
 import CheckoutAccordion from "./components/Cart/checkout";
 import OrderConfirmation from "./components/Cart/confirm";
+
+
 import Profile from "./components/user/Profile";
 import WishList from "./components/user/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
@@ -80,10 +82,14 @@ import PostList from "./components/Admen/Post/Postlist";
 import PasswordReset from "./components/user/passwordReset";
 import EditProfile from "./components/user/EditProfile";
 // import AdminDashboard from "./components/admin/admin";
+
+import MemberList from "./components/cooperative/Member/MemberList";
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
 
-import MemberList from "./components/cooperative/Member/MemberList";
+
+import MemberRegistration from "./components/user/MemberRegistration";
+
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -168,8 +174,11 @@ function App() {
           <Route path="/payment" element={<Payment/>} />
           <Route path="/orders" element={<Orders/>} />
           <Route path="/wishlist" element={<WishList/>} />
-          <Route path="/confirm" element={<OrderConfirmation />} />
+          
+          
           <Route path="/checkout" element={<CheckoutAccordion/>} />
+          <Route path="/confirm" element={<OrderConfirmation />} />
+         
           <Route path="/prod" element={<SingleProduct/>} />
         
          
@@ -233,7 +242,7 @@ function App() {
           <Route path="/category-create" element={<CategoryCreate/>} />
           <Route path="/category-update/:id" element={<CategoryUpdate/>} />
         
-          
+          <Route path="/memberRegistration" element={<MemberRegistration/>} />
         </Routes>
       </div>
     </Router>

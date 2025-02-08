@@ -201,9 +201,10 @@
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
 
+
 /* Hover Effects */
 .button-proceed-checkout:hover {
-  background-color: #1e40af; /* Darker shade for hover */
+  background-color: #d1dfff; /* Darker shade for hover */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
 }
 
@@ -242,7 +243,7 @@
 }
 
 .cart-summary {
-  display: flex;
+  display: left;
   justify-content: space-between;
   margin-top: 1rem;
 }

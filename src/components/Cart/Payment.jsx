@@ -42,7 +42,7 @@ const Payment = () => {
   return (
     <div className="checkout-container">
     <Navbar />
-    <h2 className="checkout-title">Payment Methods</h2>
+    {/* <h2 className="checkout-title">Payment Methods</h2> */}
   
     <div className="section">
       <div>
