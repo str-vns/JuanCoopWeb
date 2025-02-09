@@ -24,6 +24,8 @@ import Profile from "./components/user/Profile";
 import WishList from "./components/user/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
 import Orders from "./components/Order/Orders";
+import QrGenerate from "./components/Order/QrGenerate";
+
 import CoopDashboard from "./components/cooperative/Dashboard/CoopDashboard";
 import OverallDashboard from "./components/Admen/Dashboard/OverallDashboard";
 import ProductList from "./components/cooperative/Product/ProductList";
@@ -40,7 +42,7 @@ import FarmRegistration from "./components/cooperative/Registration/FarmRegistra
 import GoogleLogin from "./components/cooperative/Registration/GoogleLogin";
 import Messenger from './components/Chatime/messenger/Messenger';
 import CoopMessenger from './components/cooperative/Chatime/messenger/Messenger'
-import  Shipping from "./components/Cart/Address";
+import Shipping from "./components/Cart/Address";
 import Payment from "./components/Cart/Payment";
 import Address from "./components/Address/addressList"
 import AddressCreate from "./components/Address/addressCreate";
@@ -173,6 +175,7 @@ function App() {
           <Route path="/shipping" element={<Shipping/>} />
           <Route path="/payment" element={<Payment/>} />
           <Route path="/orders" element={<Orders/>} />
+          <Route path="/qr" element={<QrGenerate/>} />
           <Route path="/wishlist" element={<WishList/>} />
           
           
