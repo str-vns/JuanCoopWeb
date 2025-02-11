@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUserOrders, updateOrderStatus } from "@redux/Actions/orderActions";
+import {
+  fetchUserOrders,
+  updateOrderStatus,
+} from "@redux/Actions/orderActions";
 import { getCurrentUser } from "@utils/helpers";
 import { useNavigate } from "react-router-dom";
 import "@assets/css/orderlist.css";
@@ -65,7 +68,9 @@ const Orders = () => {
             <div key={order._id} className="order-card">
               <div className="order-header">
                 <span className="order-id">Order ID: {order._id}</span>
-                <span className="order-total">Total: ₱{order.totalPrice.toFixed(2)}</span>
+                <span className="order-total">
+                  Total: ₱{order.totalPrice.toFixed(2)}
+                </span>
               </div>
               {order.orderItems.slice(0, 1).map((item) => (
                 <div key={item._id} className="order-item">
@@ -75,79 +80,145 @@ const Orders = () => {
                     className="product-image"
                   />
                   <div className="product-details">
-                    <span className="product-name">{item.product.productName}</span>
-                    <span className="product-size">
-                      Size: {item.inventoryProduct.unitName} {item.inventoryProduct.metricUnit}
+                    <span className="product-name">
+                      {item.product.productName}
                     </span>
-                    <span className="product-quantity">Qty: {item.quantity}</span>
-                    <span className="product-price">₱{item.inventoryProduct.price}</span>
+                    {item.inventoryProduct ? (
+                      <span className="product-size">
+                        Size: {item.inventoryProduct.unitName}{" "}
+                        {item.inventoryProduct.metricUnit}
+                      </span>
+                    ) : (
+                      <span className="product-size">Size: N/A</span>
+                    )}
+                    <span className="product-quantity">
+                      Qty: {item.quantity}
+                    </span>
+                    <span className="product-price">
+                      ₱
+                      {item.inventoryProduct
+                        ? item.inventoryProduct.price
+                        : "N/A"}
+                    </span>
                   </div>
-                  
-                  <span className={`order-status ${item.orderStatus.toLowerCase()}`}>
+  
+                  <span
+                    className={`order-status ${item.orderStatus.toLowerCase()}`}
+                  >
                     {item.orderStatus}
                   </span>
-
+  
                   {/* Show QR button only for "Shipping" orders */}
                   {item.orderStatus === "Shipping" && (
                     <div className="qr-section">
-                      <button className="qr-button" onClick={() => handleViewQR(order)}>
+                      <button
+                        className="qr-button"
+                        onClick={() => handleViewQR(order)}
+                      >
                         QR Code
                       </button>
                     </div>
                   )}
-
+  
                   {item.orderStatus === "Pending" && (
                     <button
                       className="cancel-button"
-                      onClick={() => handleCancelOrder(order._id, item.inventoryProduct._id)}
+                      onClick={() =>
+                        handleCancelOrder(order._id, item.inventoryProduct?._id)
+                      }
                     >
                       Cancel Order
                     </button>
                   )}
+  
+                  {/* Show Review button for "Delivered" orders */}
+                  {item.orderStatus === "Delivered" && (
+                    <button
+                      className="review-button"
+                      onClick={() => {
+                        // Redirect to the review page with product details
+                        window.location.href = `/review?productId=${item.product._id}&orderId=${order._id}`;
+                      }}
+                    >
+                      Review
+                    </button>
+                  )}
                 </div>
               ))}
-
+  
               {isExpanded &&
                 order.orderItems.slice(1).map((item) => (
                   <div key={item._id} className="order-item">
                     <img
-                      src={item.product.image[0]?.url || "/placeholder-image.png"}
+                      src={
+                        item.product.image[0]?.url || "/placeholder-image.png"
+                      }
                       alt={item.product.productName}
                       className="product-image"
                     />
                     <div className="product-details">
-                      <span className="product-name">{item.product.productName}</span>
-                      <span className="product-size">
-                        Size: {item.inventoryProduct.unitName} {item.inventoryProduct.metricUnit}
+                      <span className="product-name">
+                        {item.product.productName}
                       </span>
-                      <span className="product-quantity">Qty: {item.quantity}</span>
-                      <span className="product-price">₱{item.inventoryProduct.price}</span>
+                      <span className="product-size">
+                        Size: {item.inventoryProduct.unitName}{" "}
+                        {item.inventoryProduct.metricUnit}
+                      </span>
+                      <span className="product-quantity">
+                        Qty: {item.quantity}
+                      </span>
+                      <span className="product-price">
+                        ₱{item.inventoryProduct.price}
+                      </span>
                     </div>
-                    
-                    <span className={`order-status ${item.orderStatus.toLowerCase()}`}>
+  
+                    <span
+                      className={`order-status ${item.orderStatus.toLowerCase()}`}
+                    >
                       {item.orderStatus}
                     </span>
-
+  
                     {/* Show QR button only for "Shipping" orders */}
                     {item.orderStatus === "Shipping" && (
                       <div className="qr-section">
-                        <button className="qr-button" onClick={() => handleViewQR(order)}>
+                        <button
+                          className="qr-button"
+                          onClick={() => handleViewQR(order)}
+                        >
                           QR Code
                         </button>
                       </div>
                     )}
-
+  
                     {item.orderStatus === "Pending" && (
                       <button
                         className="cancel-button"
-                        onClick={() => handleCancelOrder(order._id, item.inventoryProduct._id)}
+                        onClick={() =>
+                          handleCancelOrder(
+                            order._id,
+                            item.inventoryProduct._id
+                          )
+                        }
                       >
                         Cancel Order
                       </button>
                     )}
+  
+                    {/* Show Review button for "Delivered" orders */}
+                    {item.orderStatus === "Delivered" && (
+                      <button
+                        className="review-button"
+                        onClick={() => {
+                          // Redirect to the review page with product details
+                          window.location.href = `/review?productId=${item.product._id}&orderId=${order._id}`;
+                        }}
+                      >
+                        Review
+                      </button>
+                    )}
                   </div>
                 ))}
-
+  
               {order.orderItems.length > 1 && (
                 <button
                   className="expand-button"

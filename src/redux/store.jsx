@@ -38,6 +38,7 @@ import { driverApiReducer, driverListReducer, onlyApprovedDriverReducer, driverP
 // import postReducer from "./Reducers/postReducer";
 import salesReducer from "./Reducers/salesReducer"; 
 import rankedReducer from "./Reducers/rankReducers";
+import { commentcreateReducers } from "@redux/Reducers/commentReducers";
 
  import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
 import { postReducer } from "@redux/Reducers/postReducer";
@@ -71,8 +72,8 @@ const reducers = combineReducers({
   coopOrders: coopOrderReducer,
   allofCoops: coopAllReducer,
   Coop: coopYReducer,
-  allProducts: reducerProduct,
   singleCoop: reducerCoop,
+  allProducts: reducerProduct,
   CoopProduct: reducerCoopProduct,
   createProduct: reducerCreateProduct,
   UpdateProduct: reducerEditProduct,
@@ -111,6 +112,9 @@ const reducers = combineReducers({
 
   memberList: memberListReducer,
   memberApi: memberApiReducer,
+
+  createComment: commentcreateReducers
+
 
 });
 

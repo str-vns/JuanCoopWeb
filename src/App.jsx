@@ -25,6 +25,7 @@ import WishList from "./components/user/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
 import Orders from "./components/Order/Orders";
 import QrGenerate from "./components/Order/QrGenerate";
+import UserAddReview from "./components/user/UserAddReviews";
 
 import CoopDashboard from "./components/cooperative/Dashboard/CoopDashboard";
 import OverallDashboard from "./components/Admen/Dashboard/OverallDashboard";
@@ -176,6 +177,7 @@ function App() {
           <Route path="/payment" element={<Payment/>} />
           <Route path="/orders" element={<Orders/>} />
           <Route path="/qr" element={<QrGenerate/>} />
+          <Route path="/review" element={<UserAddReview/>} />
           <Route path="/wishlist" element={<WishList/>} />
           
           
