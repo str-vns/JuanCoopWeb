@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../../components/layout/navbar'
+import React, { useEffect, useState } from 'react';
+import Navbar from '../../components/layout/navbar';
 import { useDispatch, useSelector } from "react-redux";
 import { reverseCode, forwardCode } from "@redux/Actions/locationActions";
 import { addAddress } from '@redux/Actions/addressActions';
@@ -53,7 +53,7 @@ function AddressCreate() {
       setLongitude("");
       navigate("/addressList");
     }
-  }
+  };
 
   const handleMarkerDragEnd = (event) => {
     const { lngLat } = event;
@@ -131,140 +131,262 @@ function AddressCreate() {
   };
 
   return (
-    <div className="address-create-container">
-      <Navbar />
-      <div className="content-container mt-14">
-        <div className="map-section p-10 rounded-lg shadow-lg">
-          <Map
-            mapLib={import("maplibre-gl")}
-            {...viewState}
-            onMove={(evt) => setViewState(evt.viewState)}
-            style={{ width: "100%", height: "100%", borderRadius: "8px" }}
-            mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${import.meta.env.VITE_MAPLIBRE_TOKEN}`}
-          >
-            <Marker
-              longitude={markerPosition.longitude}
-              latitude={markerPosition.latitude}
-              anchor="bottom"
-              draggable
-              onDragEnd={handleMarkerDragEnd}
+    //  <div>
+    //   <Navbar />
+    //   <div className="register-signup-container mt-14 text-black ">
+    //     <div className="imageR-section p-10 text-white">
+    //           <Map
+    //             mapLib={import("maplibre-gl")}
+    //             {...viewState}
+    //             onMove={(evt) => setViewState(evt.viewState)}
+    //             style={{ width: "100%", height: "400px" }}
+    //             mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${import.meta.env.VITE_MAPLIBRE_TOKEN}`}
+    //           >
+    //             <Marker
+    //               longitude={markerPosition.longitude}
+    //               latitude={markerPosition.latitude}
+    //               anchor="bottom"
+    //               draggable
+    //               onDragEnd={handleMarkerDragEnd}
+    //             >
+    //               <div
+    //                 style={{
+    //                   color: "blue",
+    //                   fontSize: "24px",
+    //                   cursor: "grab",
+    //                 }}
+    //                 title="Drag me to move"
+    //               >
+    //                 📍
+    //               </div>
+    //             </Marker>
+    //           </Map>
+      
+    //           <div>
+    //             <input
+    //               type="text"
+    //               value={searchQuery}
+    //               onChange={(e) => setSearchQuery(e.target.value)}
+    //               placeholder="Search Address"
+    //               className="search-bar"
+    //             />
+    //             <button onClick={handleSearchClick} className="search-btn">
+    //               Search
+    //             </button>
+    //           </div>
+    //         </div>
+
+    //     {/* Address Form Section */}
+    //     <div className="addressR-signup-card">
+    //       <h1 className="addressR-form-title">Add Address</h1>
+    //       <form onSubmit={handleSave} className="addressR-form">
+    //       <div className="addressR-form-group">
+    //         <label>Address</label>
+    //         <input
+    //           type="text"
+    //           name="myAddress"
+    //           value={myAddress}
+    //           placeholder="Input Address Name"
+    //           className="addressR-form-input text-black"
+    //           required
+    //           disabled
+    //         />
+    //       </div>
+    //       <div className="addressR-form-group">
+    //         <label>Barangay</label>
+    //         <input
+    //           type="text"
+    //           name="barangay"
+    //           value={barangay}
+    //           placeholder="Input Barangay Name"
+    //           className="addressR-form-input text-black"
+    //           required
+    //           disabled
+    //         />
+    //       </div>
+    //       <div className="addressR-form-group">
+    //         <label>City</label>
+    //         <input
+    //           type="text"
+    //           name="City"
+    //           value={city}
+    //           placeholder="Input City"
+    //           className="addressR-form-input text-black"
+    //           required
+    //           disabled
+    //         />
+    //       </div>
+    //       <div className="addressR-form-group">
+    //         <label>Postal Code</label>
+    //         <input
+    //           type="text"
+    //           name="Postal Code"
+    //           value={postalCode}
+    //           placeholder="Input Postal Code"
+    //           className="addressR-form-input text-black"
+    //           required
+    //           disabled
+    //         />
+    //       </div>
+    //       <button type="submit" className="addressR-submit-btn">
+    //         Update Address
+    //       </button>
+    //     </form>
+    //     </div>
+
+    //     {isModalVisible && (
+    //       <Modal isOpen={isModalVisible} onRequestClose={handleCloseModal}>
+    //         <h2 className="text-black mt-10">Search Results</h2>
+    //         <ul>
+    //           {Array.isArray(location) && location.length > 0 ? (
+    //             location.map((result, index) => (
+    //               <li key={index}>
+    //                 <p className="text-black">{result?.address?.label}</p>
+    //                 <p className="text-black">{result?.address?.district}</p>
+    //                 <p className="text-black">{result?.address?.city}</p>
+    //                 <p className="text-black">{result?.address?.postalCode}</p>
+    //                 <button onClick={() => handleSelectAddress(result)}>
+    //                   Select Address
+    //                 </button>
+    //               </li>
+    //             ))
+    //           ) : (
+    //             <p className="text-black">No addresses found.</p>
+    //           )}
+    //         </ul>
+    //         <button onClick={handleCloseModal}>Close</button>
+    //       </Modal>
+    //     )}
+    //   </div>
+    // </div>
+    <div>
+    <Navbar />
+    <div className="register-signup-container mt-14 text-black ">
+      <div className="imageR-section p-10 text-white">
+            <Map
+              mapLib={import("maplibre-gl")}
+              {...viewState}
+              onMove={(evt) => setViewState(evt.viewState)}
+              style={{ width: "100%", height: "400px" }}
+              mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${import.meta.env.VITE_MAPLIBRE_TOKEN}`}
             >
-              <div
-                style={{
-                  color: "blue",
-                  fontSize: "24px",
-                  cursor: "grab",
-                }}
-                title="Drag me to move"
+              <Marker
+                longitude={markerPosition.longitude}
+                latitude={markerPosition.latitude}
+                anchor="bottom"
+                draggable
+                onDragEnd={handleMarkerDragEnd}
               >
-                📍
-              </div>
-            </Marker>
-          </Map>
-          <div className="search-bar-container">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search Address"
-              className="search-bar"
-              style={{ color: 'black' }}
-            />
-            <button onClick={handleSearchClick} className="search-btn">
-              Search
-            </button>
+                <div
+                  style={{
+                    color: "blue",
+                    fontSize: "24px",
+                    cursor: "grab",
+                  }}
+                  title="Drag me to move"
+                >
+                  📍
+                </div>
+              </Marker>
+            </Map>
+    
+            <div>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search Address"
+                className="search-bar"
+              />
+              <button onClick={handleSearchClick} className="search-btn">
+                Search
+              </button>
+            </div>
           </div>
+
+      {/* Address Form Section */}
+      <div className="addressR-signup-card">
+        <h1 className="addressR-form-title">Add Address</h1>
+        <form onSubmit={handleSave} className="addressR-form">
+        <div className="addressR-form-group">
+          <label>Address</label>
+          <input
+            type="text"
+            name="myAddress"
+            value={myAddress}
+            placeholder="Input Address Name"
+            className="addressR-form-input text-black"
+            required
+            disabled
+          />
         </div>
-        <div className="address-form-container">
-          <h1 className="form-title">Add Address</h1>
-          <form onSubmit={handleSave} className="form">
-            <div className="form-row">
-              <div className="form-group">
-                <label>Address</label>
-                <input
-                  type="text"
-                  name="myAddress"
-                  value={myAddress}
-                  placeholder="Input Address Name"
-                  className="form-input"
-                  required
-                  disabled
-                />
-              </div>
-              <div className="form-group">
-                <label>Barangay</label>
-                <input
-                  type="text"
-                  name="barangay"
-                  value={barangay}
-                  placeholder="Input Barangay Name"
-                  className="form-input"
-                  required
-                  disabled
-                />
-              </div>
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>City</label>
-                <input
-                  type="text"
-                  name="City"
-                  value={city}
-                  placeholder="Input City"
-                  className="form-input"
-                  required
-                  disabled
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Postal Code</label>
-                <input
-                  type="text"
-                  name="Postal Code"
-                  value={postalCode}
-                  placeholder="Input Postal Code"
-                  className="form-input"
-                  required
-                  disabled
-                />
-              </div>
-            </div>
-
-            <button type="submit" className="submit-btn">
-              Add Address
-            </button>
-          </form>
+        <div className="addressR-form-group">
+          <label>Barangay</label>
+          <input
+            type="text"
+            name="barangay"
+            value={barangay}
+            placeholder="Input Barangay Name"
+            className="addressR-form-input text-black"
+            required
+            disabled
+          />
         </div>
-        {isModalVisible && (
-          <Modal isOpen={isModalVisible} onRequestClose={handleCloseModal} className="modal">
-            <h2 className="modal-title">Search Results</h2>
-            <ul>
-              {Array.isArray(location) && location.length > 0 ? (
-                location.map((result, index) => (
-                  <li key={index} className="modal-result">
-                    <p>{result?.address?.label}</p>
-                    <p>{result?.address?.district}</p>
-                    <p>{result?.address?.city}</p>
-                    <p>{result?.address?.postalCode}</p>
-                    <button onClick={() => handleSelectAddress(result)} className="select-btn">
-                      Select Address
-                    </button>
-                  </li>
-                ))
-              ) : (
-                <p>No addresses found.</p>
-              )}
-            </ul>
-            <button onClick={handleCloseModal} className="close-btn">
-              Close
-            </button>
-          </Modal>
-        )}
+        <div className="addressR-form-group">
+          <label>City</label>
+          <input
+            type="text"
+            name="City"
+            value={city}
+            placeholder="Input City"
+            className="addressR-form-input text-black"
+            required
+            disabled
+          />
+        </div>
+        <div className="addressR-form-group">
+          <label>Postal Code</label>
+          <input
+            type="text"
+            name="Postal Code"
+            value={postalCode}
+            placeholder="Input Postal Code"
+            className="addressR-form-input text-black"
+            required
+            disabled
+          />
+        </div>
+        <button type="submit" className="addressR-submit-btn">
+         Add  Address
+        </button>
+      </form>
       </div>
+
+      {isModalVisible && (
+        <Modal isOpen={isModalVisible} onRequestClose={handleCloseModal}>
+          <h2 className="text-black mt-10">Search Results</h2>
+          <ul>
+            {Array.isArray(location) && location.length > 0 ? (
+              location.map((result, index) => (
+                <li key={index}>
+                  <p className="text-black">{result?.address?.label}</p>
+                  <p className="text-black">{result?.address?.district}</p>
+                  <p className="text-black">{result?.address?.city}</p>
+                  <p className="text-black">{result?.address?.postalCode}</p>
+                  <button onClick={() => handleSelectAddress(result)}>
+                    Select Address
+                  </button>
+                </li>
+              ))
+            ) : (
+              <p className="text-black">No addresses found.</p>
+            )}
+          </ul>
+          <button onClick={handleCloseModal}>Close</button>
+        </Modal>
+      )}
     </div>
+  </div>
   );
 }
 

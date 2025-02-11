@@ -1,27 +1,42 @@
-/* Style for map and input fields */
 .address-create-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f6f9;
+  background-color: #FFFFFF;
+  padding-top: 30px;
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.address-form-container {
+  width: 50%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .map-section {
-  width: 100%;
-  max-width: 1200px;
-  height: 500px;
+  width: 50%;
+  padding: 20px;
   position: relative;
   border-radius: 8px;
-  margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .search-bar-container {
-  margin-top: 15px;
+  
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+ 
 }
+
 
 .search-bar {
   width: 70%;
@@ -30,8 +45,8 @@
   border-radius: 5px;
   outline: none;
   color: black;
+  
 }
-
 
 .search-btn {
   padding: 8px 12px;
@@ -41,19 +56,11 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .search-btn:hover {
   background-color: #0056b3;
-}
-
-.address-form-container {
-  width: 100%;
-  max-width: 600px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form-title {

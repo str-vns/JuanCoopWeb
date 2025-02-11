@@ -93,3 +93,177 @@
   text-align: center;
   color: #757575;
 }
+
+.imageR-section {
+  background-color: #FFFFFF; 
+}
+
+.addressR-signup-card {
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px;
+  padding-top: 20px; 
+}
+
+.addressR-form-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.addressR-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.addressR-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.addressR-form-group label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.addressR-form-input {
+  width: 100%;
+  padding: 12px;
+  
+  border-radius: 5px;
+  font-size: 16px;
+ 
+}
+
+.addressR-form-input:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.addressR-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.addressR-submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.register-signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px; /* Adjust spacing between elements */
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 70px;
+}
+
+.imageR-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  padding-top: 20px; /* Applied */
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+ 
+}
+
+.search-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+ 
+}
+
+.search-btn:hover {
+  background-color: #0056b3;
+}
+
+/* modal */
+/* Modal Container */
+.Modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Modal Title */
+.Modal h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Address List */
+.Modal ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.Modal li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.Modal li:last-child {
+  border-bottom: none;
+}
+
+/* Address Text */
+.Modal p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: black;
+}
+
+/* Buttons */
+.Modal button {
+  background-color: #f0c14b;
+  border: 1px solid #a88734;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.Modal button:hover {
+  background-color: #ddb347;
+}
