@@ -370,3 +370,40 @@
   border-radius: 50%;
   border: 1px solid #ddd;
 }
+.cooperative-details {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(2, 2, 2, 0.1);
+}
+
+.cooperative-details h3 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.farmer-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.view-shop-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-size: 0.9em;
+}
+
+.view-shop-btn:hover {
+  background-color: #1e3a8a;
+  color: rgb(255, 255, 255); /* White text */
+}

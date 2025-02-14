@@ -4,8 +4,10 @@ import axios from "axios";
 import "@assets/css/productcard.css";
 import Navbar from "../layout/navbar";
 import { addToCart } from "@redux/Actions/cartActions";
-import { useDispatch } from "react-redux";
+import { getCoop } from "@redux/Actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
 import baseURL from "@Commons/baseUrl";
+
 const Stars = ({ count }) => {
   const stars = Array(5)
     .fill(0)
@@ -14,137 +16,121 @@ const Stars = ({ count }) => {
 };
 
 const ProductCard = () => {
-  const { id } = useParams(); 
-  const dispatch = useDispatch()
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [coopDetails, setCoopDetails] = useState(null);
+  const [loadingProduct, setLoadingProduct] = useState(true);
+  const [loadingCoop, setLoadingCoop] = useState(false);
   const [cartMessage, setCartMessage] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedStock, setSelectedStock] = useState(product?.stock[0]);
-  const [quantity, setQuantity] = useState(1); 
+  const [selectedStock, setSelectedStock] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
+  const { coop } = useSelector((state) => state.singleCoop);
+
+  // Fetch Product Details
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-
-
-        // Fetch product details including coop ID
-        const productResponse = await axios.get(`${baseURL}products/${id}`);
-        const productDetails = productResponse.data.details;
-
-        console.log("Product Details:", productDetails); 
+        setLoadingProduct(true);
+        const { data } = await axios.get(`${baseURL}products/${id}`);
+        const productDetails = data.details;
         setProduct(productDetails);
+        console.log("Product Details:", productDetails);
 
-        // // Fetch inventory data
-        // const inventoryResponse = await axios.get(`${baseURL}inventory`);
-        // const inventoryData = inventoryResponse.data.details.find(
-        //   (item) => item.productId === id
-        // );
+        // Set default stock selection
+        if (productDetails.stock?.length > 0) {
+          setSelectedStock(productDetails.stock[0]);
+        }
 
-        // const mergedData = {
-        //   ...productDetails,
-        //   price: inventoryData?.price || "N/A",
-        //   stock: inventoryData?.quantity || 0,
-        //   metricUnit: inventoryData?.metricUnit || "N/A",
-        // };
-
-        // setProduct(mergedData);
-        setLoading(false);
+        setLoadingProduct(false);
       } catch (error) {
-        console.error("Error fetching product or coop details:", error);
-        setLoading(false);
+        console.error("Error fetching product details:", error);
+        setLoadingProduct(false);
       }
     };
 
     fetchProductDetails();
   }, [id]);
 
+  // Fetch Cooperative Details
+  useEffect(() => {
+    if (product?.coop) {
+      const fetchCoopDetails = async () => {
+        try {
+          setLoadingCoop(true);
+          const { data } = await axios.get(`${baseURL}farm/${product.coop}`);
+          setCoopDetails(data.details);
+          setLoadingCoop(false);
+        } catch (error) {
+          console.error("Error fetching cooperative details:", error);
+          setLoadingCoop(false);
+        }
+      };
+
+      fetchCoopDetails();
+    }
+  }, [product?.coop]);
+
+  // Fetch Coop Details using Redux
+  useEffect(() => {
+    if (product?.coop) {
+      dispatch(getCoop(product.coop));
+    }
+  }, [dispatch, product?.coop]);
 
   const handleAddToCart = () => {
+    if (!selectedStock) return;
 
-       const cartItem = {
-        inventoryId: selectedStock._id,
-        productId: product._id,
-        productName: product.productName,
-        pricing: selectedStock.price,
-        quantity: quantity,
-        metricUnit: selectedStock.metricUnit,
-        unitName: selectedStock.unitName,
-        coop: product.coop,
-        image: product.image[0].url,
-        maxQuantity: selectedStock.quantity,
-       }
-      //  localStorage.setItem("cartItems", JSON.stringify(cartItem));
-       dispatch(addToCart(cartItem));
-  console.log("Cart Item:", cartItem);
-    
-    // // Retrieve cart from local storage or initialize as empty array
-    // let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    // // Check if the product already exists in the cart
-    // const existingProduct = cart.find((item) => item.id === id);
-  
-    // if (existingProduct) {
-    //   // If the product exists, increase the quantity by 1
-    //   existingProduct.quantity += 1;
-    // } else {
-    //   // Otherwise, add the new product with quantity 1
-    //   cart.push({ id, name, price, image, quantity: 1 });
-    // }
-  
-    // // Save the updated cart back to local storage
-    // localStorage.setItem("cart", JSON.stringify(cart));
+    const cartItem = {
+      inventoryId: selectedStock._id,
+      productId: product._id,
+      productName: product.productName,
+      pricing: selectedStock.price,
+      quantity,
+      metricUnit: selectedStock.metricUnit,
+      unitName: selectedStock.unitName,
+      coop: product.coop,
+      image: product.image[0]?.url,
+      maxQuantity: selectedStock.quantity,
+    };
+
+    dispatch(addToCart(cartItem));
+    console.log("Cart Item:", cartItem);
+    setCartMessage("Added to cart!");
   };
-  
 
   const handleImageChange = (direction) => {
     if (product.image?.length > 1) {
       setCurrentImageIndex((prevIndex) => {
-        if (direction === "next") {
-          return (prevIndex + 1) % product.image.length;
-        } else {
-          return (prevIndex - 1 + product.image.length) % product.image.length;
-        }
+        return direction === "next"
+          ? (prevIndex + 1) % product.image.length
+          : (prevIndex - 1 + product.image.length) % product.image.length;
       });
     }
   };
 
   const handleQuantityChange = (type) => {
-    setQuantity((prevQuantity) => {
-      if (type === "add") {
-        return Math.min(prevQuantity + 1, selectedStock?.quantity);
-      }
-      if (type === "subtract") {
-        return Math.max(prevQuantity - 1, 1);
-      }
-      return prevQuantity;
-    });
+    setQuantity((prevQuantity) =>
+      type === "add"
+        ? Math.min(prevQuantity + 1, selectedStock?.quantity)
+        : Math.max(prevQuantity - 1, 1)
+    );
   };
 
   const handleStockSelect = (item) => {
-    setSelectedStock(item); 
-    setQuantity(1); 
+    setSelectedStock(item);
+    setQuantity(1);
   };
-  
-  useEffect(() => {
-    if (product && product.stock.length > 0) {
-      setSelectedStock(product.stock[0]);
-    }
-  }, [product]);
-  
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
-  if (!product) {
-    return <div>Product not found</div>;
-  }
-
+  if (loadingProduct) return <div>Loading Product...</div>;
+  if (!product) return <div>Product not found</div>;
 
   return (
     <>
+      <Navbar />
       <div className="product-card-container">
-        <Navbar />
         <div className="product-carousel">
           <div className="image-container">
             <img
@@ -172,13 +158,11 @@ const ProductCard = () => {
         <div className="product-details">
           <h2 className="product-title">{product.productName}</h2>
           <div className="price-section">
-            {/* {product.stock.length > 0 ? () : ()} */}
             <span className="current-price">
-              {selectedStock?.price ? `₱ ${selectedStock?.price}` : "N/A"}
-
+              {selectedStock?.price ? `₱ ${selectedStock.price}` : "N/A"}
             </span>
           </div>
-       
+
           <div className="reviews">
             <Stars count={product?.ratings} />
             <span className="review-count">
@@ -188,32 +172,31 @@ const ProductCard = () => {
 
           <p className="product-description">{product.description}</p>
 
-          <div className="product-attributes">Stock: 
-          {selectedStock?.quantity ? ` ${selectedStock?.quantity}` : " 0"} </div>
-              
-          <div className="stock-Label">Product Size:</div>
-          <div className="stock-info">
-          {product.stock && product.stock.length > 0 ? (
-  product.stock
-    .filter((item) => item.quantity > 0) 
-    .map((item, index) => (
-      <button
-        key={index}
-        className={`stock-box stock-label ${
-          selectedStock === item ? "selected" : ""
-        }`}
-        onClick={() => handleStockSelect(item)}
-      >
-        {item.unitName} {item.metricUnit}
-      </button>
-    ))
-): (
-     <span className="stock-label">No Stock Available</span>
-      
-  )}
-</div>
+          <div className="product-attributes">
+            Stock: {selectedStock?.quantity ? selectedStock.quantity : "0"}
+          </div>
 
-          {/* Add to Cart Section */}
+          <div className="stock-label">Product Size:</div>
+          <div className="stock-info">
+            {product.stock && product.stock.length > 0 ? (
+              product.stock
+                .filter((item) => item.quantity > 0)
+                .map((item, index) => (
+                  <button
+                    key={index}
+                    className={`stock-box stock-label ${
+                      selectedStock === item ? "selected" : ""
+                    }`}
+                    onClick={() => handleStockSelect(item)}
+                  >
+                    {item.unitName} {item.metricUnit}
+                  </button>
+                ))
+            ) : (
+              <span className="stock-label">No Stock Available</span>
+            )}
+          </div>
+
           <div className="add-to-cart">
             <div className="quantity-selector">
               <button
@@ -248,33 +231,72 @@ const ProductCard = () => {
           </div>
         </div>
       </div>
-      <hr className="partition-line" />
 
-      {/* Reviews Section */}
+      <div className="cooperative-details">
+
+  {loadingCoop ? (
+    <p>Loading Cooperative Details...</p>
+  ) : coopDetails ? (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {coop?.user?.image?.url && (
+          <img
+            src={coop.user.image.url}
+            alt="Cooperative"
+            className="farmer-image"
+            style={{ marginRight: '15px' }}
+          />
+        )}
+        <div>
+          <p style={{ fontSize: '0.9em', margin: '2px 0', color: '#666', textAlign: 'left' }}>
+            <strong>Farm Name:</strong> {coopDetails.farmName}
+          </p>
+          <p style={{ fontSize: '0.9em', margin: '2px 0', color: '#666' }}>
+            <strong>Location:</strong> {coopDetails.barangay}, {coopDetails.city}
+          </p>
+        </div>
+      </div>
+      <a href={`/shop/${coopDetails.id}`} className="view-shop-btn">
+        View Shop
+      </a>
+    </div>
+  ) : (
+    <p>Cooperative details not available.</p>
+  )}
+</div>
+
+
       <div className="comment-reviews-container">
         <h3>Reviews</h3>
         {product.reviews.length > 0 ? (
-          product.reviews.map((review, index) => (
-            console.log(review.user.image.url),
-            <div className="review" key={index}>
-              <div className="review-header">
-                <div className="reviewer-info">
-                  <img
-                    src={
-                      review.user?.image?.url
-                        ? review.user?.image?.url
-                        : "/default-profile.jpg"
-                    }
-                    alt={`${review.user?.firstName || "Anonymous"} profile`}
-                    className="reviewer-profile-picture"
-                  />
-                  <h4>{review.user?.firstName || "Anonymous"} {review.user?.lastName || "Anonymous"}</h4> 
+          product.reviews.map(
+            (review, index) => (
+              console.log(review.user.image.url),
+              (
+                <div className="review" key={index}>
+                  <div className="review-header">
+                    <div className="reviewer-info">
+                      <img
+                        src={
+                          review.user?.image?.url
+                            ? review.user?.image?.url
+                            : "/default-profile.jpg"
+                        }
+                        alt={`${review.user?.firstName || "Anonymous"} profile`}
+                        className="reviewer-profile-picture"
+                      />
+                      <h4>
+                        {review.user?.firstName || "Anonymous"}{" "}
+                        {review.user?.lastName || "Anonymous"}
+                      </h4>
+                    </div>
+                    <Stars count={review.rating} />
+                  </div>
+                  <p>{review.comment}</p>
                 </div>
-                <Stars count={review.rating} />
-              </div>
-              <p>{review.comment}</p>
-            </div>
-          ))
+              )
+            )
+          )
         ) : (
           <p>No reviews yet.</p>
         )}
@@ -282,5 +304,38 @@ const ProductCard = () => {
     </>
   );
 };
+
+// const styles = {
+//   farmerInfo: {
+//     display: "flex",
+//     alignItems: "center",
+//     justifyContent: "space-between",
+//     padding: "10px",
+//     border: "1px solid #ddd",
+//     borderRadius: "8px",
+//     margin: "10px 0",
+//   },
+//   farmerInfo2: {
+//     display: "flex",
+//     alignItems: "center",
+//     gap: "10px",
+//   },
+//   farmerImage: {
+//     width: "50px",
+//     height: "50px",
+//     borderRadius: "50%",
+//     objectFit: "cover",
+//   },
+//   farmerName: {
+//     fontSize: "16px",
+//     fontWeight: "bold",
+//     margin: 0,
+//   },
+//   location: {
+//     fontSize: "14px",
+//     color: "#666",
+//     margin: 0,
+//   },
+// };
 
 export default ProductCard;
