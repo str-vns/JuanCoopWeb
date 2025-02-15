@@ -248,6 +248,10 @@ function App() {
         
           <Route path="/memberRegistration" element={<MemberRegistration/>} />
           <Route path="/farmerprofile/:coopId" element={<FarmerProfile />} />
+
+          <Route path="/chat/:conversationId" element={<Messenger />} />
+          <Route path="/coopchat/:conversationId" element={<CoopMessenger />} />
+
           </Routes>
       </div>
     </Router>

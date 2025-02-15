@@ -407,3 +407,28 @@
   background-color: #1e3a8a;
   color: rgb(255, 255, 255); /* White text */
 }
+
+/* Farmer profile */
+
+.farmer-profile-container {
+  text-align: center;
+  padding: 20px;
+  padding-top: 100px;
+}
+
+.coop-details {
+  margin-bottom: 20px;
+}
+
+.coop-image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.coop-image {
+  width: 150px; /* Adjust the size as needed */
+  height: 150px; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the area without stretching */
+}
