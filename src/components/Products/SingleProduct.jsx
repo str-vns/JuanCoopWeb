@@ -28,6 +28,7 @@ const ProductCard = () => {
   const [quantity, setQuantity] = useState(1);
 
   const { coop } = useSelector((state) => state.singleCoop);
+  console.log("Coop from Redux:", coop);
 
   // Fetch Product Details
   useEffect(() => {
@@ -233,38 +234,55 @@ const ProductCard = () => {
       </div>
 
       <div className="cooperative-details">
-
-  {loadingCoop ? (
-    <p>Loading Cooperative Details...</p>
-  ) : coopDetails ? (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        {coop?.user?.image?.url && (
-          <img
-            src={coop.user.image.url}
-            alt="Cooperative"
-            className="farmer-image"
-            style={{ marginRight: '15px' }}
-          />
+        {loadingCoop ? (
+          <p>Loading Cooperative Details...</p>
+        ) : coopDetails ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {coop?.user?.image?.url && (
+                <img
+                  src={coop.user.image.url}
+                  alt="Cooperative"
+                  className="farmer-image"
+                  style={{ marginRight: "15px" }}
+                />
+              )}
+              <div>
+                <p
+                  style={{
+                    fontSize: "0.9em",
+                    margin: "2px 0",
+                    color: "#666",
+                    textAlign: "left",
+                  }}
+                >
+                  <strong>Farm Name:</strong> {coopDetails.farmName}
+                </p>
+                <p
+                  style={{ fontSize: "0.9em", margin: "2px 0", color: "#666" }}
+                >
+                  <strong>Location:</strong> {coopDetails.barangay},{" "}
+                  {coopDetails.city}
+                </p>
+              </div>
+            </div>
+            <a
+              href={`/farmerprofile/${product.coop}`}
+              className="view-shop-btn"
+            >
+              View Shop
+            </a>
+          </div>
+        ) : (
+          <p>Cooperative details not available.</p>
         )}
-        <div>
-          <p style={{ fontSize: '0.9em', margin: '2px 0', color: '#666', textAlign: 'left' }}>
-            <strong>Farm Name:</strong> {coopDetails.farmName}
-          </p>
-          <p style={{ fontSize: '0.9em', margin: '2px 0', color: '#666' }}>
-            <strong>Location:</strong> {coopDetails.barangay}, {coopDetails.city}
-          </p>
-        </div>
       </div>
-      <a href={`/shop/${coopDetails.id}`} className="view-shop-btn">
-        View Shop
-      </a>
-    </div>
-  ) : (
-    <p>Cooperative details not available.</p>
-  )}
-</div>
-
 
       <div className="comment-reviews-container">
         <h3>Reviews</h3>
@@ -304,38 +322,5 @@ const ProductCard = () => {
     </>
   );
 };
-
-// const styles = {
-//   farmerInfo: {
-//     display: "flex",
-//     alignItems: "center",
-//     justifyContent: "space-between",
-//     padding: "10px",
-//     border: "1px solid #ddd",
-//     borderRadius: "8px",
-//     margin: "10px 0",
-//   },
-//   farmerInfo2: {
-//     display: "flex",
-//     alignItems: "center",
-//     gap: "10px",
-//   },
-//   farmerImage: {
-//     width: "50px",
-//     height: "50px",
-//     borderRadius: "50%",
-//     objectFit: "cover",
-//   },
-//   farmerName: {
-//     fontSize: "16px",
-//     fontWeight: "bold",
-//     margin: 0,
-//   },
-//   location: {
-//     fontSize: "14px",
-//     color: "#666",
-//     margin: 0,
-//   },
-// };
 
 export default ProductCard;

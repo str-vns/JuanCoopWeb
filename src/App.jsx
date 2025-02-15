@@ -87,6 +87,8 @@ import EditProfile from "./components/user/EditProfile";
 // import AdminDashboard from "./components/admin/admin";
 
 import MemberList from "./components/cooperative/Member/MemberList";
+import FarmerProfile from "./components/cooperative/Profile/FarmerProfile";
+
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
 
@@ -179,11 +181,8 @@ function App() {
           <Route path="/qr" element={<QrGenerate/>} />
           <Route path="/review" element={<UserAddReview/>} />
           <Route path="/wishlist" element={<WishList/>} />
-          
-          
           <Route path="/checkout" element={<CheckoutAccordion/>} />
           <Route path="/confirm" element={<OrderConfirmation />} />
-         
           <Route path="/prod" element={<SingleProduct/>} />
         
          
@@ -248,7 +247,8 @@ function App() {
           <Route path="/category-update/:id" element={<CategoryUpdate/>} />
         
           <Route path="/memberRegistration" element={<MemberRegistration/>} />
-        </Routes>
+          <Route path="/farmerprofile/:coopId" element={<FarmerProfile />} />
+          </Routes>
       </div>
     </Router>
   );
