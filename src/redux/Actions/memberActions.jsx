@@ -27,7 +27,7 @@ import {
 } from '@redux/Constants/memberConstants';
 import axios from 'axios';
 import baseURL from '@Commons/baseUrl';
-import mime from 'mime'
+import mime from 'mime';
 
 
 export const createMember = (member, token) => async (dispatch) => {

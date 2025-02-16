@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getCoopProducts } from "@redux/Actions/productActions";
 import axios from "axios";
-import baseURL from "@Commons/BaseUrl";
+import baseURL from "@Commons/baseUrl";
 import "@assets/css/productcard.css";
 import Navbar from "../../layout/navbar";
 import { createConversation } from "@redux/Actions/converstationActions";
