@@ -39,64 +39,46 @@ export const categoryList = () => async (dispatch) => {
 
 export const categoryCreate = (categoryData, image, token) => async (dispatch) => {
   try {
-    dispatch({ type: "CATEGORY_CREATE_REQUEST" });
+    dispatch({ type: CATEGORY_CREATE_REQUEST });
 
     const formData = new FormData();
-    formData.append("categoryName", categoryData.categoryName); // Use "categoryName" instead of "name"
+    formData.append("categoryName", categoryData.categoryName);
 
-    if (image) {
-      if (image instanceof File) {
-        formData.append("image", image, image.name); // Pass file with name
-      } else {
-        throw new Error("Invalid image file");
-      }
-    }
-
-    console.log("FormData before sending:");
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value); 
+    if (image instanceof File) {
+      formData.append("image", image, image.name);
+    } else {
+      console.error("Invalid image file:", image);
+      throw new Error("Invalid image file.");
     }
 
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data", 
+        "Content-Type": "multipart/form-data",
       },
     };
 
-    
+    console.log("Sending category create request...");
     const { data } = await axios.post(`${baseURL}category`, formData, config);
+    console.log("Category created successfully:", data);
 
-   
-    dispatch({ type: "CATEGORY_CREATE_SUCCESS", payload: data });
+    dispatch({ type: CATEGORY_CREATE_SUCCESS, payload: data });
+
   } catch (error) {
-    console.error("Error creating category:", error.response?.data || error.message);
+    const errorMessage = error.response?.data?.message || error.message;
+    console.error("Error creating category:", errorMessage);
+
     dispatch({
-      type: "CATEGORY_CREATE_FAIL",
-      payload: error.response?.data?.message || error.message,
+      type: CATEGORY_CREATE_FAIL,
+      payload: errorMessage,
     });
   }
 };
 
-//not okay yet
+
 export const categoryEdit = (id, categoryData, token) => async (dispatch) => {
   try {
     dispatch({ type: CATEGORY_EDIT_REQUEST });
-
-    const formData = new FormData();
-    formData.append("categoryName", categoryData.categoryName);
-
-    if (categoryData.image) {
-      const image = categoryData.image;
-
-      if (image instanceof File) {
-        formData.append("image", image, image.name);
-      } else if (typeof image === "string") {
-        formData.append("existingImage", image); // Add the existing image if provided
-      } else {
-        throw new Error("Invalid image format");
-      }
-    }
 
     const config = {
       headers: {
@@ -105,15 +87,16 @@ export const categoryEdit = (id, categoryData, token) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(`${baseURL}category/${id}`, formData, config);
+    console.log("Sending request with payload:", categoryData);
+    const { data } = await axios.put(`${baseURL}category/${id}`, categoryData, config);
 
     dispatch({
       type: CATEGORY_EDIT_SUCCESS,
       payload: data,
     });
-
   } catch (error) {
     const errorMessage = error.response?.data?.message || error.message;
+    console.error("Error updating category:", errorMessage);
     dispatch({
       type: CATEGORY_EDIT_FAIL,
       payload: errorMessage,

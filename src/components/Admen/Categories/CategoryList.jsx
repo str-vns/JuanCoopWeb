@@ -48,11 +48,17 @@ const CategoryList = () => {
   };
 
   // Handle delete category
-  const handleDeleteCategory = (categoryId) => {
+  const handleDeleteCategory = async (categoryId) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
-      dispatch(categoryDelete(categoryId));
+      try {
+        await dispatch(categoryDelete(categoryId)); // Wait for delete action
+        dispatch(getCategories()); // Refresh the category list after deletion
+      } catch (error) {
+        console.error("Error deleting category:", error);
+      }
     }
   };
+  
 
   // Pagination logic
   const totalPages = Math.ceil(categories.length / itemsPerPage);

@@ -9,50 +9,56 @@ const CategoryUpdate = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const singleCategory = location.state?.category;
+  const singleCategory = location.state?.category; // Ensure category data is passed
 
   const currentUser = getCurrentUser();
   const storedToken = getToken();
   const userId = currentUser?._id;
-  const [categoryName, setCategoryName] = useState(singleCategory?.categoryName || "");
+  
+  // Fix: Initialize with empty string instead of undefined
+  const [categoryName, setCategoryName] = useState("");
   const [image, setImage] = useState(null);
-  const [existingImage, setExistingImage] = useState(singleCategory?.image || "");
+  const [imagePreview, setImagePreview] = useState(null);
+  const [existingImage, setExistingImage] = useState("");
   const [errors, setErrors] = useState("");
   const categoryId = singleCategory?._id || null;
 
   useEffect(() => {
-    console.log("Location state:", location.state);
-    console.log("Single category object:", singleCategory);
-    console.log("Extracted categoryId:", categoryId);
-  }, [location, singleCategory, categoryId]);
-
- const handleCategoryUpdate = async () => {
-  setErrors("");
-
-  if (!categoryName.trim()) {
-    setErrors("Category name is required!");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("categoryName", categoryName);
-
-  if (image) formData.append("image", image);
-
-  try {
-    if (storedToken && categoryId) {
-      await dispatch(categoryEdit(categoryId, formData, storedToken));
-      alert("Category updated successfully!");
-      navigate("/categorylist");
-    } else {
-      setErrors("Invalid token or category ID.");
+    if (singleCategory) {
+      setCategoryName(singleCategory.categoryName || ""); // Fix: Set categoryName correctly
+      setExistingImage(singleCategory.image?.url || ""); // Fix: Ensure image URL is set
     }
-  } catch (error) {
-    setErrors(error.response?.data?.message || "Failed to update category.");
-  }
-};
+  }, [singleCategory]);
 
-  
+  const handleCategoryUpdate = async () => {
+    setErrors("");
+
+    if (!categoryName.trim()) {
+      setErrors("Category name is required!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("categoryName", categoryName);
+
+    if (image) {
+      formData.append("image", image);
+    } else {
+      formData.append("existingImage", existingImage);
+    }
+
+    try {
+      if (storedToken && categoryId) {
+        await dispatch(categoryEdit(categoryId, formData, storedToken));
+        alert("Category updated successfully!");
+        navigate("/categorylist");
+      } else {
+        setErrors("Invalid token or category ID.");
+      }
+    } catch (error) {
+      setErrors(error.response?.data?.message || "Failed to update category.");
+    }
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -66,6 +72,7 @@ const CategoryUpdate = () => {
         return;
       }
       setImage(file);
+      setImagePreview(URL.createObjectURL(file));
       setErrors("");
     }
   };
@@ -85,17 +92,17 @@ const CategoryUpdate = () => {
 
         <input type="file" style={styles.input} onChange={handleImageChange} accept="image/*" />
 
-        {existingImage && !image && (
+        {existingImage && !imagePreview && (
           <div>
             <p>Current Image:</p>
-            <img src={existingImage} alt="Category" style={{ width: "100px", height: "100px" }} />
+            <img src={existingImage} alt="Category" style={styles.image} />
           </div>
         )}
 
-        {image && (
+        {imagePreview && (
           <div>
             <p>New Image:</p>
-            <img src={URL.createObjectURL(image)} alt="Category" style={{ width: "100px", height: "100px" }} />
+            <img src={imagePreview} alt="New Category" style={styles.image} />
           </div>
         )}
 
@@ -112,6 +119,7 @@ const styles = {
   title: { fontSize: "24px", fontWeight: "bold", marginBottom: "20px" },
   form: { display: "flex", flexDirection: "column", gap: "15px" },
   input: { width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ddd", fontSize: "16px" },
+  image: { width: "100px", height: "100px", objectFit: "cover", borderRadius: "8px" },
   button: {
     backgroundColor: "#FEC120",
     padding: "10px",

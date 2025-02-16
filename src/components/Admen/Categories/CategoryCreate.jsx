@@ -15,7 +15,7 @@ const CategoryCreate = () => {
   const navigate = useNavigate();
 
   const { loading, error, success } = useSelector(
-    (state) => state.categoryCreate || {}
+    (state) => state.categoriesCreate || {}
   );
 
   useEffect(() => {
@@ -24,6 +24,9 @@ const CategoryCreate = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Success state:", success);
+    console.log("Error state:", error);
+
     if (success) {
       alert("Category created successfully!");
       setCategoryName("");
@@ -36,6 +39,8 @@ const CategoryCreate = () => {
   }, [success, error, navigate]); // Ensure `navigate` is in the dependency array
 
   const handleCategoryCreate = () => {
+    console.log("Creating category with:", { categoryName, image, token });
+
     if (!categoryName.trim()) {
       setErrorMessage("Category name is required!");
       return;
@@ -59,7 +64,6 @@ const CategoryCreate = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file type and size
       if (!file.type.startsWith("image/")) {
         setErrorMessage("Please upload a valid image file.");
         return;
@@ -69,14 +73,13 @@ const CategoryCreate = () => {
         return;
       }
       setImage(file);
-      setErrorMessage(""); // Clear previous error
+      setErrorMessage("");
     }
   };
 
   return (
     <div style={styles.container}>
       <Sidebar />
-      
 
       <h1 style={styles.title}>Create Category</h1>
 
