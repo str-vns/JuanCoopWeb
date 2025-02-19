@@ -1,68 +1,101 @@
-/* src/assets/css/inventoryDetailsModal.css */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+  .inventory-list-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-container {
-    background-color: white;
-    padding: 20px;
-    max-width: 500px;
+    height: 100vh;
     width: 100%;
+    margin-left: 100px;
+    background-color: #fffdf2;
+    font-family: "Arial", sans-serif;
+    overflow-y: hidden;
+  }
+  
+  .inventory-list-containertwo {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: #ffcc00;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
   
-  .modal-close-button {
-    background: none;
-    border: none;
-    font-size: 24px;
+  .inventory-header h1 {
+    color: #5a5a5a;
+    font-size: 1.8rem;
     font-weight: bold;
-    color: black;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
   }
   
-  .modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .inventory-table-container {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
   }
   
-  .modal-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 20px;
+  .inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .modal-image {
-    width: 150px;
-    height: 150px;
+  .inventory-table th,
+  .inventory-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .inventory-table th {
+    background-color: #fafa90;
+    color: #333;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  
+  .inventory-table tr:hover {
+    background-color: #fffae6;
+  }
+  
+  .inventory-table img {
+    width: 50px;
+    height: 50px;
     object-fit: cover;
-    margin-right: 20px;
+    border-radius: 8px;
   }
   
-  .modal-details {
-    display: flex;
-    flex-direction: column;
+  .inventory-view-button {
+    background-color: #fafa90;
+    color: #5a5a5a;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
   }
   
-  .modal-details h3 {
-    margin: 0;
-    font-size: 18px;
+  .inventory-view-button:hover {
+    background-color: #ffd700;
   }
   
-  .modal-details p {
-    margin: 5px 0;
-  }  
+  .btn-add-inventory{
+    background-color: #fafa90;
+    color: #5a5a5a;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }

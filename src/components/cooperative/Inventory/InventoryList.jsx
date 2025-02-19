@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import Header from "../header";
 import Sidebar from "../sidebar";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import { getCoopProducts } from "@redux/Actions/productActions";
@@ -15,6 +14,8 @@ const InventoryList = () => {
   const coopId = currentUser?._id;
 
   const [refreshing, setRefreshing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const { loading, coopProducts, error } = useSelector(
     (state) => state.CoopProduct
@@ -43,41 +44,41 @@ const InventoryList = () => {
     navigate("/inventorydetail", { state: { Inv: item } });
   };
 
+  // Pagination logic
+  const filteredProducts = coopProducts?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  
+  const currentProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="inventory-list-container">
       <Sidebar />
       <div className="inventory-list-containertwo">
-        {/* <Header /> */}
         <main className="p-6">
           <div className="inventory-header">
             <h1>Product Inventory List</h1>
           </div>
-          {loading ? (
-            <div className="loading-spinner">Loading...</div>
-          ) : error ? (
-            <div className="error-message">{error}</div>
-          ) : (
             <div className="inventory-table-container">
               <table className="inventory-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(coopProducts || [])
-                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by newest first
-                  .map((item) => (
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentProducts.map((item) => (
                     <tr key={item?._id}>
                       <td>
                         <img
                           src={item?.image[0]?.url || "https://via.placeholder.com/150"}
                           alt={item?.productName}
                           className="inventory-image"
-                          style={{ width: "50px", height: "50px" }}
                         />
                       </td>
                       <td>{item?.productName || "Unnamed Product"}</td>
@@ -92,11 +93,26 @@ const InventoryList = () => {
                       </td>
                     </tr>
                   ))}
-              </tbody>
-
-            </table>
+                </tbody>
+              </table>
             </div>
-          )}
+
+          {/* Pagination */}
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span>Page {currentPage} of {totalPages}</span>
+            <button
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </main>
       </div>
     </div>

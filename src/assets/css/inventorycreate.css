@@ -1,70 +1,110 @@
-/* InventoryCreate.css */
+/* Modal Background */
 .inv-create-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .inv-create-modal-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    max-width: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .inv-create-modal-container h2 {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .inv-create-modal-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .inv-create-modal-container label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .inv-create-modal-container input,
-  .inv-create-modal-container select {
-    margin-bottom: 15px;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  
-  .inv-create-modal-container .error {
-    color: red;
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .inv-create-modal-container button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .inv-create-modal-container button:disabled {
-    background-color: #ccc;
-  }
-  
-  .inv-create-modal-container button + button {
-    background-color: #f44336;
-  }  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Box */
+.inv-create-modal-container {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.inv-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+.inv-close-btn:hover {
+  color: #f44336;
+}
+
+/* Title */
+.inv-create-modal-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Form Styling */
+.inv-create-modal-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.inv-create-modal-container label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Inputs & Select */
+.inv-create-modal-container input,
+.inv-create-modal-container select {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.inv-create-modal-container input:focus,
+.inv-create-modal-container select:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 5px rgba(255, 204, 0, 0.6);
+}
+
+/* Error Message */
+.inv-create-error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Submit Button */
+.inv-submit-btn {
+  background: linear-gradient(45deg, #ffcc00, #f9d958);
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.inv-submit-btn:hover {
+  background: linear-gradient(45deg, #f9d958, #ffcc00);
+}
+
+.inv-submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

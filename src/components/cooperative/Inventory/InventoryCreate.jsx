@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createInventory } from "@redux/Actions/inventoryActions";
 import { getToken } from "@utils/helpers";
 import "@assets/css/inventorycreate.css";
+import { FaTimes } from "react-icons/fa"; // Close Icon
 
 const InventoryCreate = ({ onClose, productId }) => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const InventoryCreate = ({ onClose, productId }) => {
         setTimeout(() => {
           window.location.reload();
           onClose();
-        }, 5000);
+        }, 2000);
       }
       navigate(`/inventorydetail`, { state: { Inv: { _id: productId } } });
     } catch (error) {
@@ -75,6 +76,9 @@ const InventoryCreate = ({ onClose, productId }) => {
   return (
     <div className="inv-create-modal-overlay">
       <div className="inv-create-modal-container">
+        <button className="inv-close-btn" onClick={onClose}>
+          <FaTimes />
+        </button>
         <h2>Add Inventory</h2>
         <form onSubmit={handleCreateInventory}>
           <label>Unit Name</label>
@@ -84,6 +88,7 @@ const InventoryCreate = ({ onClose, productId }) => {
             onChange={(e) => setUnitName(e.target.value)}
             placeholder="Enter unit name"
           />
+          
           <label>Metric Unit</label>
           <select value={metricUnit} onChange={(e) => setMetricUnit(e.target.value)}>
             <option value="kg">KG</option>
@@ -94,6 +99,7 @@ const InventoryCreate = ({ onClose, productId }) => {
             <option value="pcs">PCS</option>
             <option value="oz">OZ</option>
           </select>
+
           <label>Price</label>
           <input
             type="number"
@@ -101,6 +107,7 @@ const InventoryCreate = ({ onClose, productId }) => {
             onChange={(e) => setUnitPrice(e.target.value)}
             placeholder="Enter price"
           />
+          
           <label>Quantity</label>
           <input
             type="number"
@@ -108,12 +115,13 @@ const InventoryCreate = ({ onClose, productId }) => {
             onChange={(e) => setQuantity(e.target.value)}
             placeholder="Enter quantity"
           />
+
           {error && <p className="inv-create-error">{error}</p>}
-          <button type="submit" disabled={Invloading}>
-            {Invloading ? "Adding..." : "Add"}
+
+          <button type="submit" className="inv-submit-btn" disabled={Invloading}>
+            {Invloading ? "Adding..." : "Add Inventory"}
           </button>
         </form>
-        <button onClick={onClose}>Cancel</button>
       </div>
     </div>
   );
