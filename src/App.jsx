@@ -60,6 +60,7 @@ import InventoryList from "./components/cooperative/Inventory/InventoryList";
 import InventoryDetail from "./components/cooperative/Inventory/InventoryDetail";
 import InventoryCreate from "./components/cooperative/Inventory/InventoryCreate";
 import InventoryUpdate from "./components/cooperative/Inventory/InventoryUpdate";
+
 import TypeList from "./components/Admen/Types/TypeList";
 import TypeCreate from "./components/Admen/Types/TypeCreate";
 import TypeUpdate from "./components/Admen/Types/TypeUpdate";
@@ -94,6 +95,13 @@ import RoleBaseRoute from "@route/RoleBaseRoute";
 
 
 import MemberRegistration from "./components/user/MemberRegistration";
+import MemberNotApprove from "./components/Cooperative/Member/MemberNotApprove";
+import MemberDetails from "./components/Cooperative/Member/MemberDetails";
+import ReviewRatingList from "./components/Cooperative/Review/ReviewRatingList";
+import ReviewRating from "./components/Cooperative/Review/ReviewRating";
+import NotificationList from "./components/Cooperative/Notifications/NotificationList";
+import RiderList from "./components/Cooperative/Rider/RiderList";
+import AssignList from "./components/Cooperative/Rider/AssignList";
 
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
@@ -206,8 +214,18 @@ function App() {
           <Route path="/inventorydetail" element={<InventoryDetail/>} />
           <Route path="/inventorycreate" element={<InventoryCreate/>} />
           <Route path="/inventoryupdate" element={<InventoryUpdate/>} />
+
           <Route path="/cooporderlist" element={<CoopOrderList/>} />
+
+          <Route path="/reviewratinglist" element={<ReviewRatingList/>} />
+          <Route path="/reviews/:id" element={<ReviewRating/>}/>
+
+          <Route path="/notificationlist" element={<NotificationList/>} />
+
           <Route path="/memberlist" element={<MemberList/>} />
+          <Route path="/memberNot" element={<MemberNotApprove/>} />
+          <Route path="/member-details/:id" element={<MemberDetails/>} />
+
           <Route path="/messenger" element={<CoopMessenger/>} />
 
           {/* <Route path="/orderlist" element={<OrderList/>} /> */}
@@ -240,6 +258,8 @@ function App() {
           <Route path="/coop-details/:coopId" element={<CoopDetails />} />
 
           <Route path="/postlist" element={<PostList/>} />
+          <Route path="/forumpostlist" element={<ForumPostList/>} />
+
           <Route path="/bloglist" element={<BlogList/>} />
 
           <Route path="/categorylist" element={<CategoryList/>} />
@@ -252,7 +272,10 @@ function App() {
           <Route path="/chat/:conversationId" element={<Messenger />} />
           <Route path="/coopchat/:conversationId" element={<CoopMessenger />} />
 
-          </Routes>
+  
+          <Route path="/riderlist" element={<RiderList/>}/>
+          <Route path="/assignlist" element={<AssignList/>}/>
+        </Routes>
       </div>
     </Router>
   );

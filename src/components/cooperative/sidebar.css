@@ -3,26 +3,28 @@
   left: 0;
   top: 0;
   height: 100%;
-  width: auto; /* Adjust as needed */
-  background-color: #f8f9fa; /* Customize background */
+  width: auto;
+  background-color: #f7f8fa; /* Customize background */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
 .sidebar-content {
   padding: 1rem;
+
 }
 
 .sidebar-logo {
-  width: 100px; /* Adjust as needed */
-  height: auto;
+  width: 70px; /* Adjust as needed */
+  height: 70px;
   display: block;
   margin: 0 auto 1rem;
 }
 
-.sidebar-title {
-  font-size: 1.25rem;
+.sidebar-text {
+  font-size: 1.5rem;
   font-weight: 600;
+  text-align: center;
   margin-bottom: 1rem;
 }
 
@@ -31,20 +33,29 @@
   padding: 0;
 }
 
-.sidebar-link {
+.coop-sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
   font-size: 1rem;
   font-weight: 600;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.3s ease;
+  color: #070707;
   text-decoration: none;
-  color: #f6cf5b;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.sidebar-link:hover {
-  background-color: #f8f660;
+.coop-sidebar-link:hover {
+  background-color: #fafa90; /* Light yellow hover */
+  color: #ffcc00;
 }
 
-.sidebar-icon {
-  font-size:2rem;
+.coop-sidebar-link.active {
+  background-color: #fafa90; /* Yellow background */
+  color: #000; /* Black text */
+  font-weight: bold;
+}
+
+
+.coop-sidebar-icon {
+  margin-right: 1rem;
 }

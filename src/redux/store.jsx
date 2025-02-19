@@ -42,6 +42,7 @@ import { commentcreateReducers } from "@redux/Reducers/commentReducers";
 
  import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
 import { postReducer } from "@redux/Reducers/postReducer";
+import { deliveryListReducer, deliveryApiReducer, deliveryCompleteReducer, deliveryHistoryReducer } from "@redux/Reducers/deliveryReducers";
 
 
 const reducers = combineReducers({
@@ -113,8 +114,13 @@ const reducers = combineReducers({
   memberList: memberListReducer,
   memberApi: memberApiReducer,
 
-  createComment: commentcreateReducers
+  createComment: commentcreateReducers,
 
+
+  deliveryList: deliveryListReducer,
+  deliveryComplete: deliveryCompleteReducer,
+  deliveryApi: deliveryApiReducer,
+  deliveryHistory: deliveryHistoryReducer,
 
 });
 
