@@ -34,7 +34,7 @@ const ProductList = () => {
   const [productToUpdate, setProductToUpdate] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5; // Display only 5 products per page
 
   useEffect(() => {
     if (token || coopId) {
@@ -69,15 +69,17 @@ const ProductList = () => {
   };
 
   const filteredProducts = coopProducts
-  ?.filter((product) =>
-    product.productName?.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];  // Sort by most recent first
+    ?.filter((product) =>
+      product.productName?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];
 
   const currentProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   if (loading) return <p className="text-center text-xl">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{`Error loading products: ${error}`}</p>;
@@ -121,7 +123,7 @@ const ProductList = () => {
                     <td>{product.description}</td>
                     <td>{product.stock?.[0]?.price || "N/A"}</td>
                     <td>{product.stock?.[0]?.quantity || 0}</td>
-                    <td>
+                    <td className="action-buttons">
                       <button
                         className="btn btn-update"
                         onClick={() => {
@@ -143,6 +145,23 @@ const ProductList = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span>Page {currentPage} of {totalPages}</span>
+            <button
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
           </div>
 
           {isAddModalOpen && (

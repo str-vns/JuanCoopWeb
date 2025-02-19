@@ -159,11 +159,11 @@ const ProductCreate = ({ show, onClose }) => {
                 ))}
               </div>
             </div>
-            <button type="submit" className="product-btn-submit-product">
+            <button type="submit" className="product-btn-submit">
               Add Product
             </button>
           </form>
-          <button className="product-btn-close-product" onClick={onClose}>
+          <button className="product-btn-close" onClick={onClose}>
             Close
           </button>
         </div>

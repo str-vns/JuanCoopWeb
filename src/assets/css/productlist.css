@@ -1,92 +1,123 @@
-  
-  .product-list-container {
-    padding-left: 100px;
-    height: 100vh;
-    width: 1480px;
-  }
-  
-  .product-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .product-list-header h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #343a40;
-  }
-  
-  .btn-add-product {
-    background-color: #007bff;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-add-product:hover {
-    background-color: #0056b3;
-  }
-  
-  .product-table-container {
-    overflow-x: auto;
-  }
-  
-  .product-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 0.5rem;
-  }
-  
-  .product-table th,
-  .product-table td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e9ecef;
-  }
-  
-  .product-table th {
-    background-color: #f1f1f1;
-    color: #495057;
-  }
-  
-  .product-table tbody tr:hover {
-    background-color: #f8f9fa;
-  }
-  
-  .product-image {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 0.25rem;
-  }
-  
-  .btn {
-    border: none;
-    padding: 0.4rem 0.6rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-  }
-  
-  .btn-update {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .btn-update:hover {
-    background-color: #218838;
-  }
-  
-  .btn-delete {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .btn-delete:hover {
-    background-color: #c82333;
-  }
+.product-list-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  margin-left: 100px;
+  background-color: #fffdf2;
+  font-family: "Arial", sans-serif;
+  overflow-y: hidden;
+}
+
+.product-list-containertwo {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #ffcc00;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.product-list-header h1 {
+  color: #5a5a5a;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.btn-add-product {
+  background-color: #fafa90;
+  color: #5a5a5a;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-add-product:hover {
+  background-color: #ffd700;
+}
+
+.product-table-container {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+  background-color: #fafa90;
+  color: #333;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.product-table tr:hover {
+  background-color: #fffae6;
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-update {
+  background-color: #eff23f;
+  color: yellow;
+}
+
+.btn-update:hover {
+  background-color: #f9f047;
+}
+
+.btn-delete {
+  background-color: #fe5b6c;
+  color: red;
+}
+
+.btn-delete:hover {
+  background-color: #f94859;
+}
+
+/* Table Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
