@@ -9,7 +9,6 @@ import { sendNotifications } from "@redux/Actions/notificationActions";
 import { conversationList } from '@redux/Actions/converstationActions';
 import baseURL from "@Commons/baseUrl";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../../header";
 import Sidebar from "../../sidebar";
 import axios from "axios";
 
@@ -163,13 +162,7 @@ const Messenger = () => {
 
   return (
 <section className="flex flex-col h-screen bg-white">
-<Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-
-  <div  className={`flex-1 flex flex-col transition-all duration-300 ${
-    isSidebarOpen ? "ml-64" : "ml-0"
-  }`}>
- <Header />
+<Sidebar />
     <div className="messenger">
       <div className="chatMenu border-2 border-black text-center p-4">
         <h2 className="chatMenuHeader text-lg font-semibold mb-1">Active Chat List</h2>
@@ -225,7 +218,6 @@ const Messenger = () => {
         </div>
       </div>
     </div>
-  </div>
 </section>
   );
 };

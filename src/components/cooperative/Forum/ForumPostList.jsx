@@ -1,166 +1,176 @@
-import React, { useState } from "react";
-import Header from "../header";
-import Sidebar from "../sidebar";
-import { FaSearch, FaReply, FaThumbsUp, FaComment } from "react-icons/fa"; // Added thumbs up and comment icons
-import "../css/coopprofile.css"; // Assuming custom styles are here for your project
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentUser } from "@utils/helpers";
+import { getUserPost, softDeletePost, restorePost, createPost, updatePost } from '@src/redux/Actions/postActions';
+import { useNavigate } from 'react-router-dom';
+import '@assets/css/coopuserforumlist.css';
+import Sidebar from '../sidebar';
 
 const ForumPostList = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const currentUser = getCurrentUser();
+  const userId = currentUser?._id;
+  const { loading, posts } = useSelector((state) => state.post);
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState("create"); // "create" or "edit"
+  const [postData, setPostData] = useState({ content: "", images: [] });
+  const [selectedPostId, setSelectedPostId] = useState(null);
 
-  // Sample thread data with like count and comments
-  const [threads, setThreads] = useState([
-    {
-      id: 1,
-      title: "How to Improve Your Productivity",
-      postCount: 5,
-      lastPost: "User1",
-      date: "Dec 18, 2024",
-      excerpt: "Learn the best strategies for managing time and staying productive...",
-      likes: 2,
-      liked: false,
-      comments: [
-        { id: 1, user: "User2", content: "Great tips! I'll definitely try these!" },
-        { id: 2, user: "User3", content: "Thanks for the advice!" },
-      ],
-      newComment: "",
-    },
-    {
-      id: 2,
-      title: "React for Beginners",
-      postCount: 3,
-      lastPost: "User2",
-      date: "Dec 15, 2024",
-      excerpt: "A beginner's guide to building dynamic web applications using React.js...",
-      likes: 5,
-      liked: false,
-      comments: [
-        { id: 1, user: "User1", content: "This helped me get started with React!" },
-      ],
-      newComment: "",
-    },
-    {
-      id: 3,
-      title: "Mastering Tailwind CSS",
-      postCount: 7,
-      lastPost: "User3",
-      date: "Dec 10, 2024",
-      excerpt: "How to design responsive websites effortlessly with Tailwind CSS...",
-      likes: 10,
-      liked: false,
-      comments: [],
-      newComment: "",
-    },
-  ]);
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUserPost(userId));
+    }
+  }, [userId, dispatch]);
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+  const handleSoftDelete = (postId) => {
+    dispatch(softDeletePost(postId));
+    alert("Post marked as deleted!");
   };
 
-  const handleLikeToggle = (id) => {
-    setThreads((prevThreads) =>
-      prevThreads.map((thread) =>
-        thread.id === id
-          ? { ...thread, liked: !thread.liked, likes: thread.liked ? thread.likes - 1 : thread.likes + 1 }
-          : thread
-      )
-    );
+  const handleRestore = (postId) => {
+    dispatch(restorePost(postId));
+    alert("Post restored successfully!");
   };
 
-  const handleCommentChange = (id, event) => {
-    setThreads((prevThreads) =>
-      prevThreads.map((thread) =>
-        thread.id === id ? { ...thread, newComment: event.target.value } : thread
-      )
-    );
+  const openModal = (mode, post = null) => {
+    setModalMode(mode);
+    if (mode === "edit" && post) {
+      setSelectedPostId(post._id);
+      setPostData({ content: post.content, images: post.image || [] });
+    } else {
+      setSelectedPostId(null);
+      setPostData({ content: "", images: [] });
+    }
+    setIsModalOpen(true);
   };
 
-  const handleCommentSubmit = (id) => {
-    setThreads((prevThreads) =>
-      prevThreads.map((thread) =>
-        thread.id === id
-          ? {
-              ...thread,
-              comments: [
-                ...thread.comments,
-                { id: thread.comments.length + 1, user: "User4", content: thread.newComment },
-              ],
-              newComment: "",
-            }
-          : thread
-      )
-    );
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setPostData({ content: "", images: [] });
+    setSelectedPostId(null);
+  };
+
+  const handleSubmit = () => {
+    if (!postData.content.trim()) {
+      alert("Content is required.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("content", postData.content);
+    formData.append("author", userId);
+    postData.images.forEach((image) => {
+      formData.append("image", image);
+    });
+
+    if (modalMode === "edit" && selectedPostId) {
+      dispatch(updatePost(selectedPostId, postData)).then(() => {
+        alert("Post updated successfully!");
+        dispatch(getUserPost(userId));
+        closeModal();
+      });
+    } else {
+      dispatch(createPost(formData)).then(() => {
+        alert("Post created successfully!");
+        dispatch(getUserPost(userId));
+        closeModal();
+      });
+    }
   };
 
   return (
-    <div className="h-screen w-screen flex overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+    <div className="forum-container">
+      <Sidebar />
 
-      {/* Main Content */}
-      <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-0"
-        }`}
-      >
-        <Header />
-        <div className="flex-1 overflow-y-auto bg-gray-50 p-6">
-          {/* Search Bar */}
-          <div className="flex items-center mb-4">
-            <div className="relative w-full max-w-md">
-              <input
-                type="text"
-                placeholder="Search threads..."
-                className="input input-bordered w-full"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-              <FaSearch className="absolute right-3 top-3 text-gray-500" />
-            </div>
-          </div>
+      {loading && <div className="forum-loading">Loading...</div>}
 
-          {/* Threads Listing */}
-          <div className="space-y-4">
-            {threads
-              .filter((thread) =>
-                thread.title.toLowerCase().includes(searchQuery.toLowerCase())
-              )
-              .map((thread) => (
-                <div
-                  key={thread.id}
-                  className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="card-body p-6">
-                    <h2 className="card-title text-xl font-semibold">{thread.title}</h2>
-                    <p className="text-sm text-gray-500">
-                      {thread.date} | {thread.postCount} posts | Last post by {thread.lastPost}
-                    </p>
-                    <p className="mt-2 text-gray-600">{thread.excerpt}</p>
+      <button className="forum-add-post-button" onClick={() => openModal("create")}>
+        + Create New Post
+      </button>
 
-                    {/* Comments Section */}
-                    <div className="mt-4">
-                      <h3 className="font-semibold text-lg">Comments</h3>
-                      {thread.comments.length > 0 ? (
-                        <div className="space-y-2">
-                          {thread.comments.map((comment) => (
-                            <div key={comment.id} className="text-gray-700">
-                              <strong>{comment.user}:</strong> {comment.content}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-gray-500">No comments yet.</p>
-                      )}
+      <div className="forum-post-container">
+        {posts?.length > 0 ? (
+          [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((post) => (
+            <div key={post._id} className="forum-post-card">
+              <h2 className="forum-post-title">{post.title}</h2>
+              <p className="forum-post-content">{post.content}</p>
 
-                    </div>
-                  </div>
+              {post.image?.length > 0 && (
+                <div className="forum-image-container">
+                  {post.image.map((img, index) => (
+                    <img key={index} src={img.url} alt="Post" className="forum-post-image" />
+                  ))}
                 </div>
-              ))}
+              )}
+
+              <div className="forum-action-buttons">
+                {!post.isDeleted ? (
+                  <>
+                    <button className="forum-edit-button" onClick={() => openModal("edit", post)}>
+                      Edit
+                    </button>
+                    <button className="forum-delete-button" onClick={() => handleSoftDelete(post._id)}>
+                      Soft Delete
+                    </button>
+                  </>
+                ) : (
+                  <button className="forum-restore-button" onClick={() => handleRestore(post._id)}>
+                    Restore
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
+        ) : (
+          !loading && <p className="forum-no-posts">No posts available.</p>
+        )}
+      </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>{modalMode === "edit" ? "Edit Post" : "Create Post"}</h2>
+            <textarea
+              value={postData.content}
+              onChange={(e) => setPostData({ ...postData, content: e.target.value })}
+              placeholder="What's on your mind?"
+              className="modal-textarea"
+            ></textarea>
+
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={(e) => {
+                const files = Array.from(e.target.files);
+                setPostData({ ...postData, images: files });
+              }}
+              className="modal-file-input"
+            />
+
+            <div className="modal-image-preview">
+              {postData.images.length > 0 &&
+                postData.images.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img instanceof File ? URL.createObjectURL(img) : img.url}
+                    alt="Preview"
+                    className="modal-preview-image"
+                  />
+                ))}
+            </div>
+
+            <button className="modal-submit-button" onClick={handleSubmit}>
+              {modalMode === "edit" ? "Update Post" : "Create Post"}
+            </button>
+            <button className="modal-close-button" onClick={closeModal}>
+              Cancel
+            </button>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

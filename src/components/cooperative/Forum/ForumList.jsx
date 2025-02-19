@@ -1,27 +1,34 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchApprovedPosts, likePost } from "@src/redux/Actions/postActions";
-import Header from "../header";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../sidebar";
-import { FaSearch, FaThumbsUp, FaComment } from "react-icons/fa";
-import "../css/coopprofile.css";
-import ForumPost from "./ForumPost";
-import AuthGlobal from "@redux/Store/AuthGlobal";
+import { FaSearch, FaThumbsUp, FaComment, FaShareAlt } from "react-icons/fa";
+import "@assets/css/coopforumlist.css"; // Import the new CSS file
 
 const ForumList = () => {
   const dispatch = useDispatch();
-  const { stateUser } = useContext(AuthGlobal);
-  const userId = stateUser?.userProfile?._id;
+  const navigate = useNavigate();
+  
   const [comments, setComments] = useState({});
   const { posts, loading } = useSelector((state) => state.post);
 
+  console.log(posts);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
-    dispatch(fetchApprovedPosts()); // Fetch posts when the component mounts
+    dispatch(fetchApprovedPosts());
   }, [dispatch]);
 
   const handleLike = (postId) => {
-    dispatch(likePost(postId, userId)); // Dispatch like action
-    dispatch(fetchApprovedPosts()); // Re-fetch posts to reflect updated like count
+    dispatch(likePost(postId));
+    dispatch(fetchApprovedPosts());
+    alert("Like a Post successfully!");
+  };  
+
+  const handleShare = (postId) => {
+    console.log('Shared post with ID:', postId);
   };
 
   const handleCommentChange = (postId, value) => {
@@ -31,141 +38,93 @@ const ForumList = () => {
     });
   };
 
-  const handleCommentSubmit = (postId) => {
-    const comment = comments[postId];
-    if (comment) {
-      console.log(`Comment on Post ${postId}: ${comment}`);
-    }
-  };
-
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => setIsModalOpen(false);
-
-  const handleCreatePost = (newPost) => {
-    const newThread = {
-      id: posts.length + 1,
-      title: newPost.title,
-      postCount: 0,
-      lastPost: "You",
-      date: new Date().toLocaleDateString(),
-      excerpt: newPost.content.substring(0, 100) + "...",
-      comments: [],
-    };
-    dispatch(fetchApprovedPosts()); // Re-fetch posts after creating new post
-  };
-
-  if (loading) {
-    return (
-      <div className="loader-container">
-        <div className="loader"></div>
-        <span>Loading posts...</span>
-      </div>
-    );
-  }
-
   return (
-    <div className="h-screen w-screen flex overflow-hidden">
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-0"}`}>
-        <Header />
-        <div className="flex-1 overflow-y-auto bg-gray-50 p-6">
-          {/* Search Bar */}
-          <div className="flex items-center mb-4 gap-x-2">
-            <div className="relative w-full max-w-md">
-              <input
-                type="text"
-                placeholder="Search threads..."
-                className="input input-bordered w-full"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <FaSearch className="absolute right-3 top-3 text-gray-500" />
-            </div>
-            <div className="ml-auto flex gap-x-2">
-              <button
-                className="bg-yellow-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none"
-                onClick={handleOpenModal}
-              >
-                Add Post
-              </button>
-            </div>
+    <div className="forum-container">
+      <Sidebar />
+      <div className="forum-content">
+        {/* Search Bar */}
+        <div className="forum-search-bar">
+          <div className="search-input-container">
+            <input
+              type="text"
+              placeholder="Search threads..."
+              className="search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <FaSearch className="search-icon" />
           </div>
+          <button className="add-post-btn" onClick={() => navigate("/forumpostlist")}>My Post</button>
+        </div>
 
-          {/* Posts Listing */}
-          <div className="space-y-4">
-            {posts
-              .filter((post) =>
-                post.content.toLowerCase().includes(searchQuery.toLowerCase())
-              )
-              .map((post) => (
-                <div key={post._id} className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300">
-                  <div className="card-body p-6">
-                    <h2 className="card-title text-xl font-semibold">{post.content}</h2>
-                    <p className="text-sm text-gray-500">
-                      {post.date} | {post.likeCount} likes | Last post by {post.author?.firstName}
-                    </p>
-                    {/* Like Button */}
-                    <button
-                      onClick={() => handleLike(post._id)}
-                      className="btn btn-ghost text-gray-500"
-                    >
-                      <FaThumbsUp className="mr-2" />
-                      {post.likeCount}
-                    </button>
+        {/* Loading State */}
+        {loading && (
+          <div className="loader-container">
+            <div className="loader"></div>
+            <span>Loading posts...</span>
+          </div>
+        )}
 
-                    {/* Comment Section */}
-                    <textarea
-                      value={comments[post._id] || ""}
-                      onChange={(e) => handleCommentChange(post._id, e.target.value)}
-                      className="textarea textarea-bordered w-full mt-2"
-                      placeholder="Add a comment..."
-                    ></textarea>
+        {/* Forum Posts */}
+        <div className="space-y-4">
+          {posts
+            .filter((post) =>
+              post.content.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map((post) => (
+              <div key={post._id} className="forum-post-card">
+                {/* Post Images */}
+                {post.image?.length > 0 ? (
+                  post.image.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img.url || "/default-placeholder.png"}
+                      alt={post.content || "Post Image"}
+                      className="post-image"
+                    />
+                  ))
+                ) : (
+                  <img
+                    src="/default-placeholder.png"
+                    alt="Default Post Image"
+                    className="post-image"
+                  />
+                )}
 
-                    <button
-                      onClick={() => handleCommentSubmit(post._id)}
-                      className="btn btn-primary mt-2"
-                    >
-                      <FaComment className="mr-2" />
-                    </button>
+                {/* Post Content */}
+                <h2 className="forum-post-title">{post.content}</h2>
 
-                    {/* Display Comments */}
-                    <div className="mt-4">
-                      <h3 className="font-semibold text-lg">Comments</h3>
-                      {post.comment.length > 0 ? (
-                        <div className="space-y-2">
-                          {post.comment.map((comment) => (
-                            <div key={comment._id} className="text-gray-700">
-                              <strong>{comment.firstName}:</strong> {comment.comment}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-gray-500">No comments yet.</p>
-                      )}
-                    </div>
-                  </div>
+                {/* Post Info */}
+                <p className="forum-post-info">
+                  {post.date} | {post.likeCount} likes | Last post by {" "}
+                  {post.author?.firstName} {post.author?.lastName}
+                </p>
+
+                {/* Post Actions */}
+                <div className="post-actions">
+                  {/* Like Button */}
+                  <button onClick={() => handleLike(post._id)} className="like-btn">
+                    <FaThumbsUp className="mr-2" /> {post.likeCount}
+                  </button>
+
+                  {/* Share Button */}
+                  <button onClick={() => handleShare(post._id)} className="share-btn">
+                    <FaShareAlt className="mr-2" /> Share
+                  </button>
+                  
+                  {/* Comment Section */}
+                  <textarea
+                    value={comments[post._id] || ""}
+                    onChange={(e) => handleCommentChange(post._id, e.target.value)}
+                    className="comment-input"
+                    placeholder="Add a comment..."
+                  ></textarea>
                 </div>
-              ))}
-          </div>
+              </div>
+            ))}
         </div>
       </div>
-
-      {/* Modal for Creating Post */}
-      <ForumPost
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onCreatePost={handleCreatePost}
-      />
     </div>
   );
 };
