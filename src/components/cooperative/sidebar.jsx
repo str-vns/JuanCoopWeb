@@ -34,14 +34,14 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar always-visible">
-      <div className="sidebar-content">
+    <div className="coop-sidebar always-visible">
+      <div className="coop-sidebar-content">
         <img
           src="../../../public/images/logo.png"
           alt="JuanCoop Logo"
           className="sidebar-logo"
         />
-        <ul className="sidebar-menu">
+        <ul className="coop-sidebar-menu">
           {[
             { path: "/coopdashboard", label: "Dashboard", icon: <FaTachometerAlt /> },
             { path: "/profile", label: "Profile", icon: <FaUserEdit /> },

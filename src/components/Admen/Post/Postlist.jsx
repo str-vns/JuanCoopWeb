@@ -9,26 +9,19 @@ const PostList = () => {
   const { loading = false, posts = [] } = postState;
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeTab, setActiveTab] = useState('notApproved');
   const postsPerPage = 8;
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
-  // Separate posts based on their status
   const unapprovedPosts = posts.filter((post) => post.status !== 'approved');
   const approvedPosts = posts.filter((post) => post.status === 'approved');
-
-  // Slice for pagination (only for unapproved posts for now)
-  const currentUnapprovedPosts = unapprovedPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const displayedPosts = activeTab === 'notApproved' ? unapprovedPosts : approvedPosts;
+  const currentPosts = displayedPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
-    console.log('Dispatching getPost action');
     dispatch(getPost());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log('postState:', postState);
-    console.log('posts:', posts);
-  }, [postState, posts]);
 
   const handleApprove = async (postId) => {
     await dispatch(approvePost(postId));
@@ -37,235 +30,118 @@ const PostList = () => {
   };
 
   const handleDecline = async (postId) => {
-    try {
-      await dispatch(deletePost(postId));
-      alert('Post deleted successfully!');
-      dispatch(getPost());
-    } catch (error) {
-      await dispatch(deletePost(postId));
-      alert('Post deleted successfully!');
-      dispatch(getPost());
-    }
+    await dispatch(deletePost(postId));
+    alert('Post deleted successfully!');
+    dispatch(getPost());
   };
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const totalPages = Math.ceil(unapprovedPosts.length / postsPerPage);
 
   return (
     <div style={styles.container}>
       <Sidebar />
-      {loading && (
-        <div style={styles.loadingIndicator}>
-          <span>Loading...</span>
+      <div style={styles.tabContainer}>
+        <button
+          className={`tabButton ${activeTab === 'notApproved' ? 'activeTab' : ''}`}
+          onClick={() => setActiveTab('notApproved')}
+        >
+          <span className={activeTab === 'notApproved' ? 'activeTabText' : 'tabText'}>Not Approved</span>
+        </button>
+        <button
+          className={`tabButton ${activeTab === 'approved' ? 'activeTab' : ''}`}
+          onClick={() => setActiveTab('approved')}
+        >
+          <span className={activeTab === 'approved' ? 'activeTabText' : 'tabText'}>Approved</span>
+        </button>
+      </div>
+
+      {loading ? (
+        <div style={styles.loadingIndicator}><span>Loading...</span></div>
+      ) : displayedPosts.length > 0 ? (
+        <div style={styles.postsContainer}>
+          {currentPosts.map((post) => (
+            <div key={post._id} style={styles.postCard}>
+            <div style={styles.imageAndContent}>
+              <img
+                src={post.image?.[0]?.url || 'path/to/placeholder/image.png'}
+                alt="Post"
+                style={styles.postImage}
+              />
+              <div style={styles.postDetails}>
+                <p style={styles.postContent}>{post.content || 'No content available'}</p>
+                <p style={styles.postDate}>Posted on: {new Date(post.createdAt).toLocaleDateString()}</p>
+              </div>
+            </div>
+            {activeTab === 'notApproved' && (
+              <div style={styles.buttonContainer}>
+                <button style={styles.approveButton} onClick={() => handleApprove(post._id)}>Approve</button>
+                <button style={styles.declineButton} onClick={() => handleDecline(post._id)}>Decline</button>
+              </div>
+            )}
+          </div>
+          
+          ))}
         </div>
-      )}
-      {unapprovedPosts.length > 0 ? (
-        <>
-          <h2 style={styles.sectionTitle}>Unapproved Posts</h2>
-          <div style={styles.postsContainer}>
-            {currentUnapprovedPosts.map((post) => (
-              <div key={post._id} style={styles.postCard}>
-                <div style={styles.imageAndContent}>
-                  <img
-                    src={
-                      post.image && post.image.length > 0
-                        ? post.image[0].url
-                        : 'path/to/placeholder/image.png'
-                    }
-                    alt="Post"
-                    style={styles.postImage}
-                  />
-                  <div style={styles.postDetails}>
-                    <p style={styles.postContent}>
-                      {post.content || 'No content available'}
-                    </p>
-                    <p style={styles.postDate}>
-                      Posted on: {new Date(post.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div style={styles.buttonContainer}>
-                  <button
-                    style={{ ...styles.button, ...styles.approveButton }}
-                    onClick={() => handleApprove(post._id)}
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    style={{ ...styles.button, ...styles.declineButton }}
-                    onClick={() => handleDecline(post._id)}
-                  >
-                    Decline
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={styles.pagination}>
-            <button
-              style={{ ...styles.button, ...styles.paginationButton }}
-              disabled={currentPage === 1}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-             <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index}
-                style={{ ...styles.button, ...styles.paginationButton }}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              style={{ ...styles.button, ...styles.paginationButton }}
-              disabled={currentPage === totalPages}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </>
       ) : (
-        !loading && <p style={styles.noPostsText}>No unapproved posts available.</p>
+        <p style={styles.noPostsText}>No posts available.</p>
       )}
-
-      {approvedPosts.length > 0 && (
-        <>
-          <h2 style={styles.sectionTitle}>Approved Posts</h2>
-          <div style={styles.postsContainer}>
-            {approvedPosts.map((post) => (
-              <div key={post._id} style={styles.postCard}>
-                <div style={styles.imageAndContent}>
-                  <img
-                    src={
-                      post.image && post.image.length > 0
-                        ? post.image[0].url
-                        : 'path/to/placeholder/image.png'
-                    }
-                    alt="Post"
-                    style={styles.postImage}
-                  />
-                  <div style={styles.postDetails}>
-                    <p style={styles.postContent}>
-                      {post.content || 'No content available'}
-                    </p>
-                    <p style={styles.postDate}>
-                      Posted on: {new Date(post.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-
     </div>
   );
 };
 
 const styles = {
-  container: {
-    padding: '15px', // Adjusted padding for smaller layout
-    backgroundColor: '#FFFFFF',
-    marginLeft: '250px', // Adjust based on the width of your Sidebar
-    overflow: 'hidden', // Remove scrollbar
-  },
-  loadingIndicator: {
-    margin: '15px 0', // Smaller margin
-    textAlign: 'center',
-  },
-  postsContainer: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '15px', // Adjusted gap
-  },
+  container: { padding: '15px', backgroundColor: '#FFFFFF', marginLeft: '250px',justifyContent: 'center',
+    flexDirection: 'column', // Keeps them in a vertical column
+    alignItems: 'center' , display: 'flex'},
+  tabContainer: { display: 'flex', justifyContent: 'center', marginBottom: '20px' },
+  loadingIndicator: { textAlign: 'center' },
   postCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: '8px', // Reduced border radius
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Smaller shadow
-    padding: '12px', // Reduced padding
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    padding: '20px',
+    marginBottom: '15px',
     border: '1px solid #E0E0E0',
-  },
-  imageAndContent: {
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
     display: 'flex',
-    alignItems: 'center',
+    justifyContent: 'space-between', // Ensures content and buttons are spaced apart
+    alignItems: 'center', // Aligns items vertically in the same row
+    width: '700px',
   },
-  postImage: {
-    width: '60px', // Smaller image size
-    height: '60px', // Smaller image size
-    borderRadius: '8px',
-    marginRight: '12px', // Smaller margin
-    backgroundColor: '#F0F0F0',
-  },
-  postDetails: {
-    flex: 1,
-  },
-  postContent: {
-    fontSize: '14px', // Smaller text size
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: '6px', // Smaller margin
-  },
-  postDate: {
-    fontSize: '12px', // Smaller font size
-    color: '#777',
-  },
+  imageAndContent: { display: 'flex', alignItems: 'center', flex: 1 },
   buttonContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: '12px', // Smaller margin
+    gap: '10px', // Space between buttons
+    justifyContent: 'flex-end', // Align buttons to the right
+    flexShrink: 0, // Prevents buttons from shrinking
   },
-  button: {
-    flex: '0.48',
-    padding: '8px', // Smaller padding
-    borderRadius: '6px', // Reduced border radius
+  approveButton: {
+    padding: '10px 15px',
+    borderRadius: '5px',
+    backgroundColor: '#4CAF50',
+    color: '#fff',
     border: 'none',
     cursor: 'pointer',
   },
-  approveButton: {
-    backgroundColor: '#f7b900',
-    color: '#FFFFFF',
-  },
   declineButton: {
+    padding: '10px 15px',
+    borderRadius: '5px',
     backgroundColor: '#F44336',
-    color: '#FFFFFF',
+    color: '#fff',
+    border: 'none',
+    cursor: 'pointer',
   },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '6px', // Smaller gap
-    overflow: 'hidden', // Prevent scrollbar
-    marginTop: '15px', // Smaller margin
-    width:'200px',
+  postImage: {
+    width: '80px',
+    height: '80px',
+    borderRadius: '8px',
+    marginRight: '16px',
+    backgroundColor: '#F0F0F0',
   },
-  paginationButton: {
+  postDetails: { flex: 1 },
+  postContent: { fontSize: '16px', fontWeight: 'bold', color: '#333' },
+  postDate: { fontSize: '14px', color: '#777' },
+  noPostsText: { fontSize: '18px', color: '#555', textAlign: 'center', marginTop: '25px' },
  
-    backgroundColor: '#C0C0C0',
-    color: '#000000',
-    fontSize: '12px', // Smaller text
-    padding: '6px 12px', // Smaller padding
-  },
-  noPostsText: {
-    fontSize: '16px', // Smaller font size
-    color: '#555',
-    textAlign: 'center',
-    marginTop: '25px', // Smaller margin
-  },
-  sectionTitle: {
-    fontSize: '18px', // Smaller title size
-    fontWeight: '600',
-    color: '#333',
-    marginTop: '25px', // Smaller margin
-    textAlign: 'center',
-  },
 };
+
+
 
 export default PostList;

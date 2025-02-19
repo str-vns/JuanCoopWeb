@@ -1,4 +1,4 @@
-.container {
+.rider-container {
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -7,7 +7,7 @@
     margin: 20px auto;
     width: calc(100% - 300px); /* Adjust width to not overlap with sidebar */
     margin-left: 300px; /* Align next to the sidebar */
-
+    background-color: #fff;
   }
   
   .header {
@@ -35,7 +35,7 @@
     border: 1px solid #ddd;
     border-radius: 6px;
     background-color: #fff;
-    transition: box-shadow 0.2s ease;
+ 
   }
   
   .userItem:hover {

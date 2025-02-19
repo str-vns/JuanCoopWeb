@@ -33,7 +33,7 @@ const DriverList = () => {
   }, [dispatch, token]);
 
   return (
-    <div className="container">
+    <div className="rider-container">
       <Sidebar />
       {/* <h1 className="header-title">Driver List</h1> */}
       <div className="tabContainer">

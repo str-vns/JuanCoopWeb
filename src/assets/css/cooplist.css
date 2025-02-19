@@ -2,12 +2,10 @@
 .containerCoop {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 300px); /* Adjust width to not overlap with sidebar */
+  width: calc(100% - 200px); /* Adjust width to not overlap with sidebar */
   margin-left: 230px; /* Align next to the sidebar */
   align-items: center;
-
   min-height: 100vh;
-
   padding: 20px;
   box-sizing: border-box;
   background-color: #ffffff;

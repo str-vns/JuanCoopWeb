@@ -1,6 +1,6 @@
 .type-list-container {
   height: 100vh;
-  width: calc(100% - 300px); /* Adjust width to not overlap with sidebar */
+  width: calc(100% - 350px); /* Adjust width to not overlap with sidebar */
   margin-left: 300px; /* Align next to the sidebar */
   background-color: #ffffff;
   font-family: "Arial", sans-serif;
