@@ -1,6 +1,7 @@
 .messenger {
     height: calc(109.5vh - 70px);
     display: flex;
+    margin-left: 100px;
     width: 100%;
   }
   

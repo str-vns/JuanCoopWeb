@@ -1,0 +1,79 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container-coop {
+    background: #f0f8ff; /* Light Blue for Cooperative Users */
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .menu-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .mark-all {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .notification-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .notification-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .notification-item.unread {
+    background: #e0f7fa;
+  }
+  
+  .notification-item.read {
+    background: #f5f5f5;
+  }
+  
+  .notif-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .notif-content h4 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .notif-content p {
+    margin: 5px 0;
+  }
+  
+  .timestamp {
+    font-size: 12px;
+    color: gray;
+  }
+  
