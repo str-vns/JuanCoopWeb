@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { memberList } from "@redux/Actions/memberActions";
+import { memberInactive } from "@redux/Actions/memberActions";
 import "@assets/css/driverlist.css";
 import Sidebar from "../sidebar";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const MemberList = () => {
+const MemberNotApprove = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, members = [], error } = useSelector((state) => state.memberList); // Ensure members is an empty array by default
-  const [selectedTab, setSelectedTab] = useState("Approved");
+  const [selectedTab, setSelectedTab] = useState("Not_Approved");
   const [token, setToken] = useState(null);
   const currentUser = getCurrentUser();
     const userId = currentUser?._id;
@@ -31,7 +31,7 @@ const MemberList = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(memberList(userId, token));
+      dispatch(memberInactive(userId, token));
     }
   }, [dispatch, userId, token]);
 
@@ -41,13 +41,13 @@ const MemberList = () => {
       <div className="tabContainer">
         <button
           className={`tabButton ${selectedTab === "Not_Approved" ? "activeTab" : ""}`}
-          onClick={() => navigate("/memberNot")}
+          onClick={() => setSelectedTab("Not_Approved")}
         >
-          Not Approved
+          Not_Approved
         </button>
         <button
           className={`tabButton ${selectedTab === "Approved" ? "activeTab" : ""}`}
-          onClick={() => setSelectedTab("Approved")}
+          onClick={() => navigate("/memberlist")}
         >
           Approved
         </button>
@@ -90,4 +90,4 @@ const MemberList = () => {
   );
 };
 
-export default MemberList;
+export default MemberNotApprove;
