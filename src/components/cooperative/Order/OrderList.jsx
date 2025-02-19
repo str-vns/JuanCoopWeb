@@ -16,7 +16,7 @@ const OrderList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     dispatch(fetchCoopOrders(userId, token));
@@ -29,9 +29,8 @@ const OrderList = () => {
       orderItems: Array.isArray(order.orderItems) ? order.orderItems : [],
     }))
     .filter((order) => order.orderItems.length > 0)
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort by most recent first
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  // Pagination logic
   const indexOfLastOrder = currentPage * itemsPerPage;
   const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
   const currentOrders = filterOrders.slice(indexOfFirstOrder, indexOfLastOrder);
@@ -51,9 +50,8 @@ const OrderList = () => {
   return (
     <div className="order-list-container">
       <Sidebar />
-      <div className="order-list-containertwo">
-        {/* <Header /> */}
-        <main className="p-6">
+      <div className="order-list-content">
+        <main className="order-main">
           <div className="order-list-header">
             <h1>Order List</h1>
           </div>
@@ -76,32 +74,16 @@ const OrderList = () => {
                     <td>{order?.user?.firstName} {order?.user?.lastName}</td>
                     <td>
                       {order?.orderItems?.map((item) => (
-                        <div key={item?._id}>
-                          <span
-                            className={`badge ${
-                              item?.orderStatus === "Delivered"
-                                ? "badge-success"
-                                : item?.orderStatus === "Pending"
-                                ? "badge-warning"
-                                : item?.orderStatus === "Cancelled"
-                                ? "badge-error"
-                                : item?.orderStatus === "Shipping"
-                                ? "badge-info"
-                                : item?.orderStatus === "Processing"
-                                ? "badge-primary"
-                                : ""
-                            }`}
-                          >
-                            {item?.orderStatus}
-                          </span>
+                        <div key={item?._id} className={`badge badge-${item?.orderStatus.toLowerCase()}`}>
+                          {item?.orderStatus}
                         </div>
                       ))}
                     </td>
                     <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                    <td>₱ {order.totalPrice}</td>
+                    <td>₱ {order.totalPrice.toFixed(2)}</td>
                     <td>
                       <button
-                        className="btn btn-primary btn-sm"
+                        className="btn-view"
                         onClick={() => setSelectedOrder(order) || setIsModalOpen(true)}
                       >
                         View
@@ -112,22 +94,18 @@ const OrderList = () => {
               </tbody>
             </table>
             <div className="pagination">
-              <button onClick={prevPage} disabled={currentPage === 1}>
+              <button onClick={prevPage} disabled={currentPage === 1} className="pagination-btn">
                 Previous
               </button>
               <span> Page {currentPage} of {Math.ceil(filterOrders.length / itemsPerPage)} </span>
-              <button onClick={nextPage} disabled={currentPage === Math.ceil(filterOrders.length / itemsPerPage)}>
+              <button onClick={nextPage} disabled={currentPage === Math.ceil(filterOrders.length / itemsPerPage)} className="pagination-btn">
                 Next
               </button>
             </div>
           </div>
         </main>
       </div>
-      <UpdateOrderStatus
-        isOpen={isModalOpen}
-        order={selectedOrder}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <UpdateOrderStatus isOpen={isModalOpen} order={selectedOrder} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
