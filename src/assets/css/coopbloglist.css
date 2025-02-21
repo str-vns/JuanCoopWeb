@@ -1,8 +1,9 @@
 .blog-list-container {
   display: flex;
-  width: 100%;
   min-height: 100vh;
-  background-color: #ffffff;
+    width: calc(100% - 300px);
+    margin-left: 230px;
+    background-color: #ffffff;
   font-family: "Arial", sans-serif;
 }
 

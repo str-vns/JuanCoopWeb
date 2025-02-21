@@ -1,9 +1,9 @@
 .inventory-list-container {
   display: flex;
-  height: 100vh;
-  width: 100%;
-  margin-left: 100px;
-  background-color: #fffdf2;
+  min-height: 100vh;
+    width: calc(100% - 300px);
+    margin-left: 230px;
+    background-color: #ffffff;
   font-family: "Arial", sans-serif;
   overflow-y: hidden;
 }

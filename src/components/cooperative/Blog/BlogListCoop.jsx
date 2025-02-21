@@ -5,7 +5,7 @@ import Sidebar from "../sidebar";
 import BlogInfo from "./BlogInfo";
 import "@assets/css/coopbloglist.css";
 
-const BlogList = () => {
+const BlogListCoop = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
@@ -66,4 +66,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default BlogListCoop;

@@ -6,7 +6,7 @@ import Sidebar from "../sidebar";
 import { FaSearch, FaThumbsUp, FaComment, FaShareAlt } from "react-icons/fa";
 import "@assets/css/coopforumlist.css"; // Import the new CSS file
 
-const ForumList = () => {
+const ForumListCoop = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
@@ -129,4 +129,4 @@ const ForumList = () => {
   );
 };
 
-export default ForumList;
+export default ForumListCoop;

@@ -1,0 +1,140 @@
+.review-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff; /* Light yellow background */
+    padding: 24px;
+    width: calc(100% - 300px);
+    margin-left: 230px;
+  }
+  
+  .review-header {
+    width: 100%;
+    max-width: 64rem;
+    text-align: center;
+    padding: 16px;
+    background-color: #fde68a; /* Yellow header */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .review-header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #92400e;
+  }
+  
+  .review-card {
+    width: 100%;
+    max-width: 48rem;
+    margin-top: 24px;
+    background: white;
+    padding: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .review-card h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #854d0e;
+  }
+  
+  .star-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  
+  .star {
+    font-size: 24px;
+    margin-right: 4px;
+  }
+  
+  .star-yellow {
+    color: #facc15;
+  }
+  
+  .star-gray {
+    color: #d1d5db;
+  }
+  
+  .suggestions {
+    width: 100%;
+    max-width: 48rem;
+    margin-top: 24px;
+    padding: 24px;
+    background-color: #fef3c7;
+    color: #b45309;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .reviews-section {
+    width: 100%;
+    max-width: 48rem;
+    margin-top: 24px;
+  }
+  .reviews-section h2{
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #151414;
+  }
+  
+  .review-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .review-box img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 4px solid #facc15;
+  }
+  
+  .review-box h3 {
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #78350f;
+  }
+  
+  .sentiment {
+    font-size: 0.875rem;
+    margin-left: 8px;
+  }
+  
+  .sentiment-positive {
+    color: #10b981;
+  }
+  
+  .sentiment-mostly-positive {
+    color: #047857;
+  }
+  
+  .sentiment-negative {
+    color: #ef4444;
+  }
+  
+  .sentiment-mostly-negative {
+    color: #b91c1c;
+  }
+  
+  .no-reviews {
+    text-align: center;
+    font-weight: 500;
+    color: #a16207;
+  }  

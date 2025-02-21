@@ -30,19 +30,20 @@ import UserAddReview from "./components/user/UserAddReviews";
 import CoopDashboard from "./components/cooperative/Dashboard/CoopDashboard";
 import OverallDashboard from "./components/Admen/Dashboard/OverallDashboard";
 import ProductList from "./components/cooperative/Product/ProductList";
-import BlogList from "./components/cooperative/Blog/BlogList";
+import BlogListCoop from "./components/Cooperative/Blog/BlogListCoop";
 import ForumPostList from "./components/cooperative/Forum/ForumPostList";
 import CoopProfileEdit from "./components/cooperative/Profile/editProfile";
-import ForumList from "./components/cooperative/Forum/ForumList";
-import ProductArchive from "./components/cooperative/Product/ProductArchive";
+import ForumListCoop from "./components/Cooperative/Forum/ForumListCoop";
+import ProductArchive from "./components/Cooperative/Product/ProductArchive";
+// import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ForumPost from "./Components/Cooperative/Forum/ForumPost";
 import CoopOrderList from "./components/cooperative/Order/OrderList";
-import MessageList from "./components/cooperative/Messages/MessageList";
+import MessageList from "./components/Cooperative/Messages/MessageList";
 import CoopLogin from "./components/cooperative/Registration/CoopLogin";
 import FarmRegistration from "./components/cooperative/Registration/FarmRegistration";
 import GoogleLogin from "./components/cooperative/Registration/GoogleLogin";
 import Messenger from './components/Chatime/messenger/Messenger';
-import CoopMessenger from './components/cooperative/Chatime/messenger/Messenger'
+import CoopMessenger from './components/Cooperative/Chatime/messenger/Messenger'
 import Shipping from "./components/Cart/Address";
 import Payment from "./components/Cart/Payment";
 import Address from "./components/Address/addressList"
@@ -206,7 +207,7 @@ function App() {
           <Route path="/productlist" element={<ProductList/>} />
           <Route path="/messagelist" element={<MessageList/>} />
           <Route path="/productarchive" element={<ProductArchive/>} />
-          <Route path="/forumlist" element={<ForumList/>} />
+          <Route path="/forumlistcoop" element={<ForumListCoop/>} />
           <Route path="/forumpostlist" element={<ForumPostList/>} />
 
           {/* Inventory */}
@@ -260,7 +261,7 @@ function App() {
           <Route path="/postlist" element={<PostList/>} />
           <Route path="/forumpostlist" element={<ForumPostList/>} />
 
-          <Route path="/bloglist" element={<BlogList/>} />
+          <Route path="/bloglistcoop" element={<BlogListCoop/>} />
 
           <Route path="/categorylist" element={<CategoryList/>} />
           <Route path="/category-create" element={<CategoryCreate/>} />

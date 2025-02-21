@@ -1,9 +1,9 @@
 .order-list-container {
   display: flex;
-  height: 100vh;
-  margin-left: 100px;
-  width: 100%;
-  background-color: #fffdf2;
+  min-height: 100vh;
+    width: calc(100% - 300px);
+    margin-left: 230px;
+    background-color: #ffffff;
   font-family: "Arial", sans-serif;
   overflow-y: hidden;
 }
