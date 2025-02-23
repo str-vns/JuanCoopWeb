@@ -292,7 +292,7 @@ const ProductCard = () => {
               console.log(review.user.image.url),
               (
                 <div className="review" key={index}>
-                  <div className="review-header">
+                  <div className="review-header-user">
                     <div className="reviewer-info">
                       <img
                         src={
