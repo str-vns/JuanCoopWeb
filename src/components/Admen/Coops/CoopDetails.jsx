@@ -57,7 +57,7 @@ const CoopDetails = () => {
     setIsLoading(true);
     try {
       await dispatch(activeCooperative(coopId, userId, token));
-      navigate("/coop-list");
+      navigate("/cooplist");
     } catch (err) {
       console.error("Error approving cooperative:", err);
     } finally {
@@ -70,7 +70,7 @@ const CoopDetails = () => {
     setIsLoading(true);
     try {
       await dispatch(deleteCooperative(coopId, token));
-      navigate("/coop-list");
+      navigate("/cooplist");
     } catch (err) {
       console.error("Error deleting cooperative:", err);
     } finally {

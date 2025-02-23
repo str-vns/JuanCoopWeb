@@ -45,57 +45,61 @@ const InventoryList = () => {
   };
 
   // Pagination logic
-  const filteredProducts = coopProducts?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];
+  const filteredProducts =
+    coopProducts?.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    ) || [];
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  
+
   const currentProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
   return (
-    <div className="inventory-list-container">
+    <div className="inventory-list-containers">
       <Sidebar />
       <div className="inventory-list-containertwo">
         <main className="p-6">
-          <div className="inventory-header">
+          <div className="inventory-header-list">
             <h1>Product Inventory List</h1>
           </div>
-            <div className="inventory-table-container">
-              <table className="inventory-table">
-                <thead>
-                  <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Actions</th>
+          <div className="inventory-table-container">
+            <table className="inventory-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentProducts.map((item) => (
+                  <tr key={item?._id}>
+                    <td>
+                      <img
+                        src={
+                          item?.image[0]?.url ||
+                          "https://via.placeholder.com/150"
+                        }
+                        alt={item?.productName}
+                        className="inventory-image"
+                      />
+                    </td>
+                    <td>{item?.productName || "Unnamed Product"}</td>
+                    <td>{item?.description || "No description available."}</td>
+                    <td>
+                      <i
+                        className="fa-solid fa-eye inventory-view-icon"
+                        onClick={() => handleViewDetails(item)}
+                      ></i>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {currentProducts.map((item) => (
-                    <tr key={item?._id}>
-                      <td>
-                        <img
-                          src={item?.image[0]?.url || "https://via.placeholder.com/150"}
-                          alt={item?.productName}
-                          className="inventory-image"
-                        />
-                      </td>
-                      <td>{item?.productName || "Unnamed Product"}</td>
-                      <td>{item?.description || "No description available."}</td>
-                      <td>
-                        <button
-                          className="inventory-view-button"
-                          onClick={() => handleViewDetails(item)}
-                        >
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           {/* Pagination */}
           <div className="pagination">
@@ -105,9 +109,13 @@ const InventoryList = () => {
             >
               Previous
             </button>
-            <span>Page {currentPage} of {totalPages}</span>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
             <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              onClick={() =>
+                setCurrentPage(Math.min(totalPages, currentPage + 1))
+              }
               disabled={currentPage === totalPages}
             >
               Next

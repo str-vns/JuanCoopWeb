@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoPencil, IoTrash } from "react-icons/io5";
-import { inventoryProducts, deleteInventory } from "@redux/Actions/inventoryActions";
+import {
+  inventoryProducts,
+  deleteInventory,
+} from "@redux/Actions/inventoryActions";
 import { getToken } from "@utils/helpers";
 import Header from "../header";
 import Sidebar from "../sidebar";
@@ -59,8 +62,11 @@ const InventoryDetail = () => {
         <main className="p-6">
           <div className="inventory-header">
             <h1>Inventory Detail</h1>
-            <button className="btn-add-inventory" onClick={handleCreateInventory}>
+            {/* <button className="btn-add-inventory" onClick={handleCreateInventory}>
               Add Inventory
+            </button> */}
+            <button className="btn-add-product" onClick={handleCreateInventory}>
+              <i className="fa-solid fa-plus"></i>
             </button>
           </div>
           {Invsuccess?.length > 0 ? (
@@ -86,22 +92,46 @@ const InventoryDetail = () => {
                       <td>
                         <span
                           className={`status ${
-                            item.status?.toLowerCase() === "active" ? "active" : "inactive"
+                            item.status?.toLowerCase() === "active"
+                              ? "active"
+                              : "inactive"
                           }`}
                         >
                           {item.status
-                            ? item.status.charAt(0).toUpperCase() + item.status.slice(1)
+                            ? item.status.charAt(0).toUpperCase() +
+                              item.status.slice(1)
                             : "Unknown"}
                         </span>
                       </td>
-                      <td className="action-buttons">
-                        <button className="btn btn-update" onClick={() => handleEdit(item)}>
+                      {/* <td className="action-buttons">
+                        <span
+                          className="icon-update"
+                          onClick={() => handleEdit(item)}
+                        >
                           <FaEdit />
-                        </button>
-                        <button className="btn btn-delete" onClick={() => handleDelete(item._id)}>
+                        </span>
+                        <span
+                          className="icon-delete"
+                          onClick={() => handleDelete(item._id)}
+                        >
                           <FaTrash />
-                        </button>
-                      </td>
+                        </span>
+                      </td> */}
+                      <td className="actions-column">
+  <span
+    className="icon-update"
+    onClick={() => handleEdit(item)}
+  >
+    <FaEdit />
+  </span>
+  <span
+    className="icon-delete"
+    onClick={() => handleDelete(item._id)}
+  >
+    <FaTrash />
+  </span>
+</td>
+
                     </tr>
                   ))}
                 </tbody>
@@ -112,7 +142,7 @@ const InventoryDetail = () => {
           )}
           {isInventoryCreateOpen && (
             <InventoryCreate
-              show={isInventoryCreateOpen}  // ✅ Pass `show` prop
+              show={isInventoryCreateOpen} // ✅ Pass `show` prop
               onClose={() => setInventoryCreateOpen(false)}
               productId={selectedItem?._id}
             />

@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { memberList } from "@redux/Actions/memberActions";
-import "@assets/css/driverlist.css";
+import "@assets/css/member.css";
 import Sidebar from "../sidebar";
-import { getToken, getCurrentUser } from "@utils/helpers";
+import { getCurrentUser } from "@utils/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MemberList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, members = [], error } = useSelector((state) => state.memberList); // Ensure members is an empty array by default
+  const { loading, members = [], error } = useSelector((state) => state.memberList);
   const [selectedTab, setSelectedTab] = useState("Approved");
   const [token, setToken] = useState(null);
   const currentUser = getCurrentUser();
-    const userId = currentUser?._id;
+  const userId = currentUser?._id;
 
   useEffect(() => {
     const fetchJwt = async () => {
@@ -36,17 +36,17 @@ const MemberList = () => {
   }, [dispatch, userId, token]);
 
   return (
-    <div className="container">
+    <div className="memberContainer">
       <Sidebar />
-      <div className="tabContainer">
+      <div className="memberTabContainer">
         <button
-          className={`tabButton ${selectedTab === "Not_Approved" ? "activeTab" : ""}`}
+          className={`memberTabButton ${selectedTab === "Not_Approved" ? "memberActiveTab" : ""}`}
           onClick={() => navigate("/memberNot")}
         >
           Not Approved
         </button>
         <button
-          className={`tabButton ${selectedTab === "Approved" ? "activeTab" : ""}`}
+          className={`memberTabButton ${selectedTab === "Approved" ? "memberActiveTab" : ""}`}
           onClick={() => setSelectedTab("Approved")}
         >
           Approved
@@ -54,30 +54,30 @@ const MemberList = () => {
       </div>
 
       {loading ? (
-        <div className="loader">Loading...</div>
+        <div className="memberLoader">Loading...</div>
       ) : error ? (
-        <div className="errorContainer">
-          <p className="errorText">Error loading members: {error}</p>
+        <div className="memberErrorContainer">
+          <p className="memberErrorText">Error loading members: {error}</p>
         </div>
       ) : members.length === 0 ? (
-        <div className="emptyContainer">
-          <p className="emptyText">No Member found.</p>
+        <div className="memberEmptyContainer">
+          <p className="memberEmptyText">No Member found.</p>
         </div>
       ) : (
-        <div className="listContainer">
+        <div className="memberListContainer">
           {members.map((item) => (
-            <div key={item?._id} className="userItem">
+            <div key={item?._id} className="memberUserItem">
               <img
                 src={item?.userId?.image?.url || "https://via.placeholder.com/150"}
                 alt="Profile"
-                className="profileImage"
+                className="memberProfileImage"
               />
-              <div className="userDetails">
-                <p className="userName">{`${item?.userId?.firstName || "Unknown"} ${item?.userId?.lastName || "Member"}`}</p>
-                <p className="userEmail">{item?.userId?.email || "No Email Provided"}</p>
+              <div className="memberUserDetails">
+                <p className="memberUserName">{`${item?.userId?.firstName || "Unknown"} ${item?.userId?.lastName || "Member"}`}</p>
+                <p className="memberUserEmail">{item?.userId?.email || "No Email Provided"}</p>
               </div>
               <button
-                className="viewButton"
+                className="memberViewButton"
                 onClick={() => navigate(`/member-details/${item._id}`, { state: { member: item } })}
               >
                 View

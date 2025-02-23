@@ -7,26 +7,8 @@ import { getCurrentUser } from "@utils/helpers";
 import { useSocket } from "../../../SocketIo";
 import baseURL from '@Commons/baseUrl';
 
-
-const CategorySection = ({ categories }) => {
-  const socket = useSocket();
-  const user = getCurrentUser();
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  useEffect(() => {
-  if (socket && getCurrentUser()) {
-     socket.emit("addUser", user._id)
-     socket.on("getUsers", (users) => {
-      const onlineUsers = users.filter(user => user.online && user._id !== null);
-     
-      setOnlineUsers(onlineUsers);  
-    });
-  
-    return () => {
-      socket.off("getUsers");
-    };
-  }
-}, [socket, user]);
-
+// Category Section Component
+const CategorySection = ({ categories, onCategorySelect }) => {
   return (
     <div className="p-11 rounded-md shadow-sm bg-white w-1/4 mx-auto ">
       <div className="text-center mb-4">
@@ -35,7 +17,14 @@ const CategorySection = ({ categories }) => {
       <div className="grid grid-cols-2 gap-4">
         {categories.length > 0 ? (
           categories.map((category) => (
-            <div className="text-center" key={category._id}>
+            <div 
+              className="text-center cursor-pointer" 
+              key={category._id}
+              onClick={() => {
+                console.log("Selected Category:", category.categoryName);
+                onCategorySelect(category.categoryName);
+              }}
+            >
               <img
                 src={category.image.url}
                 alt={category.categoryName}
@@ -52,32 +41,27 @@ const CategorySection = ({ categories }) => {
   );
 };
 
+
+
+
 // Product Card Component
 const Homepage = ({ image, name, price, id }) => {
   const navigate = useNavigate();
 
- 
-
   const handleAddToCart = () => {
-    // Retrieve cart from local storage or initialize as empty array
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    // Check if the product already exists in the cart
     const existingProduct = cart.find((item) => item.id === id);
-  
+
     if (existingProduct) {
-      // If the product exists, increase the quantity by 1
       existingProduct.quantity += 1;
     } else {
-      // Otherwise, add the new product with quantity 1
       cart.push({ id, name, price, image, quantity: 1 });
     }
-  
-    // Save the updated cart back to local storage
+
     localStorage.setItem("cart", JSON.stringify(cart));
   };
+
   const handleProductClick = () => {
-    // Navigate to the product detail page using the product ID
     navigate(`/product/${id}`);
   };
 
@@ -99,7 +83,10 @@ const Homepage = ({ image, name, price, id }) => {
           </p>
           <div
             className="product-card-add-to-cart bg-green-500 text-white p-2 rounded-full"
-            onClick={handleAddToCart} 
+            onClick={(e) => {
+              e.stopPropagation();
+              handleAddToCart();
+            }}
           >
             <i className="fa-solid fa-plus"></i>
           </div>
@@ -109,45 +96,51 @@ const Homepage = ({ image, name, price, id }) => {
   );
 };
 
-
+// Main Product List Component
 // Main Product List Component
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-  
-        // Fetch products
         const productsResponse = await axios.get(`${baseURL}products`);
         const fetchedProducts = productsResponse.data.details || [];
+        console.log("Fetched Products:", fetchedProducts);
 
-        // Fetch inventory
         const inventoryResponse = await axios.get(`${baseURL}inventory`);
         const fetchedInventory = inventoryResponse.data.details || [];
-  
-        // Fetch categories
+
         const categoriesResponse = await axios.get(`${baseURL}category`);
         const fetchedCategories = categoriesResponse.data.details || [];
-  
-        // Match products with their corresponding inventory data
+        console.log("Fetched Categories:", fetchedCategories);
+
         const combinedData = fetchedProducts.map((product) => {
           const matchingInventory = fetchedInventory.find(
             (item) => item.productId.toString() === product._id.toString()
           );
-
+        
+          const categoryNames = product.category.map((catId) => {
+            const category = fetchedCategories.find(
+              (cat) => cat._id.toString() === catId.toString()
+            );
+            return category?.categoryName || "Uncategorized";
+          });
+        
           return {
             ...product,
+            category: categoryNames, // Use category names instead of IDs
             price: matchingInventory?.price || "N/A",
-            quantity: matchingInventory?.quantity || 0, 
-            metricUnit: matchingInventory?.metricUnit || "", 
-            unitName: matchingInventory?.unitName || "", 
+            quantity: matchingInventory?.quantity || 0,
+            metricUnit: matchingInventory?.metricUnit || "",
+            unitName: matchingInventory?.unitName || "",
           };
         });
-  
+
         setProducts(combinedData);
         setCategories(fetchedCategories);
         setLoading(false);
@@ -156,10 +149,18 @@ const ProductList = () => {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
+  // Filter products based on selected category and search query
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = selectedCategory ? product.category.includes(selectedCategory) : true;
+    const matchesSearchQuery = product.productName.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearchQuery;
+  });
+
+  console.log("Filtered Products:", filteredProducts);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -168,21 +169,44 @@ const ProductList = () => {
   return (
     <div className="product-container flex">
       <Navbar />
-      <CategorySection categories={categories} />
+      <CategorySection 
+        categories={categories} 
+        onCategorySelect={(category) => setSelectedCategory(category)} 
+      />
 
-      <div className="product-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full p-2">
-        {products.map((product) => (
-          <Homepage
-            key={product._id}
-            id={product._id} // Pass the product ID here
-            image={product.image[0]?.url}
-            name={product.productName}
-            price={product.price}
+      <div className="w-full p-4">
+        {/* Search Bar */}
+        <div className="user-search-bar">
+          <input
+            type="text"
+            placeholder="Search for products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 p-2 rounded-md w-full"
           />
-        ))}
+        </div>
+
+        <div className="product-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <Homepage
+                key={product._id}
+                id={product._id}
+                image={product.image[0]?.url}
+                name={product.productName}
+                price={product.price}
+              />
+            ))
+          ) : (
+            <p>No products found.</p>
+          )}
+        </div>
       </div>
     </div>
   );
 };
+
+
+
 
 export default ProductList;

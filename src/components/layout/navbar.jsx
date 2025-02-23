@@ -168,11 +168,11 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-      <input
+      {/* <input
         type="text"
         placeholder="Search..."
         className="ml-70 p-2 border rounded-md mr-4"
-      />
+      /> */}
       {/* Right side with cart and profile dropdown */}
       <div className="flex-none">
         {/* Cart Dropdown */}
@@ -207,11 +207,11 @@ const Navbar = () => {
             className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:border-none hover:border-none"
           >
             <i className="fas fa-bell text-black text-xl"></i>
-            {notifCount > 0 && (
+            {/* {notifCount > 0 && (
               <div className="indicator">
                 <span className="count">{notifCount}</span>
               </div>
-            )}
+            )} */}
           </button>
 
           {isOpen && (

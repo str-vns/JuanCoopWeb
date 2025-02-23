@@ -55,6 +55,7 @@ const OrderList = () => {
           <div className="order-list-header">
             <h1>Order List</h1>
           </div>
+
           <div className="order-table-container">
             <table className="order-table">
               <thead>
@@ -71,41 +72,67 @@ const OrderList = () => {
                 {currentOrders.map((order) => (
                   <tr key={order?._id}>
                     <td>{order?._id}</td>
-                    <td>{order?.user?.firstName} {order?.user?.lastName}</td>
+                    <td>
+                      {order?.user?.firstName} {order?.user?.lastName}
+                    </td>
                     <td>
                       {order?.orderItems?.map((item) => (
-                        <div key={item?._id} className={`badge badge-${item?.orderStatus.toLowerCase()}`}>
+                        <div
+                          key={item?._id}
+                          className={`badge badge-${item?.orderStatus.toLowerCase()}`}
+                        >
                           {item?.orderStatus}
                         </div>
                       ))}
                     </td>
                     <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                     <td>₱ {order.totalPrice.toFixed(2)}</td>
-                    <td>
-                      <button
-                        className="btn-view"
-                        onClick={() => setSelectedOrder(order) || setIsModalOpen(true)}
+                    <td className="actions-column">
+                      <span
+                        className="icon-view"
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setIsModalOpen(true);
+                        }}
                       >
-                        View
-                      </button>
+                        <i className="fa-solid fa-eye"></i>
+                      </span>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <div className="pagination">
-              <button onClick={prevPage} disabled={currentPage === 1} className="pagination-btn">
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className="pagination-btn"
+              >
                 Previous
               </button>
-              <span> Page {currentPage} of {Math.ceil(filterOrders.length / itemsPerPage)} </span>
-              <button onClick={nextPage} disabled={currentPage === Math.ceil(filterOrders.length / itemsPerPage)} className="pagination-btn">
+              <span>
+                {" "}
+                Page {currentPage} of{" "}
+                {Math.ceil(filterOrders.length / itemsPerPage)}{" "}
+              </span>
+              <button
+                onClick={nextPage}
+                disabled={
+                  currentPage === Math.ceil(filterOrders.length / itemsPerPage)
+                }
+                className="pagination-btn"
+              >
                 Next
               </button>
             </div>
           </div>
         </main>
       </div>
-      <UpdateOrderStatus isOpen={isModalOpen} order={selectedOrder} onClose={() => setIsModalOpen(false)} />
+      <UpdateOrderStatus
+        isOpen={isModalOpen}
+        order={selectedOrder}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

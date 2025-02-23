@@ -193,3 +193,26 @@
   margin: 0;
 }
 
+.user-search-bar input {
+  border: 2px solid rgb(255, 255, 255); /* Change the border color to orange */
+  padding: 10px;
+  border-radius: 25px;
+  width: 90%; /* Make the width of the search bar shorter */
+  max-width: 1000px; /* Limit the maximum width */
+  transition: border-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-width: 0.5px;
+ 
+}
+.user-search-bar {
+  margin-top: 20px; /* Adjust the value to move the search bar lower */
+}
+
+.user-search-bar input:focus {
+  outline: none;
+  border-color: #c5c5c5; /* Slightly darker orange on focus */
+  box-shadow: 0 4px 8px rgba(255, 242, 219, 0.5); /* Orange shadow on focus */
+}
+
+
+

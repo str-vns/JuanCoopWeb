@@ -232,33 +232,38 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.review-header {
+.review-header-user {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
+  align-items: flex-start;
   gap: 15px;
 }
 
-.profile-picture {
+.reviewer-profile-picture {
   width: 60px;
   height: 60px;
   object-fit: cover;
   border: 1px solid #ddd;
-  border-radius: 4px; /* Make it square by reducing border-radius */
+  border-radius: 4px;
 }
 
-.review h4 {
-  margin: 0;
+.review-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-details h4 {
+  margin: 5px 0 0;
   font-size: 15px;
   color: #333;
-  text-align: left; /* Ensure text aligns left */
+  text-align: left;
 }
 
 .stars {
   font-size: 16px;
   color: #ffc107;
-  margin-top: 5px;
-  text-align: left; /* Ensure text aligns left */
+  text-align: left;
 }
+
 
 .review p {
   font-size: 15px;

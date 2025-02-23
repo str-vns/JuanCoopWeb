@@ -22,10 +22,18 @@ const ProductList = () => {
   const currentUser = getCurrentUser();
   const coopId = currentUser?._id;
 
-  const { coopProducts, loading, error } = useSelector((state) => state.CoopProduct);
-  const { success: createSuccess } = useSelector((state) => state.productCreate || {});
-  const { success: updateSuccess } = useSelector((state) => state.productUpdate || {});
-  const { success: deleteSuccess } = useSelector((state) => state.productDelete || {});
+  const { coopProducts, loading, error } = useSelector(
+    (state) => state.CoopProduct
+  );
+  const { success: createSuccess } = useSelector(
+    (state) => state.productCreate || {}
+  );
+  const { success: updateSuccess } = useSelector(
+    (state) => state.productUpdate || {}
+  );
+  const { success: deleteSuccess } = useSelector(
+    (state) => state.productDelete || {}
+  );
 
   const [categories, setCategories] = useState([]);
   const [types, setTypes] = useState([]);
@@ -34,7 +42,7 @@ const ProductList = () => {
   const [productToUpdate, setProductToUpdate] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Display only 5 products per page
+  const itemsPerPage = 4; // Display only 5 products per page
 
   useEffect(() => {
     if (token || coopId) {
@@ -62,17 +70,20 @@ const ProductList = () => {
   };
 
   const handleDelete = (productId) => {
-    const confirm = window.confirm("Are you sure you want to delete this product?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
     if (confirm) {
       dispatch(soflDelProducts(productId));
     }
   };
 
-  const filteredProducts = coopProducts
-    ?.filter((product) =>
-      product.productName?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];
+  const filteredProducts =
+    coopProducts
+      ?.filter((product) =>
+        product.productName?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) || [];
 
   const currentProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
@@ -82,7 +93,10 @@ const ProductList = () => {
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   if (loading) return <p className="text-center text-xl">Loading...</p>;
-  if (error) return <p className="text-center text-red-500">{`Error loading products: ${error}`}</p>;
+  if (error)
+    return (
+      <p className="text-center text-red-500">{`Error loading products: ${error}`}</p>
+    );
 
   return (
     <div className="product-list-container">
@@ -92,8 +106,11 @@ const ProductList = () => {
         <main className="p-6">
           <div className="product-list-header">
             <h1>All Products</h1>
-            <button className="btn-add-product" onClick={() => setIsAddModalOpen(true)}>
-              Add Product
+            <button
+              className="btn-add-product"
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              <i className="fa-solid fa-plus"></i>
             </button>
           </div>
 
@@ -114,7 +131,9 @@ const ProductList = () => {
                   <tr key={product._id}>
                     <td>
                       <img
-                        src={product.image?.[0]?.url || "/default-placeholder.png"}
+                        src={
+                          product.image?.[0]?.url || "/default-placeholder.png"
+                        }
                         alt={product.productName || "Product Image"}
                         className="product-image"
                       />
@@ -123,24 +142,26 @@ const ProductList = () => {
                     <td>{product.description}</td>
                     <td>{product.stock?.[0]?.price || "N/A"}</td>
                     <td>{product.stock?.[0]?.quantity || 0}</td>
-                    <td className="action-buttons">
-                      <button
-                        className="btn btn-update"
-                        onClick={() => {
-                          console.log("Updating product:", product);
-                          setProductToUpdate(product);
-                          setIsUpdateModalOpen(true);
-                        }}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="btn btn-delete"
-                        onClick={() => handleDelete(product._id)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </td>
+                    
+                      <td className="actions-column">
+                        <span
+                          className="icon-update"
+                          onClick={() => {
+                            console.log("Updating product:", product);
+                            setProductToUpdate(product);
+                            setIsUpdateModalOpen(true);
+                          }}
+                        >
+                          <i className="fa-solid fa-pen-to-square"></i>
+                        </span>
+                        <span
+                          className="icon-delete"
+                          onClick={() => handleDelete(product._id)}
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </span>
+                      </td>
+                    
                   </tr>
                 ))}
               </tbody>
@@ -155,9 +176,13 @@ const ProductList = () => {
             >
               Previous
             </button>
-            <span>Page {currentPage} of {totalPages}</span>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
             <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              onClick={() =>
+                setCurrentPage(Math.min(totalPages, currentPage + 1))
+              }
               disabled={currentPage === totalPages}
             >
               Next

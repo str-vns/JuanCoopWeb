@@ -29,7 +29,7 @@
   }
   
   .inventory-header h1 {
-    color: #5a5a5a;
+    color: #000000;
     font-size: 1.8rem;
     font-weight: bold;
   }
@@ -90,8 +90,9 @@
   }
   
   .btn-add-inventory{
-    background-color: #fafa90;
-    color: #5a5a5a;
+    background-color: #ffcc00;
+    color: #000000;
+    font-weight: bold;
     padding: 10px 16px;
     border: none;
     border-radius: 8px;
@@ -99,3 +100,29 @@
     cursor: pointer;
     transition: background 0.3s ease;
   }
+  .actions-column {
+    text-align: center;
+    white-space: nowrap;
+  }
+  
+  .icon-update, 
+  .icon-delete {
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: transform 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-update:hover {
+    color: #FFC107; /* Yellow for update */
+    transform: scale(1.2);
+  }
+  
+  .icon-delete:hover {
+    color: #F44336; /* Red for delete */
+    transform: scale(1.2);
+  }
+  

@@ -1,0 +1,122 @@
+.memberContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 900px;
+    margin: 20px auto;
+    width: calc(100% - 300px); /* Adjust width to not overlap with sidebar */
+    margin-left: 300px; /* Align next to the sidebar */
+    background-color: #fff;
+  }
+  
+  .memberTabContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .memberTabButton {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .memberActiveTab {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .memberListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .memberUserItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .memberUserItem:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .memberProfileImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  
+  .memberUserDetails {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .memberUserName {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  .memberUserEmail {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .memberViewButton {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .memberViewButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .memberLoader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+  
+  .memberEmptyContainer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }
+  
+  .memberEmptyText {
+    font-size: 16px;
+  }
+  
+  .memberErrorContainer {
+    text-align: center;
+    padding: 20px;
+    color: red;
+  }
+  
+  .memberErrorText {
+    font-size: 16px;
+  }
+  
