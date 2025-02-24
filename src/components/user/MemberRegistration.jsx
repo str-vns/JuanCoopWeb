@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { allCoops } from "@redux/Actions/coopActions";
 import { createMember } from "@redux/Actions/memberActions";
 import Navbar from "../layout/navbar";
-import AuthGlobal from "@redux/Store/AuthGlobal";
+import { getCurrentUser } from "@utils/helpers";
 import "@assets/css/memberRegistration.css";
 
 function MemberRegistration() {
   const { coops } = useSelector((state) => state.allofCoops);
-  const context = useContext(AuthGlobal);
+  const currentUser = getCurrentUser();
+  const userId = currentUser?._id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const userId = context?.stateUser?.userProfile?._id;
-  
+
   const [address, setAddress] = useState("");
   const [barangay, setBarangay] = useState("");
   const [city, setCity] = useState("");
@@ -28,12 +27,10 @@ function MemberRegistration() {
     dispatch(allCoops());
   }, [dispatch]);
 
-  const handleFileChange = (e, setImage) => {
+  const handleFileChange = (e, setFile) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImage(reader.result);
-      reader.readAsDataURL(file);
+      setFile(file); // Directly store the file object
     }
   };
 
@@ -53,17 +50,24 @@ function MemberRegistration() {
       userId,
     };
 
-    dispatch(createMember(memberData));
-    alert("Member Registration Successful! We will notify you once approved.");
-    navigate("/home");
+    setLoading(true);
+    try {
+      await dispatch(createMember(memberData));
+      alert("Member Registration Successful! We will notify you once approved.");
+      navigate("/home");
+    } catch (error) {
+      setErrors("Failed to register member. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="member-registration-container">
-        <Navbar />
+      <Navbar />
       <h2>Member Registration</h2>
       {errors && <p className="member-registration-error">{errors}</p>}
-      
+
       <label>Address:</label>
       <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="member-registration-input" />
 
@@ -83,11 +87,11 @@ function MemberRegistration() {
 
       <label>Barangay Clearance:</label>
       <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setBarangayClearance)} className="member-registration-file" />
-      {barangayClearance && <img src={barangayClearance} alt="Barangay Clearance" className="member-registration-preview" />}
+      {barangayClearance && <img src={URL.createObjectURL(barangayClearance)} alt="Barangay Clearance" className="member-registration-preview" />}
 
       <label>Valid ID:</label>
       <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setValidId)} className="member-registration-file" />
-      {validId && <img src={validId} alt="Valid ID" className="member-registration-preview" />}
+      {validId && <img src={URL.createObjectURL(validId)} alt="Valid ID" className="member-registration-preview" />}
 
       <button onClick={memberRegistration} disabled={loading} className="member-registration-button">
         {loading ? "Submitting..." : "Apply"}

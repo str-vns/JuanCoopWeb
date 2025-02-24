@@ -31,49 +31,46 @@ import mime from 'mime';
 
 
 export const createMember = (member, token) => async (dispatch) => {
-    console.log(member, "member")
     try {
-        dispatch({ type: MEMBER_CREATE_REQUEST });
-
-        const barangayClearance = "file:///" + member?.barangayClearance.split("file:/").join("");
-        const validId = "file:///" + member?.validId.split("file:/").join("");
-        const formData = new FormData();
-        
-        formData.append('userId', member?.userId);
-        formData.append('coopId', member?.coopId);
-        formData.append('address', member?.address);
-        formData.append('barangay', member?.barangay);
-        formData.append('city', member?.city);
-        formData.append("barangayClearance",
-            {
-                uri: barangayClearance,
-                type: mime.getType(barangayClearance),
-                name: barangayClearance.split("/").pop()
-            })
-        formData.append("validId",
-            {
-                uri: validId,
-                type: mime.getType(validId),
-                name: validId.split("/").pop()
-            })
-
-        const config = {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${token}`,
-            },
-        };
-
-        const { data } = await axios.post(`${baseURL}member`, formData, config);
-
-        dispatch({ type: MEMBER_CREATE_SUCCESS, payload: data.details });
+      dispatch({ type: MEMBER_CREATE_REQUEST });
+  
+      const formData = new FormData();
+  
+      formData.append('userId', member.userId);
+      formData.append('coopId', member.coopId);
+      formData.append('address', member.address);
+      formData.append('barangay', member.barangay);
+      formData.append('city', member.city);
+  
+      // Append barangayClearance file
+      if (member.barangayClearance) {
+        formData.append("barangayClearance", member.barangayClearance);
+      }
+  
+      // Append validId file
+      if (member.validId) {
+        formData.append("validId", member.validId);
+      }
+  
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      const { data } = await axios.post(`${baseURL}member`, formData, config);
+  
+      dispatch({ type: MEMBER_CREATE_SUCCESS, payload: data.details });
     } catch (error) {
-        dispatch({
-            type: MEMBER_CREATE_FAIL,
-            payload: error.response ? error.response.data.message : error.message,
-        });
+      dispatch({
+        type: MEMBER_CREATE_FAIL,
+        payload: error.response ? error.response.data.message : error.message,
+      });
+      throw error; // Re-throw the error to handle it in the component
     }
-}
+  };
+
                    
 export const memberList = (coopId ,token) => async (dispatch) => {
     try {
