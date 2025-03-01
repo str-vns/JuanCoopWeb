@@ -95,7 +95,8 @@ export const registerCoop = (coop, token) => async (dispatch) => {
 };
 
 export const UpdateCoop = (coop, token) => async (dispatch) => {
-  console.log("coop", coop);
+  console.log("coop object:", coop); // Debugging: Log the coop object
+  console.log("coop.id:", coop.id); // Debugging: Log the coop ID
 
   try {
     dispatch({ type: COOP_UPDATE_REQUEST });
@@ -109,15 +110,16 @@ export const UpdateCoop = (coop, token) => async (dispatch) => {
     formData.append("latitude", coop?.latitude);
     formData.append("longitude", coop?.longitude);
 
-    if (coop?.image?.length) {
-      coop?.image.forEach((imageUri) => {
-        const newImageUri = "file:///" + imageUri.split("file:/").join("");
-        formData.append("image", {
-          uri: newImageUri,
-          type: mime.getType(newImageUri),
-          name: newImageUri.split("/").pop(),
-        });
+    // Append multiple images
+    if (coop.image && Array.isArray(coop.image)) {
+      coop.image.forEach((image, index) => {
+        formData.append("image", image); // Append each image file
       });
+    }
+
+    // Log FormData contents
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value); // Debugging: Log FormData contents
     }
 
     const config = {
@@ -129,16 +131,19 @@ export const UpdateCoop = (coop, token) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `${baseURL}farm/${coop.id}`,
+      `${baseURL}farm/${coop.id}`, // Ensure coop.id is defined
       formData,
       config
     );
 
+    console.log("Update response from backend:", data); // Debugging: Log the response
     dispatch({ type: COOP_UPDATE_SUCCESS, payload: data.details });
   } catch (error) {
+    console.error("Error updating coop:", error); // Debugging: Log the error
+    console.error("Error response data:", error.response?.data); // Debugging: Log the error response
     dispatch({
       type: COOP_UPDATE_FAIL,
-      payload: error.response.data.message,
+      payload: error.response ? error.response.data.message : error.message,
     });
   }
 };
