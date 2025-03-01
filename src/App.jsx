@@ -21,6 +21,8 @@ import OrderConfirmation from "./components/Cart/confirm";
 
 
 import Profile from "./components/user/Profile";
+
+
 import WishList from "./components/user/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
 import Orders from "./components/Order/Orders";
@@ -34,7 +36,7 @@ import BlogListCoop from "./components/Cooperative/Blog/BlogListCoop";
 import ForumPostList from "./components/cooperative/Forum/ForumPostList";
 import CoopProfileEdit from "./components/cooperative/Profile/editProfile";
 import ForumListCoop from "./components/Cooperative/Forum/ForumListCoop";
-import ProductArchive from "./components/Cooperative/Product/ProductArchive";
+import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ForumPost from "./Components/Cooperative/Forum/ForumPost";
 import CoopOrderList from "./components/cooperative/Order/OrderList";
@@ -104,6 +106,9 @@ import NotificationList from "./components/Cooperative/Notifications/Notificatio
 import RiderList from "./components/Cooperative/Rider/RiderList";
 import AssignList from "./components/Cooperative/Rider/AssignList";
 
+
+import EditFarm from "./components/cooperative/Profile/editFarm";
+
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -172,7 +177,7 @@ function App() {
           <Route path="/" element={<RoleBaseRoute/>} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/editprofile" element={<FarmRegistration />} />
           <Route path="/resetPassword/:id" element={<PasswordReset/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/otp" element={<RegisterRoute> <OtpRegister /> </RegisterRoute>} />
@@ -183,6 +188,7 @@ function App() {
           {/* Order Routes */}
           <Route path="/product/:id" element={<ProductCard />} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/editfarm" element={<EditFarm/>} />
           <Route path="/cart" element={<Carts/>} />
           <Route path="/shipping" element={<Shipping/>} />
           <Route path="/payment" element={<Payment/>} />
