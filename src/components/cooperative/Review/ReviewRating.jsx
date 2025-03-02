@@ -45,7 +45,7 @@ const ReviewRating = () => {
       )}
 
       {/* Reviews Section */}
-      <h2 className="w-full max-w-3xl mt-6 text-xl font-semibold text-yellow-900 text-center">Product Reviews</h2>
+      <h2 className="w-full max-w-3xl mt-6 text-xl font-semibold text-black-1000 text-center">Product Reviews</h2>
       <div className="reviews-section">
         {product.reviews?.length > 0 ? (
           product.reviews.map((review, index) => (

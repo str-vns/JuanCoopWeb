@@ -14,20 +14,22 @@
 }
 .blog-list-header {
   display: flex;
-  justify-content: space-between; /* Align header title and button to opposite ends */
-  align-items: center; /* Vertically center items */
-  padding: 1rem; /* Add padding for spacing */
-  margin-bottom: 1.5rem; /* Space below the header */
-  background-color: #ffffff; /* White background for contrast */
-  border-bottom: 2px solid #e5e7eb; /* Subtle border below for separation */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  border-radius: 8px; /* Rounded corners */
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #ffcc00;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
 }
 
-.blog-title {
-  font-size: 1.8rem; /* Larger font size for the title */
-  font-weight: 600; /* Semi-bold weight */
-  color: #1f2937; /* Dark gray color */
+.blog-list-header h1 {
+  color: #000000;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 .btn-primary {

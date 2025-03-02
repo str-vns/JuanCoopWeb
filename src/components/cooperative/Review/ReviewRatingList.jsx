@@ -34,23 +34,23 @@ const ReviewRatingList = () => {
       ) : (
         <div className="review-rating-list__grid">
           {coopProducts?.map((item) => (
-            <div key={item._id} className="review-rating-list__card">
+            <div
+              key={item._id}
+              className="review-rating-list__card"
+              onClick={() =>
+                navigate(`/reviews/${item._id}`, { state: { product: item } })
+              }
+              style={{ cursor: "pointer" }} // Ensures it looks clickable
+            >
               <img
                 src={item?.image[0]?.url || "https://via.placeholder.com/150"}
                 alt={item.productName}
                 className="review-rating-list__image"
               />
               <h2 className="review-rating-list__title">{item.productName}</h2>
-              <p className="review-rating-list__description">{item.description}</p>
               <p className="review-rating-list__sentiment">
                 Sentiment: <span>{item.sentiment || "Neutral"}</span>
               </p>
-              <button
-                onClick={() => navigate(`/reviews/${item._id}`, { state: { product: item } })}
-                className="review-rating-list__button"
-              >
-                View
-              </button>
             </div>
           ))}
         </div>

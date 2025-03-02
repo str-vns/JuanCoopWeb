@@ -107,20 +107,5 @@
     vertical-align: middle; /* Align logo with text vertically */
   }
 
-  /* Make sure the sidebar content is scrollable but without showing the scrollbar */
-.sidebar {
-  overflow: hidden; /* Prevents the scrollbar from appearing */
-}
-
-/* Alternatively, hide the scrollbar while keeping the content scrollable */
-.sidebar-content {
-  overflow-y: scroll; /* Enables scrolling, but hides the scrollbar */
-}
-
-.sidebar::-webkit-scrollbar {
-  display: none; /* Hides the scrollbar in Webkit browsers (Chrome, Safari) */
-}
-
-.sidebar {
-  scrollbar-width: none; /* Hides the scrollbar in Firefox */
-}
+  
+  

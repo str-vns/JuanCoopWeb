@@ -27,8 +27,8 @@
   }
   
   .memberActiveTab {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #ffc107;
+    color: #000000;
   }
   
   .memberListContainer {
@@ -79,7 +79,7 @@
   
   .memberViewButton {
     padding: 8px 12px;
-    background-color: #007bff;
+    background-color: #b7b8b9;
     color: #fff;
     font-size: 14px;
     font-weight: 500;
@@ -90,7 +90,7 @@
   }
   
   .memberViewButton:hover {
-    background-color: #0056b3;
+    background-color: #ffc107;
   }
   
   .memberLoader {

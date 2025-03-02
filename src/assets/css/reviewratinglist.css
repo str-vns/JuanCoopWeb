@@ -1,97 +1,108 @@
 /* Main Container */
 .review-rating-list.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  /* Header */
-  .review-rating-list__header {
-    background-color: #ffcc00;
-    color: #333;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 10px;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Loading Text */
-  .review-rating-list__loading {
-    text-align: center;
-    font-size: 18px;
-    color: #ffcc00;
-    margin-top: 30px;
-  }
-  
-  /* Product Grid */
-  .review-rating-list__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  /* Product Card */
-  .review-rating-list__card {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .review-rating-list__card:hover {
-    transform: translateY(-5px);
-  }
-  
-  /* Product Image */
-  .review-rating-list__image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
-  /* Product Title */
-  .review-rating-list__title {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 10px 0;
-  }
-  
-  /* Product Description */
-  .review-rating-list__description {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-  
-  /* Sentiment */
-  .review-rating-list__sentiment {
-    font-size: 14px;
-    color: #444;
-  }
-  
-  .review-rating-list__sentiment span {
-    font-weight: bold;
-  }
-  
-  /* View Button */
-  .review-rating-list__button {
-    background-color: #f9d958;
-    color: #333;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .review-rating-list__button:hover {
-    background-color: #ffcc00;
-  }
-  
+  max-width: 1200px;
+  margin: auto;
+  margin-right: 40px;
+  width: calc(100% - 300px);
+  box-shadow: none;
+
+}
+
+/* Header */
+.review-rating-list__header {
+  background-color: #ffcc00;
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* Loading Text */
+.review-rating-list__loading {
+  text-align: center;
+  font-size: 18px;
+  color: #ffcc00;
+  margin-top: 30px;
+}
+.review-rating-list__header h1 {
+  font-weight: bold;
+}
+
+
+/* Product Grid */
+.review-rating-list__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Product Card */
+.review-rating-list__card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.review-rating-list__card:hover {
+  transform: translateY(-5px);
+}
+
+/* Product Image */
+.review-rating-list__image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Product Title */
+.review-rating-list__title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Product Description */
+.review-rating-list__description {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* Sentiment */
+.review-rating-list__sentiment {
+  font-size: 14px;
+  color: #444;
+}
+
+.review-rating-list__sentiment span {
+  font-weight: bold;
+}
+
+/* View Button */
+.review-rating-list__button {
+  margin-top: 10px; /* Adjust as needed */
+  padding: 10px 20px; /* Keeps button padding consistent */
+  background-color: #f9d958;
+  color: #333;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.review-rating-list__button:hover {
+  background-color: #ffcc00;
+}
+
+.review-rating-list container {
+  background-color: rgb(255, 255, 255);
+}

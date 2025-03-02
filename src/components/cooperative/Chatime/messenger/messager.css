@@ -1,89 +1,161 @@
 .messenger {
-    height: calc(109.5vh - 70px);
-    display: flex;
-    margin-left: 100px;
-    width: 100%;
-  }
-  
-  .chatMenu {
-    flex: 1.5;
-  }
-  
-  .chatMenuInput {
-    width: 90%;
-    padding: 10px 0;
-    border: none;
-    border-bottom: 1px solid gray;
-  }
-  
-  .chatBox {
-    flex: 5.5;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  margin: auto;
+  overflow: hidden;
+  padding-left: 250px;
+}
 
+.chatMenu {
+  flex: 1.2;
+  min-width: 200px;
+  max-width: 250px;
+  overflow-y: auto;
+}
+
+.chatMenuInput {
+  width: 85%;
+  padding: 6px 0;
+  font-size: 0.9rem;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.chatBox {
+  flex: 4;
+  min-width: 60%;
+  max-width: 75%;
+  overflow: hidden;
+  background-color: white;
+}
+
+.chatBoxWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.chatBoxTop {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.chatBoxBottom {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid gray; /* Gray border */
+  padding: 10px;
+}
+
+.chatMessageInput {
+  flex-grow: 1; /* Allows it to take up all available space */
+  height: 50px;
+  font-size: 1rem;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid gray; /* Gray border */
+  border-radius: 8px; /* Optional for rounded corners */
+  outline: none;
+}
+
+.sendButton {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+/* Adjusting chat online section */
+.chatOnline {
+  flex: 1.5;
+  min-width: 170px;
+  max-width: 220px;
+  overflow-y: auto;
+}
+
+.chatMenuWrapper,
+.chatBoxWrapper,
+.chatOnlineWrapper {
+  padding: 10px;
+  height: 100%;
+}
+
+/* Bigger text for no conversation */
+.noConversationText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  color: rgb(180, 180, 180);
+  text-align: center;
+  cursor: default;
+}
+
+/* Responsive for smaller screens */
+@media screen and (max-width: 1024px) {
+  .messenger {
+      width: 100%;
+      margin-left: 0;
   }
-  
-  .chatBoxWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-  
+
+  .chatMenu {
+      flex: 0.8;
+      min-width: 180px;
   }
-  
-  .chatBoxTop {
-    height: 100%;
-    overflow-y: scroll;
-    padding-right: 20px;
-  }
-  
-  .chatBoxBottom {
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .chatMessageInput {
-    width: 65%;
-    height: 90px;
-    padding: 10px;
-    background-color: white;
-  }
-  
- 
-  
-  .chatOnline {
-    flex: 3;
-  }
-  
-  .chatMenuWrapper,
-  .chatBoxWrapper,
-  .chatOnlineWrapper {
-    padding: 10px;
-    height: 100%;
-  }
-  
-  .noConversationText {
-    position: absolute;
-    top: 10%;
-    font-size: 50px;
-    color: rgb(224, 220, 220);
-    cursor: default;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .chatMenu {
-      flex: 1;
-    }
-  
-    .chatMenuInput {
+
+  .chatMenuInput {
       display: none;
-    }
-  
-    .chatBox{
-      flex: 10;
-    }
-  
-    .chatOnline{
-      flex: 1px;
-    }
   }
+
+  .chatBox {
+      flex: 6;
+      min-width: 100%;
+  }
+
+  .chatOnline {
+      display: none;
+  }
+
+  .chatMessageInput {
+      height: 45px;
+  }
+
+  .noConversationText {
+      font-size: 24px;
+  }
+}
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.chatBoxTop::-webkit-scrollbar,
+.chatMenu::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Hide scrollbar for Firefox */
+.chatBoxTop,
+.chatMenu {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Edge and IE */
+.chatBoxTop,
+.chatMenu {
+  -ms-overflow-style: none;
+}
+.chatMenu {
+  border-left: 2px solid white;
+  padding: 1rem;
+  text-align: center;
+}

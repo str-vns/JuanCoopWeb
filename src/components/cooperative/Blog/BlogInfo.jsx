@@ -19,14 +19,12 @@ const BlogInfo = ({ isOpen, onClose, post }) => {
       <div className="modal-container">
         {/* Header */}
         <div className="modal-header">
-          <button onClick={onClose} className="close-btn">
-            <FaTimes />
-          </button>
+          <h3 className="modal-title">{post.title}</h3>
+          
         </div>
 
         {/* Modal Content */}
-        <div className="modal-content-container">
-          <h3 className="modal-title">{post.title}</h3>
+        <div className="modal-content-container" style={{ maxHeight: "70vh", overflowY: "auto" }}>
           <p className="modal-date">
             Published on: {new Date(post.createdAt).toLocaleDateString()}
           </p>
@@ -41,6 +39,13 @@ const BlogInfo = ({ isOpen, onClose, post }) => {
               Visit External Website
             </button>
           )}
+        </div>
+
+        {/* Footer */}
+        <div className="modal-footer">
+          <button onClick={onClose} className="close-btn">
+          <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
       </div>
     </div>

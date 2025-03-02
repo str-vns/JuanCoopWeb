@@ -26,6 +26,7 @@
   z-index: 10;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
+  height: 70px;
 }
 
 .inventory-header-list h1 {
@@ -48,7 +49,14 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.inventory-table th,
+.inventory-tables th {
+  background-color: #f0f0f0;
+
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
 .inventory-table td {
   padding: 12px 16px;
   text-align: left;
@@ -56,7 +64,7 @@
 }
 
 .inventory-table th {
-  background-color: #fafa90;
+  background-color: #f0f0f0;
   color: #000000;
   font-weight: bold;
   position: sticky;
@@ -104,13 +112,12 @@
   color: black;
   font-size: 1.2rem;
   cursor: pointer;
-  display:flex;
+  display: flex;
   transition: transform 0.3s, color 0.3s;
   padding-left: 5px;
   display: flex;
   height: 100%;
 }
-
 
 .inventory-view-icon:hover {
   transform: scale(1.1);

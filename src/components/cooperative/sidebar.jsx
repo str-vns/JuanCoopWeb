@@ -106,12 +106,12 @@ const Sidebar = () => {
                 <span className="sidebar-text">Forum</span>
               </a>
             </li>
-            <li className="sidebar-item">
+            {/* <li className="sidebar-item">
               <a className="sidebar-link" href="/notificationlistp">
                 <i className="fas fa-solid fa-bell sidebar-icon"></i>
                 <span className="sidebar-text">Notification</span>
               </a>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>

@@ -9,7 +9,7 @@ import { sendNotifications } from "@redux/Actions/notificationActions";
 import { conversationList } from '@redux/Actions/converstationActions';
 import baseURL from "@Commons/baseUrl";
 import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../../sidebar";
+import Sidebar from "../../../cooperative/sidebar";
 import axios from "axios";
 
 const Messenger = () => {
@@ -164,7 +164,7 @@ const Messenger = () => {
 <section className="flex flex-col h-screen bg-white">
 <Sidebar />
     <div className="messenger">
-      <div className="chatMenu border-2 border-black text-center p-4">
+      <div className="chatMenu border-2 border-white text-center p-4">
         <h2 className="chatMenuHeader text-lg font-semibold mb-1">Active Chat List</h2>
         <div className="chatMenuWrapper">
           {conversations.map((c) => (
@@ -179,7 +179,7 @@ const Messenger = () => {
         </div>
       </div>
 
-      <div className="chatBox border-t-2 border-r-2 border-b-2 border-black">
+      <div className="chatBox border-t-2 border-r-2 border-b-2 border-white">
         <div className="chatBoxWrapper">
           {currentChat ? (
             <>
@@ -205,10 +205,10 @@ const Messenger = () => {
                 ></textarea>
 
                 <button
-                  className="mt-3 inline-block rounded border border-indigo-600 px-12 py-3 text-sm font-medium text-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
+                  className="sendButton"
                   onClick={handleSubmit}
                 >
-                  Send
+                 <i class="fa-solid fa-paper-plane"></i>
                 </button>
               </div>
             </>

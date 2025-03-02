@@ -62,12 +62,20 @@ const BlogLists = () => {
         <div className="flex-1 bg-white-100 p-6">
           <div className="blog-list-header">
             <h1 className="blog-title">Blog List</h1>
-            <button className="btn-primary" onClick={() => navigate("/blogcreate")}>
+            {/* <button className="btn-primary" onClick={() => navigate("/blogcreate")}>
               Add Blog
+            </button> */}
+            <button
+              className="btn-add-product"
+              onClick={() => navigate("/blogcreate")}
+            >
+              <i className="fa-solid fa-plus"></i>
             </button>
           </div>
           {loading ? (
-            <div className="loading-container"><p className="loading-text">Loading...</p></div>
+            <div className="loading-container">
+              <p className="loading-text">Loading...</p>
+            </div>
           ) : error ? (
             <p className="error-text">Error: {error}</p>
           ) : (
@@ -84,7 +92,9 @@ const BlogLists = () => {
                           className="p-4 border-b flex justify-between items-center cursor-pointer"
                           onClick={() => handleOpenModal(blog)}
                         >
-                          <span className="text-gray-800 font-medium">{blog.title}</span>
+                          <span className="text-gray-800 font-medium">
+                            {blog.title}
+                          </span>
                           <div className="actions flex space-x-2">
                             <i
                               className="fa-regular fa-pen-to-square text-yellow-500 cursor-pointer"
@@ -107,20 +117,24 @@ const BlogLists = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="pagination flex justify-center items-center mt-4 space-x-2">
-                    <button className="btn-secondary" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                  <div className="pagination">
+                    <button
+                      onClick={() =>
+                        setCurrentPage(Math.max(1, currentPage - 1))
+                      }
+                      disabled={currentPage === 1}
+                    >
                       Previous
                     </button>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                      <button
-                        key={page}
-                        className={`btn-page ${page === currentPage ? "btn-active" : ""}`}
-                        onClick={() => setCurrentPage(page)}
-                      >
-                        {page}
-                      </button>
-                    ))}
-                    <button className="btn-secondary" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
+                    <span>
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      onClick={() =>
+                        setCurrentPage(Math.min(totalPages, currentPage + 1))
+                      }
+                      disabled={currentPage === totalPages}
+                    >
                       Next
                     </button>
                   </div>
@@ -130,7 +144,11 @@ const BlogLists = () => {
           )}
         </div>
       </div>
-      <BlogInfo isOpen={isModalOpen} onClose={handleCloseModal} post={selectedBlog} />
+      <BlogInfo
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        post={selectedBlog}
+      />
     </div>
   );
 };
