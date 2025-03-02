@@ -8,9 +8,9 @@
     max-width: 1200px; /* Optional: Constrains the width to a maximum value */
     margin: 0 auto; /* Centers the content */
     padding-top: 50px;
+    background-color: #FFFFFF;
   }
-  
-  
+
   .product-row {
     display: flex;
     justify-content: space-between;
@@ -111,6 +111,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     transition: border-color 0.3s ease;
+    background-color: #ffffff;
   }
   
   /* Icon inside the search bar */

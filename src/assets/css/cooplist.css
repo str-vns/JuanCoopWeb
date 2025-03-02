@@ -58,11 +58,11 @@
 }
 
 .tabButton:hover {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
 }
 
 .activeTab {
-  background-color: #007bff;
+  background-color: #ffc107;
 }
 
 .tabText {
@@ -139,7 +139,7 @@
 }
 
 .viewButton {
-  background-color: #007bff;
+  background-color: #ffc107;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -150,5 +150,5 @@
 }
 
 .viewButton:hover {
-  background-color: #0056b3;
+  background-color:#e2aa03;
 }

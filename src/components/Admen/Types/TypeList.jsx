@@ -58,13 +58,23 @@ const TypeList = () => {
       <Sidebar />
       <div className="flex flex-col w-full">
         <div className="flex-1 bg-white-100 p-6">
-          <div className="type-list-header">
+          {/* <div className="type-list-header">
             <h1 className="type-title">Type List</h1>
             <button
               className="btn-primary"
               onClick={() => navigate("/typecreate")}
             >
               Add Type
+            </button>
+          </div> */}
+
+          <div className="type-list-header">
+            <h1>All Types</h1>
+            <button
+              className="btn-add-type"
+              onClick={() => navigate("/typecreate")}
+            >
+              <i className="fa-solid fa-plus"></i>
             </button>
           </div>
           {loading ? (
@@ -107,31 +117,22 @@ const TypeList = () => {
                     </div>
                   </div>
 
-                  {/* Pagination */}
-                  <div className="pagination flex justify-center items-center mt-4 space-x-2">
+               <div className="pagination">
                     <button
-                      className="btn-secondary"
-                      onClick={() => handlePageChange(currentPage - 1)}
+                      onClick={() =>
+                        setCurrentPage(Math.max(1, currentPage - 1))
+                      }
                       disabled={currentPage === 1}
                     >
                       Previous
                     </button>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                      (page) => (
-                        <button
-                          key={page}
-                          className={`btn-page ${
-                            page === currentPage ? "btn-active" : ""
-                          }`}
-                          onClick={() => handlePageChange(page)}
-                        >
-                          {page}
-                        </button>
-                      )
-                    )}
+                    <span>
+                      Page {currentPage} of {totalPages}
+                    </span>
                     <button
-                      className="btn-secondary"
-                      onClick={() => handlePageChange(currentPage + 1)}
+                      onClick={() =>
+                        setCurrentPage(Math.min(totalPages, currentPage + 1))
+                      }
                       disabled={currentPage === totalPages}
                     >
                       Next

@@ -14,41 +14,41 @@
 }
 .category-list-header {
   display: flex;
-  justify-content: space-between; /* Align header title and button to opposite ends */
-  align-items: center; /* Vertically center items */
-  padding: 1rem; /* Add padding for spacing */
-  margin-bottom: 1.5rem; /* Space below the header */
-  background-color: #ffffff; /* White background for contrast */
-  border-bottom: 2px solid #e5e7eb; /* Subtle border below for separation */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  border-radius: 8px; /* Rounded corners */
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #ffcc00;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
 }
 
-.category-title {
-  font-size: 1.8rem; /* Larger font size for the title */
-  font-weight: 600; /* Semi-bold weight */
-  color: #1f2937; /* Dark gray color */
+.category-list-header h1 {
+  color: #000000;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
-.btn-primary {
-  background-color: #1d4ed8; /* Blue background */
-  color: white; /* White text */
-  padding: 10px 20px; /* Button padding */
-  border-radius: 5px; /* Rounded corners */
-  font-size: 1rem; /* Text size */
-  font-weight: 500; /* Medium weight for readability */
-  transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
+.btn-add-category {
+  background-color: #ffcc00;
+  color: #000000;
+  font-weight: bold;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  border: none; /* Remove border */
+  transition: background 0.3s ease;
 }
 
-.btn-primary:hover {
-  background-color: #2563eb; /* Slightly darker blue on hover */
+
+.btn-add-category:hover {
+  background-color: #fafa90;
 }
 
-.btn-primary:active {
-  background-color: #1e40af; /* Even darker on click */
-}
 .pagination {
   display: flex;
   justify-content: center;

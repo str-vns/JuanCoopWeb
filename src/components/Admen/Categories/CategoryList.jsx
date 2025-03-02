@@ -58,7 +58,6 @@ const CategoryList = () => {
       }
     }
   };
-  
 
   // Pagination logic
   const totalPages = Math.ceil(categories.length / itemsPerPage);
@@ -76,10 +75,20 @@ const CategoryList = () => {
       <Sidebar />
       <div className="flex flex-col w-full">
         <div className="flex-1 bg-white-100 p-6">
-          <div className="category-list-header">
+          {/* <div className="category-list-header">
             <h1 className="category-title">Category List</h1>
             <button className="btn-primary" onClick={handleAddCategory}>
-              Add Category
+            <i className="fa-solid fa-plus"></i>
+            </button>
+          </div> */}
+
+          <div className="category-list-header">
+            <h1>All Category</h1>
+            <button
+              className="btn-add-category"
+              onClick={handleAddCategory}
+            >
+              <i className="fa-solid fa-plus"></i>
             </button>
           </div>
           {loading ? (
@@ -122,30 +131,22 @@ const CategoryList = () => {
                   </div>
 
                   {/* Pagination */}
-                  <div className="pagination flex justify-center items-center mt-4 space-x-2">
+                  <div className="pagination">
                     <button
-                      className="btn-secondary"
-                      onClick={() => handlePageChange(currentPage - 1)}
+                      onClick={() =>
+                        setCurrentPage(Math.max(1, currentPage - 1))
+                      }
                       disabled={currentPage === 1}
                     >
                       Previous
                     </button>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                      (page) => (
-                        <button
-                          key={page}
-                          className={`btn-page ${
-                            page === currentPage ? "btn-active" : ""
-                          }`}
-                          onClick={() => handlePageChange(page)}
-                        >
-                          {page}
-                        </button>
-                      )
-                    )}
+                    <span>
+                      Page {currentPage} of {totalPages}
+                    </span>
                     <button
-                      className="btn-secondary"
-                      onClick={() => handlePageChange(currentPage + 1)}
+                      onClick={() =>
+                        setCurrentPage(Math.min(totalPages, currentPage + 1))
+                      }
                       disabled={currentPage === totalPages}
                     >
                       Next
