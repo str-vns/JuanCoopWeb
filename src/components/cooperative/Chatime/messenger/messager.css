@@ -101,7 +101,13 @@
   color: rgb(180, 180, 180);
   text-align: center;
   cursor: default;
+  display: block; /* Ensures it takes up its own line */
+  text-align: center; /* Centers text if container is large */
+  margin-left: 20%; /* Adjust as needed to move right */
+ 
+  color: gray; /* Optional: Adjust text color */
 }
+
 
 /* Responsive for smaller screens */
 @media screen and (max-width: 1024px) {
@@ -159,3 +165,4 @@
   padding: 1rem;
   text-align: center;
 }
+
