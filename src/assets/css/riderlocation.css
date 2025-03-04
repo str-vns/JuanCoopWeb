@@ -1,0 +1,96 @@
+/* RiderAssignLoc.css */
+.rider-assign-location-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff3cd; /* Light yellow background */
+    border: 2px solid #ffc107; /* Yellow border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.rider-assign-location-container h3 {
+    text-align: center;
+    color: #d39e00; /* Dark yellow title */
+    margin-bottom: 20px;
+}
+
+.rider-assign-location-form-group {
+    margin-bottom: 15px;
+}
+
+.rider-assign-location-label {
+    font-weight: bold;
+    color: #856404; /* Darker shade for text */
+}
+
+.rider-assign-location-select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #ffc107; /* Yellow border */
+    border-radius: 5px;
+    background-color: #fffbe6; /* Lighter yellow */
+    font-size: 16px;
+}
+
+.rider-assign-location-select:disabled {
+    background-color: #f8f9fa;
+    border-color: #ced4da;
+    color: #6c757d;
+}
+
+.rider-assign-location-result {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #856404;
+    margin-top: 10px;
+}
+
+.rider-assign-location-error-text {
+    color: #ff0000;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.rider-assign-location-button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.rider-assign-location-cancel-button,
+.rider-assign-location-save-button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rider-assign-location-cancel-button {
+    background-color: #d6d8db;
+    color: #6c757d;
+}
+
+.rider-assign-location-cancel-button:hover {
+    background-color: #b1b3b6;
+}
+
+.rider-assign-location-save-button {
+    background-color: #ffc107; /* Yellow button */
+    color: #fff;
+}
+
+.rider-assign-location-save-button:hover {
+    background-color: #e0a800;
+}
+
+.rider-assign-location-save-button:disabled {
+    background-color: #f8d24e;
+    cursor: not-allowed;
+}

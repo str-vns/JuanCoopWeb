@@ -46,31 +46,78 @@ const RiderList = () => {
     }
   };
 
+  const handleRiderDelivery = (driver) => {
+    navigate(`/assigndelivery/${driver._id}`, { state: { driver } }); 
+  };
+
+  const handleRiderDetails = (driver) => {
+    navigate(`/riderdetails/${driver._id}`, { state: { driver } }); 
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       {/* Header */}
       <Sidebar/>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            Rider List
-          </Typography>
-          <Button color="inherit" onClick={() => navigate("/register")}>Add Rider</Button>
-        </Toolbar>
-      </AppBar>
+      <header style={{ backgroundColor: "#FCF300", color: "black", fontWeight: "bold", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <h1 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "bold" }}>Rider List</h1>
+        <nav>
+          <button 
+            style={{ backgroundColor: "#FFD700", color: "black", fontWeight: "bold", padding: "8px 15px", border: "none", cursor: "pointer" }}
+            onClick={() => navigate("/riderregister")}
+          >
+            Add Rider
+          </button>
+        </nav>
+      </header>
+
 
       {/* Tab Navigation */}
-      <div style={{ display: "flex", justifyContent: "center", padding: "10px" }}>
-        <Button variant={activeTab === "Assign" ? "contained" : "outlined"} onClick={() => navigate("/assignlist")}>
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        gap: "15px", 
+        padding: "15px", 
+        backgroundColor: "#F8F9FA", // Light gray background for better contrast
+        borderRadius: "10px", 
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
+      }}>
+        <Button 
+          variant="contained"
+          sx={{
+            backgroundColor: activeTab === "Assign" ? "#FFD500" : "white",
+            color: activeTab === "Assign" ? "black" : "#333",
+            fontWeight: "bold",
+            padding: "10px 20px",
+            border: activeTab === "Assign" ? "none" : "2px solid #FFD500",
+            "&:hover": {
+              backgroundColor: activeTab === "Assign" ? "#FFC300" : "#FFD500",
+              color: "black"
+            }
+          }}
+          onClick={() => navigate("/assignlist")}
+        >
           Assign
         </Button>
-        <Button variant={activeTab === "Rider" ? "contained" : "outlined"} onClick={() => setActiveTab("Rider")}>
+        
+        <Button 
+          variant="contained"
+          sx={{
+            backgroundColor: activeTab === "Rider" ? "#FFD500" : "white",
+            color: activeTab === "Rider" ? "black" : "#333",
+            fontWeight: "bold",
+            padding: "10px 20px",
+            border: activeTab === "Rider" ? "none" : "2px solid #FFD500",
+            "&:hover": {
+              backgroundColor: activeTab === "Rider" ? "#FFC300" : "#FFD500",
+              color: "black"
+            }
+          }}
+          onClick={() => setActiveTab("Rider")}
+        >
           Rider
         </Button>
       </div>
+
 
       {/* Content */}
       {loading ? (
@@ -92,8 +139,8 @@ const RiderList = () => {
                 <Typography>Available: {driver.isAvailable ? "✅ Available" : "❌ Unavailable"}</Typography>
                 {driver.approvedAt && (
                   <div style={{ marginTop: "10px" }}>
-                    <Button variant="contained" color="primary" onClick={() => navigate(`/assign/${driver._id}`)}>Assign</Button>
-                    <Button variant="contained" color="secondary" onClick={() => navigate(`/rider-details/${driver._id}`)}>View</Button>
+                    <Button variant="contained" color="primary" onClick={() => handleRiderDelivery(driver)}>Assign</Button>
+                    <Button variant="contained" color="secondary" onClick={() => handleRiderDetails(driver)}>View</Button>
                   </div>
                 )}
                 <IconButton color="error" onClick={() => handleDelete(driver._id)}>

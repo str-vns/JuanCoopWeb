@@ -1,0 +1,114 @@
+.rider-assign-container {
+  background-color: white;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rider-assign-header {
+  background-color: #FFD500;
+  color: black;
+  padding: 15px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.rider-info {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.rider-profile-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid #000;
+}
+
+.rider-name-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.rider-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+}
+
+.no-deliveries {
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.order-list {
+  width: 100%;
+  max-width: 600px;
+}
+
+.order-item {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.order-item:hover {
+  transform: translateY(-3px);
+}
+
+.delivery-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.order-button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.trash-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #dc3545;
+  transition: 0.3s;
+}
+
+.trash-button:hover {
+  color: #a71d2a;
+}

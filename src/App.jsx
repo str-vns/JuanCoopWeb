@@ -106,6 +106,14 @@ import ReviewRating from "./components/Cooperative/Review/ReviewRating";
 import NotificationList from "./components/Cooperative/Notifications/NotificationList";
 import RiderList from "./components/Cooperative/Rider/RiderList";
 import AssignList from "./components/Cooperative/Rider/AssignList";
+import RiderRegister from "./components/Cooperative/Rider/RiderRegister";
+import RiderOTP from "./components/Cooperative/Rider/RiderOTP";
+import RiderDetails from "./components/Cooperative/Rider/RiderDetails";
+import RiderCapacity from "./components/Cooperative/Rider/RiderCapacity";
+import RiderAssignLocation from "./components/Cooperative/Rider/RiderAssignLocation";
+import RiderDelivery from "./components/Cooperative/Rider/RiderDelivery";
+import AssignRider from "./components/Cooperative/Rider/AssignRider";
+import CoopHistory from "./components/Cooperative/Rider/CoopHistory";
 
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
@@ -283,6 +291,14 @@ function App() {
   
           <Route path="/riderlist" element={<RiderList/>}/>
           <Route path="/assignlist" element={<AssignList/>}/>
+          <Route path="/riderregister" element={<RiderRegister/>}/>
+          <Route path="/riderotp" element={<RiderOTP/>}/>
+          <Route path="/riderdetails/:id" element={<RiderDetails/>}/>
+          <Route path="/maxcapacity" element={<RiderCapacity/>}/>
+          <Route path="/assignlocation" element={<RiderAssignLocation/>}/>
+          <Route path="/assigndelivery/:id" element={<RiderDelivery/>}/>
+          <Route path="/assignrider/:id" element={<AssignRider/>}/>
+          <Route path="/coophistory" element={<CoopHistory/>}/>
         </Routes>
       </div>
     </Router>

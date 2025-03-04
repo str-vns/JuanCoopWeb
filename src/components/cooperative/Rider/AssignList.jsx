@@ -2,50 +2,23 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deliveryList } from "@redux/Actions/deliveryActions";
 import { shippedOrder } from "@redux/Actions/orderActions";
-import { CircularProgress, Typography, AppBar, Toolbar, Button } from "@mui/material";
+import { CircularProgress, Typography, AppBar, Toolbar, Button, Card, CardContent } from "@mui/material";
 import Sidebar from "../sidebar";
 import { getToken, getCurrentUser } from "@utils/helpers";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const AssignList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const currentUser = getCurrentUser();
   const userId = currentUser?._id;
   const token = getToken();
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [errors, setErrors] = useState(null);
+  const [activeTab, setActiveTab] = useState("Assign");
 
   const { shiploading, orders, shiperror } = useSelector(state => state.orderShipped);
   const { deliveries } = useSelector(state => state.deliveryList);
-
-  useEffect(() => {
-    if (token) {
-      const fetchData = async () => {
-        try {
-          setLoading(true);
-          dispatch(shippedOrder(token));
-          dispatch(deliveryList(token));
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchData();
-    }
-  }, [dispatch, token]);
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    try {
-      dispatch(shippedOrder(token));
-      dispatch(deliveryList(token));
-    } catch (err) {
-      console.error("Error refreshing orders:", err);
-    } finally {
-      setRefreshing(false);
-    }
-  }, [token]);
 
   const checkIfDelivered = (orderItems) => {
     const today = new Date();
@@ -61,6 +34,21 @@ const AssignList = () => {
     );
   };
 
+  useEffect(() => {
+    if (token) {
+      dispatch(shippedOrder(userId, token));
+      dispatch(deliveryList(userId, token));
+      setLoading(false);
+    }
+  }, [dispatch, userId]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(shippedOrder(userId, token));
+    dispatch(deliveryList(userId, token));
+    setRefreshing(false);
+  }, [userId, token]);
+
   const getStatusColor = (status) => {
     switch (status) {
       case "Shipping":
@@ -75,12 +63,68 @@ const AssignList = () => {
   return (
     <div style={{ padding: "20px" }}>
       <Sidebar />
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">Assigned Orders</Typography>
-          <Button onClick={onRefresh} color="inherit">Refresh</Button>
-        </Toolbar>
-      </AppBar>
+      <header style={{ backgroundColor: "#FCF300", color: "black", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <h1 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "bold" }}>Assigned Orders</h1>
+        <button 
+          style={{ backgroundColor: "#FFD700", color: "black", fontWeight: "bold", padding: "8px 15px", border: "none", cursor: "pointer" }}
+          onClick={() => navigate("/coophistory")}
+        >
+          History
+        </button>
+      </header>
+
+
+
+       {/* Tab Navigation */}
+       <div style={{ 
+          display: "flex", 
+          justifyContent: "center", 
+          gap: "15px", 
+          padding: "15px", 
+          backgroundColor: "#F8F9FA", // Light background for better contrast
+          borderRadius: "10px", 
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
+        }}>
+          <Button 
+            variant="contained"
+            sx={{
+              backgroundColor: activeTab === "Assign" ? "#FFD500" : "white",
+              color: activeTab === "Assign" ? "black" : "#333",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              border: activeTab === "Assign" ? "none" : "2px solid #FFD500",
+              "&:hover": {
+                backgroundColor: activeTab === "Assign" ? "#FFC300" : "#FFD500",
+                color: "black"
+              }
+            }}
+            onClick={() => setActiveTab("Assign")}
+          >
+            Assign
+          </Button>
+          
+          <Button 
+            variant="contained"
+            sx={{
+              backgroundColor: activeTab === "Rider" ? "#FFD500" : "white",
+              color: activeTab === "Rider" ? "black" : "#333",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              border: activeTab === "Rider" ? "none" : "2px solid #FFD500",
+              "&:hover": {
+                backgroundColor: activeTab === "Rider" ? "#FFC300" : "#FFD500",
+                color: "black"
+              }
+            }}
+            onClick={() => {
+              setActiveTab("Rider");
+              navigate("/riderlist");
+            }}
+          >
+            Rider
+          </Button>
+        </div>
+
 
       {loading || shiploading ? (
         <CircularProgress />
@@ -91,19 +135,36 @@ const AssignList = () => {
           {orders.map((order) => {
             const isDelivered = checkIfDelivered(order?.orderItems);
             return (
-              <div key={order._id} style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
-                <Typography variant="body1">Order ID: {order._id}</Typography>
-                <Typography variant="body2">
-                  Status: <span style={{ color: getStatusColor(order.status) }}>
-                    {capitalizeFirstLetter(order.status)}
-                  </span>
-                </Typography>
-                {!isDelivered && (
-                  <Button variant="contained" color="primary">
+              <Card key={order._id} style={{ marginBottom: "10px" }}>
+                <CardContent>
+                  <Typography variant="h6">
+                    {order.user.firstName} {order.user.lastName}
+                  </Typography>
+                  <Typography variant="body2">Order # {order._id}</Typography>
+                  <Typography variant="body2">
+                    Status:{" "}
+                    <span style={{ color: getStatusColor(order?.orderItems[0]?.orderStatus) }}>
+                      {capitalizeFirstLetter(order?.orderItems[0]?.orderStatus)}
+                    </span>
+                  </Typography>
+
+                  {!isDelivered && (
+                    <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#FFD500",
+                      color: "black",
+                      fontWeight: "bold",
+                      "&:hover": { backgroundColor: "#FFC300" }, // Slightly darker shade on hover
+                    }}
+                    onClick={() => navigate(`/assignrider/${order._id}`, { state: { order } })}
+                  >
                     Assign Now
                   </Button>
-                )}
-              </div>
+                  
+                  )}
+                </CardContent>
+              </Card>
             );
           })}
         </div>

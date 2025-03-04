@@ -1,0 +1,111 @@
+/* General container styling */
+.coop-history-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header section */
+  .coop-history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .coop-history-menu-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .coop-history-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /* Content area */
+  .coop-history-content {
+    margin-top: 15px;
+  }
+  
+  /* No history message */
+  .coop-history-no-history {
+    text-align: center;
+    font-size: 16px;
+    color: #777;
+  }
+  
+  /* Error message */
+  .coop-history-error {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Section headers */
+  .coop-history-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-top: 10px;
+    background: #f8f9fa;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .coop-history-section-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .coop-history-toggle-symbol {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Order list */
+  .coop-history-list {
+    padding: 10px;
+    background: #fafafa;
+    border-left: 4px solid #ddd;
+    margin-top: 5px;
+    border-radius: 5px;
+  }
+  
+  /* Individual order item */
+  .coop-history-order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: #ffffff;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Order ID */
+  .coop-history-order-id {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Status badge */
+  .coop-history-status-badge {
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 12px;
+    text-transform: capitalize;
+  }  
