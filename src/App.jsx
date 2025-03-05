@@ -46,7 +46,7 @@ import CoopLogin from "./components/cooperative/Registration/CoopLogin";
 import FarmRegistration from "./components/cooperative/Registration/FarmRegistration";
 import GoogleLogin from "./components/cooperative/Registration/GoogleLogin";
 import Messenger from './components/Chatime/messenger/Messenger';
-import CoopMessenger from './components/Cooperative/Chatime/messenger/Messenger'
+import CoopMessenger from './components/cooperative/Chatime/messenger/Messenger'
 import Shipping from "./components/Cart/Address";
 import Payment from "./components/Cart/Payment";
 import Address from "./components/Address/addressList"
