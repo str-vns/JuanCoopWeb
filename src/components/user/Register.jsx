@@ -169,7 +169,7 @@ const handleCheckboxChange = () => {
 
 return (
   <>
-    <Navbar />
+    {/* <Navbar /> */}
     <div className="register-signup-container mt-14">
       <div className="imageR-section">
         <img src={registerImage} alt="Farmer" />

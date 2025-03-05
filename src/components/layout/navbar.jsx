@@ -164,7 +164,7 @@ const Navbar = () => {
           </li>
 
           <li>
-            <a>About Us</a>
+            <a href="/aboutUs">About Us</a>
           </li>
         </ul>
       </div>

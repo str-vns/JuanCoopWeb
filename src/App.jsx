@@ -117,7 +117,7 @@ import CoopHistory from "./components/Cooperative/Rider/CoopHistory";
 
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
-
+import AboutUs from "./components/layout/aboutUs";
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -193,7 +193,7 @@ function App() {
           <Route path="/m" element={<Messenger/>}/>
           <Route path="/googlelogin" element={<GoogleLogin/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
-
+          <Route path="/aboutUs" element={<AboutUs/>} />
           {/* Order Routes */}
           <Route path="/product/:id" element={<ProductCard />} />
           <Route path="/profile" element={<Profile/>} />
