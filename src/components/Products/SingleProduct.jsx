@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "@assets/css/productcard.css";
 import Navbar from "../layout/navbar";
 import { addToCart } from "@redux/Actions/cartActions";
 import { getCoop } from "@redux/Actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
+import { FaHeart } from "react-icons/fa";
 import baseURL from "@Commons/baseUrl";
+import { WishlistUser } from "@redux/Actions/userActions";
+import { Profileuser } from "@redux/Actions/userActions";
+import { isAuth, getToken, getCurrentUser } from "@utils/helpers";
 
 const Stars = ({ count }) => {
   const stars = Array(5)
@@ -18,6 +22,10 @@ const Stars = ({ count }) => {
 const ProductCard = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = getToken();
+  const auth = isAuth();
+  const userId = getCurrentUser();
   const [product, setProduct] = useState(null);
   const [coopDetails, setCoopDetails] = useState(null);
   const [loadingProduct, setLoadingProduct] = useState(true);
@@ -26,11 +34,13 @@ const ProductCard = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedStock, setSelectedStock] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [wishlist, setWishlist] = useState([]);
 
   const { coop } = useSelector((state) => state.singleCoop);
-  console.log("Coop from Redux:", coop);
-
+  const { user, error } = useSelector((state) => state.userOnly);
+  console.log("product", user.wishlist);
   // Fetch Product Details
+  console.log("wishlist", wishlist);
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -79,7 +89,22 @@ const ProductCard = () => {
     if (product?.coop) {
       dispatch(getCoop(product.coop));
     }
-  }, [dispatch, product?.coop]);
+    dispatch(Profileuser(userId?._id, token));
+    const checkLoginStatus = async () => {
+
+      if (token && auth) {
+        if (user && Array.isArray(user.wishlist)) {
+          const matchingProducts = user.wishlist.filter(
+            (item) => item.product === product?._id
+          );
+          setWishlist(matchingProducts);
+        }
+      }
+    };
+
+    checkLoginStatus();
+    
+  }, [product?._id, token, product?.coop]);
 
   const handleAddToCart = () => {
     if (!selectedStock) return;
@@ -125,6 +150,29 @@ const ProductCard = () => {
     setQuantity(1);
   };
 
+  const handleFavorite = async () => {
+    if (!auth) {
+      console.log("Navigating to login");
+      navigate("/login");
+      return;
+    }
+  
+    try {
+      if (token) {
+        await dispatch(WishlistUser(product?._id, userId?._id, token)); // Ensure wishlist updates
+        await dispatch(Profileuser(userId?._id, token)); // Update user profile
+  
+        // Optional: Reload the page (if necessary)
+        window.location.reload();
+      } else {
+        console.log("No JWT token found.");
+      }
+    } catch (error) {
+      console.error("Error retrieving JWT:", error);
+    }
+  };
+  
+
   if (loadingProduct) return <div>Loading Product...</div>;
   if (!product) return <div>Product not found</div>;
 
@@ -157,7 +205,22 @@ const ProductCard = () => {
         </div>
 
         <div className="product-details">
-          <h2 className="product-title">{product.productName}</h2>
+          <h2 className="product-title">{product.productName}
+          <button
+              className="wishlist-icon"
+              onClick={handleFavorite}
+              style={{
+                cursor: "pointer",
+                marginLeft: "10px",
+                background: "none",
+                border: "none",
+                outline: "none",
+                boxShadow: "none"
+              }}
+            >
+              <FaHeart color={wishlist.length > 0 ? "#ff6961" : "#ccc"} size={20} />
+            </button>
+          </h2>
           <div className="price-section">
             <span className="current-price">
               {selectedStock?.price ? `₱ ${selectedStock.price}` : "N/A"}

@@ -189,11 +189,21 @@ const Carts = () => {
             <a href="/" className="button-proceed-checkout">
               Continue Shopping
             </a>
-            {cartItems.length > 0 && auth && (
-              <a href="/shipping"  className="button-proceed-checkout">
-                Proceed to Checkout
-              </a>
-            )}
+            {cartItems.length > 0 && auth ? (
+    <a 
+    // href="/shipping" 
+    onClick={checkoutHandler}
+    className="button-proceed-checkout" >
+      Proceed to Checkout
+    </a>
+  ) : (
+    <button
+      className="button-proceed-checkout"
+      onClick={isLoggedIn}
+    >
+      Proceed to Checkout
+    </button>
+  )}
           </div>
         </div>
       </div>

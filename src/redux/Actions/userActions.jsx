@@ -197,7 +197,6 @@ export const OTPregister = (OtpData) => async (dispatch) => {
 };
 
 export const Profileuser = (userDataId, token) => async (dispatch) => {
-  console.log("userDataId", userDataId);
   try {
     dispatch({ type: USER_PROFILE_REQUEST });
 
@@ -635,3 +634,38 @@ export const ProfileEdit = (userDataId, token, userData) => async (dispatch) => 
       // });
   }
 };
+
+export const WishlistUser = (productId, userId, token) => async (dispatch) => {
+
+  try {
+    dispatch({ type: WISH_USER_REQUEST });
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.post(`${baseURL}wish/users/${productId}/${userId}`, config);
+  
+
+    dispatch({
+      type: WISH_USER_SUCCESS,
+      payload: data.details, 
+    });
+  } catch (error) {
+    // Handle error messages
+    const errorMessage =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    // Dispatch the fail action
+    dispatch({
+      type: WISH_USER_FAIL,
+      payload: errorMessage,
+    });
+
+    console.log("Error from WishlistUser:", errorMessage);
+  }
+};
+
