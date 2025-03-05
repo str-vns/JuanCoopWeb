@@ -41,7 +41,7 @@ import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ForumPost from "./Components/Cooperative/Forum/ForumPost";
 import CoopOrderList from "./components/cooperative/Order/OrderList";
-import MessageList from "./components/cooperative/Messages/MessageList";
+// import MessageList from "./components/cooperative/Messages/MessageList";
 import CoopLogin from "./components/cooperative/Registration/CoopLogin";
 import FarmRegistration from "./components/cooperative/Registration/FarmRegistration";
 import GoogleLogin from "./components/cooperative/Registration/GoogleLogin";
@@ -191,7 +191,7 @@ function App() {
           <Route path="/resetPassword/:id" element={<PasswordReset/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/otp" element={<RegisterRoute> <OtpRegister /> </RegisterRoute>} />
-          <Route path="/m" element={<Messenger/>}/>
+          <Route path="/m" element={<Messenger/>}/> 
           <Route path="/googlelogin" element={<GoogleLogin/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
           <Route path="/aboutUs" element={<AboutUs/>} />
@@ -221,7 +221,7 @@ function App() {
           <Route path="/overalldashboard" element={<OverallDashboard/>} />
           <Route path="/coopprofileedit" element={<CoopProfileEdit/>} />
           <Route path="/productlist" element={<ProductList/>} />
-          <Route path="/messagelist" element={<MessageList/>} />
+          {/* <Route path="/messagelist" element={<MessageList/>} /> */}
           <Route path="/productarchive" element={<ProductArchive/>} />
           <Route path="/forumlistcoop" element={<ForumListCoop/>} />
           <Route path="/forumpostlist" element={<ForumPostList/>} />
