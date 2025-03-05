@@ -32,16 +32,16 @@ import UserAddReview from "./components/user/UserAddReviews";
 import CoopDashboard from "./components/cooperative/Dashboard/CoopDashboard";
 import OverallDashboard from "./components/Admen/Dashboard/OverallDashboard";
 import ProductList from "./components/cooperative/Product/ProductList";
-import BlogListCoop from "./components/Cooperative/Blog/BlogListCoop";
-
+// import BlogListCoop from "./components/Cooperative/Blog/BlogListCoop";
+import BlogListCoop from "./components/cooperative/Blog/BlogListCoop";
 import ForumPostList from "./components/cooperative/Forum/ForumPostList";
 import CoopProfileEdit from "./components/cooperative/Profile/editProfile";
-import ForumListCoop from "./components/Cooperative/Forum/ForumListCoop";
+import ForumListCoop from "./components/cooperative/Forum/ForumListCoop";
 import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ForumPost from "./Components/Cooperative/Forum/ForumPost";
 import CoopOrderList from "./components/cooperative/Order/OrderList";
-import MessageList from "./components/Cooperative/Messages/MessageList";
+import MessageList from "./components/cooperative/Messages/MessageList";
 import CoopLogin from "./components/cooperative/Registration/CoopLogin";
 import FarmRegistration from "./components/cooperative/Registration/FarmRegistration";
 import GoogleLogin from "./components/cooperative/Registration/GoogleLogin";
@@ -99,21 +99,22 @@ import RoleBaseRoute from "@route/RoleBaseRoute";
 
 
 import MemberRegistration from "./components/user/MemberRegistration";
-import MemberNotApprove from "./components/Cooperative/Member/MemberNotApprove";
-import MemberDetails from "./components/Cooperative/Member/MemberDetails";
-import ReviewRatingList from "./components/Cooperative/Review/ReviewRatingList";
-import ReviewRating from "./components/Cooperative/Review/ReviewRating";
-import NotificationList from "./components/Cooperative/Notifications/NotificationList";
-import RiderList from "./components/Cooperative/Rider/RiderList";
-import AssignList from "./components/Cooperative/Rider/AssignList";
-import RiderRegister from "./components/Cooperative/Rider/RiderRegister";
-import RiderOTP from "./components/Cooperative/Rider/RiderOTP";
-import RiderDetails from "./components/Cooperative/Rider/RiderDetails";
-import RiderCapacity from "./components/Cooperative/Rider/RiderCapacity";
-import RiderAssignLocation from "./components/Cooperative/Rider/RiderAssignLocation";
-import RiderDelivery from "./components/Cooperative/Rider/RiderDelivery";
-import AssignRider from "./components/Cooperative/Rider/AssignRider";
-import CoopHistory from "./components/Cooperative/Rider/CoopHistory";
+import MemberNotApprove from "./components/cooperative/Member/MemberNotApprove";
+import MemberDetails from "./components/cooperative/Member/MemberDetails";
+import ReviewRatingList from "./components/cooperative/Review/ReviewRatingList";
+import ReviewRating from "./components/cooperative/Review/ReviewRating";
+import NotificationList from "./components/cooperative/Notifications/NotificationList";
+import RiderList from "./components/cooperative/Rider/RiderList";
+import AssignList from "./components/cooperative/Rider/AssignList";
+
+import RiderRegister from "./components/cooperative/Rider/RiderRegister";
+import RiderOTP from "./components/cooperative/Rider/RiderOTP";
+import RiderDetails from "./components/cooperative/Rider/RiderDetails";
+import RiderCapacity from "./components/cooperative/Rider/RiderCapacity";
+import RiderAssignLocation from "./components/cooperative/Rider/RiderAssignLocation";
+import RiderDelivery from "./components/cooperative/Rider/RiderDelivery";
+import AssignRider from "./components/cooperative/Rider/AssignRider";
+import CoopHistory from "./components/cooperative/Rider/CoopHistory";
 
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
