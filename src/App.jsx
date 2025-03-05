@@ -41,7 +41,7 @@ import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ProductArchive from "./components/cooperative/Product/ProductArchive";
 // import ForumPost from "./Components/Cooperative/Forum/ForumPost";
 import CoopOrderList from "./components/cooperative/Order/OrderList";
-import MessageList from "./components/cooperative/MessageList";
+import MessageList from "./components/cooperative/Messages/MessageList";
 import CoopLogin from "./components/cooperative/Registration/CoopLogin";
 import FarmRegistration from "./components/cooperative/Registration/FarmRegistration";
 import GoogleLogin from "./components/cooperative/Registration/GoogleLogin";
