@@ -669,3 +669,33 @@ export const WishlistUser = (productId, userId, token) => async (dispatch) => {
   }
 };
 
+export const getWishlist = (userId, token) => async (dispatch) => {
+  try {
+    dispatch({ type: WISHLIST_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(`${baseURL}wish/${userId}`, config);
+
+    dispatch({
+      type: WISHLIST_SUCCESS,
+      payload: data.details,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: WISHLIST_FAIL,
+      payload: errorMessage,
+    });
+
+    console.log("Error from getWishlist", errorMessage);
+  }
+}
