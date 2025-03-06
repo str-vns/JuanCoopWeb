@@ -23,7 +23,7 @@ const ForumPost = ({ isOpen, onClose, onCreatePost }) => {
         <h2 className="text-2xl font-semibold mb-4">Create New Post</h2>
         <div className="mb-4">
           <label htmlFor="title" className="block text-sm font-medium mb-2">
-            Title
+            Titleee
           </label>
           <input
             type="text"
