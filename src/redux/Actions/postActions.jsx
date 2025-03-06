@@ -30,21 +30,38 @@ import {
   FETCH_APPROVED_POSTS_REQUEST,
   FETCH_APPROVED_POSTS_SUCCESS,
   FETCH_APPROVED_POSTS_FAIL,
+  ADD_COMMENT_REQUEST,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAIL,
+  GET_COMMENTS_REQUEST,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_FAIL,
+  POST_IMAGE_DELETE_REQUEST,
+  POST_IMAGE_DELETE_SUCCESS,
+  POST_IMAGE_DELETE_FAIL,
   CLEAR_ERRORS,
 } from "../Constants/postConstants";
 import baseURL from '@Commons/baseUrl';
 
-export const createPost = (formData) => async (dispatch) => {
+export const createPost = (post, token) => async (dispatch) => {
   try {
     dispatch({ type: POST_REQUEST });
+
+    const formData = new FormData();
+    formData.append("content", post.content);
+    formData.append("author", post.author);
+    post?.image.forEach((image) => {
+      formData.append("image", image);
+    });
 
     const config = {
       headers: {
         "Content-Type": "multipart/form-data", // Required for FormData
+         Authorization: `Bearer ${token}`,
       },
     };
 
-    const { data } = await axios.post(`${baseURL}p`, formData, config);
+    const { data } = await axios.post(`${baseURL}p/create`, formData, config);
 
     dispatch({
       type: POST_SUCCESS,
@@ -113,30 +130,25 @@ export const getUserPost = (userId) => async (dispatch) => {
   }
 };
 
-export const updatePost = (id, postData) => async (dispatch) => {
+export const updatePost = (id, post, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_POST_REQUEST });
 
-    // Create FormData object
     const formData = new FormData();
-    formData.append("content", postData.content);
-    formData.append("author", postData.author);
-
-    // Append images to FormData
-    postData.images.forEach((image, index) => {
-      formData.append("image", {
-        uri: image, // URI of the image
-        type: "image/jpeg", // You can adjust this based on your file type
-        name: `image_${index + 1}.jpg`, // Provide a unique name for each file
-      });
+    formData.append("content", post.content);
+    post?.image.forEach((image) => {
+      formData.append("image", image);
+      console.log("image", image);
     });
 
-    // Send FormData to server
-    const { data } = await axios.put(`${baseURL}p/${id}`, formData, {
+    const config = {
       headers: {
-        "Content-Type": "multipart/form-data", // Required for FormData
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
-    });
+    };
+
+    const { data } = await axios.put(`${baseURL}p/update/${id}`, formData, config);
 
     dispatch({
       type: UPDATE_POST_SUCCESS,
@@ -154,7 +166,7 @@ export const deletePost = (id) => async (dispatch) => {
   try {
     dispatch({ type: POST_DELETE_REQUEST });
 
-    await axios.delete(`${baseURL}p/${id}`);
+    await axios.delete(`${baseURL}p/delete/${id}`);
 
     dispatch({ type: POST_DELETE_SUCCESS, payload: id });
     return Promise.resolve(); // Indicate success
@@ -167,12 +179,11 @@ export const deletePost = (id) => async (dispatch) => {
   }
 };
 
-// Redux Action for Soft Delete Post
 export const softDeletePost = (id) => async (dispatch) => {
   try {
     dispatch({ type: POST_SOFTDELETE_REQUEST });
 
-    const response = await axios.patch(`${baseURL}p/${id}`);
+    const response = await axios.patch(`${baseURL}p/softdel/${id}`);
 
     dispatch({
       type: POST_SOFTDELETE_SUCCESS,
@@ -208,17 +219,17 @@ export const likePost = (id, userId) => async (dispatch) => {
   try {
     dispatch({ type: POST_LIKE_REQUEST });
 
-    // Making API request to the backend
-    const response = await axios.post(`${baseURL}p/${id}`, { user: userId });
+    // Ensure the correct backend endpoint
+    const response = await axios.post(`${baseURL}p/like/${id}`, { user: userId });
 
     dispatch({
       type: POST_LIKE_SUCCESS,
-      payload: response.data, // Assuming backend returns updated post data
+      payload: response.data, // Backend should return updated post data
     });
   } catch (error) {
     dispatch({
       type: POST_LIKE_FAIL,
-      payload: error.response ? error.response.data.message : error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -236,6 +247,88 @@ export const approvePost = (id) => async (dispatch) => {
     dispatch({
       type: POST_APPROVE_FAILURE,
       payload: error.response ? error.response.data.message : error.message,
+    });
+  }
+};
+
+// ADD COMMENT
+export const addComment = (comment, token) => async (dispatch) => {
+  console.log("Comment function triggered. Data:", comment);
+  
+  try {
+    dispatch({ type: ADD_COMMENT_REQUEST });
+
+    const commentData = {
+      user: comment.user,
+      post: comment.post,
+      comment: comment.comment,
+    };
+
+    console.log("Sending commentData:", commentData);
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(`${baseURL}post/comment`, commentData, config);
+
+    console.log("Response received:", data);
+
+    if (data.success) {
+      dispatch({
+        type: ADD_COMMENT_SUCCESS,
+        payload: data.details,
+      });
+      return { success: true, comment: data.details };
+    } else {
+      dispatch({
+        type: ADD_COMMENT_FAIL,
+        payload: data.message,
+      });
+    }
+
+  } catch (error) {
+    console.error("Error submitting comment:", error.response?.data || error.message);
+    dispatch({
+      type: ADD_COMMENT_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};
+
+// GET COMMENTS
+export const getComments = (postId) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_COMMENTS_REQUEST });
+
+    const { data } = await axios.get(`${baseURL}post/${postId}`);
+
+    dispatch({ type: GET_COMMENTS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_COMMENTS_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};
+
+export const imagePostDel = (postId, imageId) => async (dispatch) => {
+  try {
+    dispatch({ type: POST_IMAGE_DELETE_REQUEST });
+
+    const { data } = await axios.put(`${baseURL}p/image/${postId}/${imageId}`);
+    
+    dispatch({ 
+      type: POST_IMAGE_DELETE_SUCCESS,
+      payload: data 
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_IMAGE_DELETE_FAIL,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

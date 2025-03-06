@@ -41,8 +41,9 @@ import rankedReducer from "./Reducers/rankReducers";
 import { commentcreateReducers } from "@redux/Reducers/commentReducers";
 
  import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
-import { postReducer } from "@redux/Reducers/postReducer";
+import { postReducer, addCommentReducer, getCommentsReducer, postLikeReducer } from "@redux/Reducers/postReducer";
 import { deliveryListReducer, deliveryApiReducer, deliveryCompleteReducer, deliveryHistoryReducer } from "@redux/Reducers/deliveryReducers";
+import { AddComment } from "@mui/icons-material";
 
 
 const reducers = combineReducers({
@@ -105,6 +106,9 @@ const reducers = combineReducers({
   deleteBlog: reducerDelBlog, 
 
   post: postReducer,
+  AddComment: addCommentReducer,
+  getComments: getCommentsReducer,
+  postLike: postLikeReducer,
 
   onlyApprovedDriver: onlyApprovedDriverReducer,
   driverList: driverListReducer,
