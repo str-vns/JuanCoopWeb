@@ -2,39 +2,130 @@
     max-width: 900px;
     margin: 30px auto;
     padding: 20px;
-    background: #fffbea;
+    background: #ffffff;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     font-family: "Arial", sans-serif;
+    width: calc(100% - 200px); /* Adjust width to not overlap with sidebar */
+    margin-left: 300px; 
 }
 
 .rider-details-header {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
     background: #ffcc00;
     padding: 15px;
-    border-radius: 8px;
-    color: #333;
-    font-size: 22px;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.rider-details-header h1 {
+    color: #000000;
+    font-size: 1.8rem;
     font-weight: bold;
 }
 
+.rider-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.rider-text {
+    text-align: left;
+    flex: 2;
+    margin-bottom: 10px;
+}
+
+.rider-status {
+    text-align: right;
+    min-width: 200px;
+    font-weight: bold;
+}
+
+.rider-details-coopDetails {
+    width: 60%;
+    margin: auto;
+}
+
 .rider-details-coopContainer {
+    width: 100%;
     display: flex;
     align-items: center;
-    padding: 15px;
-    background: #fff3b0;
-    border-radius: 10px;
-    margin-top: 20px;
+
+    padding: 10px;
+    /* Remove shadow */
+    box-shadow: none;
 }
 
 .rider-details-coopImage {
-    width: 110px;
-    height: 110px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     margin-right: 20px;
-    border: 3px solid #ffcc00;
 }
 
+.rider-details-approved {
+    color: green;
+}
+
+.rider-details-notApproved {
+    color: red;
+}
+
+/* Button Styles */
+.rider-details-button, .rider-details-toggleButton {
+    background: #ffcc00;
+    border: none;
+    padding: 10px 15px; /* Add padding to buttons */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    transition: 0.3s;
+    margin-left: 10px; /* Add margin for spacing */
+}
+
+.rider-details-button:hover, .rider-details-toggleButton:hover {
+    background: #ffdb4d;
+}
+
+.rider-btn-delete {
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.rider-btn-delete:hover {
+    transform: scale(1.2);
+    background-color: #ffffff;
+}
+
+/* Clickable Text */
+.clickable-text {
+    color: rgb(255, 145, 0);
+    text-decoration: underline;
+    cursor: pointer;
+    width: fit-content;
+}
+
+/* Rider License */
+.rider-license {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.rider-license img {
+    width: 150px;
+    height: auto;
+}
+
+/* Rider Details Image */
 .rider-details-imageContainer {
     width: 110px;
     height: 110px;
@@ -43,80 +134,26 @@
     margin-bottom: 30px;
 }
 
-.rider-details-coopDetails h3 {
-    margin: 0;
-    font-size: 20px;
-    color: #333;
+/* Location & Product List */
+.rider-details-row, .rider-details-locationList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
 }
 
-.rider-details-notApproved {
-    color: red;
-    font-weight: bold;
-}
-
-.rider-details-approved {
-    color: green;
-    font-weight: bold;
-}
-
-.rider-details-button {
-    background: #ffcc00;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #333;
-    transition: 0.3s;
-}
-
-.rider-details-button:hover {
-    background: #ffdb4d;
-}
-
-.rider-details-deleteButton {
-    background: red;
-    color: white;
-    padding: 6px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.rider-details-toggleButton {
-    background: #007bff;
-    color: white;
-    padding: 6px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.rider-details-row {
+.rider-details-productCard {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
     padding: 10px;
-    background: #fff3b0; /* Soft yellow */
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.rider-details-row h3 {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between text and button */
-    margin: 0;
-}
-
-.rider-details-button {
-    background: #ffcc00;
+.rider-details-deleteButton {
+    background: none;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    color: #333;
-}
-
-.rider-details-button:hover {
-    background: #ffdb4d;
+    font-size: 16px;
 }

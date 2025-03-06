@@ -1,74 +1,93 @@
 .assign-rider-detailsContainer {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    min-height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 40px;
+  font-family: 'Arial', sans-serif;
+  max-width: 900px; /* Prevent excessive width */
+  width: 100%;
+  margin: 0 auto; /* Center align */
+  width: calc(100% - 200px); /* Adjust width to not overlap with sidebar */
+  margin-left: 300px; 
   
-  .assign-rider-header {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .assign-rider-menuButton {
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .assign-rider-headerTitle {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .assign-rider-container {
-    padding: 15px;
-  }
-  
-  .assign-rider-customerInfo,
-  .assign-rider-paymentDetails {
-    margin-bottom: 20px;
-    font-size: 20px;
-  }
-  
-  .assign-rider-productDetails {
-    margin-bottom: 20px;
-    font-size: 20px;
-  }
-  
-  .assign-rider-productItem {
-    /* display: flex; */
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .assign-rider-productImage {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    margin-left: 600px;
-  }
-  
-  .assign-rider-deliverButton {
-    background-color: #ffc107;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .assign-rider-errorText {
-    color: red;
-    text-align: center;
-  }  
+}
+.assign-rider-customerInfo
+{
+  text-align: left; /* Aligns text to the left */
+  width: 100%; /* Ensures it spans the full width */
+  margin-left: 0; /* Removes any unintended centering */
+}
+.assign-rider-paymentDetails{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.assign-rider-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffcc00;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 800px; /* Keep it aligned with content */
+}
+
+.assign-rider-header h1 {
+  color: #000000;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.assign-rider-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(255, 255, 255, 0.1);
+}
+
+.assign-rider-productDetails {
+  text-align: center;
+}
+
+.assign-rider-productItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.assign-rider-productImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.assign-rider-deliverButton {
+  display: block;
+  width: 200px;
+  background-color: #ffcc00;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+  margin: 20px auto; /* Centers the button horizontally */
+  text-align: center; 
+ 
+}
+
+.assign-rider-deliverButton:hover {
+  background-color: #e6b800;
+}
+

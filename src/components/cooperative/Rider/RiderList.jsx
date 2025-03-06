@@ -1,156 +1,201 @@
-import React, { useEffect, useState, useCallback, useContext } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { singleDriver, removeDriver } from "@redux/Actions/driverActions";
-// import AuthGlobal from "../redux/store/AuthGlobal";
-import { Button, CircularProgress, Card, CardContent, Typography, IconButton, AppBar, Toolbar } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Card,
+  CardContent,
+  Typography,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MenuIcon from "@mui/icons-material/Menu";
+import { getCurrentUser } from "@utils/helpers";
+import "@assets/css/RiderList.css";
 import Sidebar from "../sidebar";
-import { getToken, getCurrentUser } from "@utils/helpers";
 
 const RiderList = () => {
-//   const context = useContext(AuthGlobal);
-//   const userId = context?.stateUser?.userProfile?._id;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const currentUser = getCurrentUser();
   const userId = currentUser?._id;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const { loading, drivers, error } = useSelector((state) => state.driverList);
-  const [refreshing, setRefreshing] = useState(false);
+
   const [token, setToken] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedDriver, setSelectedDriver] = useState(null);
   const [activeTab, setActiveTab] = useState("Rider");
 
+  // Fetch token from local storage
   useEffect(() => {
-    const fetchJwt = async () => {
-      const jwtToken = localStorage.getItem("jwt");
-      setToken(jwtToken);
-    };
-    fetchJwt();
+    setToken(localStorage.getItem("jwt"));
   }, []);
 
+  // Fetch drivers list when token is available
   useEffect(() => {
-    if (token) dispatch(singleDriver(userId, token));
+    if (token && userId) {
+      dispatch(singleDriver(userId, token));
+    }
   }, [dispatch, token, userId]);
 
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    dispatch(singleDriver(userId, token));
-    setTimeout(() => setRefreshing(false), 1000);
-  }, [dispatch, token]);
+    if (token) {
+      dispatch(singleDriver(userId, token));
+    }
+  }, [dispatch, token, userId]);
 
-  const handleDelete = (driverId) => {
-    if (window.confirm("Are you sure you want to delete this driver?")) {
-      dispatch(removeDriver(driverId, token));
+  // Handle delete confirmation
+  const confirmDelete = (driver) => {
+    setSelectedDriver(driver);
+    setOpenDialog(true);
+  };
+
+  // Handle delete action
+  const handleConfirmDelete = () => {
+    if (selectedDriver) {
+      dispatch(removeDriver(selectedDriver._id, token));
+      setOpenDialog(false);
       onRefresh();
     }
   };
 
-  const handleRiderDelivery = (driver) => {
-    navigate(`/assigndelivery/${driver._id}`, { state: { driver } }); 
-  };
-
-  const handleRiderDetails = (driver) => {
-    navigate(`/riderdetails/${driver._id}`, { state: { driver } }); 
-  };
-
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="rider-container">
       {/* Header */}
-      <Sidebar/>
-      <header style={{ backgroundColor: "#FCF300", color: "black", fontWeight: "bold", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <h1 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "bold" }}>Rider List</h1>
-        <nav>
-          <button 
-            style={{ backgroundColor: "#FFD700", color: "black", fontWeight: "bold", padding: "8px 15px", border: "none", cursor: "pointer" }}
-            onClick={() => navigate("/riderregister")}
-          >
-            Add Rider
-          </button>
-        </nav>
-      </header>
-
+      <Sidebar />
+      <div className="rider-list-header">
+        <h1>All Riders</h1>
+        <button
+          className="btn-add-rider"
+          onClick={() => navigate("/riderregister")}
+        >
+          <i className="fa-solid fa-plus"></i>
+        </button>
+      </div>
 
       {/* Tab Navigation */}
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        gap: "15px", 
-        padding: "15px", 
-        backgroundColor: "#F8F9FA", // Light gray background for better contrast
-        borderRadius: "10px", 
-        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
-      }}>
-        <Button 
+      <div className="tab-navigation-container">
+        <Button
           variant="contained"
-          sx={{
-            backgroundColor: activeTab === "Assign" ? "#FFD500" : "white",
-            color: activeTab === "Assign" ? "black" : "#333",
-            fontWeight: "bold",
-            padding: "10px 20px",
-            border: activeTab === "Assign" ? "none" : "2px solid #FFD500",
-            "&:hover": {
-              backgroundColor: activeTab === "Assign" ? "#FFC300" : "#FFD500",
-              color: "black"
-            }
-          }}
+          className={`tab-button ${activeTab === "Assign" ? "active" : ""}`}
           onClick={() => navigate("/assignlist")}
         >
           Assign
         </Button>
-        
-        <Button 
+
+        <Button
           variant="contained"
-          sx={{
-            backgroundColor: activeTab === "Rider" ? "#FFD500" : "white",
-            color: activeTab === "Rider" ? "black" : "#333",
-            fontWeight: "bold",
-            padding: "10px 20px",
-            border: activeTab === "Rider" ? "none" : "2px solid #FFD500",
-            "&:hover": {
-              backgroundColor: activeTab === "Rider" ? "#FFC300" : "#FFD500",
-              color: "black"
-            }
-          }}
+          className={`tab-button ${activeTab === "Rider" ? "active" : ""}`}
           onClick={() => setActiveTab("Rider")}
         >
           Rider
         </Button>
       </div>
 
+      {/* Driver List */}
+      <div className="driver-list-container">
+        {loading ? (
+          <CircularProgress />
+        ) : error || !drivers?.length ? (
+          <Typography variant="h6" color="error" align="center">
+            No Drivers Found.
+          </Typography>
+        ) : (
+          <div className="driver-card-wrapper">
+            {drivers.map((driver) => (
+              <Card key={driver._id} className="driver-card">
+                <CardContent>
+                  {/* Delete Button */}
+                  <IconButton
+                    className="delete-button"
+                    color="error"
+                    onClick={() => confirmDelete(driver)}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                      bottom: "auto",
+                      left: "auto",
+                      zIndex: 10,
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
 
-      {/* Content */}
-      {loading ? (
-        <CircularProgress />
-      ) : error || drivers?.length === 0 ? (
-        <Typography variant="h6" color="error" align="center">No Drivers Found.</Typography>
-      ) : (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "15px" }}>
-          {drivers.map((driver) => (
-            <Card key={driver._id} style={{ width: "300px", padding: "10px" }}>
-              <CardContent>
-                <img
-                  src={driver.image?.url || "https://via.placeholder.com/100"}
-                  alt="Profile"
-                  style={{ width: "80px", height: "80px", borderRadius: "50%" }}
-                />
-                <Typography variant="h6">{driver.firstName} {driver.lastName}</Typography>
-                <Typography>Approved: {driver.approvedAt ? "✅ Approved" : "❌ Not Approved"}</Typography>
-                <Typography>Available: {driver.isAvailable ? "✅ Available" : "❌ Unavailable"}</Typography>
-                {driver.approvedAt && (
-                  <div style={{ marginTop: "10px" }}>
-                    <Button variant="contained" color="primary" onClick={() => handleRiderDelivery(driver)}>Assign</Button>
-                    <Button variant="contained" color="secondary" onClick={() => handleRiderDetails(driver)}>View</Button>
-                  </div>
-                )}
-                <IconButton color="error" onClick={() => handleDelete(driver._id)}>
-                  <DeleteIcon />
-                </IconButton>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+                  <img
+                    src={driver.image?.url || "https://via.placeholder.com/100"}
+                    alt="Profile"
+                    className="driver-image"
+                  />
+                  <Typography variant="h6">
+                    {driver.firstName} {driver.lastName}
+                  </Typography>
+                  <Typography>
+                    Approved:{" "}
+                    {driver.approvedAt ? "✅ Approved" : "❌ Not Approved"}
+                  </Typography>
+                  <Typography>
+                    Available:{" "}
+                    {driver.isAvailable ? "✅ Available" : "❌ Unavailable"}
+                  </Typography>
+                  {driver.approvedAt && (
+                    <div className="driver-actions">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() =>
+                          navigate(`/assigndelivery/${driver._id}`, {
+                            state: { driver },
+                          })
+                        }
+                      >
+                        Assign
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() =>
+                          navigate(`/riderdetails/${driver._id}`, {
+                            state: { driver },
+                          })
+                        }
+                      >
+                        View
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+          <DialogTitle>Confirm Deletion</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete {selectedDriver?.firstName}{" "}
+              {selectedDriver?.lastName}?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenDialog(false)} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmDelete} color="error">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 };

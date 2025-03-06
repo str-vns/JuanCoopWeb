@@ -81,10 +81,12 @@ const AssignRider = () => {
   return (
     <div className="assign-rider-detailsContainer">
       <Sidebar />
-      <div className="assign-rider-header">
+      {/* <div className="assign-rider-header">
         <h2 className="assign-rider-headerTitle">Delivery Details</h2>
+      </div> */}
+      <div className="assign-rider-header">
+        <h1>Delivery Details</h1>
       </div>
-
       <div className="assign-rider-container">
         <div className="assign-rider-customerInfo">
           <p>
