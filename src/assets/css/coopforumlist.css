@@ -1,255 +1,244 @@
-/* .forum-container {
+.forumlist-coop-container {
   display: flex;
-  margin-left: 100px;
-  height: 100vh;
-  width: 1380px;
-  overflow: hidden;
-  background-color: #f8fafc;
-} */
-
-/* Forum Content */
-.forum-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
-  background-color: #ffffff;
-  border-radius: 12px;
+  background-color: #fff9db; /* Light Yellow */
+  margin-left: 250px;
 }
 
-/* Search Bar */
-.forum-search-bar {
+.forumlist-coop-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.forumlist-coop-search-bar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  background: #f1f5f9;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.search-input-container {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
+.forumlist-coop-search {
+  display: flex;
+  align-items: center;
+  background: #ffeb99; /* Soft yellow */
+  padding: 10px;
+  border-radius: 20px;
 }
 
-.search-input {
-  width: 100%;
-  padding: 12px 45px 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-.search-input:focus {
+.forumlist-coop-search input {
+  border: none;
+  background: transparent;
+  padding: 5px;
   outline: none;
-  border-color: #f59e0b;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
 }
 
-.search-icon {
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  color: #888;
-  font-size: 18px;
+.forumlist-coop-search-icon {
+  color: #ffcc00; /* Gold Yellow */
+  margin-left: 10px;
 }
 
-/* Add Post Button */
-.add-post-btn {
-  background: linear-gradient(135deg, #f59e0b, #ea580c);
-  color: white;
-  padding: 12px 18px;
-  border-radius: 10px;
+.forumlist-coop-add-post {
+  background: #ffcc00;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
   font-weight: bold;
-  font-size: 16px;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0px 4px 8px rgba(245, 158, 11, 0.2);
 }
 
-.add-post-btn:hover {
-  background: linear-gradient(135deg, #ea580c, #fbbf24);
-  transform: scale(1.05);
+.forumlist-coop-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* Forum Post Cards */
-.forum-post-card {
+.forumlist-coop-card {
   background: white;
-  border-radius: 12px;
-  padding: 20px;
+  padding: 15px;
+  border-radius: 10px;
   margin-bottom: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  border-left: 5px solid #fbbf24;
-  width: 80%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
-.forum-post-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+.forumlist-coop-card:hover {
+  transform: scale(1.02);
 }
 
-/* Post Images */
-.post-image {
+
+.forumlist-coop-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.forumlist-coop-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.forumlist-coop-date {
+  font-size: 12px;
+  color: gray;
+}
+
+.forumlist-coop-post-content {
+  margin: 10px 0;
+}
+
+.forumlist-coop-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forumlist-coop-like,
+.forumlist-coop-comment {
+  display: flex;
+  align-items: center;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.forumlist-coop-comment-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.forumlist-coop-like {
+  background: #e6f7ff; /* Light Blue */
+  color: #007bff;
+}
+
+.forumlist-coop-like:hover {
+  background: #b3e0ff;
+}
+
+.forumlist-coop-comment {
+  background: #f8f9fa; /* Light Gray */
+  color: #6c757d;
+}
+
+.forumlist-coop-comment:hover {
+  background: #e2e6ea;
+}
+
+.forumlist-coop-comment-item {
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.forumlist-coop-comment-content {
+  display: flex;
+  align-items: center; /* Align items in one row */
+  gap: 10px; /* Adds spacing between name, comment, and sentiment */
+}
+
+.forumlist-coop-comment-item strong {
+  color: #333;
+}
+.forumlist-coop-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.forumlist-coop-modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh; /* Set max height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.forumlist-coop-modal-actions {
+  display: flex;
+  justify-content: space-between; /* Space between buttons and sentiment label */
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.forumlist-coop-actions-buttons {
+  display: flex;
+  gap: 10px; /* Adds space between Like and Comment buttons */
+}
+
+.forumlist-coop-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.forumlist-coop-post-carousel {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+
+.forumlist-coop-post-image {
   width: 100%;
   max-height: 250px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 10px;
 }
 
-/* Post Title */
-.forum-post-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
-}
-
-/* Post Info */
-.forum-post-info {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-bottom: 0.5rem;
-}
-
-/* Post Actions */
-.post-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.like-btn, .comment-btn, .share-btn {
-  background: #f1f5f9;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+.sentiment-label {
   display: flex;
   align-items: center;
-  transition: all 0.3s;
-}
-
-.like-btn {
-  color: #f59e0b;
-}
-
-.like-btn:hover {
-  background: #fbbf24;
-  color: white;
-}
-
-.comment-btn {
-  color: #2563eb;
-}
-
-.comment-btn:hover {
-  background: #1d4ed8;
-  color: white;
-}
-
-.share-btn {
-  color: #10b981;
-}
-
-.share-btn:hover {
-  background: #059669;
-  color: white;
-}
-
-/* Comment Section */
-.comment-section {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 15px;
-}
-
-.comment-input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  resize: none;
-  transition: all 0.3s ease;
-}
-
-.comment-input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
-  outline: none;
-}
-
-.comment-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
-}
-
-.comment-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Comments Section */
-.comments-section {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  width: fit-content;
   margin-top: 10px;
-  padding: 12px;
-  border-top: 1px solid #e5e7eb;
-  background: #f9fafb;
-  border-radius: 10px;
+  margin-left: auto;
 }
 
-.comment-item {
+.comment-date {
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 5px; /* Adds spacing between comment and date */
+}
+
+.positive {
+  background-color: #08cf3a; /* Light Green */
+  color: #070707;
   display: flex;
-  gap: 10px;
-  padding: 8px 0;
-  align-items: center;
 }
 
-.comment-avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.comment-header {
+.neutral {
+  background-color: #fefa21; /* Light Yellow */
+  color: #070707;
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
 }
 
-/* Loader */
-.loader-container {
+.negative {
+  background-color: #fd2537; /* Light Red */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  color: #070707;
 }
 
-.loader {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f4f6;
-  border-top: 5px solid #f59e0b;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.sentiment-label svg {
+  margin-right: 5px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
