@@ -1,126 +1,117 @@
 .rider-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    background: #ffcc00;
-    padding: 15px;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-  }
-  
-  .rider-list-header h1 {
-    color: #000000;
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-  
-  .btn-add-rider {
-    background-color: #ffcc00;
-    color: #000000;
-    font-weight: bold;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  
-  .btn-add-rider:hover {
-    background-color: #fafa90;
-  }
-  
-  .tab-navigation-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 15px;
-    background-color: #ffffff; 
-    border-radius: 10px;
-    
-  }
-  
-  .tab-button {
-    font-weight: bold;
-    padding: 10px 20px;
-    background-color: white;
-    color: #333;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #ffcc00;
+  padding: 15px;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
 
-  
-  .tab-button.active {
-    background-color: #ffd500;
-    color: black;
-   
-  }
+.rider-list-header h1 {
+  color: #000000;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
 
-  .driver-list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    
-  }
-  
-  .driver-card-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-  }
-  
-  .driver-card {
-    position: relative; /* Ensure absolute positioning of delete button works */
-    width: 300px;
-    padding: 15px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; /* Prevents content overflow */
-  }
-  .driver-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Delete button fixed in the upper right corner */
-  .delete-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: auto;
-    left: auto;
+.btn-add-rider {
+  background-color: #ffcc00;
+  color: #000000;
+  font-weight: bold;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-  }
-  
-  .driver-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: block;
-    margin: 20px auto 10px; /* Adjust margin to avoid overlap */
-  }
-  
-  .driver-actions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .driver-actions button {
-    flex: 1;
-    margin: 5px;
-  }
-  
+.btn-add-rider:hover {
+  background-color: #fafa90;
+}
 
-  .rider-container {
-    
-    width: calc(100% - 200px); /* Adjust width to not overlap with sidebar */
-    margin-left: 300px; 
-  }
+.tab-navigation-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.tab-button {
+  font-weight: bold;
+  padding: 10px 20px;
+  background-color: white;
+  color: #333;
+}
+
+.tab-button.active {
+  background-color: #ffd500;
+  color: black;
+}
+
+.driver-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.driver-card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.driver-card {
+  position: relative; /* Ensure absolute positioning of delete button works */
+  width: 300px;
+  padding: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden; /* Prevents content overflow */
+}
+.driver-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Delete button fixed in the upper right corner */
+.delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+}
+
+.driver-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  margin: 20px auto 10px; /* Adjust margin to avoid overlap */
+}
+
+.driver-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.driver-actions button {
+  flex: 1;
+  margin: 5px;
+}
+
+.rider-container {
+  width: calc(100% - 200px); /* Adjust width to not overlap with sidebar */
+  margin-left: 300px;
+}

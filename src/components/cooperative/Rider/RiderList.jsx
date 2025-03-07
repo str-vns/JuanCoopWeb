@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getCurrentUser } from "@utils/helpers";
-import "@assets/css/RiderList.css";
+import "@assets/css/riderlist.css";
 import Sidebar from "../sidebar";
 
 const RiderList = () => {
