@@ -14,8 +14,7 @@
 
   color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
-  background-color: white !important; /* Force white background */
-
+  background-color: white !important; 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -51,7 +50,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #ff0000;
   cursor: pointer;
   transition: border-color 0.25s;
 }
