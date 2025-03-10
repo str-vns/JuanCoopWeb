@@ -11,6 +11,10 @@ import { isAuth, getToken } from "@utils/helpers";
 import baseURL from "@Commons/baseUrl";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaInfoCircle } from "react-icons/fa";
+
+const SHIPPING_FEE = 75; // Example shipping fee
+const TAX_RATE = 0.12; // Example tax rate (12%)
 
 const Carts = () => {
   const dispatch = useDispatch();
@@ -18,10 +22,21 @@ const Carts = () => {
   const auth = isAuth();
   const token = getToken();
   const cartItems = useSelector((state) => state.cartItems);
-  const totalPrice = cartItems.reduce(
+
+  const subtotal = cartItems.reduce(
     (acc, item) => acc + item.pricing * item.quantity,
     0
   );
+
+  const handleTaxInfo = () => {
+    alert(
+      "This tax applies to non-members of the cooperative. If you want to save on future purchases, consider registering as a member."
+    );
+  };
+
+  const tax = subtotal * TAX_RATE;
+  const totalPrice = (subtotal + SHIPPING_FEE + tax).toFixed(2);
+
   console.log("Cart Items:", cartItems);
 
   const handleIncrement = (item) => {
@@ -31,7 +46,6 @@ const Carts = () => {
   };
 
   const handleDecrement = (item) => {
-    console.log(item?.quantity);
     if (item?.quantity > 1) {
       dispatch(updateCartQuantity(item?.inventoryId, item?.quantity - 1));
     }
@@ -48,6 +62,9 @@ const Carts = () => {
         inventoryId: item.inventoryId,
         quantity: item.quantity,
       })),
+      subtotal,
+      tax: tax.toFixed(2),
+      shippingFee: SHIPPING_FEE,
       totalPrice,
     };
 
@@ -63,13 +80,11 @@ const Carts = () => {
         }
       );
 
-      console.log("Checkout Data:", data);
       if (data?.details?.success === true) {
         toast.success("Order placed successfully!");
         navigate("/shipping");
       } else {
         data?.details?.lowStockItems?.forEach((item) => {
-          console.log("Low Stock Item:", item);
           if (item.reason === "out_of_stock") {
             toast.error(
               `${item.productName} ${item.unitName} ${item.metricUnit} is out of stock and has been removed from your cart.`
@@ -98,6 +113,7 @@ const Carts = () => {
   const isLoggedIn = async () => {
     navigate("/login?redirect=shippings");
   };
+
   return (
     <section className="cart-section">
       <Navbar />
@@ -119,7 +135,7 @@ const Carts = () => {
                     </a>
                     <div className="cart-item-info">
                       <a href="#" className="cart-item-title">
-                        {item.productName} {""}
+                        {item.productName}{" "}
                       </a>
                       <a href="#" className="cart-item-title">
                         {item.unitName} {item.metricUnit}
@@ -181,7 +197,31 @@ const Carts = () => {
           </div>
           {cartItems.length > 0 && (
             <div className="cart-summary">
-              <p className="total-text">Total: ₱ {totalPrice} </p>
+              <p className="total-text">Subtotal: ₱ {subtotal.toFixed(2)}</p>
+              <p
+                className="total-text"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center", // Fixed camelCase issue
+                }}
+              >
+                Tax: ₱ {tax.toFixed(2)}
+                <FaInfoCircle
+                  style={{
+                    marginLeft: "8px",
+                    cursor: "pointer",
+                    color: "#007bff",
+                    fontSize: "14px",
+                  }}
+                  onClick={handleTaxInfo}
+                />
+              </p>
+
+              <p className="total-text">
+                Shipping Fee: ₱ {SHIPPING_FEE.toFixed(2)}
+              </p>
+              <p className="total-text">Total: ₱ {totalPrice}</p>
             </div>
           )}
 
@@ -190,20 +230,17 @@ const Carts = () => {
               Continue Shopping
             </a>
             {cartItems.length > 0 && auth ? (
-    <a 
-    // href="/shipping" 
-    onClick={checkoutHandler}
-    className="button-proceed-checkout" >
-      Proceed to Checkout
-    </a>
-  ) : (
-    <button
-      className="button-proceed-checkout"
-      onClick={isLoggedIn}
-    >
-      Proceed to Checkout
-    </button>
-  )}
+              <button
+                onClick={checkoutHandler}
+                className="button-proceed-checkout"
+              >
+                Proceed to Checkout
+              </button>
+            ) : (
+              <button className="button-proceed-checkout" onClick={isLoggedIn}>
+                Proceed to Checkout
+              </button>
+            )}
           </div>
         </div>
       </div>

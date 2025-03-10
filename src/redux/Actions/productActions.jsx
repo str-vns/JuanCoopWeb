@@ -71,7 +71,7 @@ export const getProduct = () => async (dispatch) => {
       });
     }
   };
-  
+  console.log("getCoop", getCoop);
   /**
    * Fetch products of a cooperative
    */

@@ -7,13 +7,16 @@ export const createComment = (comment, token) => async (dispatch) => {
     try {
         dispatch({ type: COMMENT_CREATE_REQUEST });
 
+
         const formData = new FormData();
         formData.append("user", comment.user);
         formData.append("order", comment.order);
         formData.append("productId", comment.productId);
         formData.append("rating", comment.rating);
         formData.append("comment", comment.comment);
-
+        formData.append("driverRating", comment.driverRating);
+        formData.append("serviceRating", comment.serviceRating);
+        
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,

@@ -32,18 +32,40 @@ const Orders = () => {
     }, 500);
   }, [dispatch, userId]);
 
-  const handleCancelOrder = (orderId, inventoryId) => {
-    const status = {
-      orderStatus: "Cancelled",
-      inventoryProduct: inventoryId,
-    };
+  const handleCancelOrder = (order, item) => {
+    console.log("🔹 Cancelling order:", order);
+    console.log("🔹 Item details:", item);
+    console.log("🔹 Inventory Product ID:", item.inventoryProduct?._id);
+    console.log("🔹 Order Item ID:", item._id || item.orderItemId);
+  
+    if (!item.inventoryProduct?._id) {
+      console.error("❌ Missing inventory ID for order:", order);
+      alert("Error: Inventory Product ID is missing!");
+      return;
+    }
+  
     try {
-      dispatch(updateOrderStatus(orderId, status));
-      onRefresh();
+      // Navigate to cancellation page with order and item details
+      navigate("/client_cancelled", {
+        state: {
+          order,
+          item,
+          inventoryId: item.inventoryProduct._id, // Explicitly pass inventoryId
+          orderItemId: item._id || item.orderItemId, // Explicitly pass Order Item ID
+          coopUser: item.coopUser,
+        },
+      });
+  
+      console.log("✅ Item details before navigation:", item);
+      console.log("✅ Order Item ID being passed:", item._id || item.orderItemId);
+      console.log("✅ Inventory ID being passed:", item.inventoryProduct._id);
     } catch (error) {
-      console.error("Error updating order:", error);
+      console.error("❌ Error navigating to cancellation page:", error);
     }
   };
+  
+  
+  
 
   const toggleExpandedOrder = (orderId) => {
     setExpandedOrders((prevState) => ({
@@ -56,6 +78,8 @@ const Orders = () => {
     navigate("/qr", { state: { order } });
   };
 
+ 
+  
   return (
     <div className="order-container">
       <Navbar />
@@ -123,9 +147,8 @@ const Orders = () => {
                   {item.orderStatus === "Pending" && (
                     <button
                       className="cancel-button"
-                      onClick={() =>
-                        handleCancelOrder(order._id, item.inventoryProduct?._id)
-                      }
+                      onClick={() => handleCancelOrder(order, item)}
+
                     >
                       Cancel Order
                     </button>

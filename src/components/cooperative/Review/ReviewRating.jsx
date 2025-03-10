@@ -1,78 +1,141 @@
-import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { FaStar } from 'react-icons/fa';
-import Sidebar from '../sidebar';
-import "@assets/css/coopreviewrating.css"; // Import the external CSS
+import React from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
+import Sidebar from "../sidebar";
+import "@assets/css/coopreviewrating.css";
 
 const ReviewRating = () => {
   const { state } = useLocation();
   const { productId } = useParams();
   const product = state?.product || {};
+  const reviews = product?.reviews || [];
+
+  /* Calculate Overall Ratings */
+  const calculateAverage = (key) => {
+    if (!reviews.length) return 0;
+    const total = reviews.reduce((sum, review) => sum + (review[key] || 0), 0);
+    return total / reviews.length;
+  };
+
+  const toPercentage = (rating) => Math.round((rating / 5) * 100);
+
+  const overallProductRating = calculateAverage("rating");
+  const overallServiceRating = calculateAverage("serviceRating");
+  const overallDeliveryRating = calculateAverage("driverRating"); // Ensure consistency
+
+  const productPercentage = toPercentage(overallProductRating);
+  const servicePercentage = toPercentage(overallServiceRating);
+  const deliveryPercentage = toPercentage(overallDeliveryRating);
+
+  /* Generate Feedback Messages */
+  const getMessage = (percentage, category) => {
+    if (percentage >= 90)
+      return `${category}: Excellent! (${percentage}%) Keep up the great work!`;
+    if (percentage >= 75)
+      return `${category}: Very Good! (${percentage}%) Customers are happy.`;
+    if (percentage >= 50)
+      return `${category}: Average (${percentage}%) Consider some improvements.`;
+    if (percentage >= 30)
+      return `${category}: Below Average (${percentage}%) Needs improvement.`;
+    return `${category}: Poor (${percentage}%) Immediate improvements needed!`;
+  };
+
+  /* Sentiment Analysis for Comments */
+  const getSentiment = (rating) => {
+    if (rating >= 4) return "😊 Positive";
+    if (rating >= 2.5) return "😐 Neutral";
+    return "😡 Negative";
+  };
 
   return (
     <div className="review-container">
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Header */}
       <div className="review-header">
-        <h1>Product Review List</h1>
+        <h1>Review Summary</h1>
       </div>
 
-      {/* Overall Rating */}
       <div className="review-card">
         <h2>{product.productName} - Overall Rating</h2>
-        <div className="star-container">
-          {[...Array(5)].map((_, i) => (
-            <FaStar 
-              key={i} 
-              className={`star ${i < (product.ratings || 0) ? 'star-yellow' : 'star-gray'}`} 
-            />
-          ))}
+
+        {/* Overall Ratings with Stars */}
+        <div className="overall-ratings">
+          <div className="rating-category">
+            <h3>Product Rating</h3>
+            <div className="star-container">
+              {[...Array(5)].map((_, i) => (
+                <FaStar
+                  key={i}
+                  className={`star ${i < overallProductRating ? "star-yellow" : "star-gray"}`}
+                />
+              ))}
+            </div>
+            <p>{getMessage(productPercentage, "Product Rating")}</p>
+          </div>
+
+          <div className="rating-category">
+            <h3>Seller Service</h3>
+            <div className="star-container">
+              {[...Array(5)].map((_, i) => (
+                <FaStar
+                  key={i}
+                  className={`star ${i < overallServiceRating ? "star-yellow" : "star-gray"}`}
+                />
+              ))}
+            </div>
+            <p>{getMessage(servicePercentage, "Seller Service Rating")}</p>
+          </div>
+
+          <div className="rating-category">
+            <h3>Delivery Speed</h3>
+            <div className="star-container">
+              {[...Array(5)].map((_, i) => (
+                <FaStar
+                  key={i}
+                  className={`star ${i < overallDeliveryRating ? "star-yellow" : "star-gray"}`}
+                />
+              ))}
+            </div>
+            <p>{getMessage(deliveryPercentage, "Delivery Speed Rating")}</p>
+          </div>
         </div>
       </div>
 
-      {/* Suggestions Section */}
-      {product.sentiment && (
-        <div className="suggestions">
-          <p>
-            {product.sentiment === "Mostly positive" && "Your product is doing great! Keep up the good work."}
-            {product.sentiment === "positive" && "Keep up the good work! Your product is performing well."}
-            {product.sentiment === "negative" && "Your product needs improvement, better marketing, and enhanced services."}
-            {product.sentiment === "Mostly negative" && "Significant improvements are needed. Focus on better marketing and service quality."}
-          </p>
-        </div>
-      )}
-
-      {/* Reviews Section */}
-      <h2 className="w-full max-w-3xl mt-6 text-xl font-semibold text-black-1000 text-center">Product Reviews</h2>
       <div className="reviews-section">
-        {product.reviews?.length > 0 ? (
-          product.reviews.map((review, index) => (
+     
+
+        {reviews.length > 0 ? (
+          reviews.map((review, index) => (
             <div key={index} className="review-box">
+               <h2 className="review-title">Product Reviews</h2>
               <img src={review.user?.image?.url || "default-user.png"} alt="Profile" />
-              <h3>
-                {review.user?.firstName || "Anonymous"} {review.user?.lastName || ""}
-                <span className={`sentiment ${
-                  review.sentimentScore <= -15 ? 'sentiment-mostly-negative' 
-                    : review.sentimentScore < 0 ? 'sentiment-negative' 
-                    : review.sentimentScore >= 15 ? 'sentiment-mostly-positive' 
-                    : review.sentimentScore > 0 ? 'sentiment-positive' 
-                    : ''
-                }`}>
-                  {review.sentimentScore <= -15 ? 'Mostly Negative' 
-                    : review.sentimentScore < 0 ? 'Negative' 
-                    : review.sentimentScore >= 15 ? 'Mostly Positive' 
-                    : review.sentimentScore > 0 ? 'Positive' 
-                    : 'Neutral'}
-                </span>
-              </h3>
+              <h3>{review.user?.firstName || "Anonymous"} {review.user?.lastName || ""}</h3>
+
+              {/* Individual Ratings */}
+              <label>Product Quality</label>
               <div className="star-container">
                 {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className={`star ${i < review.rating ? 'star-yellow' : 'star-gray'}`} />
+                  <FaStar key={i} className={`star ${i < (review.rating || 0) ? "star-yellow" : "star-gray"}`} />
                 ))}
               </div>
-              <p className="mt-2 text-gray-700">{review.comment || "No review available."}</p>
+
+              <label>Seller Service</label>
+              <div className="star-container">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className={`star ${i < (review.serviceRating ?? 0) ? "star-yellow" : "star-gray"}`} />
+                ))}
+              </div>
+
+              <label>Delivery Speed</label>
+              <div className="star-container">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className={`star ${i < (review.driverRating ?? 0) ? "star-yellow" : "star-gray"}`} />
+                ))}
+              </div>
+
+              {/* Sentiment Analysis */}
+              <p>Sentiment: {getSentiment(review.rating)}</p>
+
+              <p>Comment: {review.comment || "No review available."}</p>
             </div>
           ))
         ) : (

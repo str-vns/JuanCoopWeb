@@ -21,13 +21,14 @@ const UserAddReview = () => {
 
   const user = getCurrentUser();
   const token = getToken();
-
   const userId = user?._id;
   const { products } = useSelector((state) => state.allProducts);
   const transactionId = orderId;
 
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
+  const [deliverySpeed, setDeliverySpeed] = useState(0);
+  const [sellerService, setSellerService] = useState(0);
   const [errormessage, setErrorMessage] = useState("");
 
   const isReview = products?.reviews?.find(
@@ -44,19 +45,23 @@ const UserAddReview = () => {
     if (isReview) {
       setReview(isReview.comment);
       setStars(isReview.rating);
+      setDeliverySpeed(isReview.deliverySpeed || 0);
+      setSellerService(isReview.sellerService || 0);
     }
   }, [isReview]);
 
   const handlePostReview = () => {
-    if (stars === 0) {
-      setErrorMessage("Please rate the product");
+    if (stars === 0 || deliverySpeed === 0 || sellerService === 0) {
+      setErrorMessage("Please rate all categories");
       return;
     }
     const comment = {
       user: userId,
       order: transactionId,
       productId,
-      rating: stars,
+      rating: stars,         // Product Quality Rating
+      driverRating: deliverySpeed,  // Delivery Speed Rating
+      serviceRating: sellerService, // Seller Service Rating
       comment: review,
     };
 
@@ -64,16 +69,17 @@ const UserAddReview = () => {
     navigate("/");
     setReview("");
     setStars(0);
+    setDeliverySpeed(0);
+    setSellerService(0);
     setErrorMessage("");
-  };
-
-  const handleBack = () => {
-    navigate("/orders");
   };
 
   return (
     <div className="container-rev">
       <Navbar />
+      <button className="back-button" onClick={() => navigate(-1)}>
+        <FaArrowLeft /> Back
+      </button>
       <img src={yeyImage} alt="Product" className="productImage-rev" />
 
       <h2 className="question-rev">
@@ -83,6 +89,7 @@ const UserAddReview = () => {
         By providing reviews we can improve your next order. Thank you!
       </p>
 
+      <label>Product Rating</label>
       <StarRatings
         rating={stars}
         starRatedColor="gold"
@@ -91,6 +98,25 @@ const UserAddReview = () => {
         name="rating"
       />
 
+      <label>Delivery Speed</label>
+      <StarRatings
+  rating={deliverySpeed}
+  starRatedColor="gold"
+  changeRating={(newRating) => setDeliverySpeed(newRating)}
+  numberOfStars={5}
+  name="deliverySpeed"
+/>
+<label>Seller Service</label>
+<StarRatings
+  rating={sellerService}
+  starRatedColor="gold"
+  changeRating={(newRating) => setSellerService(newRating)}
+  numberOfStars={5}
+  name="sellerService"
+/>
+
+
+      
       <textarea
         className="textInput-rev"
         placeholder="Tell us about your experience"
