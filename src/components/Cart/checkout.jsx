@@ -22,6 +22,12 @@ const CheckoutAccordion = () => {
     0
   );
 
+  const shippingFee = 75; // Fixed shipping fee in PHP
+const taxRate = 0.12; // 12% tax
+const taxAmount = totalPrice * taxRate;
+const grandTotal = totalPrice + taxAmount + shippingFee;
+
+
   const confirmOrder = async () => {
     if (!payItems || !shipItems || !cartItems) {
       toast?.error("There is a problem with your cart", {
@@ -67,6 +73,9 @@ const CheckoutAccordion = () => {
       shippingAddress: shipItems?._id,
       paymentMethod: payItems?.paymentMethod,
       totalPrice: totalPrice,
+      totalPrice: grandTotal, // Now includes shipping fee and tax
+      shippingFee: shippingFee, // Added shipping fee
+      taxAmount: taxAmount, // Added tax amount
     };
 
     try {
@@ -176,13 +185,26 @@ const CheckoutAccordion = () => {
             <div className="flex justify-end pt-8">
               <div className="w-full">
                 <dl className="space-y-2 text-sm text-gray-700">
-                  <div id="order_summary">
-                    <h4 className="text-lg font-semibold">Order Summary</h4>
-                    <div className="flex justify-between !text-base font-medium">
-                    <span className="font-bold">Total:</span> 
-                      <dd>₱ {totalPrice.toFixed(2)}</dd>
-                    </div>
-                  </div>
+                <div id="order_summary">
+  <h4 className="text-lg font-semibold">Order Summary</h4>
+  <div className="flex justify-between !text-base font-medium">
+    <span className="font-bold">Subtotal:</span> 
+    <dd>₱ {totalPrice.toFixed(2)}</dd>
+  </div>
+  <div className="flex justify-between !text-base font-medium">
+    <span className="font-bold">Shipping Fee:</span> 
+    <dd>₱ {shippingFee.toFixed(2)}</dd>
+  </div>
+  <div className="flex justify-between !text-base font-medium">
+    <span className="font-bold">Tax (12%):</span> 
+    <dd>₱ {taxAmount.toFixed(2)}</dd>
+  </div>
+  <div className="flex justify-between !text-lg font-bold border-t pt-2">
+    <span className="font-bold">Grand Total:</span> 
+    <dd>₱ {grandTotal.toFixed(2)}</dd>
+  </div>
+</div>
+
                 </dl>
                 <div className="flex justify-end pt-6">
                   <button
