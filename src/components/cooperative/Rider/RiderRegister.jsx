@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { OTPregister, checkEmail } from "@redux/Actions/userActions";
+import { OTPregister } from "@redux/Actions/userActions";
 import axios from "axios";
 import baseURL from "@Commons/baseUrl";
 import Sidebar from "../sidebar";
-import { getCurrentUser, getToken } from "@utils/helpers";
 import "@assets/css/riderregister.css";
+import { getCurrentUser} from "@utils/helpers";
 
 const RiderRegister = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = getCurrentUser();
   const userId = currentUser?._id;
-  const token = getToken();
-  const { isEmailAvailable } = useSelector((state) => state.checkDuplication);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,177 +22,198 @@ const RiderRegister = () => {
   const [age, setAge] = useState("");
   const [phoneNum, setPhoneNum] = useState("09");
   const [gender, setGender] = useState("");
-  const [image, setImage] = useState(null);
-  const [driversLicenseImage, setDriversLicenseImage] = useState(null);
+  const [profileImagePreview, setProfileImagePreview] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [licenseImagePreview, setLicenseImagePreview] = useState(null);
+  const [licenseImage, setLicenseImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
-  const [checked, setChecked] = useState(false);
 
-  // Handle Image Upload
-  const handleImageUpload = (e, setFile) => {
+  // Handle image selection & preview
+  const handleImageChange = (e, setImage, setImagePreview) => {
     const file = e.target.files[0];
-    if (file) {
-      setFile(file); // Directly store the file object
+    if (!file) {
+        setImage(null);
+        setImagePreview(null);
+        return;
     }
-  };
 
-  // Handle Form Submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    setImage(file); // Store the actual File object
 
-    console.log("Register button clicked!");
-
-    try {
-        console.log("Checking email existence...");
-        const { data } = await axios.post(`${baseURL}check-email`, { email });
-        const response = await axios.post(`${baseURL}check-driver-email`, { email });
-
-        if (!firstName || !lastName || !age || !phoneNum || !email || !password || !image || !driversLicenseImage || !gender) {
-            console.log("Validation failed: Missing required fields");
-            setErrors("All fields are required.");
-        } else if (!checked) {
-            console.log("Validation failed: Terms not accepted");
-            setErrors("Please accept the terms and conditions.");
-        } else if (data.details || response.data.details) {
-            console.log("Validation failed: Email already exists");
-            setErrors("Email already exists.");
-        } else if (age < 18) {
-            console.log("Validation failed: Age too low");
-            setErrors("You must be at least 18 years old.");
-        } else if (age > 164) {
-            console.log("Validation failed: Invalid age");
-            setErrors("Invalid age.");
-        } else if (phoneNum.length < 11) {
-            console.log("Validation failed: Invalid phone number");
-            setErrors("Invalid phone number.");
-        } else if (password !== confirmPassword) {
-            console.log("Validation failed: Password mismatch");
-            setErrors("Passwords do not match.");
-        } else if (password.length < 8 || !/[0-9]/.test(password) || !/[a-zA-Z]/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            console.log("Validation failed: Weak password");
-            setErrors("Password must be at least 8 characters, include a letter, number, and special character.");
-        } else {
-            console.log("All validation passed. Dispatching OTP...");
-            dispatch(OTPregister({ email }));
-
-            const riderRegister = {
-                firstName,
-                lastName,
-                age,
-                phoneNum,
-                gender,
-                image,
-                driversLicenseImage,
-                email,
-                password,
-                userId,  
-              }
-
-            console.log("Navigating to RiderOTP with data:", riderRegister);
-            navigate("/riderotp", { state: { riderRegister } });
+    const reader = new FileReader();
+    reader.onload = () => {
+        if (reader.readyState === 2) {
+            setImagePreview(reader.result);
         }
-    } catch (error) {
-        console.log("Error occurred:", error);
-        setErrors("An error occurred.");
-    }
-
-    setLoading(false);
-}
-
-const handleChangeText = (e) => {
-    const text = e.target.value; // Extract the value from event
-    if (text.startsWith("09")) {
-        setPhoneNum(text);
-    } else {
-        setPhoneNum("09");
-    }
+    };
+    reader.readAsDataURL(file);
 };
 
 
+  
+  
+
+  // Handle input clearing & form reset
+  const handleCancel = () => {
+    setFirstName("");
+    setLastName("");
+    setAge("");
+    setGender("");
+    setPhoneNum("09");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    setProfileImage(null);
+    setLicenseImage(null);
+    navigate(-1);
+  };
+
+  // Validate user input before submitting
+  const validateInputs = async () => {
+    if (!firstName || !lastName || !age || !phoneNum || !gender || !email || !password || !profileImage || !licenseImage) {
+      return "All fields are required.";
+    }
+    if (parseInt(age, 10) < 18 || parseInt(age, 10) > 100) {
+      return "Age must be between 18 and 100.";
+    }
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      return "Invalid email format.";
+    }
+    if (!/^09\d{9}$/.test(phoneNum)) {
+      return "Phone number must start with '09' and be 11 digits long.";
+    }
+    if (password !== confirmPassword) {
+      return "Passwords do not match.";
+    }
+
+    try {
+      const { data } = await axios.post(`${baseURL}check-email`, { email });
+      if (data.exists) {
+        return "Email already exists.";
+      }
+    } catch (error) {
+      console.error("Email validation failed:", error);
+      return "Unable to check email availability. Please try again.";
+    }
+
+    return null;
+  };
+
+  // Handle form submission
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setErrors(null);
+    setLoading(true);
+
+    const errorMsg = await validateInputs();
+    if (errorMsg) {
+      setErrors(errorMsg);
+      setLoading(false);
+      return;
+    }
+
+    const otpSent = await dispatch(OTPregister({ email }));
+    console.log("OTP Sent Status:", otpSent); // Debugging line
+
+    if (otpSent) {
+      console.log("Navigating to Rider OTP screen..."); // Debugging line
+      navigate("/riderotp", {
+        state: {
+          riderRegister: {
+            firstName,
+            lastName,
+            age,
+            phoneNum,
+            gender,
+            email,
+            password,
+            profileImage,
+            licenseImage,
+            user: userId,
+          },
+        },
+      });
+    } else {
+      setErrors("Failed to send OTP. Please try again.");
+    }
+
+
+    setLoading(false);
+  };
+
   return (
-    <div className="rider-register-container">
-      <Sidebar />
+    <div className="rider-register">
+      <Sidebar/>
       <h2>Register</h2>
-      {errors && <p className="error-text">{errors}</p>}
-      <form onSubmit={handleSubmit}>
+      {errors && <p style={{ color: "red" }}>{errors}</p>}
+      <form onSubmit={handleRegister}>
         <input
           type="text"
           placeholder="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          required
         />
         <input
           type="text"
           placeholder="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          required
         />
         <input
           type="number"
           placeholder="Age"
           value={age}
           onChange={(e) => setAge(e.target.value)}
-          required
         />
         <input
-            type="tel"
-            placeholder="Phone Number"
-            value={phoneNum}
-            onChange={handleChangeText} // ✅ Keep this
-            maxLength={11}
-            required
-            />
-
-        <select value={gender} onChange={(e) => setGender(e.target.value)} required>
+          type="text"
+          maxLength={11}
+          placeholder="Phone Number"
+          value={phoneNum}
+          onChange={(e) => {
+            const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+            if (input.startsWith("09") && input.length <= 11) {
+              setPhoneNum(input);
+            }
+          }}
+        />
+        <select value={gender} onChange={(e) => setGender(e.target.value)}>
           <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="prefer not to say">Prefer Not To Say</option>
         </select>
-
-        {/* Image Uploads */}
-        <label>Profile Picture</label>
-        <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setImage)} />
-        {image && <img src={URL.createObjectURL(image)} alt="Profile Preview" className="preview-image" />}
-
-        <label>Driver's License</label>
-        <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setDriversLicenseImage)} />
-        {driversLicenseImage && (
-          <img src={URL.createObjectURL(driversLicenseImage)} alt="License Preview" className="preview-image" />
-        )}
-
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
         <input
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          required
         />
 
-        <label>
-          <input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} />{" "}
-          Accept Terms and Conditions
-        </label>
+        <label>Upload Profile Image:</label>
+        <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setProfileImage, setProfileImagePreview)} />
+        {profileImagePreview && <img src={profileImagePreview} alt="Profile Preview" width="100" />}
+
+        <label>Upload License Image:</label>
+        <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setLicenseImage, setLicenseImagePreview)} />
+        {licenseImagePreview && <img src={licenseImagePreview} alt="License Preview" width="100" />}
 
         <button type="submit" disabled={loading}>
           {loading ? "Registering..." : "Register"}
         </button>
+        <button type="button" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   );

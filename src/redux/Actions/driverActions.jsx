@@ -45,14 +45,11 @@ import baseURL from '@Commons/baseUrl';
 import mime from "mime"; 
 
 export const createDriver = (driver, token) => async (dispatch) => {
-   
-    const driverInfo = driver.riderRegister;
+    const driverInfo = driver;
     try {
         dispatch({ type: CREATE_DRIVER_REQUEST });
-        const newImage = "file:///" + driverInfo?.image.split("file:/").join("");
-        const newDriversLicenseImagee = "file:///" + driverInfo?.driversLicenseImage.split("file:/").join("");
-        const formData = new FormData();
 
+        const formData = new FormData();
         formData.append("firstName", driverInfo?.firstName);
         formData.append("lastName", driverInfo?.lastName);
         formData.append("password", driverInfo?.password);
@@ -61,17 +58,17 @@ export const createDriver = (driver, token) => async (dispatch) => {
         formData.append("gender", driverInfo?.gender);
         formData.append("age", driverInfo?.age);
         formData.append("user", driverInfo?.user);
-        formData.append("otp", driver.otp);
-        formData.append("image", {
-            uri: newImage,
-            type: mime.getType(newImage),
-            name: newImage.split("/").pop(),
-        });
-        formData.append("driversLicenseImage", {
-            uri: newDriversLicenseImagee,
-            type: mime.getType(newDriversLicenseImagee),
-            name: newDriversLicenseImagee.split("/").pop(),
-        });
+        formData.append("otp", driverInfo?.otp);
+
+        if (driverInfo.profileImage) {
+            formData.append("image", driverInfo.profileImage); // Append the File object directly
+        }
+
+        if (driverInfo.licenseImage) {
+            formData.append("driversLicenseImage", driverInfo.licenseImage);
+        }
+
+        console.log("FormData being sent:", formData);
 
         const { data } = await axios.post(`${baseURL}driver`, formData, {
             headers: {
@@ -79,7 +76,9 @@ export const createDriver = (driver, token) => async (dispatch) => {
                 "Content-Type": "multipart/form-data",
             },
         });
-      
+
+        console.log("Response from backend:", data);
+
         dispatch({ type: CREATE_DRIVER_SUCCESS, payload: data.details });
         return true;
     } catch (error) {
@@ -89,7 +88,8 @@ export const createDriver = (driver, token) => async (dispatch) => {
         });
         return false;
     }
-}
+};
+
 
 export const listDriver  = (token) => async (dispatch) => {
     try {
