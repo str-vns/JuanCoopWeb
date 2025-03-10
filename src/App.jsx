@@ -116,6 +116,7 @@ import RiderDelivery from "./components/cooperative/Rider/RiderDelivery";
 import AssignRider from "./components/cooperative/Rider/AssignRider";
 import CoopHistory from "./components/cooperative/Rider/CoopHistory";
 
+import Client_Cancelled from "./components/Cancelled/Client_Cancelled";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
@@ -300,6 +301,8 @@ function App() {
           <Route path="/assigndelivery/:id" element={<RiderDelivery/>}/>
           <Route path="/assignrider/:id" element={<AssignRider/>}/>
           <Route path="/coophistory" element={<CoopHistory/>}/>
+
+          <Route path="/client_cancelled" element={<Client_Cancelled/>}/>
         </Routes>
       </div>
     </Router>
