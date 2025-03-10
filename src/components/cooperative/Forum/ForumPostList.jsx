@@ -30,7 +30,6 @@ const ForumPostList = () => {
     dispatch(getUserPost(userId)); // Add parentheses to call the function
   };
 
-
   const openEditModal = (post) => {
     setSelectedPost(post);
     setIsEditModalOpen(true);
@@ -184,7 +183,7 @@ const ForumPostList = () => {
                 <button className="usercoop-forumlist-delete-btn" onClick={() => handleDelete(post._id)}>Delete</button>
               </div>
             </div>
-          ))}
+          )) }
         </div>
       </div>
 

@@ -52,12 +52,6 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/productarchive">
-                <i className="fas fa-solid fa-bag-shopping sidebar-icon"></i>
-                <span className="sidebar-text">Product Archive</span>
-              </a>
-            </li>
-            <li className="sidebar-item">
               <a className="sidebar-link" href="/inventorylist">
                 <i className="fas fa-solid fa-note-sticky sidebar-icon"></i>
                 <span className="sidebar-text">Inventory</span>
@@ -70,21 +64,33 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/bloglistcoop">
-                <i className="fas fa-newspaper sidebar-icon"></i>
-                <span className="sidebar-text">Bloglist</span>
+              <a className="sidebar-link" href="/messenger">
+                <i className="fas fa-solid fa-comments sidebar-icon"></i>
+                <span className="sidebar-text">Messages</span>
               </a>
             </li>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/memberlist">
-                <i className="fas fa-solid fa-person sidebar-icon"></i>
-                <span className="sidebar-text">Member list</span>
+              <a className="sidebar-link" href="/notificationlist">
+                <i className="fas fa-solid fa-bell sidebar-icon"></i>
+                <span className="sidebar-text">Notifications</span>
               </a>
             </li>
             <li className="sidebar-item">
               <a className="sidebar-link" href="/riderlist">
                 <i className="fas fa-solid fa-truck sidebar-icon"></i>
-                <span className="sidebar-text">Rider list</span>
+                <span className="sidebar-text">Rider</span>
+              </a>
+            </li>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/riderlist">
+                <i className="fa-solid fa-wallet sidebar-icon"></i>
+                <span className="sidebar-text">Wallet</span>
+              </a>
+            </li>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/memberlist">
+                <i className="fas fa-solid fa-person sidebar-icon"></i>
+                <span className="sidebar-text">Members</span>
               </a>
             </li>
             <li className="sidebar-item">
@@ -93,17 +99,22 @@ const Sidebar = () => {
                 <span className="sidebar-text">Rating</span>
               </a>
             </li>
-           
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/messenger">
-                <i className="fas fa-solid fa-comments sidebar-icon"></i>
-                <span className="sidebar-text">Messages</span>
+              <a className="sidebar-link" href="/bloglistcoop">
+                <i className="fas fa-newspaper sidebar-icon"></i>
+                <span className="sidebar-text">Blogs</span>
               </a>
             </li>
             <li className="sidebar-item">
               <a className="sidebar-link" href="/forumlistcoop">
                 <i className="fas fa-pen-to-square sidebar-icon"></i>
-                <span className="sidebar-text">Forum</span>
+                <span className="sidebar-text">Discussion</span>
+              </a>
+            </li>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/productarchive">
+                <i className="fas fa-solid fa-bag-shopping sidebar-icon"></i>
+                <span className="sidebar-text">Product Archive</span>
               </a>
             </li>
             {/* <li className="sidebar-item">

@@ -60,8 +60,15 @@ export const postReducer = (state = initialState, action) => {
         loading: false,
         posts: Array.isArray(action.payload) ? action.payload : [],
       };
-
-    case UPDATE_POST_SUCCESS:
+      case UPDATE_POST_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          post: action.payload, // Updated single post
+          posts: state.posts.map((post) =>
+            post._id === action.payload._id ? action.payload : post // Update post in the list
+          ),
+        };
     case POST_IMAGE_DELETE_SUCCESS:
       return {
         ...state,

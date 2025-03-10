@@ -93,10 +93,10 @@ const ProductList = () => {
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   if (loading) return <p className="text-center text-xl">Loading...</p>;
-  if (error)
-    return (
-      <p className="text-center text-red-500">{`Error loading products: ${error}`}</p>
-    );
+  // if (error)
+  //   return (
+  //     <p className="text-center text-red-500">{`Error loading products: ${error}`}</p>
+  //   );
 
   return (
     <div className="product-list-container">

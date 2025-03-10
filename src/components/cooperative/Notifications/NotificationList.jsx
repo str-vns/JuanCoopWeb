@@ -4,26 +4,24 @@ import { singleNotification, readAllNotifications, readNotification } from '@src
 import { getCurrentUser, getToken } from "@utils/helpers";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import "@assets/css/notificationlist.css"; // Import styles
+import "@assets/css/notificationlist.css"; // Updated styles
 import Sidebar from "../sidebar";
 
 const NotificationList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [token, setToken] = useState(getToken());
   const [refresh, setRefresh] = useState(false);
 
-  // Fetch user details
   const currentUser = getCurrentUser();
   const userId = currentUser?._id;
   const userRoles = currentUser?.roles;
   const isCooperative = userRoles?.includes("Cooperative");
   const isCustomer = userRoles?.includes("Customer");
 
-  // Apply dynamic styling based on user roles
-  const containerClass = isCooperative && isCustomer ? "container-coop" : "container";
+  const containerClass = isCooperative && isCustomer ? "coop-notif-container-coop" : "coop-notif-container";
 
-  // Redux state for notifications
   const { notifloading, notification } = useSelector((state) => state.getNotif);
 
   useEffect(() => {
@@ -36,16 +34,19 @@ const NotificationList = () => {
       dispatch(singleNotification(userId, token));
       setRefresh(false);
     }, 500);
-  }, [dispatch, token, userId]);
+  }, [dispatch, token]);
 
   const handleRead = (id, type) => {
     dispatch(readNotification(id, token));
     if (type === "order") {
-      navigate("/user/orders");
+      navigate("/cooporderlist");
+    } else if (type === "product") {
+      navigate("/productlist");
+    } else if (type === "members") {
+      navigate("/memberNot");
     } else if (type === "message") {
-      navigate("/messages");
+      navigate("/messenger");
     }
-    onRefresh();
   };
 
   const handleReadAll = () => {
@@ -55,34 +56,34 @@ const NotificationList = () => {
 
   return (
     <div className={containerClass}>
-      <header className="header">
-        <button className="menu-button" onClick={() => navigate("/menu")}>
-          ☰
-        </button>
-        <h2>Notifications</h2>
+      <header className="coop-notif-header">
+        <h2>📢 Notifications</h2>
+        <button className="coop-notif-mark-all" onClick={handleReadAll}>Mark All as Read</button>
       </header>
 
-      <Sidebar/>
-
-      <button className="mark-all" onClick={handleReadAll}>Mark All as Read</button>
+      <Sidebar />
 
       {notifloading ? (
-        <p>Loading...</p>
+        <p className="coop-notif-loading">Loading...</p>
       ) : notification?.length > 0 ? (
-        <ul className="notification-list">
+        <ul className="coop-notif-list">
           {notification.map((item, index) => (
-            <li key={index} className={`notification-item ${item.readAt ? "read" : "unread"}`} onClick={() => handleRead(item._id, item.type)}>
-              {item.url && <img src={item.url} alt="Notification" className="notif-image" />}
-              <div className="notif-content">
+            <li 
+              key={index} 
+              className={`coop-notif-item ${item.readAt ? "coop-notif-read" : "coop-notif-unread"}`} 
+              onClick={() => handleRead(item._id, item.type)}
+            >
+              {item.url && <img src={item.url} alt="Notification" className="coop-notif-image" />}
+              <div className="coop-notif-content">
                 <h4>{item.title}</h4>
                 <p>{item.content}</p>
-                <span className="timestamp">{moment(item.createdAt).fromNow()}</span>
+                <span className="coop-notif-timestamp">{moment(item.createdAt).fromNow()}</span>
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No notifications found.</p>
+        <p className="coop-notif-empty">No notifications found.</p>
       )}
     </div>
   );
