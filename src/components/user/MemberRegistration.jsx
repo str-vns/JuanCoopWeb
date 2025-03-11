@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { allCoops } from "@redux/Actions/coopActions";
-import { createMember } from "@redux/Actions/memberActions";
+import { createMember,memberDetails } from "@redux/Actions/memberActions";
+import { getToken, getCurrentUser } from "@utils/helpers";
+
 import Navbar from "../layout/navbar";
-import { getCurrentUser } from "@utils/helpers";
 import "@assets/css/memberRegistration.css";
 
 function MemberRegistration() {
   const { coops } = useSelector((state) => state.allofCoops);
+  const { loading: memberLoading, members, error } = useSelector((state) => state.memberList);
   const currentUser = getCurrentUser();
   const userId = currentUser?._id;
+  const token = getToken(); // Directly get token
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,6 +28,7 @@ function MemberRegistration() {
 
   useEffect(() => {
     dispatch(allCoops());
+    dispatch(memberDetails(userId, token));
   }, [dispatch]);
 
   const handleFileChange = (e, setFile) => {
@@ -78,12 +82,31 @@ function MemberRegistration() {
       <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="member-registration-input" />
 
       <label>Choose Cooperative:</label>
-      <select value={coopId} onChange={(e) => setCoopId(e.target.value)} className="member-registration-select">
+      {/* <select value={coopId} onChange={(e) => setCoopId(e.target.value)} className="member-registration-select">
         <option value="">Select Cooperative</option>
         {coops.map((coop) => (
           <option key={coop._id} value={coop._id}>{coop.farmName}</option>
         ))}
-      </select>
+      </select> */}
+
+<select
+  value={coopId}
+  onChange={(e) => setCoopId(e.target.value)}
+  className="member-registration-select"
+>
+  <option value="" disabled>Select Cooperative</option>
+  {coops && coops.length > 0 ? (
+    coops
+      .filter(coop => !members.some(member => member.coopId?._id === coop._id))
+      .map((coop) => (
+        <option key={coop._id} value={coop._id}>
+          {coop.farmName || "None"}
+        </option>
+      ))
+  ) : (
+    <option value="" disabled>No Cooperative</option>
+  )}
+</select>
 
       <label>Barangay Clearance:</label>
       <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setBarangayClearance)} className="member-registration-file" />

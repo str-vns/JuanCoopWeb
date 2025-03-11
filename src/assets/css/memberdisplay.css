@@ -1,0 +1,96 @@
+/* General container */
+.member-container {
+    padding: 20px;
+    padding-top: 100px;
+}
+
+/* Member list container */
+.member-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Individual member card */
+/* Individual member card */
+.member-card {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    text-align: left; /* Ensure text is aligned to the left */
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    gap: 15px; /* Space between image and text */
+}
+
+/* Member details */
+.member-details {
+    flex: 1; /* Allow text to take up remaining space */
+    text-align: left; /* Ensure text inside is left-aligned */
+}
+
+/* Member image */
+.member-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Member details */
+.member-details {
+    flex: 1; /* Allow text to take up remaining space */
+}
+
+/* Status colors */
+.status-member {
+    color: green;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+/* Button for joining */
+.join-button {
+    background: #f7b900;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.join-button:hover {
+    background: #e6a400;
+}
+
+/* Error message */
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+/* Header */
+.members-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: #ffcc00;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.members-list-header h1 {
+    color: #000000;
+    font-size: 1.8rem;
+    font-weight: bold;
+}

@@ -92,7 +92,7 @@ const Profile = () => {
             Register your Cooperative
           </a>
           <br></br>
-          <a href="/memberRegistration" className="coop-link">
+          <a href="/memberdisplay" className="coop-link">
             Join an Existing Cooperative
           </a>
         </div>

@@ -117,6 +117,7 @@ import AssignRider from "./components/cooperative/Rider/AssignRider";
 import CoopHistory from "./components/cooperative/Rider/CoopHistory";
 
 import Client_Cancelled from "./components/Cancelled/Client_Cancelled";
+import MemberDisplay from "./components/user/MemberDisplay";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
@@ -303,6 +304,11 @@ function App() {
           <Route path="/coophistory" element={<CoopHistory/>}/>
 
           <Route path="/client_cancelled" element={<Client_Cancelled/>}/>
+           {/* this route is for the Member list in User Account for Coop Registration */}
+          
+           <Route path="/memberDisplay" element={<MemberDisplay/>}/>
+
+
         </Routes>
       </div>
     </Router>
