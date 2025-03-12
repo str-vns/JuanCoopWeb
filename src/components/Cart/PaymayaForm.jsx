@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "@assets/css/Paymaya.css";
+import "@assets/css/gcash.css";
 import Navbar from "../layout/navbar";
 
 const PaymayaForm = () => {
