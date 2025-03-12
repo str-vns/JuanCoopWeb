@@ -7,37 +7,99 @@ import {
   removeFromCart,
   updateCartInv,
 } from "@redux/Actions/cartActions";
-import { isAuth, getToken } from "@utils/helpers";
+import { isAuth, getToken, getCurrentUser } from "@utils/helpers";
 import baseURL from "@Commons/baseUrl";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { memberDetails } from "@redux/Actions/memberActions";
 import { FaInfoCircle } from "react-icons/fa";
+import { useEffect } from "react";
 
-const SHIPPING_FEE = 75; // Example shipping fee
-const TAX_RATE = 0.12; // Example tax rate (12%)
+const SHIPPING_FEE = 75; 
+const TAX_RATE = 0.12;
 
 const Carts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = isAuth();
   const token = getToken();
+  const cUser = getCurrentUser();
   const cartItems = useSelector((state) => state.cartItems);
+  const { loading, members, error }  = useSelector((state) => state.memberList); 
+  const approvedMember = members?.filter(member => member.approvedAt !== null);
+  const coopId = approvedMember?.map(member => member.coopId?._id) || [];
+  const userId = cUser?._id;
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.pricing * item.quantity,
     0
   );
-
+ 
+  useEffect(() => {
+      const membering = async () => {
+          try {
+              dispatch(memberDetails(userId, token));
+          } catch (error) {
+              console.error("Error fetching member details:", error);
+          }
+      }
+      membering();
+  },[])
+  
   const handleTaxInfo = () => {
     alert(
-      "This tax applies to non-members of the cooperative. If you want to save on future purchases, consider registering as a member."
+      "This tax applies to users who are not members of any cooperative. If you want to save on future purchases, consider registering as a member."
     );
   };
 
-  const tax = subtotal * TAX_RATE;
-  const totalPrice = (subtotal + SHIPPING_FEE + tax).toFixed(2);
+  const calculateShipping = () => {
+    const uniqueCoops = new Set();
+    cartItems.forEach((item) => {
+      if (item?.coop) {
+        uniqueCoops.add(item.coop);
+      }
+    });
+  
+    const shippingCost = uniqueCoops.size * 75; 
+  
+    return shippingCost;
+  };
 
-  console.log("Cart Items:", cartItems);
+  const calculateTax = () => {
+    const hasNonMemberItem = cartItems.some(item => 
+      item?.coop && !coopId.includes(item.coop)
+  );
+    return hasNonMemberItem ? 0.12 : 0;
+  };
+
+  const calculateFinalTotal = () => {
+    const shippingCost = calculateShipping();
+
+    let taxableTotal = 0;
+    let nonTaxableTotal = 0;
+
+
+    cartItems.forEach((item) => {
+      console.log("Item: ", item);
+      const itemTotal = item.pricing * item.quantity;
+      console.log("Item Total: ", itemTotal);
+  
+      if (!coopId.includes(item?.coop)) {
+          taxableTotal += itemTotal;  
+      } else {
+          nonTaxableTotal += itemTotal;  
+      }
+  });
+
+    const taxAmount = taxableTotal * 0.12; 
+    const finalTotal = taxableTotal + nonTaxableTotal + taxAmount + shippingCost;
+
+    return finalTotal.toFixed(2);
+  };
+
+  console.log("Subtotal:", subtotal);
+  console.log("Calculated Tax:", calculateTax());
+  console.log("Final Total:", calculateFinalTotal());
 
   const handleIncrement = (item) => {
     if (item?.quantity < item?.maxQuantity) {
@@ -56,6 +118,9 @@ const Carts = () => {
   };
 
   const checkoutHandler = async () => {
+    const taxAmount = calculateTax();
+    const totalPrice = parseFloat(calculateFinalTotal());
+
     const orderItems = {
       orderItems: cartItems.map((item) => ({
         product: item.productId,
@@ -63,9 +128,9 @@ const Carts = () => {
         quantity: item.quantity,
       })),
       subtotal,
-      tax: tax.toFixed(2),
+      tax: taxAmount.toFixed(2),
       shippingFee: SHIPPING_FEE,
-      totalPrice,
+      totalPrice: totalPrice.toFixed(2),
     };
 
     try {
@@ -110,7 +175,7 @@ const Carts = () => {
     }
   };
 
-  const isLoggedIn = async () => {
+  const isLoggedIn = () => {
     navigate("/login?redirect=shippings");
   };
 
@@ -135,7 +200,7 @@ const Carts = () => {
                     </a>
                     <div className="cart-item-info">
                       <a href="#" className="cart-item-title">
-                        {item.productName}{" "}
+                        {item.productName}
                       </a>
                       <a href="#" className="cart-item-title">
                         {item.unitName} {item.metricUnit}
@@ -167,26 +232,9 @@ const Carts = () => {
                     <div className="cart-item-actions">
                       <button
                         type="button"
-                        className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+                        className="text-red-600 hover:underline"
                         onClick={() => handleRemove(item)}
                       >
-                        <svg
-                          className="me-1.5 h-5 w-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M6 18 17.94 6M18 18 6.06 6"
-                          />
-                        </svg>
                         Remove
                       </button>
                     </div>
@@ -198,48 +246,23 @@ const Carts = () => {
           {cartItems.length > 0 && (
             <div className="cart-summary">
               <p className="total-text">Subtotal: ₱ {subtotal.toFixed(2)}</p>
-              <p
-                className="total-text"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center", // Fixed camelCase issue
-                }}
-              >
-                Tax: ₱ {tax.toFixed(2)}
+              <p className="total-text">
+                Tax: ₱ {calculateTax().toFixed(2)}
                 <FaInfoCircle
-                  style={{
-                    marginLeft: "8px",
-                    cursor: "pointer",
-                    color: "#007bff",
-                    fontSize: "14px",
-                  }}
+                  className="ml-2 text-blue-500 cursor-pointer"
                   onClick={handleTaxInfo}
                 />
               </p>
-
-              <p className="total-text">
-                Shipping Fee: ₱ {SHIPPING_FEE.toFixed(2)}
-              </p>
-              <p className="total-text">Total: ₱ {totalPrice}</p>
+              <p className="total-text">Shipping Fee: ₱ {calculateShipping().toFixed(2)}</p>
+              <p className="total-text">Total: ₱ {calculateFinalTotal()}</p>
             </div>
           )}
-
           <div className="button-row">
-            <a href="/" className="button-proceed-checkout">
-              Continue Shopping
-            </a>
+            <a href="/" className="button-proceed-checkout">Continue Shopping</a>
             {cartItems.length > 0 && auth ? (
-              <button
-                onClick={checkoutHandler}
-                className="button-proceed-checkout"
-              >
-                Proceed to Checkout
-              </button>
+              <button onClick={checkoutHandler} className="button-proceed-checkout">Proceed to Checkout</button>
             ) : (
-              <button className="button-proceed-checkout" onClick={isLoggedIn}>
-                Proceed to Checkout
-              </button>
+              <button className="button-proceed-checkout" onClick={isLoggedIn}>Proceed to Checkout</button>
             )}
           </div>
         </div>

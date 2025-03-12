@@ -5,12 +5,12 @@ import {
 } from "redux";
 import { thunk } from "redux-thunk";
 import cartItems from "@redux/Reducers/cartReducers";
-import payItems from "@redux/Reducers/paymentReducers";
+import { payItems , payData } from "@redux/Reducers/paymentReducers";
 import shipItems from "@redux/Reducers/shippingReducers";
 import { authReducer } from "@redux/Reducers/authReducers";
 import { OTPReducer,RegisterReducer,userReducer,EditProfileReducer,getUsersReducers,AllUsersReducer,checkEmailReducer,otpForgotPasswordReducer,googleLoginReducer} from "@redux/Reducers/userReducers";
 import { addressReducers } from "@redux/Reducers/addressReducers";
-import { orderReducer,orderCoopReducer,orderShippedReducer,historyDeliveryCoopReducer, coopdashboardReducer,overalldashboardReducer} from "./Reducers/orderReducer";
+import { orderReducer,orderCoopReducer,orderShippedReducer,historyDeliveryCoopReducer, coopdashboardReducer,overalldashboardReducer,onlinePaymentReducer, getPaymentReducer} from "./Reducers/orderReducer";
 import {
   messageListReducer,
   sendMessageReducer,
@@ -39,20 +39,20 @@ import { driverApiReducer, driverListReducer, onlyApprovedDriverReducer, driverP
 import salesReducer from "./Reducers/salesReducer"; 
 import rankedReducer from "./Reducers/rankReducers";
 import { commentcreateReducers } from "@redux/Reducers/commentReducers";
-import { walletReducer } from "@redux/Reducers/walletReducer";
+import { walletReducer } from "@redux/Reducers/walletReducers";
+
 import { transactionReducer, transactionAPIReducer, refundReducer } from "@redux/Reducers/transactionReducer";
 import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
 import { postReducer, addCommentReducer, getCommentsReducer, postLikeReducer } from "@redux/Reducers/postReducer";
 import { deliveryListReducer, deliveryApiReducer, deliveryCompleteReducer, deliveryHistoryReducer } from "@redux/Reducers/deliveryReducers";
 import { cancelledReducerApi, cancelledReducer } from "@redux/Reducers/cancelledReducer";
 import { AddComment } from "@mui/icons-material";
-
-
 const reducers = combineReducers({
   sales: salesReducer,
   rank: rankedReducer,
   cartItems: cartItems,
   payItems: payItems,
+  payData: payData,
   shipItems: shipItems,
   authInfo: authReducer,
   userOnly: userReducer,
@@ -130,9 +130,13 @@ const reducers = combineReducers({
 
   cancelled: cancelledReducer,
   cancelledApi: cancelledReducerApi,
+
+  onlinePay: onlinePaymentReducer,
+  getPayment: getPaymentReducer,
   getWallet: walletReducer,
   transaction: transactionReducer,
   transactionAPI: transactionAPIReducer,
+  refund: refundReducer
 });
 
 let initialState = {

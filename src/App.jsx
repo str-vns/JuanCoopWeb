@@ -129,6 +129,11 @@ import PaymentWithdraw from "./components/Cooperative/Wallet/PaymentWithdraw";
 import GcashWithdrawForm from "./components/Cooperative/Wallet/GcashWithdrawForm";
 import MayaForm from "./components/Cooperative/Wallet/MayaWithdrawForm";
 import CreateWithdraw from "./components/Cooperative/Wallet/CreateWithdraw";
+
+import GcashForm from "./components/Cart/gcashForm";
+import PaymayaForm from "./components/Cart/PaymayaForm";
+
+
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -317,7 +322,8 @@ function App() {
           
            <Route path="/memberDisplay" element={<MemberDisplay/>}/>
 
-
+          <Route path="/gcash" element={<GcashForm/>} />
+          <Route path ="/paymaya" element={<PaymayaForm/>} /> 
 
           <Route path="/withdrawlist" element={<WithdrawList/>}/>
           <Route path="/paymentwithdraw" element={<PaymentWithdraw/>}/>

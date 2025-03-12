@@ -13,13 +13,26 @@ const Payment = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const handleConfirmPayment = (e) => {
     e.preventDefault();
-    if(selectedPaymentMethod){
+    if(selectedPaymentMethod === "COD"){
       const data = {
         paymentMethod: selectedPaymentMethod
       }
       dispatch(addPay(data));
       navigate("/checkout"); 
-    }else {
+    } else if (selectedPaymentMethod === "gcash") {
+      const data = {
+        paymentMethod: selectedPaymentMethod  
+      }
+      dispatch(addPay(data));
+      navigate("/gcash")
+    } else if (selectedPaymentMethod === "paymaya"){
+      const data = {
+        paymentMethod: selectedPaymentMethod  
+      }
+      dispatch(addPay(data));
+      navigate("/paymaya")
+    }
+    else {
        toast.error("Please select a Payment Method to proceed.",
               {
                 theme: "dark",
@@ -68,20 +81,38 @@ const Payment = () => {
   
           {/* Online Payment Option */}
           <label
-            className={`address-box ${selectedPaymentMethod === "Credit Card" ? "selected" : ""}`}
+      className={`address-box ${selectedPaymentMethod === "Gcash" ? "selected" : ""}`}
+    >
+      <input
+        type="radio"
+        name="payment-method"
+        value="Gcash"
+        checked={selectedPaymentMethod === "gcash"}
+        onChange={() => {setSelectedPaymentMethod("gcash")}}
+      />
+      <div className="address-details">
+        <p>
+          <strong>Gcash</strong>
+        </p>
+        <p>Pay securely with Gcash</p>
+      </div>
+    </label>
+
+          <label
+            className={`address-box ${selectedPaymentMethod === "Paymaya" ? "selected" : ""}`}
           >
             <input
               type="radio"
               name="payment-method"
-              value="Credit Card"
-              checked={selectedPaymentMethod === "Credit Card"}
-              onChange={() => setSelectedPaymentMethod("Credit Card")}
+              value="Paymaya"
+              checked={selectedPaymentMethod === "paymaya"}
+              onChange={() => setSelectedPaymentMethod("paymaya")}
             />
             <div className="address-details">
               <p>
-                <strong>Online Payment</strong>
+                <strong>Paymaya</strong>
               </p>
-              <p>Pay securely with credit card, PayPal, or other methods.</p>
+              <p>Pay securely with Paymaya</p>
             </div>
           </label>
         </div>

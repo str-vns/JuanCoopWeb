@@ -26,7 +26,13 @@ import {
 
     OVERALL_DASHBOARD_REQUEST, 
     OVERALL_DASHBOARD_SUCCESS, 
-    OVERALL_DASHBOARD_FAIL
+    OVERALL_DASHBOARD_FAIL,
+    GET_PAYMENT_REQUEST,
+    GET_PAYMENT_SUCCESS,
+    GET_PAYMENT_FAIL,
+    ONLINE_PAYMENT_REQUEST,
+    ONLINE_PAYMENT_SUCCESS,
+    ONLINE_PAYMENT_FAIL,
 
   } from '../Constants/orderConstants';
   
@@ -161,6 +167,38 @@ import {
         return { ...state, overalldashboardloading: false, overalldashboards: action.payload };
       case OVERALL_DASHBOARD_FAIL:
         return { ...state, overalldashboardloading: false, overalldashboarderror: action.payload };
+      default:
+        return state;
+    }
+  };
+
+  export const getPaymentReducer = (state = { payment: {} }, action) => {
+    switch (action.type) {
+      case GET_PAYMENT_REQUEST:
+        return { getpaymentloading: true, getpayment: {} };
+  
+      case GET_PAYMENT_SUCCESS:
+        return { getpaymentloading: false, getpayment: action.payload };
+  
+      case GET_PAYMENT_FAIL:
+        return { getpaymentloading: false, getpaymenterror: action.payload };
+  
+      default:
+        return state;
+    }
+  };
+
+  export const onlinePaymentReducer = (state = { payment: {} }, action) => {
+    switch (action.type) {
+      case ONLINE_PAYMENT_REQUEST:
+        return { paymentloading: true, payment: {} };
+  
+      case ONLINE_PAYMENT_SUCCESS:
+        return { paymentloading: false, payment: action.payload };
+  
+      case ONLINE_PAYMENT_FAIL:
+        return { paymentloading: false, paymenterror: action.payload };
+  
       default:
         return state;
     }
