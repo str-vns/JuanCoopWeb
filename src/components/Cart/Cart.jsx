@@ -135,7 +135,18 @@ const Carts = () => {
     dispatch(removeFromCart(item.inventoryId));
   };
 
+  
+
+  const isLoggedIn = () => {
+    navigate("/login?redirect=shippings");
+  };
+
   const checkoutHandler = async () => {
+
+    if( !auth ) {
+      return isLoggedIn();
+    } 
+    
     const taxAmount = calculateTax();
     const totalPrice = parseFloat(calculateFinalTotal());
 
@@ -184,7 +195,8 @@ const Carts = () => {
                 item.currentStock
               )
             );
-          }
+          
+        }
         });
       }
     } catch (error) {
@@ -192,11 +204,6 @@ const Carts = () => {
       console.error("Checkout Error:", error);
     }
   };
-
-  const isLoggedIn = () => {
-    navigate("/login?redirect=shippings");
-  };
-
   return (
     <section className="cart-section">
       <Navbar />
