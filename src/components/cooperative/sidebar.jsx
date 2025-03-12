@@ -1,14 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "@assets/css/adminSidebar.css";
 import logo from "@assets/img/logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "@redux/Actions/authActions";
 import Cookies from "js-cookie";
+import { getCurrentUser, getToken, isAuth } from "@utils/helpers";
+import {
+  singleNotification,
+  readAllNotifications,
+  readNotification,
+} from "@redux/Actions/notificationActions";
+import { useSocket } from "../../../SocketIo";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = getCurrentUser();
+  const socket = useSocket();
+  const token = getToken();
+  const { notification } = useSelector((state) => state.getNotif);
+  const [notifCount, setNotifCount] = useState(0);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      if (user?._id) {
+        dispatch(singleNotification(user._id, token));
+      }
+    };
+    fetchNotifications();
+  }, [user?._id, dispatch]);
+
+  useEffect(() => {
+    setNotifCount(notification.filter((notif) => notif.readAt === null).length);
+  }, [notification]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("getNotification", (data) => {
+        const unreadCount = notification.filter((notif) => notif.readAt === null).length;
+        setNotifCount(unreadCount + 1);
+      });
+      return () => {
+        socket.off("getNotification");
+      };
+    }
+  }, [socket, notification]);
+
+  const handleReadAll = async () => {
+    dispatch(readAllNotifications(user?._id, token));
+    setNotifCount(0);
+  };
 
   const handleLogout = () => {
     navigate("/");
@@ -72,7 +115,7 @@ const Sidebar = () => {
             <li className="sidebar-item">
               <a className="sidebar-link" href="/notificationlist">
                 <i className="fas fa-solid fa-bell sidebar-icon"></i>
-                <span className="sidebar-text">Notifications</span>
+                <span className="sidebar-text">Notifications {notifCount > 0 && <span className="coop-notif-badge">{notifCount}</span>}</span>
               </a>
             </li>
             <li className="sidebar-item">
@@ -82,7 +125,7 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/riderlist">
+              <a className="sidebar-link" href="/withdrawlist">
                 <i className="fa-solid fa-wallet sidebar-icon"></i>
                 <span className="sidebar-text">Wallet</span>
               </a>

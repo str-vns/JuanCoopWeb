@@ -9,6 +9,17 @@
   z-index: 1000;
 }
 
+.coop-notif-badge {
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 7px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+
 .coop-sidebar-content {
   padding: 1rem;
 

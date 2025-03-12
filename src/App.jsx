@@ -116,11 +116,19 @@ import RiderDelivery from "./components/cooperative/Rider/RiderDelivery";
 import AssignRider from "./components/cooperative/Rider/AssignRider";
 import CoopHistory from "./components/cooperative/Rider/CoopHistory";
 
+
+
 import Client_Cancelled from "./components/Cancelled/Client_Cancelled";
 import MemberDisplay from "./components/user/MemberDisplay";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
+import MemberForumList from "./components/user/MemberForumList";
+import WithdrawList from "./components/Cooperative/Wallet/WithdrawList";
+import PaymentWithdraw from "./components/Cooperative/Wallet/PaymentWithdraw";
+import GcashWithdrawForm from "./components/Cooperative/Wallet/GcashWithdrawForm";
+import MayaForm from "./components/Cooperative/Wallet/MayaWithdrawForm";
+import CreateWithdraw from "./components/Cooperative/Wallet/CreateWithdraw";
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -227,6 +235,7 @@ function App() {
           <Route path="/productarchive" element={<ProductArchive/>} />
           <Route path="/forumlistcoop" element={<ForumListCoop/>} />
           <Route path="/forumpostlist" element={<ForumPostList/>} />
+          <Route path="/coopmemberforum" element={<MemberForumList/>}/>
 
           {/* Inventory */}
           <Route path="/inventorylist" element={<InventoryList/>} />
@@ -309,6 +318,12 @@ function App() {
            <Route path="/memberDisplay" element={<MemberDisplay/>}/>
 
 
+
+          <Route path="/withdrawlist" element={<WithdrawList/>}/>
+          <Route path="/paymentwithdraw" element={<PaymentWithdraw/>}/>
+          <Route path="/gcashwithdraw" element={<GcashWithdrawForm/>}/>
+          <Route path="/mayawithdraw" element={<MayaForm/>}/>
+          <Route path="/createwithdraw" element={<CreateWithdraw/>}/>
         </Routes>
       </div>
     </Router>

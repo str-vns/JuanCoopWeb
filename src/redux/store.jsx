@@ -39,8 +39,9 @@ import { driverApiReducer, driverListReducer, onlyApprovedDriverReducer, driverP
 import salesReducer from "./Reducers/salesReducer"; 
 import rankedReducer from "./Reducers/rankReducers";
 import { commentcreateReducers } from "@redux/Reducers/commentReducers";
-
- import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
+import { walletReducer } from "@redux/Reducers/walletReducer";
+import { transactionReducer, transactionAPIReducer, refundReducer } from "@redux/Reducers/transactionReducer";
+import { memberListReducer, memberApiReducer } from "@redux/Reducers/memberReducer";
 import { postReducer, addCommentReducer, getCommentsReducer, postLikeReducer } from "@redux/Reducers/postReducer";
 import { deliveryListReducer, deliveryApiReducer, deliveryCompleteReducer, deliveryHistoryReducer } from "@redux/Reducers/deliveryReducers";
 import { cancelledReducerApi, cancelledReducer } from "@redux/Reducers/cancelledReducer";
@@ -129,6 +130,9 @@ const reducers = combineReducers({
 
   cancelled: cancelledReducer,
   cancelledApi: cancelledReducerApi,
+  getWallet: walletReducer,
+  transaction: transactionReducer,
+  transactionAPI: transactionAPIReducer,
 });
 
 let initialState = {
