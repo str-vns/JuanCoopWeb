@@ -5,6 +5,8 @@ import Navbar from "../layout/navbar";
 import { toast } from "react-toastify";
 import { addPay } from '@redux/Actions/paymentActions';
 import { useDispatch } from "react-redux";
+import { addPaymentData } from '@redux/Actions/paymentActions';
+
 const unSuccess = "Unsuccessful_01";
 
 const Payment = () => {
@@ -19,6 +21,7 @@ const Payment = () => {
         paymentMethod: selectedPaymentMethod
       }
       dispatch(addPay(data));
+      dispatch(addPaymentData({})); 
       navigate("/checkout"); 
     } else if (selectedPaymentMethod === "gcash") {
       const data = {

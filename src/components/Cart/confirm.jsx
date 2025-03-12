@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from '@redux/Actions/cartActions';
 import { clearShip } from '@redux/Actions/shippingActions';
 import { clearPay } from '@redux/Actions/paymentActions';
+
 import html2pdf from 'html2pdf.js';
 
 const OrderConfirmation = () => {
@@ -25,6 +26,7 @@ const OrderConfirmation = () => {
     dispatch(clearCart());
     dispatch(clearShip());
     dispatch(clearPay());
+
     navigate("/");
     alert("Navigating back to Home...");
   };

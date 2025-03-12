@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "@assets/css/gcash.css";
 import Navbar from "../layout/navbar";
 import { addPaymentData } from '@redux/Actions/paymentActions';
-import { onlinePayment, getPayment } from "@src/redux/Actions/orderActions";
+import { onlinePayment } from "@src/redux/Actions/orderActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { memberDetails } from "@redux/Actions/memberActions";
@@ -16,13 +16,11 @@ const GcashForm = () => {
   const cUser = getCurrentUser()
   const dispatch = useDispatch()
   const userId = cUser._id
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
   const { loading, members, error }  = useSelector((state) => state.memberList); 
   console.log("members",members)
   const approvedMember = members?.find((member) => member.approvedAt !== null);
   const coopId = approvedMember?.coopId?._id;
+  const [finalAmount, setFinalAmount] = useState(0);
 
    useEffect(() => {
     if (!members) {
@@ -43,30 +41,31 @@ const GcashForm = () => {
     return shippingCost;
   };
 
+  useEffect(() => {
   const calculateFinalTotal = () => {
     const shippingCost = calculateShipping();
-
     let taxableTotal = 0;
     let nonTaxableTotal = 0;
 
-
     cartItems.forEach((item) => {
-      console.log("Item: ", item);
       const itemTotal = item.pricing * item.quantity;
-      console.log("Item Total: ", itemTotal);
-  
       if (coopId !== item.coop) {
-          taxableTotal += itemTotal;  
+        taxableTotal += itemTotal;
       } else {
-          nonTaxableTotal += itemTotal;  
+        nonTaxableTotal += itemTotal;
       }
-  });
+    });
 
-    const taxAmount = taxableTotal * 0.12; 
+    const taxAmount = taxableTotal * 0.12;
     const finalTotal = taxableTotal + nonTaxableTotal + taxAmount + shippingCost;
 
     return finalTotal.toFixed(2);
   };
+
+  setFinalAmount(calculateFinalTotal());
+}, [cartItems, coopId]); 
+
+  
 
   const handleSubmit = async (values) => {
 
@@ -78,9 +77,21 @@ const GcashForm = () => {
         type: payItems.paymentMethod,
         isMobile: false,
     }
-    const paymentResult = await dispatch(onlinePayment(paymentData, token));
-    console.log("payData", paymentResult)
-    alert("Gcash payment details submitted successfully!");
+    try {
+      const paymentResult = await dispatch(onlinePayment(paymentData, token));
+
+      if (paymentResult?.attributes?.next_action?.redirect?.url) {
+        alert("Gcash payment details submitted successfully!");
+        dispatch(addPaymentData(paymentData));
+        window.location.href = paymentResult.attributes.next_action.redirect.url; 
+
+      } else {
+        throw new Error("Payment processing failed, no redirect URL.");
+      }
+    } catch (error) {
+      console.error("Payment creation error:", error);
+      alert(error.message || "Failed to create payment.");
+    }
   };
 
   const validationSchema = Yup.object({
@@ -92,12 +103,14 @@ const GcashForm = () => {
     amount: Yup.number().required("Amount is required"),
   })
 
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: "",
       email: "",
       phone: "09",
-      amount: calculateFinalTotal(),
+      amount: finalAmount,
     },
     validationSchema,
     onSubmit: (values) => {
@@ -108,6 +121,7 @@ const GcashForm = () => {
       }
     }
   })
+  
   return (
     <div className="gcashfinal">
       <div className="gcash-form-container">

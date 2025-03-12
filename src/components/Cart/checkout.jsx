@@ -3,10 +3,11 @@ import "@assets/css/checkout.css";
 import Navbar from "../layout/navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getCurrentUser } from "@utils/helpers";
-import { getToken } from "@utils/helpers";
+import { getCurrentUser, isAuth, getToken } from "@utils/helpers";
+import { memberDetails } from "@redux/Actions/memberActions";
 import { toast } from "react-toastify";
 import { createOrder } from "@redux/Actions/orderActions";
+import { clearPayData } from '@redux/Actions/paymentActions';
 
 const CheckoutAccordion = () => {
   const dispatch = useDispatch();
@@ -17,17 +18,93 @@ const CheckoutAccordion = () => {
   const payItems = useSelector((state) => state.payItems);
   const cartItems = useSelector((state) => state.cartItems);
   const shipItems = useSelector((state) => state.shipItems);
+  const payData = useSelector((state) => state.payData);
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.pricing * item.quantity,
     0
   );
+  const { loading, members, error } = useSelector((state) => state.memberList);
+  const approvedMember = members?.filter(
+    (member) => member.approvedAt !== null
+  );
+  const coopId = approvedMember?.map((member) => member.coopId?._id) || [];
 
-  const shippingFee = 75; // Fixed shipping fee in PHP
+const shippingFee = 75; // Fixed shipping fee in PHP
 const taxRate = 0.12; // 12% tax
 const taxAmount = totalPrice * taxRate;
 const grandTotal = totalPrice + taxAmount + shippingFee;
 
+useEffect(() => {
+  const membering = async () => {
+    try {
+      dispatch(memberDetails(userId, token));
+    } catch (error) {
+      console.error("Error fetching member details:", error);
+    }
+  };
+  membering();
+}, []);
 
+const calculateShipping = () => {
+  const uniqueCoops = new Set();
+  cartItems.forEach((item) => {
+    if (item?.coop) {
+      uniqueCoops.add(item.coop);
+    }
+  });
+
+  const shippingCost = uniqueCoops.size * 75;
+
+  return shippingCost;
+};
+
+const calculateTax = () => {
+  const hasNonMemberItem = cartItems.some(
+    (item) => item?.coop && !coopId.includes(item.coop)
+  );
+  return hasNonMemberItem ? 0.12 : 0;
+};
+
+const calculateFinalTotal = () => {
+  const shippingCost = calculateShipping();
+
+  let taxableTotal = 0;
+  let nonTaxableTotal = 0;
+
+  cartItems.forEach((item) => {
+    
+    const itemTotal = item.pricing * item.quantity;
+    if (!coopId.includes(item.coop)) {
+      taxableTotal += itemTotal;
+    } else {
+      nonTaxableTotal += itemTotal;
+    }
+  });
+
+  const taxAmount = taxableTotal * 0.12;
+  const finalTotal =
+    taxableTotal + nonTaxableTotal + taxAmount + shippingCost;
+
+  return finalTotal.toFixed(2);
+};
+
+const subtax = () => {
+
+  let taxableTotal = 0;
+
+cartItems.forEach((item) => {
+    
+    const itemTotal = item.pricing * item.quantity;
+    if (!coopId.includes(item.coop)) {
+      taxableTotal += itemTotal;
+    } 
+  });
+
+ return taxableTotal;
+}
+
+const payStatus = payData?.payStatus === "Paid" ? "Paid" : "Unpaid";
+console.log("Pay Status:", payStatus);
   const confirmOrder = async () => {
     if (!payItems || !shipItems || !cartItems) {
       toast?.error("There is a problem with your cart", {
@@ -68,20 +145,22 @@ const grandTotal = totalPrice + taxAmount + shippingFee;
         quantity: item?.quantity,
         price: item?.pricing,
         coopUser: item?.coop,
+        user: item.user,
         inventoryProduct: item?.inventoryId,
       })),
+
       shippingAddress: shipItems?._id,
       paymentMethod: payItems?.paymentMethod,
-      // totalPrice: totalPrice,
-      totalPrice: grandTotal, // Now includes shipping fee and tax
-      shippingFee: shippingFee, // Added shipping fee
-      taxAmount: taxAmount, // Added tax amount
+      payStatus: payStatus,
+      totalPrice: calculateFinalTotal(), 
+      shippingPrice: calculateShipping(), 
     };
-
+    console.log("Order Data:", orderData);
     try {
       const orderCreationResult = await dispatch(createOrder(orderData, token));
-
+      
       if (orderCreationResult?.order) {
+        dispatch(clearPayData());
         toast?.success("Your order has been successfully placed!", {
           theme: "dark",
           position: "top-right",
@@ -193,15 +272,15 @@ const grandTotal = totalPrice + taxAmount + shippingFee;
   </div>
   <div className="flex justify-between !text-base font-medium">
     <span className="font-bold">Shipping Fee:</span> 
-    <dd>₱ {shippingFee.toFixed(2)}</dd>
+    <dd>₱ {calculateShipping().toFixed(2)}</dd>
   </div>
   <div className="flex justify-between !text-base font-medium">
     <span className="font-bold">Tax (12%):</span> 
-    <dd>₱ {taxAmount.toFixed(2)}</dd>
+    <dd>₱ {(subtax() * calculateTax()).toFixed(2)}</dd>
   </div>
   <div className="flex justify-between !text-lg font-bold border-t pt-2">
     <span className="font-bold">Grand Total:</span> 
-    <dd>₱ {grandTotal.toFixed(2)}</dd>
+    <dd>₱ {calculateFinalTotal()}</dd>
   </div>
 </div>
 

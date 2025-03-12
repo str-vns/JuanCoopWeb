@@ -6,7 +6,7 @@ import { getToken, isAuth, getCurrentUser } from "@utils/helpers";
 import { logoutUser } from "@redux/Actions/authActions";
 import { setCartItems } from "@redux/Actions/cartActions";
 import { setShippingItems } from "@redux/Actions/shippingActions";
-import { setPayItems } from "@redux/Actions/paymentActions";
+import { setPayItems, setPayDataItems } from "@redux/Actions/paymentActions";
 import {
   singleNotification,
   readAllNotifications,
@@ -74,7 +74,8 @@ const Navbar = () => {
         const storedCart = localStorage.getItem("cartItems");
         const storedShip = localStorage.getItem("shipItems");
         const storedPay = localStorage.getItem("payItems");
-
+        const storedPayData = localStorage.getItem("payData");
+  
         // Parse and dispatch if items exist
         if (storedCart) {
           const cartItems = JSON.parse(storedCart);
@@ -90,6 +91,12 @@ const Navbar = () => {
           const payItems = JSON.parse(storedPay);
           dispatch(setPayItems(payItems));
         }
+
+        if(storedPayData){
+          const payData = JSON.parse(storedPayData);
+          dispatch(setPayDataItems(payData));
+        }
+
       } catch (error) {
         console.error("Error loading items from localStorage:", error);
       }
