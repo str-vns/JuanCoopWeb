@@ -86,7 +86,7 @@ const OrderList = () => {
                       ))}
                     </td>
                     <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                    <td>₱ {order.totalPrice.toFixed(2)}</td>
+                    <td>₱ {order.totalAmount.toFixed(2)}</td>
                     <td className="actions-column">
                       <span
                         className="icon-view"

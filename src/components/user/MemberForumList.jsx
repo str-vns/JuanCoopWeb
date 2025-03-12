@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
+import "@assets/css/aboutUs.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchApprovedPosts, likePost, addComment } from "@src/redux/Actions/postActions";
-import { useNavigate } from "react-router-dom";
-import Sidebar from "../sidebar";
+import Navbar from "../layout/navbar";
 import { FaSearch, FaThumbsUp, FaComment, FaGrinStars, FaRegMeh, FaRegTired, FaRegLaugh } from "react-icons/fa";
 import { getToken, getCurrentUser } from "@utils/helpers";
-import "@assets/css/coopforumlist.css";
 
-const ForumListCoop = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const MemberForumList = () => {
+    const dispatch = useDispatch();
   const user = getCurrentUser();
   const token = getToken();
   const userId = user?._id;
@@ -74,8 +72,9 @@ const ForumListCoop = () => {
   };
 
   return (
-    <div className="forumlist-coop-container">
-      <Sidebar />
+    <>
+      <Navbar />
+      <div className="forumlist-coop-container">
       <div className="forumlist-coop-content">
         {/* Search Bar */}
         <div className="forumlist-coop-search-bar">
@@ -88,9 +87,6 @@ const ForumListCoop = () => {
             />
             <FaSearch className="forumlist-coop-search-icon" />
           </div>
-          <button className="forumlist-coop-add-post" onClick={() => navigate("/forumpostlist")}>
-            My Post
-          </button>
         </div>
 
         {/* Loading State */}
@@ -336,7 +332,8 @@ const ForumListCoop = () => {
 
       </div>
     </div>
+    </>
   );
 };
 
-export default ForumListCoop;
+export default MemberForumList;

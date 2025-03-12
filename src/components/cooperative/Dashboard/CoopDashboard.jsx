@@ -48,7 +48,7 @@ const CoopDashboard = () => {
   };
 
   return (
-    <div className="flex bg-yellow-50 min-h-screen">
+    <div className="flex bg-yellow-50 min-h-screen  ml-[200px]">
       <Sidebar />
       <div className="p-8 w-full">
         {/* Dashboard Overview */}
@@ -57,7 +57,7 @@ const CoopDashboard = () => {
             <div key={index} className="bg-yellow-300 p-6 rounded-xl shadow-lg flex flex-col items-center">
               <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
               <p className="text-3xl font-bold mt-2 text-gray-800">
-                {index === 0 ? `$${dashboard?.totalRevenue || 0}` : index === 1 ? dashboard?.totalOrders || 0 : dashboard?.totalCustomers || 0}
+                {index === 0 ? `₱ ${dashboard?.totalRevenue || 0}` : index === 1 ? dashboard?.totalOrders || 0 : dashboard?.totalCustomers || 0}
               </p>
             </div>
           ))}
@@ -119,7 +119,7 @@ const CoopDashboard = () => {
             <ul className="mt-2 space-y-2">
               {dashboard?.topSellingProducts?.map((product, index) => (
                 <li key={index} className="bg-yellow-100 p-3 rounded-md shadow-sm">
-                  <span className="font-medium text-gray-900">{product.productName}</span> - {product.totalQuantitySold} sold
+                  <span className="font-medium text-gray-900">{product.productName}</span> - {product.totalSold} sold
                 </li>
               ))}
             </ul>

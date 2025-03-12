@@ -12,6 +12,7 @@ import {
   readAllNotifications,
   readNotification,
 } from "@redux/Actions/notificationActions";
+import { memberDetails } from "@redux/Actions/memberActions";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../../SocketIo";
 import Cookies from "js-cookie";
@@ -26,10 +27,12 @@ const Navbar = () => {
   const { notifloading, notification, notiferror } = useSelector(
     (state) => state.getNotif
   );
+  const { loading, members, error } = useSelector((state) => state.memberList);
   const cartItems = useSelector((state) => state.cartItems);
   const cartItemsCount = cartItems.length;
   const [isOpen, setIsOpen] = useState(false);
   const [notifCount, setNotifCount] = useState(0);
+  const isApprovedMember = members?.some(member => member.approvedAt !== null);
 
   const handleRead = async (id, type) => {
     try {
@@ -51,6 +54,14 @@ const Navbar = () => {
       console.error("Error marking all as read: ", error);
     }
   };
+
+  useEffect(() => {
+    if (user?._id) {
+      // Fetch member details if the user is authenticated
+      dispatch(memberDetails(user._id, token));
+    }
+  }, [user?._id, dispatch, token]);
+
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -166,6 +177,11 @@ const Navbar = () => {
           <li>
             <a href="/aboutUs">About Us</a>
           </li>
+          {isApprovedMember && (
+            <li>
+              <a href="/coopmemberforum">Discussions</a>
+            </li>
+          )}
         </ul>
       </div>
       {/* <input
