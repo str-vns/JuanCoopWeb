@@ -46,7 +46,7 @@ const ProductCard = () => {
       try {
         setLoadingProduct(true);
         const { data } = await axios.get(`${baseURL}products/${id}`);
-        const productDetails = data.details;
+        const productDetails = data?.details;
         setProduct(productDetails);
         console.log("Product Details:", productDetails);
 
@@ -72,7 +72,7 @@ const ProductCard = () => {
         try {
           setLoadingCoop(true);
           const { data } = await axios.get(`${baseURL}farm/${product.coop}`);
-          setCoopDetails(data.details);
+          setCoopDetails(data?.details);
           setLoadingCoop(false);
         } catch (error) {
           console.error("Error fetching cooperative details:", error);
@@ -89,22 +89,23 @@ const ProductCard = () => {
     if (product?.coop) {
       dispatch(getCoop(product.coop));
     }
-    dispatch(Profileuser(userId?._id, token));
+  
+    if (userId?._id && token) {
+      dispatch(Profileuser(userId._id, token));
+    }
+  
     const checkLoginStatus = async () => {
-
-      if (token && auth) {
-        if (user && Array.isArray(user.wishlist)) {
-          const matchingProducts = user.wishlist.filter(
-            (item) => item.product === product?._id
-          );
-          setWishlist(matchingProducts);
-        }
+      if (token && auth && user && Array.isArray(user?.wishlist)) {
+        const matchingProducts = user.wishlist.filter(
+          (item) => item?.product === product?._id
+        );
+        setWishlist(matchingProducts);
       }
     };
-
+  
     checkLoginStatus();
-    
-  }, [product?._id, token, product?.coop]);
+  
+  }, [product?._id, token, product?.coop, user, auth]);
 
   const handleAddToCart = () => {
     if (!selectedStock) return;
