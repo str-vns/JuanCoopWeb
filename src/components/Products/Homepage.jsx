@@ -12,7 +12,7 @@ const CategorySection = ({ categories, onCategorySelect }) => {
   return (
     <div className="p-11 rounded-md shadow-sm bg-white w-1/4 mx-auto ">
       <div className="text-center mb-4">
-        <h1 className="text-lg font-semibold">All Categories</h1>
+        <h1 className="text-lg text-black font-semibold">All Categories</h1>
       </div>
       <div className="grid grid-cols-2 gap-4">
         {categories.length > 0 ? (
@@ -30,7 +30,9 @@ const CategorySection = ({ categories, onCategorySelect }) => {
                 alt={category.categoryName}
                 className="w-20 h-20 rounded-full object-cover mx-auto border border-gray-300"
               />
-              <p className="text-sm mt-2">{category.categoryName}</p>
+              {/* <p className="text-sm mt-2">{category.categoryName}</p> */}
+              <p className="text-lg font-bold text-black mt-2">{category.categoryName}</p>
+
             </div>
           ))
         ) : (

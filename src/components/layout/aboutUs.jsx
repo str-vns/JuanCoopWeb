@@ -7,19 +7,19 @@ const AboutUs = () => {
   return (
     <>
       <Navbar />
-      <div class="relative w-full h-[400px] pt-8" id="home">
+      <div class="relative w-full h-[500px] pt-8" id="home">
  
-  <div class="absolute inset-x-0 bottom-0 top-32 opacity-70">
+<div class="absolute inset-0 opacity-100">
     <img
-      src="../src/assets/img/cover.png"
+      src="../src/assets/img/cover2.png"
       alt="Background Image"
       class="object-cover object-center w-full h-full"
     />
   </div>
 
  
-  <div class="absolute inset-x-9 top-1/4 flex flex-col md:flex-row items-center justify-between">
-    <div class="md:w-1/2 mb-4 md:mb-0">
+  <div class="absolute inset-x-9 top-1/4 flex flex-col md:flex-row items-center justify-between opacity-100">
+  {/* <div class="md:w-1/2 mb-4 md:mb-0">
       <h1 class="text-gray-700 font-medium text-4xl md:text-5xl leading-tight mb-2">
        JuanKoop
       </h1>
@@ -32,7 +32,7 @@ const AboutUs = () => {
       >
         Contact Us
       </a>
-    </div>
+    </div> */}
   </div>
 </div>
 
@@ -325,13 +325,14 @@ const AboutUs = () => {
               <div className="rounded-lg overflow-hidden order-none sm:order-first">
                 <div className="rounded-lg overflow-hidden order-none sm:order-first h-[450px]">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101720.8827264538!2d120.90445982945971!3d14.84119267412355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ac52d5bceee7%3A0xafb96a3e215b8ad6!2sMinor%20Basilica%20and%20Parish%20of%20La%20Pur%C3%ADsima%20Concepci%C3%B3n!5e1!3m2!1sen!2sph!4v1741091451503!5m2!1sen!2sph"
-                    className="w-full h-full"
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7722.39630681948!2d120.9561085966795!3d14.831821530810835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397a8de24b249b9%3A0x293b12e1dc8b9c98!2sSanta%20Maria%2C%20Bulacan!5e0!3m2!1sen!2sph!4v1741091451503!5m2!1sen!2sph" 
+  className="w-full h-full"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                   ></iframe>
+                
                 </div>
               </div>
             </div>
