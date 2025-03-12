@@ -124,11 +124,11 @@ import MemberDisplay from "./components/user/MemberDisplay";
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
 import MemberForumList from "./components/user/MemberForumList";
-import WithdrawList from "./components/Cooperative/Wallet/WithdrawList";
-import PaymentWithdraw from "./components/Cooperative/Wallet/PaymentWithdraw";
-import GcashWithdrawForm from "./components/Cooperative/Wallet/GcashWithdrawForm";
-import MayaForm from "./components/Cooperative/Wallet/MayaWithdrawForm";
-import CreateWithdraw from "./components/Cooperative/Wallet/CreateWithdraw";
+import WithdrawList from "./components/cooperative/Wallet/WithdrawList";
+import PaymentWithdraw from "./components/cooperative/Wallet/PaymentWithdraw";
+import GcashWithdrawForm from "./components/cooperative/Wallet/GcashWithdrawForm";
+import MayaForm from "./components/cooperative/Wallet/MayaWithdrawForm";
+import CreateWithdraw from "./components/cooperative/Wallet/CreateWithdraw";
 
 import GcashForm from "./components/Cart/gcashForm";
 import PaymayaForm from "./components/Cart/PaymayaForm";
