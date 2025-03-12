@@ -32,10 +32,17 @@ const Carts = () => {
   const coopId = approvedMember?.map((member) => member.coopId?._id) || [];
   const userId = cUser?._id;
 
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.pricing * item.quantity,
-    0
-  );
+  const subtotal = cartItems.reduce((acc, item) => {
+    console.log("Item: ", item);
+    const itemTotal = item.pricing * item.quantity;
+    console.log("Item Total: ", itemTotal);
+  
+    if (coopId !== item.coop) {
+      return acc + itemTotal;
+    }
+    
+    return acc;
+  }, 0);
 
   useEffect(() => {
     const membering = async () => {
@@ -81,11 +88,9 @@ const Carts = () => {
     let nonTaxableTotal = 0;
 
     cartItems.forEach((item) => {
-      console.log("Item: ", item);
+      
       const itemTotal = item.pricing * item.quantity;
-      console.log("Item Total: ", itemTotal);
-
-      if (!coopId.includes(item?.coop)) {
+      if (!coopId.includes(item.coop)) {
         taxableTotal += itemTotal;
       } else {
         nonTaxableTotal += itemTotal;
@@ -98,10 +103,21 @@ const Carts = () => {
 
     return finalTotal.toFixed(2);
   };
+  
+  const subtax = () => {
 
-  console.log("Subtotal:", subtotal);
-  console.log("Calculated Tax:", calculateTax());
-  console.log("Final Total:", calculateFinalTotal());
+    let taxableTotal = 0;
+
+  cartItems.forEach((item) => {
+      
+      const itemTotal = item.pricing * item.quantity;
+      if (!coopId.includes(item.coop)) {
+        taxableTotal += itemTotal;
+      } 
+    });
+
+   return taxableTotal;
+  }
 
   const handleIncrement = (item) => {
     if (item?.quantity < item?.maxQuantity) {
@@ -256,7 +272,7 @@ const Carts = () => {
                   gap: "8px",
                 }}
               >
-                Tax: ₱ {(subtotal * calculateTax()).toFixed(2)}
+                Tax: ₱ {(subtax() * calculateTax()).toFixed(2)}
                 <FaInfoCircle
                   style={{
                     cursor: "pointer",

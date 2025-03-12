@@ -83,7 +83,7 @@ const Homepage = ({ image, name, price, id }) => {
           <p className="product-card-price-current font-bold text-lg">
             ₱{price}
           </p>
-          <div
+          {/* <div
             className="product-card-add-to-cart bg-green-500 text-white p-2 rounded-full"
             onClick={(e) => {
               e.stopPropagation();
@@ -91,7 +91,7 @@ const Homepage = ({ image, name, price, id }) => {
             }}
           >
             <i className="fa-solid fa-plus"></i>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

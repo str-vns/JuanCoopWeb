@@ -28,7 +28,7 @@ function AddressCreate() {
   const [longitude, setLongitude] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
+ console.log(location)
   const handleSave = (e) => {
     e.preventDefault();
     if (!myAddress || !barangay || !city || !postalCode || !latitude || !longitude) {

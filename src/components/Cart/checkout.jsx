@@ -72,7 +72,7 @@ const grandTotal = totalPrice + taxAmount + shippingFee;
       })),
       shippingAddress: shipItems?._id,
       paymentMethod: payItems?.paymentMethod,
-      totalPrice: totalPrice,
+      // totalPrice: totalPrice,
       totalPrice: grandTotal, // Now includes shipping fee and tax
       shippingFee: shippingFee, // Added shipping fee
       taxAmount: taxAmount, // Added tax amount

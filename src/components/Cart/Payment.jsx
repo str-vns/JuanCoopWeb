@@ -13,6 +13,7 @@ const Payment = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const handleConfirmPayment = (e) => {
     e.preventDefault();
+  if(selectedPaymentMethod){
     if(selectedPaymentMethod === "COD"){
       const data = {
         paymentMethod: selectedPaymentMethod
@@ -49,7 +50,22 @@ const Payment = () => {
             );
     }
 
-
+  } else {
+    toast.error("Please select a Payment Method to proceed.",
+              {
+                theme: "dark",
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                toastId: unSuccess,
+                closeButton: false,
+            }
+            );
+  }
   };
 
   return (
