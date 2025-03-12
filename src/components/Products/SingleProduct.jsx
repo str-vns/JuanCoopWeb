@@ -35,12 +35,10 @@ const ProductCard = () => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [wishlist, setWishlist] = useState([]);
-
   const { coop } = useSelector((state) => state.singleCoop);
   const { user, error } = useSelector((state) => state.userOnly);
-  console.log("product", user.wishlist);
-  // Fetch Product Details
-  console.log("wishlist", wishlist);
+
+  console.log("wishlist:", wishlist);
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -48,9 +46,6 @@ const ProductCard = () => {
         const { data } = await axios.get(`${baseURL}products/${id}`);
         const productDetails = data?.details;
         setProduct(productDetails);
-        console.log("Product Details:", productDetails);
-
-        // Set default stock selection
         if (productDetails.stock?.length > 0) {
           setSelectedStock(productDetails.stock[0]);
         }
@@ -63,6 +58,15 @@ const ProductCard = () => {
     };
 
     fetchProductDetails();
+
+    if (product?.coop) {
+      dispatch(getCoop(product.coop));
+    }
+  
+    if (userId?._id && token) {
+      dispatch(Profileuser(userId._id, token));
+    }
+  
   }, [id]);
 
   // Fetch Cooperative Details
@@ -86,17 +90,9 @@ const ProductCard = () => {
 
   // Fetch Coop Details using Redux
   useEffect(() => {
-    if (product?.coop) {
-      dispatch(getCoop(product.coop));
-    }
-  
-    if (userId?._id && token) {
-      dispatch(Profileuser(userId._id, token));
-    }
-  
     const checkLoginStatus = async () => {
       if (token && auth && user && Array.isArray(user?.wishlist)) {
-        const matchingProducts = user.wishlist.filter(
+        const matchingProducts = user?.wishlist.filter(
           (item) => item?.product === product?._id
         );
         setWishlist(matchingProducts);
@@ -105,7 +101,7 @@ const ProductCard = () => {
   
     checkLoginStatus();
   
-  }, [product?._id, token, product?.coop, user, auth]);
+  }, [user]);
 
   const handleAddToCart = () => {
     if (!selectedStock) return;
@@ -160,11 +156,10 @@ const ProductCard = () => {
   
     try {
       if (token) {
-        await dispatch(WishlistUser(product?._id, userId?._id, token)); // Ensure wishlist updates
-        await dispatch(Profileuser(userId?._id, token)); // Update user profile
+        await dispatch(WishlistUser(product?._id, userId?._id, token)); 
+        await dispatch(Profileuser(userId?._id, token)); 
   
-        // Optional: Reload the page (if necessary)
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.log("No JWT token found.");
       }
