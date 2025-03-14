@@ -1,0 +1,560 @@
+.refundContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+    padding-left: 200px;
+  }
+  
+  /* Title */
+  .refundTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  /* Tabs */
+  .refundTabContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .refundTabButton {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .refundTabButton:hover {
+    background-color: #ddd;
+  }
+  
+  .refundActiveTab {
+    background-color: #ffcc00;
+    color: black;
+    font-weight: bold;
+    border-color: #ffcc00;
+  }
+  
+  /* Loader */
+  .refundLoader {
+    font-size: 18px;
+    color: #555;
+    margin-top: 20px;
+  }
+  
+  /* Empty State */
+  .refundEmptyContainer {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .refundEmptyText {
+    font-size: 16px;
+    color: #888;
+  }
+  
+  /* List Container */
+  .refundListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* Card */
+  .refundCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #ffcc00;
+  }
+  
+  /* Card Details */
+  .refundDetails {
+    text-align: left;
+  }
+  
+  .refundId {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .refundStatus {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .refundAmount {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  /* Status Colors */
+  .status-success {
+    color: green;
+  }
+  
+  .status-pending {
+    color: orange;
+  }
+  
+  /* View Button */
+  .refundViewButton {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .refundViewButton:hover {
+    background-color: #e6b800;
+  }
+  
+  /* Refresh Button */
+  .refundRefreshButton {
+    margin-top: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #22c55e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .refundRefreshButton:hover {
+    background-color: #16a34a;
+  }
+  
+
+
+
+  .pendingContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+    padding-left: 200px;
+  }
+  
+  /* Header */
+  .pendingHeader {
+    display: flex;
+    align-items: center;
+    space-between: 10px;
+  }
+  
+  .pendingBackButton {
+    font-size: 16px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .pendingTitle {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Tabs */
+  .pendingTabContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .pendingTabButton {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .pendingTabButton:hover {
+    background-color: #ddd;
+  }
+  
+  .pendingActiveTab {
+    background-color: #ffcc00;
+    color: black;
+    font-weight: bold;
+    border-color: #ffcc00;
+  }
+  
+  /* Loader */
+  .pendingLoader {
+    font-size: 18px;
+    color: #555;
+    margin-top: 20px;
+  }
+  
+  /* Empty State */
+  .pendingEmptyState {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+  }
+  
+  /* List Container */
+  .pendingListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* Card */
+  .pendingCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #ffcc00;
+  }
+  
+  /* Card Details */
+  .pendingDetails {
+    text-align: left;
+  }
+  
+  .pendingId {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .pendingStatus {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .pendingAmount {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  /* Status Colors */
+  .pendingStatusText {
+    font-weight: bold;
+  }
+  
+  .pendingStatusText.text-green-500 {
+    color: green;
+  }
+  
+  .pendingStatusText.text-orange-500 {
+    color: orange;
+  }
+  
+  .pendingStatusText.text-red-500 {
+    color: red;
+  }
+  
+  /* View Button */
+  .pendingViewButton {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pendingViewButton:hover {
+    background-color: #e6b800;
+  }
+  
+  /* Refresh Button */
+  .pendingRefreshButton {
+    margin-top: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #22c55e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pendingRefreshButton:hover {
+    background-color: #16a34a;
+  }
+
+  
+/* 
+  RefundProcessAdmin.jsx */
+.processContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+    padding-left: 200px;
+  }
+  
+  /* Header */
+  .processHeader {
+    display: flex;
+    align-items: center;
+  }
+  
+  .processBackButton {
+    font-size: 16px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .processTitle {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Tabs */
+  .processTabContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .processTabButton {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .processTabButton:hover {
+    background-color: #ddd;
+  }
+  
+  .processActiveTab {
+    background-color: #ffcc00;
+    color: black;
+    font-weight: bold;
+    border-color: #ffcc00;
+  }
+  
+  /* Loader */
+  .processLoader {
+    font-size: 18px;
+    color: #ffcc00;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  
+  /* Empty State */
+  .processEmptyState {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+  }
+  
+  /* List Container */
+  .processListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* Card */
+  .processCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #ffcc00;
+  }
+  
+  /* Card Details */
+  .processDetails {
+    text-align: left;
+  }
+  
+  .processId {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .processStatus {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .processAmount {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  /* Status Colors */
+  .processStatusText {
+    font-weight: bold;
+  }
+  
+  .processStatusText.text-green-500 {
+    color: green;
+  }
+  
+  .processStatusText.text-orange-500 {
+    color: orange;
+  }
+  
+  .processStatusText.text-red-500 {
+    color: red;
+  }
+  
+  /* View Button */
+  .processViewButton {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .processViewButton:hover {
+    background-color: #e6b800;
+  }
+  
+  /* Refresh Button */
+  .processRefreshButton {
+    margin-top: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #22c55e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .processRefreshButton:hover {
+    background-color: #16a34a;
+  }
+  
+
+
+
+
+  .container-detail {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5rem;
+  }
+  
+  .items-center-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .refund-detail-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .refund-detail-user {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  
+  .refund-detail-id,
+  .refund-detail-method,
+  .refund-detail-account,
+  .refund-detail-phone,
+  .refund-detail-date,
+  .refund-detail-amount,
+  .refund-detail-reason {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .refund-detail-status {
+    font-weight: bold;
+  }
+  
+  .refund-detail-status span {
+    font-weight: normal;
+  }
+  
+  .refund-detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .refund-detail-approve {
+    background-color: #22c55e;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.3s;
+  }
+  
+  .refund-detail-approve:hover {
+    background-color: #16a34a;
+  }
+  
+  .refund-detail-approve:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+  

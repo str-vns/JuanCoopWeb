@@ -134,6 +134,15 @@ import GcashForm from "./components/Cart/gcashForm";
 import PaymayaForm from "./components/Cart/PaymayaForm";
 import OnlineNext from "./components/Cart/OnlineNext";
 
+import WithdrawsListAdmin from "./components/Admen/Withdraws/Withdrawslist";
+import WithdrawsSuccessAdmin from "./components/Admen/Withdraws/WithdrawSuccessAdmin";
+import WithdrawsSingleAdmin from "./components/Admen/Withdraws/WithdrawsSingleAdmin";
+
+import RefundProcessAdmin from "./components/Admen/Refund/RefundProcessAdmin";
+import RefundDetailsAdmin from "./components/Admen/Refund/RefundDetailsAdmin";
+import RefundSuccessAdmin from "./components/Admen/Refund/RefundSuccessAdmin";
+
+
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
   const currentDate = new Date();
@@ -331,6 +340,15 @@ function App() {
           <Route path="/mayawithdraw" element={<MayaForm/>}/>
           <Route path="/createwithdraw" element={<CreateWithdraw/>}/>
           <Route path="/onlineNext" element={<OnlineNext/>}/>
+
+          <Route path="/withdrawlistAdmin" element={<WithdrawsListAdmin/>}/>
+          <Route path="/withdrawSuccessAdmin" element={<WithdrawsSuccessAdmin/>}/>
+          <Route path="/withdraws/:id" element={<WithdrawsSingleAdmin/>}/>
+
+          <Route path="/RefundProcessAdmin" element={<RefundProcessAdmin/>}/>
+          <Route path="/refund-details/:id" element={<RefundDetailsAdmin />} />
+          <Route path="/RefundSuccessAdmin" element={<RefundSuccessAdmin/>}/>
+
         </Routes>
       </div>
     </Router>

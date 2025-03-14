@@ -81,6 +81,18 @@ const Sidebar = () => {
                 <span className="sidebar-text">Types</span>
               </a>
             </li>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/withdrawlistAdmin">
+                <i className="fa-solid fa-wallet sidebar-icon"></i>
+                <span className="sidebar-text">Withdraws</span>
+              </a>
+            </li>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/RefundSuccessAdmin">
+                <i className="fa-solid fa-rotate-right sidebar-icon"></i>
+                <span className="sidebar-text">Refund</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
