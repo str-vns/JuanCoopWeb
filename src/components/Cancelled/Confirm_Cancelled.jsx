@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthGlobal from "@redux/Store/AuthGlobal";
 import { useDispatch } from "react-redux";
-import { updateOrderStatus } from "@redux/actions/orderActions";
-import { createCancelled } from "@redux/actions/cancelledActions";
+import { updateOrderStatus } from "@redux/Actions/orderActions";
+import { createCancelled } from "@redux/Actions/cancelledActions";
 import { useSocket } from "../../../SocketIo";
-import { sendNotifications } from "@redux/actions/notificationActions";
+import { sendNotifications } from "@redux/Actions/notificationActions";
 
 const ConfirmCancelled = () => {
   const navigate = useNavigate();
