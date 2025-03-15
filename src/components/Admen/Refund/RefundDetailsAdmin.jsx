@@ -29,6 +29,13 @@ const RefundDetailsAdmin = () => {
     fetchJwt();
   }, []);
 
+  // Debugging logs
+  useEffect(() => {
+    console.log("Full Transaction Data:", trans);
+    console.log("Cancelled ID Data:", trans?.cancelledId);
+    console.log("Refund Reason Content:", trans?.cancelledId?.content);
+  }, [trans]);
+
   const handleApprove = async (transId) => {
     if (window.confirm("Did You Send the Money to the User?")) {
       try {
@@ -56,7 +63,7 @@ const RefundDetailsAdmin = () => {
         });
 
         dispatch(sendNotifications(notification, token));
-        navigate("/refunds-list");
+        navigate("/RefundSuccessAdmin");
       } finally {
         setIsLoading(false);
       }
@@ -94,7 +101,12 @@ const RefundDetailsAdmin = () => {
             {trans?.transactionStatus}
           </span>
         </p>
-        <p>Reason for Refund: {trans?.cancelledId?.content}</p>
+        <p>
+          <strong>Reason for Refund:</strong>{" "}
+          {trans?.cancelledId?.content || (
+            <span className="text-red-500">No reason provided.</span>
+          )}
+        </p>
       </div>
 
       {trans?.transactionStatus === "PENDING" && (

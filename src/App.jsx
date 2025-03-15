@@ -119,6 +119,11 @@ import CoopHistory from "./components/cooperative/Rider/CoopHistory";
 
 
 import Client_Cancelled from "./components/Cancelled/Client_Cancelled";
+import OnlinePayRefund from "./components/Cancelled/OnlinePay_Cancelled";
+import GcashRefund from "./components/Cancelled/Gcash_Cancelled";
+import PaymayaRefund from "./components/Cancelled/Paymaya_Cancelled";
+import ConfirmCancelled from "./components/Cancelled/Confirm_Cancelled";
+
 import MemberDisplay from "./components/user/MemberDisplay";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
@@ -327,8 +332,13 @@ function App() {
           <Route path="/coophistory" element={<CoopHistory/>}/>
 
           <Route path="/client_cancelled" element={<Client_Cancelled/>}/>
+          <Route path="/online-pay-cancelled" element={<OnlinePayRefund/>}/>
+          <Route path="/gcash_cancelled" element={<GcashRefund/>}/>
+          <Route path="/paymaya_cancelled" element={<PaymayaRefund/>}/>
+          <Route path="/confirm_cancelled" element={<ConfirmCancelled/>}/>
+
            {/* this route is for the Member list in User Account for Coop Registration */}
-          
+           
            <Route path="/memberDisplay" element={<MemberDisplay/>}/>
 
           <Route path="/gcash" element={<GcashForm/>} />

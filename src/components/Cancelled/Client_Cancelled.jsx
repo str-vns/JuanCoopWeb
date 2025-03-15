@@ -3,33 +3,52 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrderStatus } from "@src/redux/Actions/orderActions";
 import { createCancelled } from "@src/redux/Actions/cancelledActions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSocket } from "../../../SocketIo";
 import AuthGlobal from "@redux/Store/AuthGlobal";
+import { sendNotifications } from "@redux/Actions/notificationActions";
 import { getCoop } from "@redux/Actions/productActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
+import "@assets/css/refundreason.css"; //
 
-const ClientCancelled = () => {
+const Client_Cancelled = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const context = useContext(AuthGlobal);
   const dispatch = useDispatch();
+  const currentUser = getCurrentUser();
+  const storedToken = getToken();
+  const userId = currentUser?._id;
+  const socket = useSocket();
 
-  // Extract order details safely
-  const cancelled = location.state || {};
+  const { loading, coop, error } = useSelector((state) => state.singleCoop);
+  const cancelled = location.state || {}; // Ensure it's always an object
 
   const inventoryId = cancelled?.inventoryId || null;
   const orderId = cancelled?.orderId || cancelled?.order?._id || null;
   const orderItemId = cancelled?.orderItemId || null;
   const coopUser = cancelled?.coopUser || null;
 
-  const currentUser = getCurrentUser();
-  const userId = currentUser?._id || null;
+  console.log("Location State (Cancelled Data):", cancelled);
+  console.log("Order Data:", cancelled.order);
+  const coops = cancelled.coopUser;
+  const paymentMethod =
+    cancelled?.paymentMethod || cancelled?.order?.paymentMethod || null;
+  console.log("Payment Method:", paymentMethod);
 
-  const { loading, coop, error } = useSelector((state) => state.singleCoop);
+  const userName = currentUser?.firstName || "Unknown User";
+  const lastName = currentUser?.lastName || "";
 
-  const [selectedReason, setSelectedReason] = useState("");
+  // Debugging user details
+  console.log("User Name:", userName);
+  console.log("User Last Name:", lastName);
+  const [selectedReason, setSelectedReason] = useState(null);
   const [otherReason, setOtherReason] = useState("");
+  console.log("Selected Reason:", selectedReason);
+  console.log("Other Reason:", otherReason);
   const [token, setToken] = useState(null);
-
+  const [fcmToken, setFcmToken] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const reasons = [
     "Changed my mind",
     "Found a better deal",
@@ -43,100 +62,114 @@ const ClientCancelled = () => {
   useEffect(() => {
     const fetchJwt = async () => {
       try {
-        const storedToken = localStorage.getItem("jwt");
-        if (storedToken) {
-          setToken(storedToken);
-          if (coopUser) {
-            dispatch(getCoop(coopUser, storedToken));
-          }
-        } else {
-          console.error("JWT Token not found.");
-        }
+        const storedToken = await AsyncStorage.getItem("jwt");
+        if (storedToken) setToken(storedToken);
+        console.log("JWT Token:", storedToken);
       } catch (err) {
         console.error("Error retrieving JWT: ", err);
       }
     };
     fetchJwt();
-  }, [coopUser, dispatch]);
+    if (coops) {
+      dispatch(getCoop(coops, token));
+    }
+  }, [coops, token]);
 
-  const handleCancelOrder = async () => {
-    if (!selectedReason) {
-      alert("Please select a reason for cancellation.");
+  const handleCancelOrder = () => {
+    if (window.confirm("Do you want to cancel this order?")) {
+      proceedWithCancellation();
+    }
+  };
+
+  const proceedWithCancellation = () => {
+    if (!currentUser) {
+      alert("User profile is not available. Please try again later.");
       return;
     }
 
-    if (!userId) {
-      alert("User profile is not available. Please log in again.");
-      navigate("/login");
+    if (selectedReason === "Other" && otherReason === "") {
+      alert("Please specify your reason");
       return;
     }
 
-    if (!orderId) {
-      alert("Order ID is missing. Please try again.");
-      return;
-    }
-
-    if (!orderItemId) {
-      alert("Order Item ID is missing. Cannot process cancellation.");
-      return;
-    }
-
-    if (!inventoryId) {
-      alert("Inventory ID is missing. Cannot update order status.");
-      return;
-    }
-
-    const cancelReason = selectedReason === "Other" ? otherReason : selectedReason;
-
-    const cancelData = {
+    const reason = selectedReason === "Other" ? otherReason : selectedReason;
+    const cancelledInfo = {
       cancelledId: orderItemId,
       cancelledBy: userId,
-      content: cancelReason,
+      content: reason,
+    };
+    const otherInfo = {
+      coopUser: coop?.user?._id,
+      fcmToken: fcmToken,
+      userName: userName,
+      lastName: lastName,
+      inventoryProduct: inventoryId,
+      orderId: orderId,
     };
 
-    try {
-      // Dispatch the cancellation action
-      await dispatch(createCancelled(cancelData, getToken()));
+    if (paymentMethod === "paymaya" || paymentMethod === "gcash") {
+      console.log("Redirecting to online payment cancellation...");
+      navigate("/online-pay-cancelled", {
+        state: { cancelledData: cancelledInfo, others: otherInfo },
+      });
+    } else {
+      dispatch(createCancelled(cancelledInfo, token));
+      setRefresh(true);
+      try {
+        const status = {
+          orderStatus: "Cancelled",
+          inventoryProduct: inventoryId,
+        };
+        dispatch(updateOrderStatus(orderId, status, token));
 
-      // Update the order status to "Cancelled"
-      const statusUpdate = {
-        orderStatus: "Cancelled",
-        inventoryProduct: inventoryId, // Ensure inventoryId is passed correctly
-      };
+        const notification = {
+          title: "Order Cancelled",
+          content: `The order has been cancelled by ${userName} ${lastName}.`,
+          user: coop?.user?._id,
+          fcmToken: fcmToken,
+          type: "order",
+        };
 
-      await dispatch(updateOrderStatus(orderId, statusUpdate));
+        socket.emit("sendNotification", {
+          senderName: userName,
+          receiverName: coop?.user?._id,
+          type: "order",
+        });
+        dispatch(sendNotifications(notification, token));
 
-      alert("Your order has been successfully cancelled.");
-      navigate(-1); // Go back to the previous page
-    } catch (error) {
-      alert("Failed to cancel the order.");
-      console.error("Cancellation Error:", error);
+        alert("Your order has been successfully cancelled.");
+      } catch (error) {
+        console.error("Error cancelling order:", error);
+        alert(
+          "An error occurred while cancelling your order. Please try again."
+        );
+      } finally {
+        setRefresh(false);
+        navigate(-1);
+      }
     }
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Order Cancellation</h2>
-      <p style={styles.description}>Why do you want to cancel this order?</p>
+    <div className="cancel-container">
+      <h1 className="cancel-title">Order Cancelled</h1>
+      <p className="cancel-description">Why did you cancel the order?</p>
 
-      <div style={styles.reasonsContainer}>
-        {reasons.map((reason) => (
-          <button
-            key={reason}
-            style={{
-              ...styles.reasonButton,
-              ...(selectedReason === reason ? styles.selectedReason : {}),
-            }}
-            onClick={() => setSelectedReason(reason)}
-          >
-            {reason}
-          </button>
-        ))}
-      </div>
+      {reasons.map((reason, index) => (
+        <button
+          key={index}
+          className={`cancel-reason-btn ${
+            selectedReason === reason ? "cancel-selected" : ""
+          }`}
+          onClick={() => setSelectedReason(reason)}
+        >
+          {reason}
+        </button>
+      ))}
 
       {selectedReason === "Other" && (
         <textarea
-          style={styles.bigInput}
+          className="cancel-textarea"
           placeholder="Please specify your reason"
           value={otherReason}
           onChange={(e) => setOtherReason(e.target.value)}
@@ -144,11 +177,11 @@ const ClientCancelled = () => {
         />
       )}
 
-      <div style={styles.buttonGroup}>
-        <button style={styles.confirmButton} onClick={handleCancelOrder}>
+      <div className="cancel-button-group">
+        <button className="cancel-confirm-btn" onClick={handleCancelOrder}>
           Confirm
         </button>
-        <button style={styles.cancelButton} onClick={() => navigate(-1)}>
+        <button className="cancel-back-btn" onClick={() => navigate(-1)}>
           Back
         </button>
       </div>
@@ -156,79 +189,4 @@ const ClientCancelled = () => {
   );
 };
 
-const styles = {
-  container: {
-    maxWidth: "600px",
-    margin: "50px auto",
-    padding: "20px",
-    background: "#ffffff",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-    borderRadius: "8px",
-    textAlign: "center",
-    fontFamily: "Arial, sans-serif",
-  },
-  title: {
-    fontSize: "24px",
-    marginBottom: "10px",
-    color: "#333",
-  },
-  description: {
-    fontSize: "16px",
-    color: "#666",
-    marginBottom: "20px",
-  },
-  reasonsContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gap: "10px",
-    marginBottom: "20px",
-  },
-  reasonButton: {
-    padding: "10px 15px",
-    border: "1px solid #ddd",
-    backgroundColor: "#f9f9f9",
-    color: "#333",
-    borderRadius: "5px",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-    fontSize: "14px",
-  },
-  selectedReason: {
-    backgroundColor: "#007bff",
-    color: "white",
-  },
-  bigInput: {
-    width: "100%",
-    padding: "10px",
-    marginTop: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-    fontSize: "14px",
-  },
-  buttonGroup: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "10px",
-    marginTop: "20px",
-  },
-  confirmButton: {
-    padding: "10px 15px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "14px",
-    backgroundColor: "#007bff",
-    color: "white",
-  },
-  cancelButton: {
-    padding: "10px 15px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "14px",
-    backgroundColor: "#dc3545",
-    color: "white",
-  },
-};
-
-export default ClientCancelled;
+export default Client_Cancelled;
