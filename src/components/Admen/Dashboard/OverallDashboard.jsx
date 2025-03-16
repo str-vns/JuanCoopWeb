@@ -28,6 +28,8 @@ ChartJS.register(
 
 const OverallDashboard = () => {
   const dispatch = useDispatch();
+  
+  // Fetch token only once
   const token = getToken();
 
   const { 
@@ -37,12 +39,15 @@ const OverallDashboard = () => {
   } = useSelector((state) => state.overalldashboards || {});
 
   useEffect(() => {
-    dispatch(fetchOverallDashboardData(token));
-  }, [dispatch, token]);
+    if (token) {
+      dispatch(fetchOverallDashboardData(token));
+    }
+  }, [dispatch, token]); // Ensures token is ready before dispatching
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
+  // Handle missing data gracefully
   const salesTrends = dashboard?.salesTrends || { daily: 0, weekly: 0, monthly: 0 };
   const rankedProducts = dashboard?.rankedProducts || [];
 
@@ -72,36 +77,40 @@ const OverallDashboard = () => {
       <Sidebar />
       <div className="flex flex-col w-full">
         <div className="flex-1 bg-gray-50 p-6">
-            <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">Overall Dashboard</h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                <h2 className="text-lg font-semibold text-gray-600">Daily Sales</h2>
-                <p className="text-3xl font-bold text-green-600">₱{salesTrends.daily}</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                <h2 className="text-lg font-semibold text-gray-600">Weekly Sales</h2>
-                <p className="text-3xl font-bold text-blue-600">₱{salesTrends.weekly}</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                <h2 className="text-lg font-semibold text-gray-600">Monthly Sales</h2>
-                <p className="text-3xl font-bold text-yellow-600">₱{salesTrends.monthly}</p>
-              </div>
+          <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
+            Overall Dashboard
+          </h1>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            {["Daily", "Weekly", "Monthly"].map((period, index) => {
+              const salesAmount = salesTrends[period.toLowerCase()] || 0;
+              const colors = ["text-green-600", "text-blue-600", "text-yellow-600"];
+              return (
+                <div key={period} className="bg-white p-6 rounded-lg shadow-lg text-center">
+                  <h2 className="text-lg font-semibold text-gray-600">{period} Sales</h2>
+                  <p className={`text-3xl font-bold ${colors[index]}`}>₱{salesAmount}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center border-l-4 border-blue-500">
+            <h2 className="text-2xl font-bold text-gray-700 uppercase tracking-wide">Total Orders</h2>
+            <p className="text-4xl font-extrabold text-blue-500">{dashboard?.totalOrders ?? 0}</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <h3 className="text-xl font-semibold text-gray-700 mb-4">Sales Trends</h3>
+              <Bar data={salesTrendsData} />
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center border-l-4 border-blue-500">
-              <h2 className="text-2xl font-bold text-gray-700 uppercase tracking-wide">Total Orders</h2>
-              <p className="text-4xl font-extrabold text-blue-500">{dashboard?.totalOrders ?? 0}</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h3 className="text-xl font-semibold text-gray-700 mb-4">Sales Trends</h3>
-                <Bar data={salesTrendsData} />
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h3 className="text-xl font-semibold text-gray-700 mb-4">Top Selling Products</h3>
-                <Pie data={topProductsData} />
-              </div>
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <h3 className="text-xl font-semibold text-gray-700 mb-4">Top Selling Products</h3>
+              <Pie data={topProductsData} />
             </div>
           </div>
+
+        </div>
       </div>
     </div>
   );
