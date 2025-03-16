@@ -120,6 +120,13 @@ const MemberForumList = () => {
                 </div>
                 <p className="forumlist-coop-post-content">
                   {post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content}
+                  {post.image?.length > 0 && (
+                    <div className="usercoop-image-container">
+                    {post.image.map((img, index) => (
+                        <img key={index} src={img.url} alt="Post" className="usercoop-forumlist-image" />
+                    ))}
+                    </div>
+                  )}
                 </p>
                 <div className="forumlist-coop-actions">
                   <button onClick={() => handleLike(post._id)} className="forumlist-coop-like">

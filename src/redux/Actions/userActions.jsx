@@ -142,6 +142,7 @@ export const OTPregister = (OtpData) => async (dispatch) => {
 
 
     const { data } = await axios.post(`${baseURL}send-otp`, OtpData);
+    console.log("OTP Response Data:", data);
 
  
     dispatch({

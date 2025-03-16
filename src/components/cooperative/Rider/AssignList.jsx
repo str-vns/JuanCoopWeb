@@ -82,7 +82,7 @@ const AssignList = () => {
     <div className="assign-list-header">
       <h1>Assigned Orders</h1>
       <button className="btn-add-rider" onClick={() => navigate("/coophistory")}>
-      <i class="fa-solid fa-file"></i>
+      <i className="fa-solid fa-file"></i>
       </button>
     </div>
 

@@ -104,42 +104,37 @@ const RiderRegister = () => {
     e.preventDefault();
     setErrors(null);
     setLoading(true);
-
+  
     const errorMsg = await validateInputs();
     if (errorMsg) {
       setErrors(errorMsg);
       setLoading(false);
       return;
     }
-
-    const otpSent = await dispatch(OTPregister({ email }));
-    console.log("OTP Sent Status:", otpSent); // Debugging line
-
-    if (otpSent) {
-      console.log("Navigating to Rider OTP screen..."); // Debugging line
-      navigate("/riderotp", {
-        state: {
-          riderRegister: {
-            firstName,
-            lastName,
-            age,
-            phoneNum,
-            gender,
-            email,
-            password,
-            profileImage,
-            licenseImage,
-            user: userId,
-          },
+  
+    dispatch(OTPregister({ email })); // No need for await
+    console.log("OTP request dispatched"); // Debugging
+  
+    navigate("/riderotp", {
+      state: {
+        riderRegister: {
+          firstName,
+          lastName,
+          age,
+          phoneNum,
+          gender,
+          email,
+          password,
+          profileImage,
+          licenseImage,
+          user: userId,
         },
-      });
-    } else {
-      setErrors("Failed to send OTP. Please try again.");
-    }
-
-
+      },
+    });
+  
     setLoading(false);
   };
+  
 
   return (
     <div className="rider-register">

@@ -195,7 +195,7 @@ const RiderDetails = () => {
                   <p>City: {assigned?.city}</p>
                   <button
                     className="rider-btn-delete"
-                    onClick={() => handleRemoveLocation(assigned._id)}
+                    onClick={() => handleRemoveLocation({locationId: assigned._id})}
                   >
                     <i class="fa-solid fa-trash"></i>
                   </button>

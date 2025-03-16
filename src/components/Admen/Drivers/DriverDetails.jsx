@@ -33,7 +33,7 @@ const DriverDetails = () => {
     try {
       dispatch(driverApproved(driverId, token));
       alert("Driver approved successfully");
-      navigate("/driver-list");
+      navigate("/driverlist");
     } catch (error) {
       alert("Error approving driver");
     } finally {
@@ -47,7 +47,7 @@ const DriverDetails = () => {
     try {
       dispatch(driverRejected(driverId, token));
       alert("Driver rejected successfully");
-      navigate("/driver-list");
+      navigate("/driverlist");
     } catch (error) {
       alert("Error rejecting driver");
     } finally {

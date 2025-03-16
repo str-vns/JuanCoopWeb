@@ -128,7 +128,6 @@ import MemberDisplay from "./components/user/MemberDisplay";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
-import MemberForumList from "./components/user/MemberForumList";
 import WithdrawList from "./components/cooperative/Wallet/WithdrawList";
 import PaymentWithdraw from "./components/cooperative/Wallet/PaymentWithdraw";
 import GcashWithdrawForm from "./components/cooperative/Wallet/GcashWithdrawForm";
@@ -146,6 +145,9 @@ import WithdrawsSingleAdmin from "./components/Admen/Withdraws/WithdrawsSingleAd
 import RefundProcessAdmin from "./components/Admen/Refund/RefundProcessAdmin";
 import RefundDetailsAdmin from "./components/Admen/Refund/RefundDetailsAdmin";
 import RefundSuccessAdmin from "./components/Admen/Refund/RefundSuccessAdmin";
+
+import MemberForumList from "./components/user/MemberForumList";
+import ReasonCancelled from "./components/Cancelled/ReasonCancelled";
 
 
 const isTokenExpired = () => {
@@ -216,7 +218,7 @@ function App() {
           <Route path="/" element={<RoleBaseRoute/>} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/editprofile" element={<FarmRegistration />} />
+          <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/resetPassword/:id" element={<PasswordReset/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/otp" element={<RegisterRoute> <OtpRegister /> </RegisterRoute>} />
@@ -332,6 +334,7 @@ function App() {
           <Route path="/coophistory" element={<CoopHistory/>}/>
 
           <Route path="/client_cancelled" element={<Client_Cancelled/>}/>
+          <Route path="/reasoncancelled" element={<ReasonCancelled/>}/>
           <Route path="/online-pay-cancelled" element={<OnlinePayRefund/>}/>
           <Route path="/gcash_cancelled" element={<GcashRefund/>}/>
           <Route path="/paymaya_cancelled" element={<PaymayaRefund/>}/>

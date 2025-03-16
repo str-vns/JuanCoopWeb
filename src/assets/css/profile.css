@@ -57,6 +57,18 @@
   transition: background-color 0.3s ease;
 }
 
+.edit-farm-btn{
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #686767;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
 
 /* Cooperative link styles */
 .coop-link-container {

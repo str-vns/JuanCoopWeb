@@ -67,7 +67,7 @@ import {
       };
   
       const { data } = await axios.put(
-        `${baseURL}inventory/${inventoryId}`,
+        `${baseURL}inventory/update/${inventoryId}`,
         inventory,
         config
       );

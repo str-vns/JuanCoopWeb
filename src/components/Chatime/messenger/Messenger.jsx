@@ -188,7 +188,7 @@ const Messenger = () => {
                   className="sendButton"
                   onClick={handleSubmit}
                 >
-                 <i class="fa-solid fa-paper-plane"></i>
+                 <i className="fa-solid fa-paper-plane"></i>
                 </button>
               </div>
             </>
