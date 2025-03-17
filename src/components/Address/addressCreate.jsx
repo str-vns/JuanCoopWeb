@@ -131,134 +131,6 @@ function AddressCreate() {
   };
 
   return (
-    //  <div>
-    //   <Navbar />
-    //   <div className="register-signup-container mt-14 text-black ">
-    //     <div className="imageR-section p-10 text-white">
-    //           <Map
-    //             mapLib={import("maplibre-gl")}
-    //             {...viewState}
-    //             onMove={(evt) => setViewState(evt.viewState)}
-    //             style={{ width: "100%", height: "400px" }}
-    //             mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${import.meta.env.VITE_MAPLIBRE_TOKEN}`}
-    //           >
-    //             <Marker
-    //               longitude={markerPosition.longitude}
-    //               latitude={markerPosition.latitude}
-    //               anchor="bottom"
-    //               draggable
-    //               onDragEnd={handleMarkerDragEnd}
-    //             >
-    //               <div
-    //                 style={{
-    //                   color: "blue",
-    //                   fontSize: "24px",
-    //                   cursor: "grab",
-    //                 }}
-    //                 title="Drag me to move"
-    //               >
-    //                 📍
-    //               </div>
-    //             </Marker>
-    //           </Map>
-      
-    //           <div>
-    //             <input
-    //               type="text"
-    //               value={searchQuery}
-    //               onChange={(e) => setSearchQuery(e.target.value)}
-    //               placeholder="Search Address"
-    //               className="search-bar"
-    //             />
-    //             <button onClick={handleSearchClick} className="search-btn">
-    //               Search
-    //             </button>
-    //           </div>
-    //         </div>
-
-    //     {/* Address Form Section */}
-    //     <div className="addressR-signup-card">
-    //       <h1 className="addressR-form-title">Add Address</h1>
-    //       <form onSubmit={handleSave} className="addressR-form">
-    //       <div className="addressR-form-group">
-    //         <label>Address</label>
-    //         <input
-    //           type="text"
-    //           name="myAddress"
-    //           value={myAddress}
-    //           placeholder="Input Address Name"
-    //           className="addressR-form-input text-black"
-    //           required
-    //           disabled
-    //         />
-    //       </div>
-    //       <div className="addressR-form-group">
-    //         <label>Barangay</label>
-    //         <input
-    //           type="text"
-    //           name="barangay"
-    //           value={barangay}
-    //           placeholder="Input Barangay Name"
-    //           className="addressR-form-input text-black"
-    //           required
-    //           disabled
-    //         />
-    //       </div>
-    //       <div className="addressR-form-group">
-    //         <label>City</label>
-    //         <input
-    //           type="text"
-    //           name="City"
-    //           value={city}
-    //           placeholder="Input City"
-    //           className="addressR-form-input text-black"
-    //           required
-    //           disabled
-    //         />
-    //       </div>
-    //       <div className="addressR-form-group">
-    //         <label>Postal Code</label>
-    //         <input
-    //           type="text"
-    //           name="Postal Code"
-    //           value={postalCode}
-    //           placeholder="Input Postal Code"
-    //           className="addressR-form-input text-black"
-    //           required
-    //           disabled
-    //         />
-    //       </div>
-    //       <button type="submit" className="addressR-submit-btn">
-    //         Update Address
-    //       </button>
-    //     </form>
-    //     </div>
-
-    //     {isModalVisible && (
-    //       <Modal isOpen={isModalVisible} onRequestClose={handleCloseModal}>
-    //         <h2 className="text-black mt-10">Search Results</h2>
-    //         <ul>
-    //           {Array.isArray(location) && location.length > 0 ? (
-    //             location.map((result, index) => (
-    //               <li key={index}>
-    //                 <p className="text-black">{result?.address?.label}</p>
-    //                 <p className="text-black">{result?.address?.district}</p>
-    //                 <p className="text-black">{result?.address?.city}</p>
-    //                 <p className="text-black">{result?.address?.postalCode}</p>
-    //                 <button onClick={() => handleSelectAddress(result)}>
-    //                   Select Address
-    //                 </button>
-    //               </li>
-    //             ))
-    //           ) : (
-    //             <p className="text-black">No addresses found.</p>
-    //           )}
-    //         </ul>
-    //         <button onClick={handleCloseModal}>Close</button>
-    //       </Modal>
-    //     )}
-    //   </div>
-    // </div>
     <div>
     <Navbar />
     <div className="register-signup-container mt-14 text-black ">
@@ -290,7 +162,7 @@ function AddressCreate() {
               </Marker>
             </Map>
     
-            <div>
+            <div className="search-container">
               <input
                 type="text"
                 value={searchQuery}

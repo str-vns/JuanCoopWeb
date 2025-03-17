@@ -8,6 +8,16 @@
   padding-top: 100px;
 }
 
+.product-image {
+  width: 150px; /* Fixed width */
+  height: 150px; /* Fixed height */
+  object-fit: cover; /* Ensures the image fills the space without distortion */
+  object-position: center; /* Centers the image cropping */
+  border-radius: 8px; /* Optional: Adds smooth edges */
+  display: block;
+  overflow: hidden;
+}
+
 
 /* Wishlist Grid Layout - 2 Columns */
 .wishlist-grid {

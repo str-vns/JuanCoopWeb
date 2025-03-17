@@ -3,8 +3,10 @@ import Map, { Marker, Popup, NavigationControl, Source, Layer } from "react-map-
 import "maplibre-gl/dist/maplibre-gl.css";
 import { allCoops } from "@redux/Actions/coopActions";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const MapContain = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { coops } = useSelector((state) => state.allofCoops);
   const [viewState, setViewState] = useState({
@@ -20,7 +22,9 @@ const MapContain = () => {
     setSelectedCoop(coop); 
   };
 
-
+  const handleViewProfile = () => {
+    navigate(`/farmerprofile/${selectedCoop._id}`);
+};
   const getRouteFromOSRM = async () => {
     if (!userLocation || !selectedCoop) return;
 
@@ -110,7 +114,9 @@ const MapContain = () => {
               />
               <p className="text-black mt-2 mb-2 font-bold">{selectedCoop.farmName}</p>
               <p className="text-black mt-2 mb-2">{selectedCoop.address}</p>
-              <button onClick={() => alert(`View more about ${selectedCoop.farmName}`)}>View</button>
+              <button onClick={handleViewProfile}>
+            View more about {selectedCoop.farmName}
+        </button>
             </div>
           </Popup>
         )}

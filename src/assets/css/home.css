@@ -19,7 +19,7 @@
   
   .product-card {
     width: 19%; /* Fixed width to prevent resizing */
-    min-width: 200px; /* Ensure the card doesn't shrink too much */
+    min-width: 200px; /* Prevents excessive shrinking */
     max-width: 350px;
     height: 350px; /* Fixed height for consistency */
     border: 1px solid #cccccc;
@@ -29,21 +29,25 @@
     text-align: center;
     position: relative;
     display: flex;
-    flex-direction: column; /* Ensure proper alignment of content */
-    justify-content: space-between; /* Evenly space content vertically */
-  }
-  
-  
-  .product-card:hover {
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* Prevents overflow issues */
+}
+
+.product-card:hover {
     transform: scale(1.05);
-  }
-  
-  .product-card img {
-    width: 100%; /* Make the image span the width of the container */
-    height: 250px; /* Set a fixed height for all images */
-    object-fit: cover; /* Crop the image to fit within the dimensions */
-    display: block; /* Remove default inline spacing */
-  }
+}
+
+.product-card img {
+    width: 100%; /* Ensures it fills the container */
+    height: 250px; /* Consistent height for all images */
+    object-fit: cover; /* Ensures images are cropped to fit */
+    object-position: center; /* Centers the cropping */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: block;
+}
+
   .product-card-content {
     padding: 10px;
   }

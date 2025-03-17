@@ -5,6 +5,16 @@
   background-color: #FFFFFF;
   padding-top: 30px;
 }
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  flex: 1;
+  margin-right: -5px; /* Adjust the spacing as needed */
+}
+
 
 .content-container {
   display: flex;
@@ -17,7 +27,7 @@
   padding: 20px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 .map-section {
@@ -25,7 +35,7 @@
   padding: 20px;
   position: relative;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+ 
 }
 
 .search-bar-container {

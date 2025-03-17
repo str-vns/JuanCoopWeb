@@ -12,9 +12,28 @@
   align-items: center; 
   background-color: #ffffff;
   margin: 0; 
-  padding-top: 100px; 
+  padding-top: 70px; 
   box-sizing: border-box; 
 }
+.payment-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #007bff;
+  padding: 25px;
+  position: relative; /* Changed from sticky to relative */
+  margin-top: 10px; /* Pushes it lower */
+  z-index: 1; /* Lower z-index so it doesn't overlap */
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+.payment-list-header h1 {
+  color: #000000;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
 
 .checkout-title {
   font-size: 32px;

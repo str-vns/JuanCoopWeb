@@ -88,6 +88,14 @@ const Wishlist = () => {
   // Render wishlist item
   const renderItem = useCallback((item) => {
     if (!item) return null;
+
+    const truncateDescription = (description) => {
+      if (description.length > 30) {
+        return description.substring(0, 30) + "...";
+      }
+      return description;
+    };
+
     return (
       <div className="product-card" key={item._id} onClick={() => handleProductClick(item._id)}>
         {item?.image?.[0]?.url ? (
@@ -97,16 +105,16 @@ const Wishlist = () => {
         )}
         <div className="product-info">
           <h3 className="product-name">{item?.productName || "Unnamed Product"}</h3>
-          <p className="product-description">{item?.description || "No description available."}</p>
+          <p className="product-description">{truncateDescription(item?.description || "No description available.")}</p>
         </div>
-        <div className="action-buttons">
+        {/* <div className="action-buttons">
           <button onClick={(e) => {
             e.stopPropagation();
             wishlistHeart(item._id);
           }} className="icon-button">
             <FaHeart size={24} color="#ff6961" />
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }, [handleProductClick, wishlistHeart, defaultImageUrl]);
