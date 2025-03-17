@@ -5,6 +5,8 @@ import { createDriver } from "@redux/Actions/driverActions";
 import { OTPregister } from "@redux/Actions/userActions";
 import Sidebar from "../sidebar";
 import { getToken } from "@utils/helpers";
+import { singleDriver } from "@redux/Actions/driverActions";
+import { getCurrentUser } from "@utils/helpers";
 
 const RiderOTP = () => {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ const RiderOTP = () => {
   const [timer, setTimer] = useState(420);
   const [canResend, setCanResend] = useState(false);
   const [isResending, setIsResending] = useState(false);
+  const currentUser = getCurrentUser();
+  const userId = currentUser?._id;
 
   const location = useLocation();
   const riderRegister = location.state?.riderRegister;
@@ -64,32 +68,47 @@ const RiderOTP = () => {
     }
   }, [error]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const otpValue = otp.join("");
-
+  
     console.log("✅ Final OTP entered by user:", otpValue);
     console.log("📌 Stored OTP from API response:", riderRegister?.otp);
-
+  
     if (otpValue.length < 6) {
       alert("Please enter a 6-digit OTP.");
       return;
     }
-
+  
     if (!riderRegister) {
       alert("❌ Missing registration data. Please register again.");
       navigate("/register");
       return;
     }
-
+  
     const registerData = {
       otp: otpValue,
       ...riderRegister,
     };
-
+  
     console.log("📤 Submitting registration data:", registerData);
-    dispatch(createDriver(registerData, token));
-    navigate("/riderlist");
+  
+    try {
+      // Dispatch the createDriver action and wait for it to complete
+      await dispatch(createDriver(registerData, token));
+  
+      // Once rider is created, fetch the updated list
+      if (token) {
+        await dispatch(singleDriver(userId, token)); // Ensure this action exists in Redux
+      }
+  
+      // Navigate after successful update
+      navigate("/riderlist");
+    } catch (error) {
+      console.error("🚨 Error creating rider:", error);
+      alert("❌ Failed to create rider. Please try again.");
+    }
   };
+  
 
   useEffect(() => {
     if (timer > 0) {

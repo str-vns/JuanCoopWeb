@@ -42,7 +42,7 @@ const ProductList = () => {
   const [productToUpdate, setProductToUpdate] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Display only 5 products per page
+  const itemsPerPage = 5;
 
   useEffect(() => {
     if (token || coopId) {
@@ -70,13 +70,14 @@ const ProductList = () => {
   };
 
   const handleDelete = (productId) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this product?"
-    );
+    const confirm = window.confirm("Are you sure you want to delete this product?");
     if (confirm) {
-      dispatch(soflDelProducts(productId));
+      dispatch(soflDelProducts(productId)).then(() => {
+        dispatch(getCoopProducts(coopId, token));
+      });
     }
   };
+  
 
   const filteredProducts =
     coopProducts

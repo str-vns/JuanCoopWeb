@@ -39,8 +39,9 @@ const ProductArchive = () => {
   const handleRestore = (id) => {
     setRefresh(true);
     try {
-      dispatch(restoreProducts(id));
-      onRefresh();
+      dispatch(restoreProducts(id)).then(() => {
+        dispatch(archiveProducts(Coopid));
+      });
     } catch (error) {
       console.error("Error restoring product:", error);
     } finally {
@@ -52,8 +53,9 @@ const ProductArchive = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       setRefresh(true);
       try {
-        dispatch(deleteProducts(id));
-        onRefresh();
+        dispatch(deleteProducts(id)).then(() => {
+          dispatch(archiveProducts(Coopid));
+        });
       } catch (error) {
         console.error("Error deleting product:", error);
       } finally {
