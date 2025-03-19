@@ -165,6 +165,11 @@ const isTokenExpired = () => {
   if (currentDate.toDateString() === tokenExpireDate.toDateString()) {
     if (currentDate > tokenExpireDate) {
       console.log("Token Expired");
+        localStorage.removeItem('user')
+        localStorage.removeItem('jwt')
+        localStorage.removeItem('isAuth')
+        localStorage.removeItem('token_expiry')
+        localStorage.removeItem('cartItems')
       return true;
     }
   }
@@ -206,8 +211,6 @@ function App() {
 
   }, [dispatch]);
 
-  // localStorage.removeItem('user')
-  // localStorage.removeItem('jwt')
  
   return (
     <Router>
