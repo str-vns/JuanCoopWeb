@@ -165,11 +165,11 @@ const isTokenExpired = () => {
   if (currentDate.toDateString() === tokenExpireDate.toDateString()) {
     if (currentDate > tokenExpireDate) {
       console.log("Token Expired");
-        localStorage.removeItem('user')
-        localStorage.removeItem('jwt')
-        localStorage.removeItem('isAuth')
-        localStorage.removeItem('token_expiry')
-        localStorage.removeItem('cartItems')
+        // localStorage.removeItem('user')
+        // localStorage.removeItem('jwt')
+        // localStorage.removeItem('isAuth')
+        // localStorage.removeItem('token_expiry')
+        // localStorage.removeItem('cartItems')
       return true;
     }
   }
@@ -193,7 +193,9 @@ function App() {
   },[])
 
   useEffect(() => {
-    if (isTokenExpired()) {
+ 
+    if (isTokenExpired() === true  ) {
+     
       dispatch(logoutUser())
       toast.error('Session Expired', {
         theme: "dark",
