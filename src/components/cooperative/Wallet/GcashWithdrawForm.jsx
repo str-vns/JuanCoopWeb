@@ -4,6 +4,7 @@ import { getWallet } from "@redux/Actions//walletActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import Sidebar from "../sidebar";
+import "@assets/css/gcashform.css";
 
 const GcashWithdrawForm = () => {
   const location = useLocation();
@@ -53,20 +54,40 @@ const GcashWithdrawForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <Sidebar/>
-      <div className="bg-white p-6 rounded-lg shadow-md w-80">
-        <label className="block font-bold">Name:</label>
-        <input type="text" className="w-full p-2 border rounded" value={name} onChange={(e) => setName(e.target.value)} />
+    <div className="gcash-withdraw">
+      <Sidebar />
+      <div className="gcash-withdraw__container">
+        <h2 className="gcash-withdraw__title">Withdraw Funds</h2>
 
-        <label className="block font-bold mt-2">Phone Number:</label>
-        <input type="tel" className="w-full p-2 border rounded" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <label className="gcash-withdraw__label">Name:</label>
+        <input
+          type="text"
+          className="gcash-withdraw__input"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"
+        />
 
-        <label className="block font-bold mt-2">Amount:</label>
-        <input type="number" className="w-full p-2 border rounded" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        <label className="gcash-withdraw__label">Phone Number:</label>
+        <input
+          type="tel"
+          className="gcash-withdraw__input"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Enter phone number"
+        />
 
-        <button className="w-full mt-4 p-2 bg-blue-500 text-white rounded" onClick={handleConfirm}>
-          Confirm
+        <label className="gcash-withdraw__label">Amount:</label>
+        <input
+          type="number"
+          className="gcash-withdraw__input"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Enter amount"
+        />
+
+        <button className="gcash-withdraw__button" onClick={handleConfirm}>
+          Confirm Withdrawal
         </button>
       </div>
     </div>

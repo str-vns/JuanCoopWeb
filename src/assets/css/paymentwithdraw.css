@@ -1,0 +1,57 @@
+/* Payment Withdraw Page */
+.payment-withdraw {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #fff;
+    font-family: "Inter", sans-serif;
+    margin-left: 250px;
+  }
+  
+  .payment-withdraw__container {
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-withdraw__container h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  .payment-withdraw__button {
+    width: 250px;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
+  }
+  
+  .payment-withdraw__button--paymaya {
+    background: #0fa104;
+  }
+  
+  .payment-withdraw__button--paymaya:hover {
+    background: #003b8b;
+  }
+  
+  .payment-withdraw__button--gcash {
+    background: #0077ff;
+  }
+  
+  .payment-withdraw__button--gcash:hover {
+    background: #0066cc;
+  }
+  

@@ -20,8 +20,20 @@ const ForumListCoop = () => {
   const [showComments, setShowComments] = useState({});
   const [selectedPost, setSelectedPost] = useState(null);
   const [showModalComments, setShowModalComments] = useState(false);
-  const badWords = ["fuck", "shit", "bitch", "tangina", "gago", "putangina", "ulol"]; 
-
+  const badWords = [
+    // English Profanity
+    "fuck", "shit", "bitch", "asshole", "bastard", "cunt", "dumbass", "jackass", "motherfucker",
+    "dipshit", "piss", "cock", "dick", "prick", "slut", "whore", "nigger", "faggot", "twat",
+    "pussy", "bollocks", "wanker", "son of a bitch", "douchebag", "arsehole", "bloody hell",
+    "goddamn", "hell no", "screw you", "retard", "idiot", "moron",
+  
+    // Tagalog Profanity
+    "tangina", "gago", "putangina", "ulol", "bobo", "tanga", "inutil", "bwisit", "pakyu", 
+    "siraulo", "peste", "punyeta", "lecheng", "lintik", "hayop ka", "tarantado", "gunggong",
+    "ampota", "bwesit", "kantot", "hindot", "burat", "jakol", "salsal", "iyot", "chupa",
+    "pakyu ka", "hindutan", "bilat", "pokpok", "bayag", "pwet", "supalpal", "lapastangan"
+  ];
+  
   const censorBadWords = (text) => {
     return text
       .split(" ")
@@ -140,6 +152,22 @@ const ForumListCoop = () => {
                 <p className="forumlist-coop-post-content">
                   {post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content}
                 </p>
+                {post.image?.length > 0 ? (
+                  post.image.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img.url || "/default-placeholder.png"}
+                      alt="Post"
+                      className="forumlist-coop-post-image"
+                    />
+                  ))
+                ) : (
+                  <img
+                    src="/default-placeholder.png"
+                    alt="Default Post"
+                    className="forumlist-coop-post-image"
+                  />
+                )}
                 <div className="forumlist-coop-actions">
                   <button onClick={() => handleLike(post._id)} className="forumlist-coop-like">
                     <FaThumbsUp /> {post.likeCount}

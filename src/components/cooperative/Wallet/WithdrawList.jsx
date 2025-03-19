@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import axios from "axios";
 import { IoMenuOutline } from "react-icons/io5";
+import "@assets/css/withdrawlist.css";
 import Sidebar from "../sidebar";
 
 const WithdrawList = () => {
@@ -52,53 +53,39 @@ const WithdrawList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Sidebar/>
-      <div className="flex items-center p-4 bg-white shadow-md border-b">
-        <h1 className="flex-grow text-center text-xl font-bold">Wallet</h1>
+    <div className="coop-wallet-list min-h-screen bg-gray-50">
+      <Sidebar />
+      <div className="coop-wallet-list__header">
+        <h1>Wallet</h1>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-lg mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
-        <div className="bg-purple-600 text-white p-4 rounded-md text-center">
-          <p className="text-lg font-bold">Balance: ₱{wallet?.balance ?? 0}</p>
+      {/* Wallet Balance Section */}
+      <div className="coop-wallet-list__content">
+        <div className="coop-wallet-list__balance">
+          <p>Balance: ₱{wallet?.balance ?? 0}</p>
         </div>
 
-        <button
-          onClick={withdrawHandler}
-          className="mt-4 w-full bg-orange-500 text-white p-3 rounded-md font-bold hover:bg-orange-600 transition"
-        >
+        <button onClick={withdrawHandler} className="coop-wallet-list__withdraw-btn">
           Withdraw
         </button>
 
         {/* Transaction List */}
         {withdraw && withdraw.length > 0 ? (
-          <ul className="mt-4 space-y-3">
+          <ul className="coop-wallet-list__transactions">
             {withdraw.map((item) => (
-              <li
-                key={item._id}
-                className="bg-white p-4 rounded-lg shadow flex justify-between"
-              >
+              <li key={item._id} className="coop-wallet-list__transaction">
                 <div>
-                  <p className="text-gray-700 font-medium">Amount: ₱{item.amount}</p>
-                  <p className="text-gray-600 text-sm">Date: {new Date(item.date).toLocaleDateString()}</p>
+                  <p className="coop-wallet-list__amount">Amount: ₱{item.amount}</p>
+                  <p className="coop-wallet-list__date">Date: {new Date(item.date).toLocaleDateString()}</p>
                 </div>
-                <p
-                  className={`font-bold ${
-                    item.transactionStatus === "SUCCESS"
-                      ? "text-green-600"
-                      : item.transactionStatus === "PENDING"
-                      ? "text-orange-600"
-                      : "text-red-600"
-                  }`}
-                >
+                <p className={`coop-wallet-list__status coop-wallet-list__status--${item.transactionStatus.toLowerCase()}`}>
                   {item.transactionStatus}
                 </p>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="text-center text-gray-500 mt-4">No transactions available</p>
+          <p className="coop-wallet-list__no-transactions">No transactions available</p>
         )}
       </div>
     </div>

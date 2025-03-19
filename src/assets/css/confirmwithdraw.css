@@ -1,0 +1,54 @@
+/* Confirm Withdraw Page Styles */
+.confirm-withdraw {
+    font-family: "Inter", sans-serif;
+    min-height: 100vh;
+    background-color: #fff;
+    display: flex;
+    margin-left: 250px;
+  }
+  
+  .confirm-withdraw__container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .confirm-withdraw__header {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #f4c430;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+  }
+  
+  .confirm-withdraw__info {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 0.8rem;
+    padding: 0.8rem;
+    background: #fff8e1;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  
+  .confirm-withdraw__button {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+    background: #f4c430;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  

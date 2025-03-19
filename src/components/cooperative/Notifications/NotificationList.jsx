@@ -46,6 +46,8 @@ const NotificationList = () => {
       navigate("/memberNot");
     } else if (type === "message") {
       navigate("/messenger");
+    } else if (type === "wallet") {
+      navigate("/withdrawlist");
     }
   };
 
@@ -55,35 +57,43 @@ const NotificationList = () => {
   };
 
   return (
-    <div className={containerClass}>
-      <header className="coop-notif-header">
+    <div className={`coop-notification-container ${containerClass}`}>
+      {/* Header Section */}
+      <header className="coop-notification-header">
         <h2>📢 Notifications</h2>
-        <button className="coop-notif-mark-all" onClick={handleReadAll}>Mark All as Read</button>
+        <button className="coop-notification-mark-all" onClick={handleReadAll}>
+          Mark All as Read
+        </button>
       </header>
 
+      {/* Sidebar */}
       <Sidebar />
 
+      {/* Loading State */}
       {notifloading ? (
-        <p className="coop-notif-loading">Loading...</p>
+        <p className="coop-notification-loading">Loading...</p>
       ) : notification?.length > 0 ? (
-        <ul className="coop-notif-list">
+        <ul className="coop-notification-list">
           {notification.map((item, index) => (
-            <li 
-              key={index} 
-              className={`coop-notif-item ${item.readAt ? "coop-notif-read" : "coop-notif-unread"}`} 
+            <li
+              key={index}
+              className={`coop-notification-item ${item.readAt ? "coop-notification-read" : "coop-notification-unread"}`}
               onClick={() => handleRead(item._id, item.type)}
             >
-              {item.url && <img src={item.url} alt="Notification" className="coop-notif-image" />}
-              <div className="coop-notif-content">
-                <h4>{item.title}</h4>
-                <p>{item.content}</p>
-                <span className="coop-notif-timestamp">{moment(item.createdAt).fromNow()}</span>
+              {/* Notification Image */}
+              {item.url && <img src={item.url} alt="Notification" className="coop-notification-image" />}
+              
+              {/* Notification Content */}
+              <div className="coop-notification-content">
+                <h4 className="coop-notification-title">{item.title}</h4>
+                <p className="coop-notification-message">{item.content}</p>
+                <span className="coop-notification-timestamp">{moment(item.createdAt).fromNow()}</span>
               </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="coop-notif-empty">No notifications found.</p>
+        <p className="coop-notification-empty">No notifications found.</p>
       )}
     </div>
   );

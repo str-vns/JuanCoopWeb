@@ -1,0 +1,110 @@
+/* Wallet Page Styles */
+.coop-wallet-list {
+    font-family: "Inter", sans-serif;
+    margin-left: 250px;
+    background-color: #fff;
+  }
+  
+  .coop-wallet-list__header {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* border-bottom: 2px solid #f4c430; */
+  }
+  
+  .coop-wallet-list__header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .coop-wallet-list__content {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .coop-wallet-list__balance {
+    background: #f4c430;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .coop-wallet-list__withdraw-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: #ff9500;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .coop-wallet-list__withdraw-btn:hover {
+    background: #e68900;
+  }
+  
+  .coop-wallet-list__transactions {
+    margin-top: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .coop-wallet-list__transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.8rem;
+  }
+  
+  .coop-wallet-list__amount {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .coop-wallet-list__date {
+    font-size: 0.9rem;
+    color: gray;
+  }
+  
+  .coop-wallet-list__status {
+    font-weight: bold;
+  }
+  
+  .coop-wallet-list__status--success {
+    color: #27ae60;
+  }
+  
+  .coop-wallet-list__status--pending {
+    color: #f39c12;
+  }
+  
+  .coop-wallet-list__status--failed {
+    color: #e74c3c;
+  }
+  
+  .coop-wallet-list__no-transactions {
+    text-align: center;
+    color: gray;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+  

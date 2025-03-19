@@ -1,112 +1,121 @@
-/* General container */
-.coop-notif-container {
-  max-width: 650px;
-  margin: auto;
+/* Main Container */
+.coop-notification-container {
+  font-family: "Arial", sans-serif;
+  background-color: #fff8dc;
   padding: 20px;
-  background: #fffbe6; /* Light Yellow */
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Cooperative user specific background */
-.coop-notif-container-coop {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-left: 250px;
-  background: #fff5cc; /* Softer yellow for cooperative users */
 }
 
 /* Header */
-.coop-notif-header {
+.coop-notification-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.coop-notif-header h2 {
-  color: #0b0b0a; /* Bright Yellow */
-  font-size: 22px;
+  align-items: center;
+  background-color: #f8e496;
+  color: #121212;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 18px;
   font-weight: bold;
 }
 
-/* Mark All as Read button */
-.coop-notif-mark-all {
-  background: #ffcc00;
-  color: #000;
-  border: none;
+.coop-notification-mark-all {
+  background-color: #ffcc00;
+  border: 2px solid #333;
+  color: #333;
   padding: 8px 12px;
-  border-radius: 6px;
   cursor: pointer;
+  border-radius: 5px;
   font-weight: bold;
-  transition: 0.3s;
+  transition: background 0.3s;
 }
 
-.coop-notif-mark-all:hover {
-  background: #ffdb4d;
+.coop-notification-mark-all:hover {
+  background-color: #ffd633;
 }
 
-/* Notification list */
-.coop-notif-list {
+/* Notification List */
+.coop-notification-list {
   list-style: none;
   padding: 0;
+  margin: 15px 0;
 }
 
-/* Individual notification items */
-.coop-notif-item {
+.coop-notification-item {
   display: flex;
   align-items: center;
+  gap: 15px;
+  background: #fff;
   padding: 12px;
   border-radius: 8px;
-  border-bottom: 1px solid #ffeb99;
+  margin-bottom: 10px;
+  border-left: 5px solid #ffcc00;
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
 }
 
-.coop-notif-item:hover {
-  background: #fff2cc;
+.coop-notification-item:hover {
+  background: #fff3b0;
+  transform: scale(1.02);
 }
 
-/* Unread notifications */
-.coop-notif-unread {
-  background: #ffeb99;
+/* Read and Unread Styles */
+.coop-notification-unread {
+  border-left: 5px solid #ff9900;
   font-weight: bold;
 }
 
-/* Read notifications */
-.coop-notif-read {
-  background: #fffbe6;
+.coop-notification-read {
+  opacity: 0.7;
 }
 
 /* Notification Image */
-.coop-notif-image {
+.coop-notification-image {
   width: 50px;
   height: 50px;
+  object-fit: cover;
   border-radius: 50%;
-  margin-right: 12px;
   border: 2px solid #ffcc00;
 }
 
 /* Notification Content */
-.coop-notif-content h4 {
-  margin: 0;
+.coop-notification-content {
+  flex: 1;
+}
+
+.coop-notification-title {
   font-size: 16px;
-  color: #333;
+  font-weight: bold;
+  margin: 0;
 }
 
-.coop-notif-content p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #666;
-}
-
-.coop-notif-timestamp {
-  font-size: 12px;
-  color: gray;
-}
-
-/* Loading and Empty State */
-.coop-notif-loading,
-.coop-notif-empty {
-  text-align: center;
+.coop-notification-message {
   font-size: 14px;
   color: #555;
+  margin: 5px 0;
+}
+
+.coop-notification-timestamp {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Empty Notification Message */
+.coop-notification-empty {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* Loading Indicator */
+.coop-notification-loading {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
 }

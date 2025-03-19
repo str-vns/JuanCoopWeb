@@ -4,6 +4,7 @@ import { getWallet } from "@redux/Actions//walletActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import Sidebar from "../sidebar";
+import "@assets/css/mayaform.css";
 
 const MayaForm = () => {
   const location = useLocation();
@@ -12,8 +13,6 @@ const MayaForm = () => {
   const currentUser = getCurrentUser();
   const userId = currentUser?._id;
   const { loading, wallet, error } = useSelector((state) => state.getWallet);
-
- 
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -54,20 +53,40 @@ const MayaForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <Sidebar/>
-      <div className="bg-white p-6 rounded-lg shadow-md w-80">
-        <label className="block font-bold">Name:</label>
-        <input type="text" className="w-full p-2 border rounded" value={name} onChange={(e) => setName(e.target.value)} />
+    <div className="maya-withdraw">
+      <Sidebar />
+      <div className="maya-withdraw__container">
+        <h2 className="maya-withdraw__title">Withdraw Funds</h2>
 
-        <label className="block font-bold mt-2">Phone Number:</label>
-        <input type="tel" className="w-full p-2 border rounded" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <label className="maya-withdraw__label">Name:</label>
+        <input
+          type="text"
+          className="maya-withdraw__input"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"
+        />
 
-        <label className="block font-bold mt-2">Amount:</label>
-        <input type="number" className="w-full p-2 border rounded" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        <label className="maya-withdraw__label">Phone Number:</label>
+        <input
+          type="tel"
+          className="maya-withdraw__input"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Enter phone number"
+        />
 
-        <button className="w-full mt-4 p-2 bg-blue-500 text-white rounded" onClick={handleConfirm}>
-          Confirm
+        <label className="maya-withdraw__label">Amount:</label>
+        <input
+          type="number"
+          className="maya-withdraw__input"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Enter amount"
+        />
+
+        <button className="maya-withdraw__button" onClick={handleConfirm}>
+          Confirm Withdrawal
         </button>
       </div>
     </div>
