@@ -207,6 +207,7 @@ const Carts = () => {
   return (
     <section className="cart-section">
       <Navbar />
+      
       <div className="cart-container">
         <div className="cart-content">
           <div className="cart-items">
@@ -302,7 +303,7 @@ const Carts = () => {
             </a>
             <button
               onClick={cartItems.length > 0 ? checkoutHandler : null}
-              className="button-proceed-checkout"
+              className={`button-proceed-checkout ${cartItems.length === 0 ? 'disabled' : ''}`}
               disabled={cartItems.length === 0}
             >
               Proceed to Checkout

@@ -57,14 +57,16 @@ const RiderList = () => {
     setOpenDialog(true);
   };
 
-  // Handle delete action
   const handleConfirmDelete = () => {
     if (selectedDriver) {
-      dispatch(removeDriver(selectedDriver._id, token));
+      dispatch(removeDriver(selectedDriver._id, token)).then(() => {
+        // Fetch the updated list of riders
+        dispatch(singleDriver(userId, token)); 
+      });
       setOpenDialog(false);
-      onRefresh();
     }
   };
+  
 
   return (
     <div className="rider-container">

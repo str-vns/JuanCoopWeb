@@ -71,6 +71,7 @@ const Address = () => {
   return (
     <div>
       <Navbar />
+      
       <div className="address-section">
         {loading ? (
           <p className="loadingText">Loading...</p>
@@ -79,7 +80,17 @@ const Address = () => {
             Error: {error.message || "Something went wrong."}
           </p>
         ) : (
+          
           <div className="address-container">
+            <div className="address-list-header">
+            <h1>Address</h1>
+            <button
+              className="btn-add-address"
+              onClick={() => navigate("/address/create")}
+            >
+              <i className="fa-solid fa-plus"></i>
+            </button>
+          </div>
             {Array.isArray(addresses) && addresses.length > 0 ? (
               addresses.map((address) => (
                 <div
@@ -116,13 +127,14 @@ const Address = () => {
             )}
           </div>
         )}
+        
         <div className="button-container">
-          <button
+          {/* <button
             onClick={() => navigate("/address/create")}
             className="proceed-button"
           >
             Add Address
-          </button>
+          </button> */}
           <button onClick={handleAddressClick} className="proceed-button">
             Proceed To Payment
           </button>

@@ -46,7 +46,9 @@ const InventoryDetail = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-      dispatch(deleteInventory(id, token));
+      dispatch(deleteInventory(id, token)).then(() => {
+        dispatch(inventoryProducts(InvItem._id, token));
+      });
     }
   };
 

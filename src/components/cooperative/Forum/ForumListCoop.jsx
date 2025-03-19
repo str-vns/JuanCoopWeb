@@ -20,6 +20,20 @@ const ForumListCoop = () => {
   const [showComments, setShowComments] = useState({});
   const [selectedPost, setSelectedPost] = useState(null);
   const [showModalComments, setShowModalComments] = useState(false);
+  const badWords = ["fuck", "shit", "bitch", "tangina", "gago", "putangina", "ulol"]; 
+
+  const censorBadWords = (text) => {
+    return text
+      .split(" ")
+      .map((word) => {
+        let lowerWord = word.toLowerCase();
+        if (badWords.includes(lowerWord)) {
+          return word[0] + "*".repeat(word.length - 1); // Replace all except the first letter
+        }
+        return word;
+      })
+      .join(" ");
+  };
 
   useEffect(() => {
     dispatch(fetchApprovedPosts());
@@ -32,9 +46,10 @@ const ForumListCoop = () => {
 };
 
   const handleCommentChange = (postId, value) => {
+    const filteredComment = censorBadWords(value);
     setComments((prevComments) => ({
       ...prevComments,
-      [postId]: value,
+      [postId]: filteredComment,
     }));
   };
 

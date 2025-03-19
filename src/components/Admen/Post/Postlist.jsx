@@ -29,10 +29,11 @@ const PostList = () => {
     dispatch(getPost());
   };
 
-  const handleDecline = async (postId) => {
-    await dispatch(deletePost(postId));
+  const handleDecline = (postId) => {
+    dispatch(deletePost(postId)).then(() => {
+      dispatch(getPost());
+    });
     alert('Post deleted successfully!');
-    dispatch(getPost());
   };
 
   return (

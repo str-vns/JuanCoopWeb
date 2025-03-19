@@ -105,7 +105,7 @@ const AssignList = () => {
 
     {loading || shiploading ? (
       <CircularProgress />
-    ) : shiperror || orders?.length === 0 ? (
+    ) : shiperror || !orders || orders.length === 0 ? (
       <Typography variant="h6" color="error" align="center">
         No Assigned Orders.
       </Typography>

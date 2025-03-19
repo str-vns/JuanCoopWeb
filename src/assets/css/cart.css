@@ -178,8 +178,6 @@
   margin-top: 1rem;
 }
 
-
-
 .checkout-btn:hover {
   background-color:  #f59f0bc0;
 }
@@ -200,7 +198,11 @@
   text-decoration: none; /* Remove underline */
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
-
+.button-proceed-checkout.disabled {
+  background-color: #d3d3d3; /* Light gray color */
+  cursor: not-allowed;
+  color: #a9a9a9; /* Dark gray color for text */
+}
 
 /* Hover Effects */
 .button-proceed-checkout:hover {
