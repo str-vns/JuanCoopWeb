@@ -3,8 +3,32 @@
 .farmRegisterBtn {
     text-align: center; /* Center-align the button */
     margin-top: 20px; /* Space above the button */
+    
+  }
+  .editFarmContainer{
+padding-left: 200px;
   }
   
+  .coop-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: #ffcc00;
+    padding: 15px;
+  
+    top: 0;
+    z-index: 10;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+  }
+  
+  .coop-list-header h1 {
+    color: #000000;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
   .farmRegister {
     background-color: #007bff; /* Green background */
     color: white; /* White text */
@@ -14,7 +38,7 @@
     font-size: 18px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Light shadow */
   }
   
   .farmRegister:hover {

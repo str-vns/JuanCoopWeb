@@ -43,24 +43,25 @@ const RiderDelivery = () => {
   return (
     <div className="rider-assign-container">
       <Sidebar />
-      <div className="rider-assign-header">
-        <h1>Assigned Deliveries</h1>
-      </div>
+      <div className="rider-list-header">
+            <h1 className="rider-title">Assigned Deliveries</h1>
+          </div>
 
       {deliveries?.length ? (
-        <div className="rider-info">
-          <img
-            src={deliveries[0]?.assignedTo?.image?.url || "/default-avatar.png"}
-            alt="Rider"
-            className="rider-profile-image"
-          />
-          <div>
-            <p className="rider-name-title">Rider Name:</p>
-            <p className="rider-name">
-              {deliveries[0]?.assignedTo?.firstName} {deliveries[0]?.assignedTo?.lastName}
-            </p>
-          </div>
-        </div>
+      <div className="rider-info">
+      <img
+        src={deliveries[0]?.assignedTo?.image?.url || "/default-avatar.png"}
+        alt="Rider"
+        className="rider-profile-image"
+      />
+      <div className="rider-information">
+        <p className="rider-name-title">Rider Name:</p>
+        <p className="rider-name">
+          {deliveries[0]?.assignedTo?.firstName} {deliveries[0]?.assignedTo?.lastName}
+        </p>
+      </div>
+    </div> 
+    
       ) : (
         <p className="no-deliveries">No deliveries assigned yet.</p>
       )}
@@ -80,7 +81,7 @@ const RiderDelivery = () => {
               </button>
 
               <button className="trash-button" onClick={() => dispatch(removeDelivery(item._id, token))}>
-                🗑️
+              <i class="fa-solid fa-trash"></i>
               </button>
             </div>
           </div>

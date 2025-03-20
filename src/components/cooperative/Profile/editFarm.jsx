@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../layout/navbar";
+// import Navbar from "../../layout/navbar";
 import "@assets/css/farmRegistration.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, getToken } from "@utils/helpers";
@@ -12,6 +12,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import maplibre from "maplibre-gl";
 import Modal from "react-modal";
 import AuthGlobal from "@redux/Store/AuthGlobal";
+import Sidebar from "../sidebar";
 
 Modal.setAppElement("#root");
 
@@ -201,12 +202,18 @@ const EditFarm = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="min-h-screen bg-gray-50 mt-14">
-        <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+      {/* <Navbar /> */}
+      <Sidebar/>
+      <div className="editFarmContainer">
+
+        <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg ">
+          {/* <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
             Edit Farm
-          </h2>
+          </h2> */}
+          <div className="coop-list-header">
+            <h1>Edit Farm</h1>
+           
+          </div>
 
           <form onSubmit={handleUpdate}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

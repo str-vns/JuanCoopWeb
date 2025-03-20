@@ -83,7 +83,7 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="sidebar-item">
-              <a className="sidebar-link" href="/profile">
+              <a className="sidebar-link" href="/CoopProfile">
                 <i className="fas fa-user-circle sidebar-icon"></i>
                 <span className="sidebar-text">Profile</span>
               </a>
@@ -92,6 +92,12 @@ const Sidebar = () => {
               <a className="sidebar-link" href="/productlist">
                 <i className="fas fa-solid fa-bag-shopping sidebar-icon"></i>
                 <span className="sidebar-text">Products</span>
+              </a>
+            </li>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/productarchive">
+                <i className="fas fa-solid fa-bag-shopping sidebar-icon"></i>
+                <span className="sidebar-text">Product Archive</span>
               </a>
             </li>
             <li className="sidebar-item">
@@ -154,12 +160,7 @@ const Sidebar = () => {
                 <span className="sidebar-text">Discussion</span>
               </a>
             </li>
-            <li className="sidebar-item">
-              <a className="sidebar-link" href="/productarchive">
-                <i className="fas fa-solid fa-bag-shopping sidebar-icon"></i>
-                <span className="sidebar-text">Product Archive</span>
-              </a>
-            </li>
+          
             {/* <li className="sidebar-item">
               <a className="sidebar-link" href="/notificationlistp">
                 <i className="fas fa-solid fa-bell sidebar-icon"></i>

@@ -1,114 +1,124 @@
 .rider-assign-container {
-  background-color: white;
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 40px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 250px;
 }
 
-.rider-assign-header {
-  background-color: #FFD500;
+.rider-list-header {
+  background-color: #ffd700;
   color: black;
   padding: 15px;
-  font-size: 10px;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 12px;
+  margin-bottom: 20px;
 }
 
 .rider-info {
   display: flex;
   align-items: center;
   margin: 20px 0;
-  padding: 15px;
-  background: #fff;
-  border-radius: 10px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  border: 1px solid #ddd;
 }
 
 .rider-profile-image {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  margin-right: 15px;
-  border: 2px solid #000;
+  margin-right: 20px;
+  border: 2px solid #dbdbdb;
+}
+
+.rider-name-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .rider-name-title {
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: bold;
-  color: #333;
+  color: #444;
+  align-items: left;
 }
 
 .rider-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #000;
-}
-
-.no-deliveries {
-  font-size: 16px;
-  color: #888;
-  text-align: center;
-  margin: 20px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000000;
+  align-items: left;
 }
 
 .order-list {
   width: 100%;
-  max-width: 600px;
 }
 
 .order-item {
-  background: #fff;
-  padding: 15px;
-  margin-bottom: 12px;
-  border-radius: 10px;
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 12px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: 0.3s;
+  transition: transform 0.3s;
+  width: 100%;
 }
 
 .order-item:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .delivery-text {
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
+  color: #444;
+  margin-bottom: 10px;
 }
 
 .button-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .order-button {
-  padding: 8px 16px;
-  border-radius: 5px;
+  padding: 10px 18px;
+  border-radius: 6px;
   color: white;
   font-weight: bold;
   border: none;
   cursor: pointer;
-  transition: 0.3s;
+  background-color: #28a745;
+  transition: background-color 0.3s;
 }
 
-.trash-button {
-  background: none;
+.order-button:hover {
+  background-color: #218838;
+}
+
+.delete-button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
   border: none;
-  font-size: 24px;
   cursor: pointer;
-  color: #dc3545;
-  transition: 0.3s;
+  background-color: #dc3545;
+  transition: background-color 0.3s;
 }
 
-.trash-button:hover {
-  color: #a71d2a;
+.delete-button:hover {
+  background-color: #a71d2a;
 }

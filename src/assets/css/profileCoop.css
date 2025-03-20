@@ -1,0 +1,110 @@
+/* User Container */
+.usercontainer {
+    display: flex;
+    background-color: #ffffff;
+}
+
+/* Profile Wrapper */
+.profileWrapper {
+    margin-left: 250px; /* Adjusted for sidebar width */
+    padding: 10px; /* Made padding smaller */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Profile Content */
+.profileContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 70%; /* Reduced width for better alignment */
+    margin-top: -80px; /* Raised the profile card higher */
+}
+
+/* Left Column (Profile Image & Email) */
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #ddd;
+    padding-right: 20px;
+}
+
+.profileImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.emailText {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Right Column (Profile Info & Buttons) */
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Centers the content horizontally */
+}
+
+.input {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-width: 300px; /* Makes input fields the same width as buttons */
+}
+
+/* Button Group */
+.buttonGroup {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+/* Buttons */
+.update-btn, .edit-farm-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%; /* Make buttons match input width */
+    max-width: 300px;
+}
+
+/* Different Shades of Blue */
+.update-btn {
+    background-color: #007bff;
+}
+
+.edit-farm-btn {
+    background-color: #0056b3;
+}
+
+.update-btn:hover {
+    background-color: #0056b3;
+}
+
+.edit-farm-btn:hover {
+    background-color: #004090;
+}
+
+/* Error Message */
+.errorText {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+}

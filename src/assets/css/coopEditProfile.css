@@ -1,0 +1,131 @@
+/* Container for the whole screen */
+.containerprofile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #ffffff; /* Lighter background for better contrast */
+  padding: 10px;
+  min-height: 100vh;
+  padding-left: 200px;
+  gap: 50px;
+}
+
+/* Profile picture container */
+.profilePicContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  min-height: 100vh;
+  padding: 80px;
+}
+
+.profilePicContainer:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile picture styles */
+.profilePic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+/* File input label */
+.fileInputLabel {
+  display: inline-block;
+  background-color: #d1d1d1;
+  color: rgb(0, 0, 0);
+  padding: 10px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.fileInputLabel:hover {
+  background-color: #007bff;
+}
+
+/* Hide the default file input */
+.fileInput {
+  display: none;
+}
+
+/* Input field container */
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.inputContainer:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Labels */
+.label {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Inputs */
+.input {
+  height: 45px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding-left: 10px;
+  background-color: #fff;
+  margin-bottom: 15px;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #007bff;
+}
+
+/* Button styles */
+.button {
+  background-color: #007bff;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 300px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #007bff;
+}
+
+/* Success and error messages */
+.success {
+  color: green;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}

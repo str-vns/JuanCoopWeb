@@ -141,7 +141,7 @@ const EditProfile = () => {
 
   return (
     <div className="containerprofile">
-    <Navbar />
+    {/* <Navbar /> */}
       <div className="profilePicContainer">
         <img src={imagePreview} alt="Profile" className="profilePic" />
         <label className="fileInputLabel">

@@ -229,9 +229,9 @@ const FarmRegistration = () => {
   };
   return (
     <>
-      <Navbar />
-      <div className="min-h-screen bg-gray-50 mt-14">
-        <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+      {/* <Navbar /> */}
+      <div className="min-h-screen bg-white-50 mt-14">
+        <div className="max-w-4xl mx-auto bg-white p-6 rounded">
           <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
             Farm Registration
           </h2>

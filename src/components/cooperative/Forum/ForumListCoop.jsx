@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchApprovedPosts, likePost, addComment } from "@src/redux/Actions/postActions";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../sidebar";
-import { FaSearch, FaThumbsUp, FaComment, FaGrinStars, FaRegMeh, FaRegTired, FaRegLaugh } from "react-icons/fa";
+import { FaSearch, FaThumbsUp, FaComment, FaRegLaugh, FaRegMeh, FaRegTired, FaExclamationCircle } from "react-icons/fa";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import "@assets/css/coopforumlist.css";
 
@@ -47,15 +47,36 @@ const ForumListCoop = () => {
       .join(" ");
   };
 
+  // List of bad words to censor
+
   useEffect(() => {
     dispatch(fetchApprovedPosts());
   }, [dispatch]);
 
+  // Function to censor bad words in comments
+  const censorComment = (comment) => {
+    if (!comment) return comment;
+
+    // Replace bad words with ***
+    return badWords.reduce((acc, word) => {
+      const regex = new RegExp(word, "gi");
+      return acc.replace(regex, "***");
+    }, comment);
+  };
+
+  // Function to check if a comment contains bad words
+  const containsBadWord = (comment) => {
+    return badWords.some((word) => {
+      const regex = new RegExp(word, "gi");
+      return regex.test(comment);
+    });
+  };
+
   const handleLike = (postId) => {
-  dispatch(likePost(postId, userId)).then(() => {
-    dispatch(fetchApprovedPosts());
-  });
-};
+    dispatch(likePost(postId, userId)).then(() => {
+      dispatch(fetchApprovedPosts());
+    });
+  };
 
   const handleCommentChange = (postId, value) => {
     const filteredComment = censorBadWords(value);
@@ -70,22 +91,29 @@ const ForumListCoop = () => {
       alert("Please enter a comment.");
       return;
     }
-
+  
+    // Check if the comment contains bad words
+    const hasBadWord = containsBadWord(comments[postId]);
+  
+    // Censor the comment before sending it to the backend
+    const censoredComment = censorComment(comments[postId]);
+  
     const commentData = {
       user: userId,
       post: postId,
-      comment: comments[postId],
+      comment: censoredComment,
+      sentimentLabel: hasBadWord ? "negative" : "neutral", // Set sentiment to negative if bad word is detected
     };
-
-    dispatch(addComment(commentData, token));
-    alert("Comment added successfully!");
-
-    // Clear input
-    setComments((prevComments) => ({
-      ...prevComments,
-      [postId]: "",
-    }));
-    dispatch(fetchApprovedPosts());
+  
+    dispatch(addComment(commentData, token)).then(() => {
+      alert("Comment added successfully!");
+      // Clear input
+      setComments((prevComments) => ({
+        ...prevComments,
+        [postId]: "",
+      }));
+      dispatch(fetchApprovedPosts()); // Refresh posts to reflect the new comment
+    });
   };
 
   // Toggle comments dropdown
@@ -193,14 +221,14 @@ const ForumListCoop = () => {
                   <div className="forumlist-coop-comments">
                     <h3>Comments</h3>
                     {post.comments?.length > 0 ? (
-                      [...post.comments] // Create a copy to avoid mutating original data
-                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by date (most recent first)
+                      [...post.comments]
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                         .map((comment, index) => (
                           <div key={index} className="forumlist-coop-comment-item">
                             {/* Row: Name, Comment, and Sentiment Label */}
                             <div className="forumlist-coop-comment-content flex">
                               <p>
-                                <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {comment.comment}
+                                <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {censorComment(comment.comment)}
                               </p>
                               <div className={`sentiment-label ${comment.sentimentLabel}`}>
                                 {comment.sentimentLabel === "positive" && (
@@ -213,6 +241,14 @@ const ForumListCoop = () => {
                                   <span className="negative"><FaRegTired /></span>
                                 )}
                               </div>
+                              {/* Censored Comment Icon */}
+                              {containsBadWord(comment.comment) && (
+                                <FaExclamationCircle
+                                  className="censored-icon"
+                                  title="This comment was censored due to inappropriate language."
+                                  onClick={() => alert("This comment was censored due to inappropriate language.")}
+                                />
+                              )}
                             </div>
 
                             {/* Date below */}
@@ -233,17 +269,16 @@ const ForumListCoop = () => {
                   </div>
                 )}
 
-
-                 {/* Comment Input */}
-                 <div className="forumlist-coop-add-comment">
-                    <input
-                      type="text"
-                      placeholder="Write a comment..."
-                      value={comments[post._id] || ""}
-                      onChange={(e) => handleCommentChange(post._id, e.target.value)}
-                    />
-                    <button onClick={() => handleComment(post._id)}>Post</button>
-                  </div>
+                {/* Comment Input */}
+                <div className="forumlist-coop-add-comment">
+                  <input
+                    type="text"
+                    placeholder="Write a comment..."
+                    value={comments[post._id] || ""}
+                    onChange={(e) => handleCommentChange(post._id, e.target.value)}
+                  />
+                  <button onClick={() => handleComment(post._id)}>Post</button>
+                </div>
               </div>
             ))}
         </div>
@@ -306,7 +341,6 @@ const ForumListCoop = () => {
                 </div>
               </div>
 
-
               {/* Comments Dropdown Inside Modal */}
               {showModalComments && (
                 <div className="forumlist-coop-comments">
@@ -319,7 +353,7 @@ const ForumListCoop = () => {
                           {/* Row: Name, Comment, and Sentiment Label */}
                           <div className="forumlist-coop-comment-content flex">
                             <p>
-                              <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {comment.comment}
+                              <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {censorComment(comment.comment)}
                             </p>
                             <div className={`sentiment-label ${comment.sentimentLabel}`}>
                               {comment.sentimentLabel === "positive" && (
@@ -332,6 +366,14 @@ const ForumListCoop = () => {
                                 <span className="negative"><FaRegTired /></span>
                               )}
                             </div>
+                            {/* Censored Comment Icon */}
+                            {containsBadWord(comment.comment) && (
+                              <FaExclamationCircle
+                                className="censored-icon"
+                                title="This comment was censored due to inappropriate language."
+                                onClick={() => alert("This comment was censored due to inappropriate language.")}
+                              />
+                            )}
                           </div>
 
                           {/* Date below */}
@@ -351,8 +393,6 @@ const ForumListCoop = () => {
                   )}
                 </div>
               )}
-
-
 
               {/* Comment Input */}
               <div className="forumlist-coop-add-comment">
@@ -376,7 +416,6 @@ const ForumListCoop = () => {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
