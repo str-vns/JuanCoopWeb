@@ -21,7 +21,7 @@ import OrderConfirmation from "./components/Cart/confirm";
 
 
 import Profile from "./components/user/Profile";
-
+import UserEditProfile from "./components/user/UserEditProfile";
 
 import WishList from "./components/user/Wishlist";
 // import OrderList from "./Components/Order/Orderlist";
@@ -93,6 +93,8 @@ import EditProfile from "./components/user/EditProfile";
 
 import MemberList from "./components/cooperative/Member/MemberList";
 import FarmerProfile from "./components/cooperative/Profile/FarmerProfile";
+import CoopProfile from "./components/cooperative/Profile/coopProfile";
+import EditProfileCoop from "./components/cooperative/Profile/coopEditProfile";
 
 import { getCurrentUser } from "@utils/helpers";
 import RoleBaseRoute from "@route/RoleBaseRoute";
@@ -148,7 +150,7 @@ import RefundSuccessAdmin from "./components/Admen/Refund/RefundSuccessAdmin";
 
 import MemberForumList from "./components/user/MemberForumList";
 import ReasonCancelled from "./components/Cancelled/ReasonCancelled";
-
+import CoopEditProfile from "./components/cooperative/Profile/coopEditProfile";
 
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
@@ -223,7 +225,7 @@ function App() {
           <Route path="/" element={<RoleBaseRoute/>} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/editprofile" element={<EditProfile />} />
+         
           <Route path="/resetPassword/:id" element={<PasswordReset/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/otp" element={<RegisterRoute> <OtpRegister /> </RegisterRoute>} />
@@ -233,7 +235,13 @@ function App() {
           <Route path="/aboutUs" element={<AboutUs/>} />
           {/* Order Routes */}
           <Route path="/product/:id" element={<ProductCard />} />
+
+          {/* profile */}
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/CoopProfile" element={<CoopProfile/>}/>
+          <Route path="/CoopEdit" element={<CoopEditProfile/>}/>
+
           <Route path="/editfarm" element={<EditFarm/>} />
           <Route path="/cart" element={<Carts/>} />
           <Route path="/shipping" element={<Shipping/>} />
@@ -366,6 +374,8 @@ function App() {
           <Route path="/RefundProcessAdmin" element={<RefundProcessAdmin/>}/>
           <Route path="/refund-details/:id" element={<RefundDetailsAdmin />} />
           <Route path="/RefundSuccessAdmin" element={<RefundSuccessAdmin/>}/>
+
+          
 
         </Routes>
       </div>
