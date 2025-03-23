@@ -5,14 +5,22 @@ import html2canvas from "html2canvas";
 
 const QrPage = () => {
   const location = useLocation();
-  const { order } = location.state || {};
+  const { order, trackId, userId } = location.state || {};
+
+  console.log("Order Data in QrPage:", order); // Debugging output
+  console.log("Track ID in QrPage:", trackId); // Debugging output
+  console.log("User ID in QrPage:", userId); // Debugging output
 
   const generateQRCodeData = () => {
-    return JSON.stringify({
-      orderId: order._id,
+    const qrData = JSON.stringify({
+      orderId: order?._id || "UNKNOWN_ORDER",
+      deliveryId: trackId || "MISSING_DELIVERY_ID",
+      userId: userId || "UNKNOWN_USER",
       status: "delivered",
-      userId: order.userId,
     });
+
+    console.log("Generated QR Code Data:", qrData); // Debugging output
+    return qrData;
   };
 
   const downloadQRCode = () => {
@@ -21,7 +29,7 @@ const QrPage = () => {
       html2canvas(qrElement).then((canvas) => {
         const link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
-        link.download = `qr-code-${order._id}.png`;
+        link.download = `qr-code-${order?._id || "UNKNOWN_ORDER"}.png`;
         link.click();
       });
     }
@@ -39,15 +47,18 @@ const QrPage = () => {
       <div style={styles.qrManual}>
         <p>Orderlist Number</p>
         <div style={styles.qrCodeInput}>
-          <input type="text" value={order?._id} readOnly style={styles.input} />
-        
+          <input
+            type="text"
+            value={order?._id || "UNKNOWN_ORDER"}
+            readOnly
+            style={styles.input}
+          />
         </div>
       </div>
 
       <button onClick={downloadQRCode} style={styles.qrDownloadButton}>
-       Download
+        Download
       </button>
-  
     </div>
   );
 };
@@ -90,12 +101,6 @@ const styles = {
     border: "1px solid #ccc",
     borderRadius: "5px",
   },
-  copyButton: {
-    cursor: "pointer",
-    border: "none",
-    background: "none",
-    fontSize: "18px",
-  },
   qrDownloadButton: {
     marginTop: "20px",
     backgroundColor: "#008f4f",
@@ -105,9 +110,6 @@ const styles = {
     fontSize: "18px",
     cursor: "pointer",
     borderRadius: "5px",
-  },
-  qrDownloadButtonHover: {
-    backgroundColor: "#00703e",
   },
 };
 

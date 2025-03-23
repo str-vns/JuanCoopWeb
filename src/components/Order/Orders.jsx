@@ -18,6 +18,7 @@ const Orders = () => {
   const currentUser = getCurrentUser();
   const userId = currentUser?._id;
 
+  
   useEffect(() => {
     if (userId) {
       dispatch(fetchUserOrders(userId));
@@ -63,10 +64,6 @@ const Orders = () => {
       console.error("❌ Error navigating to cancellation page:", error);
     }
   };
-  
-  
-  
-
   const toggleExpandedOrder = (orderId) => {
     setExpandedOrders((prevState) => ({
       ...prevState,
@@ -74,11 +71,46 @@ const Orders = () => {
     }));
   };
 
-  const handleViewQR = (order) => {
-    navigate("/qr", { state: { order } });
-  };
+  // const handleViewQR = (order) => {
+  //   navigate("/qr", { state: { order } });
+  // };
 
  
+  // const handleViewQR = (order) => {
+  //   console.log("Order being passed to QR Page:", order); // Debugging output
+  //   const deliveryId = order.orderItems[0]?.deliveryId || "MISSING_DELIVERY_ID"; // Get deliveryId from the first order item
+  //   console.log("Delivery ID:", deliveryId); // Debugging output
+  //   console.log("User ID:", currentUser?._id); // Debugging output
+  
+  //   navigate("/qr", {
+  //     state: {
+  //       order, // Pass the entire order object
+  //       trackId: deliveryId, // Pass deliveryId
+  //       userId: currentUser?._id || "UNKNOWN_USER", // Pass userId from currentUser
+  //     },
+  //   });
+  // };
+  const handleViewQR = (order) => {
+    const deliveryId = order?.orderItems?.[0]?.deliveryId;
+
+    if (!deliveryId) {
+      console.error("❌ Missing deliveryId in order:", order);
+      alert("Error: Delivery ID is missing for this order!");
+      return;
+    }
+
+    console.log("✅ Extracted Delivery ID:", deliveryId); // Debugging
+
+    navigate("/qr", {
+      state: {
+        order,
+        trackId: deliveryId,
+        userId: currentUser?._id || "UNKNOWN_USER",
+      },
+    });
+  };
+  
+  
   
   return (
     <div className="order-container">
