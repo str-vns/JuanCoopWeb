@@ -9,6 +9,7 @@ const ForumCreate = ({ closeModal }) => {
   const currentUser = getCurrentUser();
   const token = getToken();
   const userId = currentUser?._id;
+  const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [imagesPreview, setImagesPreview] = useState([]);
   const [images, setImages] = useState([]);
@@ -22,6 +23,7 @@ const ForumCreate = ({ closeModal }) => {
     }
 
     const data = {
+      title: postTitle,
       content: postContent,
       image: images,
       author: userId,
@@ -65,11 +67,16 @@ const ForumCreate = ({ closeModal }) => {
               {/* Text Input */}
               <textarea
                 className="forumpost-create-input"
+                value={postTitle}
+                onChange={(e) => setPostTitle(e.target.value)}
+                placeholder="Add Title"
+              />
+              <textarea
+                className="forumpost-create-input"
                 value={postContent}
                 onChange={(e) => setPostContent(e.target.value)}
                 placeholder="What's on your mind?"
               />
-    
               {/* Image Upload */}
               <div className="forumpost-create-images">
                 <input

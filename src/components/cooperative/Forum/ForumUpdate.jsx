@@ -11,6 +11,7 @@ const ForumUpdate = ({ closeModal, post }) => {
   const postId = post._id;
   const token = getToken();
 
+  const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [imagesPreview, setImagesPreview] = useState([]);
   const [images, setImages] = useState([]);
@@ -20,6 +21,7 @@ const ForumUpdate = ({ closeModal, post }) => {
 
   useEffect(() => {
     if (post) {
+        setPostTitle(post.title || "");
         setPostContent(post.content || "");
         setImagesPreview(post.image.map((img) => img.url) || []);
     }
@@ -52,12 +54,13 @@ const ForumUpdate = ({ closeModal, post }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!postContent || (!imagesPreview.length && !images.length)) {
+    if (!postTitle || !postContent || (!imagesPreview.length && !images.length)) {
       alert("Please fill all the fields");
       return;
     }
 
     const postData = {
+      title: postTitle,
       content: postContent,
       image: newImages,
     };
@@ -82,6 +85,16 @@ return (
         <form onSubmit={handleSubmit} className="forumpost-update-form">
           
           {/* Input Field */}
+          <div className="forumpost-update-input-container">
+            <input
+              type="text"
+              value={postTitle}
+              onChange={(e) => setPostTitle(e.target.value)}
+              required
+              placeholder="Title"
+              className="forumpost-update-input"
+            />
+          </div>
           <div className="forumpost-update-input-container">
             <input
               type="text"
@@ -115,12 +128,6 @@ return (
                   return (
                     <div key={imageId || index} className="forumpost-update-image">
                       <img src={img} alt={`Uploaded ${index}`} className="forumpost-update-img" />
-                      <button
-                        onClick={() => handleRemoveImage(imageId)}
-                        className="forumpost-update-remove"
-                      >
-                        ✖
-                      </button>
                     </div>
                   );
                 })}

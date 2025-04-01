@@ -27,7 +27,7 @@ const ForumPostList = () => {
   const handleDelete = (postId) => {
     dispatch(deletePost(postId));
     alert("Post marked as deleted!");
-    dispatch(getUserPost(userId)); // Add parentheses to call the function
+    dispatch(getUserPost(userId));
   };
 
   const openEditModal = (post) => {
@@ -35,7 +35,7 @@ const ForumPostList = () => {
     setIsEditModalOpen(true);
   };
 
-  const filteredPosts = posts?.filter(post => post.status === activeTab) || [];
+  const filteredPosts = posts?.filter(post => post.author === userId && post.status === activeTab) || [];
 
   const toggleComments = (postId) => {
     setShowComments((prevState) => ({
@@ -81,6 +81,7 @@ const ForumPostList = () => {
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .map((post) => (
             <div key={post._id} className="usercoop-forumlist-post">
+               <p className="usercoop-forumlist-content font-bold">{post.title}</p>
               <p className="usercoop-forumlist-content">{post.content}</p>
 
               {post.image?.length > 0 && (

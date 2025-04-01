@@ -154,7 +154,7 @@ const ForumListCoop = () => {
         {/* Forum Posts */}
         <div className="forumlist-coop-posts">
           {posts
-            .filter((post) => post.content.toLowerCase().includes(searchQuery.toLowerCase()))
+            .filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()))
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((post) => (
               <div key={post._id} className="forumlist-coop-card">
@@ -177,25 +177,19 @@ const ForumListCoop = () => {
                     </span>
                   </div>
                 </div>
+                <p className="forumlist-coop-post-title">
+                  {post.title}
+                </p>
                 <p className="forumlist-coop-post-content">
                   {post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content}
                 </p>
-                {post.image?.length > 0 ? (
-                  post.image.map((img, idx) => (
-                    <img
-                      key={idx}
-                      src={img.url || "/default-placeholder.png"}
-                      alt="Post"
-                      className="forumlist-coop-post-image"
-                    />
-                  ))
-                ) : (
-                  <img
-                    src="/default-placeholder.png"
-                    alt="Default Post"
-                    className="forumlist-coop-post-image"
-                  />
-                )}
+                {post.image?.length > 0 && (
+                <div className="usercoop-image-container">
+                  {post.image.map((img, index) => (
+                    <img key={index} src={img.url} alt="Post" className="usercoop-forumlist-image" />
+                  ))}
+                </div>
+              )}
                 <div className="forumlist-coop-actions">
                   <button onClick={() => handleLike(post._id)} className="forumlist-coop-like">
                     <FaThumbsUp /> {post.likeCount}
@@ -227,6 +221,15 @@ const ForumListCoop = () => {
                           <div key={index} className="forumlist-coop-comment-item">
                             {/* Row: Name, Comment, and Sentiment Label */}
                             <div className="forumlist-coop-comment-content flex">
+                            <p className="comment-date">
+                              {comment.createdAt
+                                ? new Date(comment.createdAt).toLocaleDateString("en-US", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  })
+                                : "Unknown Date"}
+                            </p>
                               <p>
                                 <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {censorComment(comment.comment)}
                               </p>
@@ -250,17 +253,6 @@ const ForumListCoop = () => {
                                 />
                               )}
                             </div>
-
-                            {/* Date below */}
-                            <p className="comment-date">
-                              {comment.createdAt
-                                ? new Date(comment.createdAt).toLocaleDateString("en-US", {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                  })
-                                : "Unknown Date"}
-                            </p>
                           </div>
                         ))
                     ) : (
@@ -270,152 +262,25 @@ const ForumListCoop = () => {
                 )}
 
                 {/* Comment Input */}
-                <div className="forumlist-coop-add-comment">
+                <div className="forumlist-coop-add-comment flex items-center gap-1 p-1 border-t border-gray-300">
                   <input
                     type="text"
                     placeholder="Write a comment..."
                     value={comments[post._id] || ""}
                     onChange={(e) => handleCommentChange(post._id, e.target.value)}
+                    className="flex-1 h-8 px-3 py-2 border border-gray-300 rounded-md text-sm outline-none focus:border-yellow-500 transition-all placeholder-left"
                   />
-                  <button onClick={() => handleComment(post._id)}>Post</button>
+                  <button
+                    onClick={() => handleComment(post._id)}
+                    className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-all"
+                  >
+                    Post
+                  </button>
                 </div>
+
               </div>
             ))}
         </div>
-
-        {/* Post Modal */}
-        {selectedPost && (
-          <div className="forumlist-coop-modal">
-            <div className="forumlist-coop-modal-content">
-              <span className="forumlist-coop-close" onClick={() => setSelectedPost(null)}>&times;</span>
-              <h2>{selectedPost.content}</h2>
-              {selectedPost.image?.length > 0 ? (
-                selectedPost.image.map((img, idx) => (
-                  <img
-                    key={idx}
-                    src={img.url || "/default-placeholder.png"}
-                    alt="Post Image"
-                    className="forumlist-coop-post-image"
-                  />
-                ))
-              ) : (
-                <img
-                  src="/default-placeholder.png"
-                  alt="Default Post Image"
-                  className="forumlist-coop-post-image"
-                />
-              )}
-              <p>
-                By {selectedPost.author?.firstName} {selectedPost.author?.lastName} on{" "}
-                {selectedPost.createdAt
-                  ? new Date(selectedPost.createdAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })
-                  : "Unknown Date"}
-              </p>
-
-              <div className="forumlist-coop-modal-actions">
-                {/* Like and Comment buttons in one row */}
-                <div className="forumlist-coop-actions-buttons">
-                  <button onClick={() => handleLike(selectedPost._id)} className="forumlist-coop-like">
-                    <FaThumbsUp /> {selectedPost.likeCount}
-                  </button>
-                  <button onClick={() => toggleModalComments(selectedPost._id)} className="forumlist-coop-comment">
-                    <FaComment /> {selectedPost.comments?.length}
-                  </button>
-                </div>
-
-                {/* Sentiment Label */}
-                <div className={`sentiment-label ${selectedPost.overallSentimentLabel}`}>
-                  {selectedPost.overallSentimentLabel === "positive" && (
-                    <span className="positive"><FaRegLaugh /> Positive</span>
-                  )}
-                  {selectedPost.overallSentimentLabel === "neutral" && (
-                    <span className="neutral"><FaRegMeh /> Neutral</span>
-                  )}
-                  {selectedPost.overallSentimentLabel === "negative" && (
-                    <span className="negative"><FaRegTired /> Negative</span>
-                  )}
-                </div>
-              </div>
-
-              {/* Comments Dropdown Inside Modal */}
-              {showModalComments && (
-                <div className="forumlist-coop-comments">
-                  <h3>Comments</h3>
-                  {selectedPost.comments?.length > 0 ? (
-                    [...selectedPost.comments] // Create a copy to avoid mutating the original data
-                      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by date (most recent first)
-                      .map((comment, index) => (
-                        <div key={index} className="forumlist-coop-comment-item">
-                          {/* Row: Name, Comment, and Sentiment Label */}
-                          <div className="forumlist-coop-comment-content flex">
-                            <p>
-                              <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {censorComment(comment.comment)}
-                            </p>
-                            <div className={`sentiment-label ${comment.sentimentLabel}`}>
-                              {comment.sentimentLabel === "positive" && (
-                                <span className="positive"><FaRegLaugh /></span>
-                              )}
-                              {comment.sentimentLabel === "neutral" && (
-                                <span className="neutral"><FaRegMeh /></span>
-                              )}
-                              {comment.sentimentLabel === "negative" && (
-                                <span className="negative"><FaRegTired /></span>
-                              )}
-                            </div>
-                            {/* Censored Comment Icon */}
-                            {containsBadWord(comment.comment) && (
-                              <FaExclamationCircle
-                                className="censored-icon"
-                                title="This comment was censored due to inappropriate language."
-                                onClick={() => alert("This comment was censored due to inappropriate language.")}
-                              />
-                            )}
-                          </div>
-
-                          {/* Date below */}
-                          <p className="comment-date">
-                            {comment.createdAt
-                              ? new Date(comment.createdAt).toLocaleDateString("en-US", {
-                                  year: "numeric",
-                                  month: "short",
-                                  day: "numeric",
-                                })
-                              : "Unknown Date"}
-                          </p>
-                        </div>
-                      ))
-                  ) : (
-                    <p>No comments yet.</p>
-                  )}
-                </div>
-              )}
-
-              {/* Comment Input */}
-              <div className="forumlist-coop-add-comment">
-                <input
-                  type="text"
-                  placeholder="Write a comment..."
-                  value={comments[selectedPost._id] || ""}
-                  onChange={(e) => handleCommentChange(selectedPost._id, e.target.value)}
-                  className="forumlist-coop-comment-input"
-                />
-                <button
-                  onClick={() => {
-                    handleComment(selectedPost._id);
-                    setSelectedPost(null); // Close modal after posting comment
-                  }}
-                  className="forumlist-coop-post-comment"
-                >
-                  Post
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

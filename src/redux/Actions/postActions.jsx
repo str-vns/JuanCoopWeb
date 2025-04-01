@@ -48,6 +48,7 @@ export const createPost = (post, token) => async (dispatch) => {
     dispatch({ type: POST_REQUEST });
 
     const formData = new FormData();
+    formData.append("title", post.title);
     formData.append("content", post.content);
     formData.append("author", post.author);
     post?.image.forEach((image) => {
@@ -135,6 +136,7 @@ export const updatePost = (id, post, token) => async (dispatch) => {
     dispatch({ type: UPDATE_POST_REQUEST });
 
     const formData = new FormData();
+    formData.append("title", post.title);
     formData.append("content", post.content);
     post?.image.forEach((image) => {
       formData.append("image", image);
