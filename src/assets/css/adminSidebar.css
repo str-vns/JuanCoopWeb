@@ -1,119 +1,81 @@
-
 .sidebar-header {
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    background-color: #ffffff; /* Header background */
-  }
-  
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #ffffff; /* Header background */
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar-nav {
+  flex-grow: 1;
+  padding: 1rem 0;
+}
+
+.sidebar-item {
+  list-style: none;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #333333;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-link:hover {
+  background-color: #FAFAFA; /* Light yellow hover background */
+  color: #ffcc00; /* Yellow text on hover */
+}
+
+.sidebar-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
 .sidebar-text {
-  
-    font-weight: bold;
-    text-align: center;
+  flex-grow: 1;
+  text-align: left;
+  font-weight: bold;
+}
 
-  }
-  .sidebar-nav {
-    flex-grow: 1;
-    padding: 1rem 0;
-  }
-  
-  .sidebar-item {
-    list-style: none;
-  }
-  
-  .sidebar-link {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    color: #333333;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .sidebar-link:hover {
-    background-color: #FAFAFA; /* Light yellow hover background */
-    color: #ffcc00; /* Yellow text on hover */
-  }
-  
-  .sidebar-icon {
-    margin-right: 1rem;
-  }
+.sidebar-footer {
+  padding: 1.5rem;
+  background-color: #ffffff;
+}
 
-  .sidebar-footer {
-    padding: 2rem;
-    background-color: #ffffff;
-    
-  
-  }
-  
-  .sidebar-button {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    width: 100%;
-    padding: 0.75rem 1.5rem;
-    background-color: #ffcc00; /* Yellow button background */
-    border: none;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #ffffff;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 10px; /* Rounded corners */
-    gap: 1rem; /* Space between the icon and text */
-  }
-  
-  .sidebar-button:hover {
-    background-color: #e6b800; /* Darker yellow */
-  }
-  
-  .sidebar-link {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    color: #333333;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
-    gap: 0.5rem;
-    justify-content: start; /* Aligns items to the left */
-  }
-  
-  .sidebar-icon {
-    flex-shrink: 0;
-  }
-  
-  .sidebar-text {
-    flex-grow: 1;
-    text-align: left; /* Ensures text is left-aligned */
-    margin-left: 0;
-  }
-  
-  
-  
-  .sidebar-button .sidebar-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: 0.75rem; /* Adjusted to match spacing in links */
-  }
-  
-  .logo-image {
-    max-width: 50%; /* Keep the logo smaller */
-    height: auto;
-    display: inline-block; /* Allow text to sit beside it */
-    margin: 0; /* Remove extra margins */
-    vertical-align: middle; /* Align logo with text vertically */
-  }
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background-color: #ffcc00; /* Yellow button background */
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-  
-  .coop-notif-badge {
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 3px 7px;
-    border-radius: 50%;
-    margin-left: 5px;
-  }
+.sidebar-button:hover {
+  background-color: #e6b800; /* Darker yellow on hover */
+}
+
+.sidebar-button .sidebar-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
