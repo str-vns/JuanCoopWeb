@@ -151,7 +151,7 @@ export const OTPregister = (OtpData) => async (dispatch) => {
     });
 
 
-   toast.success("OTP send successfully!", {
+   toast.success("OTP sent successfully!", {
     theme: "dark",
     position: "top-right",
     autoClose: 5000,
