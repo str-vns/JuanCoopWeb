@@ -3,8 +3,9 @@ import "@assets/css/aboutUs.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchApprovedPosts, likePost, addComment } from "@src/redux/Actions/postActions";
 import Navbar from "../layout/navbar";
-import { FaSearch, FaThumbsUp, FaComment, FaGrinStars, FaRegMeh, FaRegTired, FaRegLaugh } from "react-icons/fa";
+import { FaSearch, FaHeart, FaComment, FaThumbsUp, FaRegMeh, FaRegTired, FaRegLaugh } from "react-icons/fa";
 import { getToken, getCurrentUser } from "@utils/helpers";
+import "@assets/css/memberforumlist.css"; 
 
 const MemberForumList = () => {
     const dispatch = useDispatch();
@@ -130,7 +131,7 @@ const MemberForumList = () => {
                 </p>
                 <div className="forumlist-coop-actions">
                   <button onClick={() => handleLike(post._id)} className="forumlist-coop-like">
-                    <FaThumbsUp /> {post.likeCount}
+                    <FaHeart /> {post.likeCount}
                   </button>
                   <button onClick={() => toggleComments(post._id)} className="forumlist-coop-comment">
                     <FaComment /> {post.comments?.length}

@@ -48,7 +48,7 @@ const CoopDashboard = () => {
   };
 
   return (
-    <div className="flex bg-yellow-50 min-h-screen  ml-[200px]">
+    <div className="flex bg-white-50 min-h-screen  ml-[200px]">
       <Sidebar />
       <div className="p-8 w-full">
         {/* Dashboard Overview */}
