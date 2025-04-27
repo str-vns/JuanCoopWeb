@@ -20,6 +20,7 @@ const ForumListCoop = () => {
   const [showComments, setShowComments] = useState({});
   const [selectedPost, setSelectedPost] = useState(null);
   const [showModalComments, setShowModalComments] = useState(false);
+
   const badWords = [
     // English Profanity
     "fuck", "shit", "bitch", "asshole", "bastard", "cunt", "dumbass", "jackass", "motherfucker",
@@ -33,36 +34,6 @@ const ForumListCoop = () => {
     "ampota", "bwesit", "kantot", "hindot", "burat", "jakol", "salsal", "iyot", "chupa",
     "pakyu ka", "hindutan", "bilat", "pokpok", "bayag", "pwet", "supalpal", "lapastangan"
   ];
-  
-  const censorBadWords = (text) => {
-    return text
-      .split(" ")
-      .map((word) => {
-        let lowerWord = word.toLowerCase();
-        if (badWords.includes(lowerWord)) {
-          return word[0] + "*".repeat(word.length - 1); // Replace all except the first letter
-        }
-        return word;
-      })
-      .join(" ");
-  };
-
-  // List of bad words to censor
-
-  useEffect(() => {
-    dispatch(fetchApprovedPosts());
-  }, [dispatch]);
-
-  // Function to censor bad words in comments
-  const censorComment = (comment) => {
-    if (!comment) return comment;
-
-    // Replace bad words with ***
-    return badWords.reduce((acc, word) => {
-      const regex = new RegExp(word, "gi");
-      return acc.replace(regex, "***");
-    }, comment);
-  };
 
   // Function to check if a comment contains bad words
   const containsBadWord = (comment) => {
@@ -72,6 +43,26 @@ const ForumListCoop = () => {
     });
   };
 
+  useEffect(() => {
+    dispatch(fetchApprovedPosts());
+  }, [dispatch]);
+
+  // Function to censor bad words in comments
+const censorComment = (comment) => {
+  if (!comment) return comment;
+
+  return badWords.reduce((acc, word) => {
+    const regex = new RegExp(word, "gi");
+    return acc.replace(regex, (match) => {
+      // Keep the first letter, replace the rest with "*"
+      const firstLetter = match.charAt(0);
+      const stars = "*".repeat(match.length - 1);
+      return firstLetter + stars;
+    });
+  }, comment);
+};
+
+
   const handleLike = (postId) => {
     dispatch(likePost(postId, userId)).then(() => {
       dispatch(fetchApprovedPosts());
@@ -79,10 +70,9 @@ const ForumListCoop = () => {
   };
 
   const handleCommentChange = (postId, value) => {
-    const filteredComment = censorBadWords(value);
     setComments((prevComments) => ({
       ...prevComments,
-      [postId]: filteredComment,
+      [postId]: value,
     }));
   };
 
@@ -92,17 +82,10 @@ const ForumListCoop = () => {
       return;
     }
   
-    // Check if the comment contains bad words
-    const hasBadWord = containsBadWord(comments[postId]);
-  
-    // Censor the comment before sending it to the backend
-    const censoredComment = censorComment(comments[postId]);
-  
     const commentData = {
       user: userId,
       post: postId,
-      comment: censoredComment,
-      sentimentLabel: hasBadWord ? "negative" : "neutral", // Set sentiment to negative if bad word is detected
+      comment: comments[postId],
     };
   
     dispatch(addComment(commentData, token)).then(() => {
@@ -199,13 +182,13 @@ const ForumListCoop = () => {
                   </button>
                   <div className={`sentiment-label ${post.overallSentimentLabel}`}>
                     {post.overallSentimentLabel === "positive" && (
-                      <span className="positive"><FaRegLaugh /> Positive</span>
+                      <span className="sentiment-positive"><FaRegLaugh /> Positive</span>
                     )}
                     {post.overallSentimentLabel === "neutral" && (
-                      <span className="neutral"><FaRegMeh /> Neutral</span>
+                      <span className="sentiment-neutral"><FaRegMeh /> Neutral</span>
                     )}
                     {post.overallSentimentLabel === "negative" && (
-                      <span className="negative"><FaRegTired /> Negative</span>
+                      <span className="sentiment-negative"><FaRegTired /> Negative</span>
                     )}
                   </div>
                 </div>
@@ -233,15 +216,15 @@ const ForumListCoop = () => {
                               <p>
                                 <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {censorComment(comment.comment)}
                               </p>
-                              <div className={`sentiment-label ${comment.sentimentLabel}`}>
+                              <div className={`sentiment-label ${comment.sentimentLabel}`} style={{ color: "black" }} >
                                 {comment.sentimentLabel === "positive" && (
-                                  <span className="positive"><FaRegLaugh /></span>
+                                  <span className="sentiment-positive"><FaRegLaugh /></span>
                                 )}
                                 {comment.sentimentLabel === "neutral" && (
-                                  <span className="neutral"><FaRegMeh /></span>
+                                  <span className="sentiment-neutral"><FaRegMeh /></span>
                                 )}
                                 {comment.sentimentLabel === "negative" && (
-                                  <span className="negative"><FaRegTired /></span>
+                                  <span className="sentiment-negative"><FaRegTired /></span>
                                 )}
                               </div>
                               {/* Censored Comment Icon */}
@@ -281,6 +264,141 @@ const ForumListCoop = () => {
               </div>
             ))}
         </div>
+        {/* Post Modal */}
+                {selectedPost && (
+                  <div className="forumlist-coop-modal">
+                    <div className="forumlist-coop-modal-content">
+                      <span className="forumlist-coop-close" onClick={() => setSelectedPost(null)}>&times;</span>
+                      <h1 style={{ fontWeight: 'bold', fontSize: '20px' }}>{selectedPost.title}</h1>          
+                      <h2>{selectedPost.content}</h2>
+                      {selectedPost.image?.length > 0 ? (
+                        selectedPost.image.map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img.url || "/default-placeholder.png"}
+                            alt="Post Image"
+                            className="forumlist-coop-post-image"
+                          />
+                        ))
+                      ) : (
+                        <img
+                          src="/default-placeholder.png"
+                          alt="Default Post Image"
+                          className="forumlist-coop-post-image"
+                        />
+                      )}
+                      <p>
+                        By {selectedPost.author?.firstName} {selectedPost.author?.lastName} on{" "}
+                        {selectedPost.createdAt
+                          ? new Date(selectedPost.createdAt).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })
+                          : "Unknown Date"}
+                      </p>
+        
+                      <div className="forumlist-coop-modal-actions">
+                        {/* Like and Comment buttons in one row */}
+                        <div className="forumlist-coop-actions-buttons">
+                          <button onClick={() => handleLike(selectedPost._id)} className="forumlist-coop-like">
+                            <FaThumbsUp /> {selectedPost.likeCount}
+                          </button>
+                          <button onClick={() => toggleModalComments(selectedPost._id)} className="forumlist-coop-comment">
+                            <FaComment /> {selectedPost.comments?.length}
+                          </button>
+                        </div>
+        
+                        {/* Sentiment Label */}
+                        <div className={`sentiment-label ${selectedPost.overallSentimentLabel}`}>
+                          {selectedPost.overallSentimentLabel === "positive" && (
+                            <span className="positive"><FaRegLaugh /> Positive</span>
+                          )}
+                          {selectedPost.overallSentimentLabel === "neutral" && (
+                            <span className="neutral"><FaRegMeh /> Neutral</span>
+                          )}
+                          {selectedPost.overallSentimentLabel === "negative" && (
+                            <span className="negative"><FaRegTired /> Negative</span>
+                          )}
+                        </div>
+                      </div>
+        
+        
+                      {/* Comments Dropdown Inside Modal */}
+                      {showModalComments && (
+                                      <div className="forumlist-coop-comments">
+                                        <h3>Comments</h3>
+                                        {selectedPost.comments?.length > 0 ? (
+                                          [...selectedPost.comments] // Create a copy to avoid mutating the original data
+                                            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by date (most recent first)
+                                            .map((comment, index) => (
+                                              <div key={index} className="forumlist-coop-comment-item">
+                                                {/* Row: Name, Comment, and Sentiment Label */}
+                                                <div className="forumlist-coop-comment-content flex">
+                                                  <p className="comment-date">
+                                                                                {comment.createdAt
+                                                                                  ? new Date(comment.createdAt).toLocaleDateString("en-US", {
+                                                                                      year: "numeric",
+                                                                                      month: "short",
+                                                                                      day: "numeric",
+                                                                                    })
+                                                                                  : "Unknown Date"}
+                                                                              </p>
+                                                                                <p>
+                                                                                  <strong>{comment.user?.firstName} {comment.user?.lastName}:</strong> {censorComment(comment.comment)}
+                                                                                </p>
+                                                                                <div className={`sentiment-label ${comment.sentimentLabel}`}>
+                                                                                  {comment.sentimentLabel === "positive" && (
+                                                                                    <span className="sentiment-positive"><FaRegLaugh /></span>
+                                                                                  )}
+                                                                                  {comment.sentimentLabel === "neutral" && (
+                                                                                    <span className="sentiment-neutral"><FaRegMeh /></span>
+                                                                                  )}
+                                                                                  {comment.sentimentLabel === "negative" && (
+                                                                                    <span className="sentiment-negative"><FaRegTired /></span>
+                                                                                  )}
+                                                                                </div>
+                                                                                {/* Censored Comment Icon */}
+                                                                                {containsBadWord(comment.comment) && (
+                                                                                  <FaExclamationCircle
+                                                                                    className="censored-icon"
+                                                                                    title="This comment was censored due to inappropriate language."
+                                                                                    onClick={() => alert("This comment was censored due to inappropriate language.")}
+                                                                                  />
+                                                                                )}
+                                                                              </div>
+                                                                            </div>
+                                                                          ))
+                                                                      ) : (
+                                                                        <p>No comments yet.</p>
+                                                                      )}
+                                                                    </div>
+                                    )}
+        
+        
+        
+                      {/* Comment Input */}
+                      <div className="forumlist-coop-add-comment">
+                        <input
+                          type="text"
+                          placeholder="Write a comment..."
+                          value={comments[selectedPost._id] || ""}
+                          onChange={(e) => handleCommentChange(selectedPost._id, e.target.value)}
+                          className="forumlist-coop-comment-input"
+                        />
+                        <button
+                          onClick={() => {
+                            handleComment(selectedPost._id);
+                            setSelectedPost(null); // Close modal after posting comment
+                          }}
+                          className="forumlist-coop-post-comment"
+                        >
+                          Post
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
       </div>
     </div>
   );

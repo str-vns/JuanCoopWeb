@@ -222,13 +222,18 @@
 
 .sentiment-label {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   padding: 5px 10px;
   border-radius: 5px;
   font-weight: bold;
-  width: fit-content;
+  /* width: fit-content; */
   margin-top: 10px;
   margin-left: auto;
+  color: black;
+}
+
+.sentiment-label span {
+  color: black; /* ensures icons inside <span> are black too */
 }
 
 .comment-date {
@@ -239,20 +244,20 @@
 
 .positive {
   background-color: #08cf3a; /* Light Green */
-  color: #070707;
+  color: black;
   display: flex;
 }
 
 .neutral {
-  background-color: #fefa21; /* Light Yellow */
-  color: #070707;
+  background-color: rgb(162, 161, 161); /* Light Yellow */
+  color: black;
   display: flex;
 }
 
 .negative {
   background-color: #fd2537; /* Light Red */
   display: flex;
-  color: #070707;
+  color: black;
 }
 
 .sentiment-label svg {

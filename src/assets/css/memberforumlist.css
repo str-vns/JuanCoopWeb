@@ -149,14 +149,6 @@
     text-decoration: underline;
   }
   
-  .sentiment-label {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: 14px;
-  }
-  
   .sentiment-label .positive {
     color: green;
   }
@@ -216,7 +208,7 @@
   }
   
   .forumlist-coop-add-comment button:hover {
-    background-color: #218838;
+    background-color: #f8e83a;
   }
   
   .forumlist-coop-modal {
