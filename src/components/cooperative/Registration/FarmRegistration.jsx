@@ -11,7 +11,6 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import maplibre from "maplibre-gl";
 import Modal from "react-modal";
 
-
 Modal.setAppElement("#root");
 
 const FarmRegistration = () => {
@@ -363,20 +362,18 @@ const FarmRegistration = () => {
                 </Marker>
               </Map>
 
- <div className="search-container-register">
-  <input
-    type="text"
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-    placeholder="Search Address"
-    className="search-bar"
-  />
-  <button onClick={handleSearchClick} className="search-btn">
-    <i className="fa-solid fa-magnifying-glass"></i>
-  </button>
-</div>
-
-
+              <div className="search-container-register">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search Address"
+                  className="search-bar"
+                />
+                <button onClick={handleSearchClick} className="search-btn">
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
             </div>
 
             <div className="mt-6">
@@ -426,28 +423,67 @@ const FarmRegistration = () => {
           </form>
 
           {isModalVisible && (
-            <Modal isOpen={isModalVisible} onRequestClose={handleCloseModal}>
-              <h2 className="text-black mt-10">Search Results</h2>
-              <ul>
+            <Modal
+              isOpen={isModalVisible}
+              onRequestClose={handleCloseModal}
+              style={{
+                content: {
+                  top: "50%",
+                  left: "50%",
+                  right: "auto",
+                  bottom: "auto",
+                  marginRight: "-50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "40%", // Adjusted width
+                  height: "60%", // Adjusted height
+                  borderRadius: "10px",
+                  padding: "20px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                  overflowY: "auto", // Enable vertical scrolling
+                },
+                overlay: {
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                },
+              }}
+            >
+              <h2 className="text-black text-center font-bold text-xl mb-4">
+                Search Results
+              </h2>
+              <ul className="space-y-4">
                 {Array.isArray(location) && location.length > 0 ? (
                   location.map((result, index) => (
-                    <li key={index}>
-                      <p className="text-black">{result?.address?.label}</p>
+                    <li
+                      key={index}
+                      className="p-4 border border-gray-300 rounded-md shadow-sm"
+                    >
+                      <p className="text-black font-medium">
+                        {result?.address?.label}
+                      </p>
                       <p className="text-black">{result?.address?.district}</p>
                       <p className="text-black">{result?.address?.city}</p>
                       <p className="text-black">
                         {result?.address?.postalCode}
                       </p>
-                      <button onClick={() => handleSelectAddress(result)}>
+                      <button
+                        onClick={() => handleSelectAddress(result)}
+                        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                      >
                         Select Address
                       </button>
                     </li>
                   ))
                 ) : (
-                  <p className="text-black">No addresses found.</p>
+                  <p className="text-black text-center">No addresses found.</p>
                 )}
               </ul>
-              <button onClick={handleCloseModal}>Close</button>
+              <div className="text-center mt-6">
+                <button
+                  onClick={handleCloseModal}
+                  className="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+                >
+                  Close
+                </button>
+              </div>
             </Modal>
           )}
         </div>
