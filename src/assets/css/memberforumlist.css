@@ -148,6 +148,22 @@
   .forumlist-coop-comment:hover {
     text-decoration: underline;
   }
+
+  .sentiment-label {
+    display: flex;
+    /* align-items: center; */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    /* width: fit-content; */
+    margin-top: 10px;
+    margin-left: auto;
+    color: black;
+  }
+  
+  .sentiment-label span {
+    color: black; /* ensures icons inside <span> are black too */
+  }
   
   .sentiment-label .positive {
     color: green;
