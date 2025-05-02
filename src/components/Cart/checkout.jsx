@@ -208,112 +208,105 @@ console.log("Pay Status:", payStatus);
   return (
     <Fragment>
       <Navbar />
-      <div className="checkout-container min-h-screen bg-gray-100">
-        <div className="flex flex-col lg:flex-row items-start p-4 gap-8 max-w-screen-lg mx-auto">
+      <div className="checkout-container min-h-screen bg-gray-100 overflow-y-auto">
+        <div className="flex flex-col lg:flex-row items-start p-6 gap-8 max-w-screen-lg mx-auto">
           {/* Left Column: Order Items and Order Summary */}
-          <div className="w-full lg:w-2/3 space-y-4 bg-white rounded shadow-lg p-6">
-            <h4 className="text-xl font-semibold text-black border-b pb-2">
+          <div className="w-full lg:w-2/3 bg-white rounded-lg shadow-md p-6">
+            <h4 className="text-2xl font-semibold text-gray-800 border-b pb-4">
               Order Items
             </h4>
 
             {/* Scrollable section */}
-            <div className="cart-item my-1 border-b-2 border-black max-h-60 overflow-y-auto">
-              <div className="flex flex-col">
-                {cartItems.map((item) => (
-                  <Fragment key={item.product}>
-                    <div className="row my-5">
-                      <div className="mt-1">
-                        <ul className="space-y-4">
-                          <li className="flex items-center justify-between gap-4">
-                            <img
-                              src={item.image}
-                              className="h-16 w-16 rounded object-cover"
-                              alt={item.productName}
-                            />
-                            <div>
-                              <div className="text-sm text-gray-900 text-left">
-                                <Link to={`/product/${item.productId}`}>
-                                  {item.productName}
-                                </Link>
-                              </div>
-                              <div className="mt-0.5 text-xs text-gray-600 text-left">
-                                <p id="card_item_price">
-                                  {item.unitName} {item.metricUnit}
-                                </p>
-                                <p id="card_item_price">₱ {item.pricing}</p>
-                              </div>
-                            </div>
-                            <div className="flex flex-1 items-center justify-end gap-2">
-                              <p className="text-black text-sm">
-                                {item.quantity} x ₱ {item.pricing} ={" "}
-                                <b>
-                                  ₱ {(item.quantity * item.pricing).toFixed(2)}
-                                </b>
-                              </p>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </Fragment>
-                ))}
-              </div>
+            <div className="cart-item my-4 max-h-60 overflow-y-auto">
+              {cartItems.map((item) => (
+                <div
+                  key={item.product}
+                  className="flex items-center justify-between border-b py-4"
+                >
+                  <img
+                    src={item.image}
+                    className="h-16 w-16 rounded object-cover"
+                    alt={item.productName}
+                  />
+                  <div className="flex-1 ml-4">
+                    <Link
+                      to={`/product/${item.productId}`}
+                      className="text-lg font-medium text-gray-800 hover:underline"
+                    >
+                      {item.productName}
+                    </Link>
+                    <p className="text-sm text-gray-600">
+                      {item.unitName} {item.metricUnit}
+                    </p>
+                    <p className="text-sm text-gray-600">₱ {item.pricing}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-gray-800 font-medium">
+                      {item.quantity} x ₱ {item.pricing} ={" "}
+                      <span className="font-bold">
+                        ₱ {(item.quantity * item.pricing).toFixed(2)}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Order Summary */}
-            <div className="flex justify-end pt-8">
-              <div className="w-full">
-                <dl className="space-y-2 text-sm text-gray-700">
-                <div id="order_summary">
-  <h4 className="text-lg font-semibold">Order Summary</h4>
-  <div className="flex justify-between !text-base font-medium">
-    <span className="font-bold">Subtotal:</span> 
-    <dd>₱ {totalPrice.toFixed(2)}</dd>
-  </div>
-  <div className="flex justify-between !text-base font-medium">
-    <span className="font-bold">Shipping Fee:</span> 
-    <dd>₱ {calculateShipping().toFixed(2)}</dd>
-  </div>
-  <div className="flex justify-between !text-base font-medium">
-    <span className="font-bold">Tax (12%):</span> 
-    <dd>₱ {(subtax() * calculateTax()).toFixed(2)}</dd>
-  </div>
-  <div className="flex justify-between !text-lg font-bold border-t pt-2">
-    <span className="font-bold">Grand Total:</span> 
-    <dd>₱ {calculateFinalTotal()}</dd>
-  </div>
-</div>
-
-                </dl>
-                <div className="flex justify-end pt-6">
-                  <button
-                    className="block rounded bg-blue-700 px-5 py-3 text-sm text-white transition hover:bg-blue-600"
-                    onClick={confirmOrder}
-                  >
-                    Confirm Order
-                  </button>
+            <div className="mt-6">
+              <h4 className="text-xl font-semibold text-gray-800 border-b pb-4">
+                Order Summary
+              </h4>
+              <div className="space-y-4 mt-4">
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Subtotal:</span>
+                  <span>₱ {totalPrice.toFixed(2)}</span>
                 </div>
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Shipping Fee:</span>
+                  <span>₱ {calculateShipping().toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-gray-700">
+                  <span className="font-medium">Tax (12%):</span>
+                  <span>₱ {(subtax() * calculateTax()).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-gray-800 font-bold border-t pt-4">
+                  <span>Grand Total:</span>
+                  <span>₱ {calculateFinalTotal()}</span>
+                </div>
+              </div>
+              <div className="mt-6 text-right">
+                <button
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-500 transition"
+                  onClick={confirmOrder}
+                >
+                  Confirm Order
+                </button>
               </div>
             </div>
           </div>
 
           {/* Right Column: Shipping Info */}
-          <div className="w-full lg:w-1/3 space-y-4 bg-white rounded shadow-lg p-6 text-left">
-            <h4 className="text-xl font-semibold text-black border-b pb-2 text-center">
+          <div className="w-full lg:w-1/3 bg-white rounded-lg shadow-md p-6">
+            <h4 className="text-2xl font-semibold text-gray-800 border-b pb-4 text-center">
               Shipping Info
             </h4>
             {user && (
-              <p className="text-black">
-              <span className="font-bold">Name:</span> {user.firstName}, {user.lastName}
-              </p>
+              <div className="mt-4 space-y-4">
+                <p className="text-gray-700">
+                  <span className="font-medium">Name:</span> {user.firstName}{" "}
+                  {user.lastName}
+                </p>
+                <p className="text-gray-700">
+                  <span className="font-medium">Address:</span>{" "}
+                  {`${shipItems?.address}, ${shipItems?.city}, ${shipItems?.postalCode}`}
+                </p>
+                <p className="text-gray-700">
+                  <span className="font-medium">Payment Method:</span>{" "}
+                  {payItems.paymentMethod}
+                </p>
+              </div>
             )}
-            <p className="text-black">
-            <span className="font-bold">Address:</span> {" "}
-              {`${shipItems?.address}, ${shipItems?.city}, ${shipItems?.postalCode}`}
-            </p>
-            <p className="text-black">
-            <span className="font-bold">Payment Method:</span> {payItems.paymentMethod}
-            </p>
           </div>
         </div>
       </div>
