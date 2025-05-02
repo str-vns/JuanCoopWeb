@@ -90,7 +90,7 @@ function MemberRegistration() {
         <option value="" disabled>Select Cooperative</option>
         {coops && coops.length > 0 ? (
           coops
-            .filter(coop => !(members && members.some(member => member.coopId?._id === coop._id)))
+            .filter(coop => !(members && Array.isArray(members) && members.some(member => member.coopId?._id === coop._id)))
             .map((coop) => (
               <option key={coop._id} value={coop._id}>
                 {coop.farmName || "None"}
