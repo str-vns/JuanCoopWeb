@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import html2canvas from 'html2canvas-pro';
-
+import domtoimage from 'dom-to-image-more';
 const QrPage = () => {
   const location = useLocation();
   const { order, trackId, userId } = location.state || {};
@@ -22,18 +22,14 @@ const QrPage = () => {
     console.log("Generated QR Code Data:", qrData); // Debugging output
     return qrData;
   };
-
   const downloadQRCode = () => {
     const qrElement = document.getElementById("qr-code");
+  
     if (qrElement) {
-      html2canvas(qrElement, {
-        scale: 2,
-        useCORS: true, // Enable cross-origin resource sharing
-        backgroundColor: "#ffffff", // Explicitly set a supported background color
-      })
-        .then((canvas) => {
+      domtoimage.toPng(qrElement)
+        .then((dataUrl) => {
           const link = document.createElement("a");
-          link.href = canvas.toDataURL("image/png");
+          link.href = dataUrl;
           link.download = `qr-code-${order?._id || "UNKNOWN_ORDER"}.png`;
           link.click();
         })
@@ -54,12 +50,12 @@ const QrPage = () => {
       <div
         id="qr-code"
         style={{
-          backgroundColor: "#ffffff",
+          backgroundColor: "#ffffff", // Ensure supported background color
           padding: "15px",
           border: "2px solid #ddd",
           borderRadius: "10px",
           display: "inline-block",
-          color: "#000", // Ensure text color is black
+          color: "#000", // Ensure supported text color
         }}
       >
         <QRCodeCanvas
