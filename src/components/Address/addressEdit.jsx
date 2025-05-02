@@ -184,15 +184,27 @@ function addressUpdate() {
                 </Marker>
               </Map>
       
-              <div>
+              <div className="search-container" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search Address"
                   className="search-bar"
+                  style={{ flex: "1" }}
                 />
-                <button onClick={handleSearchClick} className="search-btn">
+                <button
+                  onClick={handleSearchClick}
+                  className="search-btn"
+                  style={{
+                    backgroundColor: "#007BFF", // Blue background
+                    color: "white",
+                    padding: "10px 20px",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                >
                   Search
                 </button>
               </div>
@@ -257,26 +269,75 @@ function addressUpdate() {
         </div>
 
         {isModalVisible && (
-          <Modal isOpen={isModalVisible} onRequestClose={handleCloseModal}>
+      <Modal
+      isOpen={isModalVisible}
+      onRequestClose={handleCloseModal}
+      style={{
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "40%", // Adjusted width
+          height: "60%", // Adjusted height
+          borderRadius: "10px",
+          padding: "20px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          overflowY: "auto", // Enable vertical scrolling
+        },
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+      }}
+    >
             <h2 className="text-black mt-10">Search Results</h2>
             <ul>
               {Array.isArray(location) && location.length > 0 ? (
                 location.map((result, index) => (
-                  <li key={index}>
+                  <li key={index} className="text-center">
                     <p className="text-black">{result?.address?.label}</p>
                     <p className="text-black">{result?.address?.district}</p>
                     <p className="text-black">{result?.address?.city}</p>
                     <p className="text-black">{result?.address?.postalCode}</p>
-                    <button onClick={() => handleSelectAddress(result)}>
-                      Select Address
-                    </button>
+                    <div className="text-center mt-2">
+                      <button
+                        onClick={() => handleSelectAddress(result)}
+                        style={{
+                          backgroundColor: "#007BFF", // Blue background
+                          color: "white", // White text
+                          padding: "10px 20px",
+                          border: "none",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                          textAlign: "center", // Center text
+                        }}
+                      >
+                        Select Address
+                      </button>
+                    </div>
                   </li>
                 ))
               ) : (
-                <p className="text-black">No addresses found.</p>
+                <p className="text-black text-center">No addresses found.</p>
               )}
             </ul>
-            <button onClick={handleCloseModal}>Close</button>
+            <div className="text-center mt-4">
+            <button
+              onClick={handleCloseModal}
+              style={{
+                backgroundColor: "#f44336", // Red color
+                color: "white",
+                padding: "10px 20px",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Close
+            </button>
+          </div>
           </Modal>
         )}
       </div>

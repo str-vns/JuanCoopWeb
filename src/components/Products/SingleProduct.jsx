@@ -304,30 +304,32 @@ const ProductCard = () => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
-              {coop?.user?.image?.url && (
+              <div className="coop-image-container">
                 <img
-                  src={coop.user.image.url}
+                  src={coopDetails?.user?.image?.url || "/default-profile.jpg"}
                   alt="Cooperative"
-                  className="farmer-image"
-                  style={{ marginRight: "15px" }}
+                  className="coop-image"
+                  style={{ marginRight: "15px", borderRadius: "50%", width: "60px", height: "60px" }}
                 />
-              )}
-              <div>
+              </div>
+              <div style={{ textAlign: "left" }}>
                 <p
                   style={{
                     fontSize: "0.9em",
                     margin: "2px 0",
                     color: "#666",
-                    textAlign: "left",
                   }}
                 >
                   <strong>Farm Name:</strong> {coopDetails.farmName}
                 </p>
                 <p
-                  style={{ fontSize: "0.9em", margin: "2px 0", color: "#666" }}
+                  style={{
+                    fontSize: "0.9em",
+                    margin: "2px 0",
+                    color: "#666",
+                  }}
                 >
-                  <strong>Location:</strong> {coopDetails.barangay},{" "}
-                  {coopDetails.city}
+                  <strong>Location:</strong> {coopDetails.barangay}, {coopDetails.city}
                 </p>
               </div>
             </div>
