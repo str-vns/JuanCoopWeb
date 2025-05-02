@@ -19,8 +19,9 @@ const Messenger = () => {
   const user = getCurrentUser();
   const { loading, conversations } = useSelector((state) => state.converList);
   const { users } = useSelector((state) => state.getThemUser);
-  const [onlineUsers, setOnlineUsers] = useState([]);
+ const [onlineUsers, setOnlineUsers] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [arriveMessage, setArriveMessage] = useState(null);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -56,21 +57,32 @@ const Messenger = () => {
   }, [user?._id, token, dispatch]);
 
   useEffect(() => {
-    if (socket) {
-      const handleNewMessage = (data) => {
-        const newMessage = {
-          sender: data.senderId,
-          text: data.text,
-          createdAt: Date.now(),
+      // Make sure the socket connection is valid
+      if (socket) {
+        const handleNewMessage = (data) => {
+          console.log("New message received:", data);
+          setArriveMessage({
+            sender: data.senderId,
+            text: data.text,
+            createdAt: Date.now(),
+          });
         };
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
-      };
-      socket.on("getMessage", handleNewMessage);
-      return () => {
-        socket.off("getMessage", handleNewMessage);
-      };
-    }
-  }, [socket]);
+    
+        // Listen for incoming messages
+        socket.on("getMessage", handleNewMessage);
+    
+        // Clean up the event listener when the component is unmounted or socket changes
+        return () => {
+          socket.off("getMessage", handleNewMessage);
+        };
+      }
+    }, [socket]);
+  
+    useEffect(() => {
+      arriveMessage &&
+        currentChat?.members.includes(arriveMessage.sender) &&
+        setMessages((prev) => [...prev, arriveMessage]);
+    }, [arriveMessage, currentChat]);
   
   useEffect(() => {
     // Only fetch messages when currentChat is defined
@@ -98,8 +110,9 @@ const Messenger = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    if (newMessage === "" || newMessage === null) {
-      return; 
+    if (!newMessage.trim()) {
+      console.log("Message is empty!");
+      return;
     }
   
     const message = {
@@ -111,28 +124,38 @@ const Messenger = () => {
     const receiverId = currentChat?.members.find(
       (member) => member !== user._id
     );
+    console.log("Receiver ID:", receiverId);
   
     if (!currentChat || !receiverId) {
       console.log("No active chat or receiver!");
-      return; 
+      return;
     }
-
+  
     const isOnlinerUser = onlineUsers.find((user) => user.userId === receiverId);
-    console.log("isOnlinerUser", isOnlinerUser);
-
+    console.log("Is receiver online:", isOnlinerUser);
+  
     if (!isOnlinerUser) {
       const notification = {
-        title: `New message`, 
+        title: `New message`,
         content: `You have a new message from ${user?.firstName} ${user?.lastName}`,
         user: receiverId,
         url: user?.image?.url,
         type: "message",
+      };
+      try {
+        dispatch(sendNotifications(notification, token));
+        console.log("Notification sent:", notification);
+      } catch (error) {
+        console.error("Failed to send notification:", error);
       }
-      dispatch(sendNotifications(notification , token))
-}
-
-
+    }
+  
     socket.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
+    console.log("Message sent via socket:", {
       senderId: user._id,
       receiverId,
       text: newMessage,
@@ -147,10 +170,9 @@ const Messenger = () => {
       };
       const res = await axios.post(`${baseURL}m`, message, config);
       const data = res.data.details.message;
-      console.log("data", data);
-      setMessages([...messages, res.data.details.message]);
+      console.log("Message saved to DB:", data);
+      setMessages([...messages, data]);
       setNewMessage("");
-
     } catch (error) {
       console.error("Failed to send message:", error);
     }

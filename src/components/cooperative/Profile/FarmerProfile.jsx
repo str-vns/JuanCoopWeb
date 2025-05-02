@@ -114,9 +114,8 @@ const FarmerProfile = () => {
         const newConvo = { senderId: userId, receiverId: cooperativeUserId };
         
         const response = await dispatch(createConversation(newConvo, token));
-        console.log("Response from createConversation:", response);
   
-        const newConvoId = response?.payload?._id;
+        const newConvoId = response?.conversation?.conversation?._id;
         if (newConvoId) {
           console.log("Navigating to new conversation:", newConvoId);
           setTimeout(() => {

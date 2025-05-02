@@ -14,130 +14,174 @@ import axios from "axios";
 
 const Messenger = () => {
   const socket = useSocket();
-  const dispatch = useDispatch();
-  const token = getToken();
-  const user = getCurrentUser();
-  const { loading, conversations } = useSelector((state) => state.converList);
-  const { users } = useSelector((state) => state.getThemUser);
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  const [arriveMessage, setArriveMessage] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
-  const scrollRef = useRef();
-
-  useEffect(() => {
-    if (user?._id && token) {
-      dispatch(conversationList(user._id, token));
-    }
-  }, [user?._id, token, dispatch]);
-
-  useEffect(() => {
-    // Make sure the socket connection is valid
-    if (socket) {
-      const handleNewMessage = (data) => {
-        // Assuming you have an array of messages, we append the new message to the array
-        setArriveMessage((prevMessages) => [
-          ...prevMessages,
-          {
-            sender: data.senderId,
-            text: data.text,
-            createdAt: Date.now(),
-          },
-        ]);
-      };
+    const dispatch = useDispatch();
+    const token = getToken();
+    const user = getCurrentUser();
+    const { loading, conversations } = useSelector((state) => state.converList);
+    const { users } = useSelector((state) => state.getThemUser);
+   const [onlineUsers, setOnlineUsers] = useState([]);
+    const [messages, setMessages] = useState([]);
+    const [arriveMessage, setArriveMessage] = useState(null);
+    const [currentChat, setCurrentChat] = useState(null);
+    const [newMessage, setNewMessage] = useState("");
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+    const scrollRef = useRef();
   
-      // Listen for incoming messages
-      socket.on("getMessage", handleNewMessage);
-  
-      // Clean up the event listener when the component is unmounted or socket changes
-      return () => {
-        socket.off("getMessage", handleNewMessage);
-      };
-    }
-  }, [socket]);
-
-  useEffect(() => {
-    arriveMessage &&
-      currentChat?.members.includes(arriveMessage.sender) &&
-      setMessages((prev) => [...prev, arriveMessage]);
-  }, [arriveMessage, currentChat]);
-  
-  useEffect(() => {
-    // Only fetch messages when currentChat is defined
-    if (currentChat) {
-      const fetchMessages = async () => {
-        try {
-          const config = {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          };
-  
-          const res = await axios.get(`${baseURL}m/${currentChat._id}`, config);
-          setMessages(res.data.details); 
-        } catch (error) {
-          console.error("Error fetching messages:", error);
+    
+    useEffect(() => {
+      if (socket && getCurrentUser()) {
+        if (user?._id) {
+          socket.emit("addUser", user._id);
         }
+    
+        const handleUsers = (users) => {
+          console.log("users", users);
+          const onlineUsers = users.filter(user => user.online && user?._id !== null);
+          setOnlineUsers(onlineUsers);
+        };
+    
+        socket.on("getUsers", handleUsers);
+    
+  
+        return () => {
+          socket.off("getUsers", handleUsers);
+        };
+      }
+    }, [socket, user?._id]);
+  
+    useEffect(() => {
+      if (user?._id && token) {
+        dispatch(conversationList(user._id, token));
+      }
+    }, [user?._id, token, dispatch]);
+  
+    useEffect(() => {
+        // Make sure the socket connection is valid
+        if (socket) {
+          const handleNewMessage = (data) => {
+            console.log("New message received:", data);
+            setArriveMessage({
+              sender: data.senderId,
+              text: data.text,
+              createdAt: Date.now(),
+            });
+          };
+      
+          // Listen for incoming messages
+          socket.on("getMessage", handleNewMessage);
+      
+          // Clean up the event listener when the component is unmounted or socket changes
+          return () => {
+            socket.off("getMessage", handleNewMessage);
+          };
+        }
+      }, [socket]);
+    
+      useEffect(() => {
+        arriveMessage &&
+          currentChat?.members.includes(arriveMessage.sender) &&
+          setMessages((prev) => [...prev, arriveMessage]);
+      }, [arriveMessage, currentChat]);
+    
+    useEffect(() => {
+      // Only fetch messages when currentChat is defined
+      if (currentChat) {
+        const fetchMessages = async () => {
+          try {
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            };
+    
+            const res = await axios.get(`${baseURL}m/${currentChat._id}`, config);
+            setMessages(res.data.details); 
+          } catch (error) {
+            console.error("Error fetching messages:", error);
+          }
+        };
+    
+        fetchMessages(); // Call the async function
+      }
+    }, [currentChat, token]);
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      if (!newMessage.trim()) {
+        console.log("Message is empty!");
+        return;
+      }
+    
+      const message = {
+        sender: user._id,
+        text: newMessage,
+        conversationId: currentChat?._id,
       };
-  
-      fetchMessages(); // Call the async function
-    }
-  }, [currentChat, token]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    // Validate the new message
-    if (newMessage === "" || newMessage === null) {
-      return; // Stops execution if newMessage is either an empty string or null
-    }
-  
-    const message = {
-      sender: user._id,
-      text: newMessage,
-      conversationId: currentChat?._id,
+    
+      const receiverId = currentChat?.members.find(
+        (member) => member !== user._id
+      );
+      console.log("Receiver ID:", receiverId);
+    
+      if (!currentChat || !receiverId) {
+        console.log("No active chat or receiver!");
+        return;
+      }
+    
+      const isOnlinerUser = onlineUsers.find((user) => user.userId === receiverId);
+      console.log("Is receiver online:", isOnlinerUser);
+    
+      if (!isOnlinerUser) {
+        const notification = {
+          title: `New message`,
+          content: `You have a new message from ${user?.firstName} ${user?.lastName}`,
+          user: receiverId,
+          url: user?.image?.url,
+          type: "message",
+        };
+        try {
+          dispatch(sendNotifications(notification, token));
+          console.log("Notification sent:", notification);
+        } catch (error) {
+          console.error("Failed to send notification:", error);
+        }
+      }
+    
+      socket.emit("sendMessage", {
+        senderId: user._id,
+        receiverId,
+        text: newMessage,
+      });
+      console.log("Message sent via socket:", {
+        senderId: user._id,
+        receiverId,
+        text: newMessage,
+      });
+    
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        const res = await axios.post(`${baseURL}m`, message, config);
+        const data = res.data.details.message;
+        console.log("Message saved to DB:", data);
+        setMessages([...messages, data]);
+        setNewMessage("");
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      }
     };
   
-    const receiverId = currentChat?.members.find(
-      (member) => member !== user._id
-    );
+    useEffect(() => {
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
   
-    // Ensure currentChat and receiverId are valid
-    if (!currentChat || !receiverId) {
-      console.log("No active chat or receiver!");
-      return; // Exit the function without sending
-    }
-  
-    // Emit the new message to the socket
-    socket.emit("sendMessage", {
-      senderId: user._id,
-      receiverId,
-      text: newMessage,
-    });
-  
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const res = await axios.post(`${baseURL}m`, message, config);
-      const data = res.data.details.message;
-      console.log("data", data);
-      setMessages([...messages, res.data.details.message]);
-      setNewMessage("");
-
-    } catch (error) {
-      console.error("Failed to send message:", error);
-    }
-  };
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
   return (
 <section className="flex flex-col h-screen bg-white">
   <Navbar />
