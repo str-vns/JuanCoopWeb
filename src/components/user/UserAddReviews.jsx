@@ -77,9 +77,9 @@ const UserAddReview = () => {
   return (
     <div className="container-rev">
       <Navbar />
-      <button className="back-button" onClick={() => navigate(-1)}>
+      {/* <button className="back-button" onClick={() => navigate(-1)}>
         <FaArrowLeft /> Back
-      </button>
+      </button> */}
       <img src={yeyImage} alt="Product" className="productImage-rev" />
 
       <h2 className="question-rev">
