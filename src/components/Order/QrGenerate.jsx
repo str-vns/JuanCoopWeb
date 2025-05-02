@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
-import domtoimage from "dom-to-image-more";
+import html2canvas from 'html2canvas-pro';
 
 const QrPage = () => {
   const location = useLocation();
@@ -25,13 +25,15 @@ const QrPage = () => {
 
   const downloadQRCode = () => {
     const qrElement = document.getElementById("qr-code");
-
     if (qrElement) {
-      domtoimage
-        .toPng(qrElement)
-        .then((dataUrl) => {
+      html2canvas(qrElement, {
+        scale: 2,
+        useCORS: true, // Enable cross-origin resource sharing
+        backgroundColor: "#ffffff", // Explicitly set a supported background color
+      })
+        .then((canvas) => {
           const link = document.createElement("a");
-          link.href = dataUrl;
+          link.href = canvas.toDataURL("image/png");
           link.download = `qr-code-${order?._id || "UNKNOWN_ORDER"}.png`;
           link.click();
         })
@@ -52,12 +54,12 @@ const QrPage = () => {
       <div
         id="qr-code"
         style={{
-          backgroundColor: "#ffffff", // Ensure supported background color
+          backgroundColor: "#ffffff",
           padding: "15px",
           border: "2px solid #ddd",
           borderRadius: "10px",
           display: "inline-block",
-          color: "#000", // Ensure supported text color
+          color: "#000", // Ensure text color is black
         }}
       >
         <QRCodeCanvas
@@ -90,6 +92,7 @@ const QrPage = () => {
 };
 
 const styles = {
+  
   qrPage: {
     textAlign: "center",
     padding: "20px",
