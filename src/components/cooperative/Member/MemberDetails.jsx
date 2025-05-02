@@ -124,14 +124,14 @@ const MemberDetails = () => {
               onClick={() => handleApprove(members?._id, members?.userId?._id)}
               disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "Approve"}
+              {isLoading ? "Loading..." : "Approved"}
             </button>
             <button
               className="driverCardButton"
               onClick={() => handleDelete(members?._id)}
               disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "Decline"}
+              {isLoading ? "Loading..." : "Declined"}
             </button>
           </div>
         )}
