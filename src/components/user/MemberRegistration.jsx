@@ -82,31 +82,24 @@ function MemberRegistration() {
       <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="member-registration-input" />
 
       <label>Choose Cooperative:</label>
-      {/* <select value={coopId} onChange={(e) => setCoopId(e.target.value)} className="member-registration-select">
-        <option value="">Select Cooperative</option>
-        {coops.map((coop) => (
-          <option key={coop._id} value={coop._id}>{coop.farmName}</option>
-        ))}
-      </select> */}
-
-<select
-  value={coopId}
-  onChange={(e) => setCoopId(e.target.value)}
-  className="member-registration-select"
->
-  <option value="" disabled>Select Cooperative</option>
-  {coops && coops.length > 0 ? (
-    coops
-      .filter(coop => !members.some(member => member.coopId?._id === coop._id))
-      .map((coop) => (
-        <option key={coop._id} value={coop._id}>
-          {coop.farmName || "None"}
-        </option>
-      ))
-  ) : (
-    <option value="" disabled>No Cooperative</option>
-  )}
-</select>
+      <select
+        value={coopId}
+        onChange={(e) => setCoopId(e.target.value)}
+        className="member-registration-select"
+      >
+        <option value="" disabled>Select Cooperative</option>
+        {coops && coops.length > 0 ? (
+          coops
+            .filter(coop => !(members && members.some(member => member.coopId?._id === coop._id)))
+            .map((coop) => (
+              <option key={coop._id} value={coop._id}>
+                {coop.farmName || "None"}
+              </option>
+            ))
+        ) : (
+          <option value="" disabled>No Cooperative</option>
+        )}
+      </select>
 
       <label>Barangay Clearance:</label>
       <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setBarangayClearance)} className="member-registration-file" />
