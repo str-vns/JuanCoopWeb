@@ -76,7 +76,7 @@ const OverallDashboard = () => {
     <div className="coop-dashboard-container">
       <Sidebar />
       <div className="flex flex-col w-full">
-        <div className="flex-1 bg-gray-50 p-6">
+        <div className="flex-1 bg-white-50 p-6">
           <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
             Overall Dashboard
           </h1>
