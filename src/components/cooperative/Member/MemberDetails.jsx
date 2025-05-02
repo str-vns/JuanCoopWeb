@@ -13,6 +13,11 @@ const MemberDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [startPan, setStartPan] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const fetchJwt = async () => {
@@ -37,14 +42,49 @@ const MemberDetails = () => {
 
   const handleDelete = (memId) => {
     setIsLoading(true);
-    dispatch(rejectMember(memId,token));
+    dispatch(rejectMember(memId, token));
     alert("Member rejected successfully");
     setIsLoading(false);
     navigate("/memberlist");
   };
 
-  const handleModalOpen = () => setIsModalOpen(true);
-  const handleModalClose = () => setIsModalOpen(false);
+  const handleModalOpen = (imageUrl) => {
+    setModalImage(imageUrl);
+    setZoomLevel(1); // Reset zoom level when opening a new image
+    setPanPosition({ x: 0, y: 0 }); // Reset pan position
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = (e) => {
+    if (e.target.classList.contains("licenseModal")) {
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel((prevZoom) => Math.min(prevZoom + 0.2, 3)); // Limit zoom to 3x
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel((prevZoom) => Math.max(prevZoom - 0.2, 1)); // Limit zoom to 1x
+  };
+
+  const handleMouseDown = (e) => {
+    setIsPanning(true);
+    setStartPan({ x: e.clientX - panPosition.x, y: e.clientY - panPosition.y });
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isPanning) return;
+    setPanPosition({
+      x: e.clientX - startPan.x,
+      y: e.clientY - startPan.y,
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsPanning(false);
+  };
 
   return (
     <div className="driverCardContainer">
@@ -53,7 +93,7 @@ const MemberDetails = () => {
       <div className="driverCard">
         <div className="driverCardHeader">
           <img
-            src={members?.userId?.image?.url  || "https://via.placeholder.com/150"}
+            src={members?.userId?.image?.url || "https://via.placeholder.com/150"}
             className="driverCardImage"
             alt="Driver"
           />
@@ -97,51 +137,67 @@ const MemberDetails = () => {
         )}
       </div>
 
-      {/* Separate Card for License */}
+      {/* Separate Card for Barangay Clearance */}
       <div className="licenseCard">
         <h3 className="driverCardRequirement">Barangay Clearance</h3>
         <div className="licenseCardFiles">
           <img
-            src={
-                members?.barangayClearance?.url ||
-              "https://via.placeholder.com/150"
-            }
+            src={members?.barangayClearance?.url || "https://via.placeholder.com/150"}
             className="licenseCardImage"
-            alt="Driver License"
-            onClick={handleModalOpen}
-          />
-        </div>
-      </div>
-      <div className="licenseCard">
-        <h3 className="driverCardRequirement">Valid ID</h3>
-        <div className="licenseCardFiles">
-          <img
-            src={
-                members?.validId?.url ||
-              "https://via.placeholder.com/150"
-            }
-            className="licenseCardImage"
-            alt="Driver License"
-            onClick={handleModalOpen}
+            alt="Barangay Clearance"
+            onClick={() => handleModalOpen(members?.barangayClearance?.url)}
           />
         </div>
       </div>
 
-      {/* Modal for Zooming License */}
+      {/* Separate Card for Valid ID */}
+      <div className="licenseCard">
+        <h3 className="driverCardRequirement">Valid ID</h3>
+        <div className="licenseCardFiles">
+          <img
+            src={members?.validId?.url || "https://via.placeholder.com/150"}
+            className="licenseCardImage"
+            alt="Valid ID"
+            onClick={() => handleModalOpen(members?.validId?.url)}
+          />
+        </div>
+      </div>
+
+      {/* Modal for Zooming, Panning, and Downloading Image */}
       {isModalOpen && (
-        <div className="licenseModal">
+        <div
+          className="licenseModal"
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onClick={handleModalClose}
+        >
           <div className="licenseModalContent">
-            <span className="licenseModalClose" onClick={handleModalClose}>
+            <span className="licenseModalClose" onClick={() => setIsModalOpen(false)}>
               &times;
             </span>
             <img
-              src={
-                driver?.driversLicenseImage?.url ||
-                "https://via.placeholder.com/150"
-              }
+              src={modalImage}
               className="licenseModalImage"
-              alt="Driver License"
+              alt="Zoomed Image"
+              style={{
+                transform: `scale(${zoomLevel}) translate(${panPosition.x}px, ${panPosition.y}px)`,
+                transition: isPanning ? "none" : "transform 0.3s ease",
+                cursor: isPanning ? "grabbing" : "grab",
+              }}
+              onMouseDown={handleMouseDown}
             />
+            <div className="licenseModalControls">
+              <button className="licenseModalButton" onClick={handleZoomIn}>
+                Zoom In
+              </button>
+              <button className="licenseModalButton" onClick={handleZoomOut}>
+                Zoom Out
+              </button>
+              <button className="licenseModalButton" onClick={() => setIsModalOpen(false)}>
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
