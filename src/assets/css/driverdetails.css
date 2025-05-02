@@ -86,6 +86,53 @@
     font-size: 13px;
   }
 }
+.driverCardButtonContainer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.driverCardButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  min-width: 100px;
+  color: white;
+}
+
+.driverCardButton:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+
+.driverCardButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Blue Approve Button */
+.driverCardButton:first-child {
+  background-color: #007bff;
+}
+
+.driverCardButton:first-child:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Red Decline Button */
+.driverCardButton:last-child {
+  background-color: #dc3545;
+}
+
+.driverCardButton:last-child:hover:not(:disabled) {
+  background-color: #a71d2a;
+}
 
 .driverCardContainer {
   display: flex;
