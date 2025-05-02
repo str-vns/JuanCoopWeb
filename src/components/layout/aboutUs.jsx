@@ -179,7 +179,7 @@ const AboutUs = () => {
             </div>
             <div class="mt-12 md:mt-0">
               <img
-                src="..\src\assets\img\2.png"
+                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167519/9_kzdlqn.png"
                 alt="About Us Image"
                 class="object-cover rounded-lg shadow-md"
               />
