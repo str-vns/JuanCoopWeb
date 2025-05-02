@@ -59,10 +59,17 @@ const QrPage = () => {
           border: "2px solid #ddd",
           borderRadius: "10px",
           display: "inline-block",
-          color: "#000", // Just in case
+          color: "#000", // Ensure text color is black
         }}
       >
-        <QRCodeCanvas value={generateQRCodeData()} size={256} />
+        <QRCodeCanvas
+          value={generateQRCodeData()}
+          size={256}
+          style={{
+            color: "#000", // Ensure QR code color is black
+            backgroundColor: "#fff", // Ensure QR code background is white
+          }}
+        />
       </div>
 
       <div style={styles.qrManual}>
@@ -85,6 +92,7 @@ const QrPage = () => {
 };
 
 const styles = {
+  
   qrPage: {
     textAlign: "center",
     padding: "20px",
