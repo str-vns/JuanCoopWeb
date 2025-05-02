@@ -1,41 +1,43 @@
 import React from "react";
 import "@assets/css/aboutUs.css";
 import Navbar from "../layout/navbar";
-import "../../assets/img/1.png"
+import coverImage from "../../assets/img/cover2.png";
+import img1 from "../../assets/img/1.png";
+import img2 from "../../assets/img/2.png";
+import img3 from "../../assets/img/3.png";
+import img4 from "../../assets/img/4.png";
+import img5 from "../../assets/img/5.png";
+import img6 from "../../assets/img/6.png";
 
 const AboutUs = () => {
   return (
     <>
       <Navbar />
       <div class="relative w-full h-[500px] pt-8" id="home">
- 
-<div class="absolute inset-0 opacity-100">
-    <img
-      src="../src/assets/img/cover2.png"
-      alt="Background Image"
-      class="object-cover object-center w-full h-full"
-    />
-  </div>
-
- 
-  <div class="absolute inset-x-9 top-1/4 flex flex-col md:flex-row items-center justify-between opacity-100">
-  {/* <div class="md:w-1/2 mb-4 md:mb-0">
-      <h1 class="text-gray-700 font-medium text-4xl md:text-5xl leading-tight mb-2">
-       JuanKoop
-      </h1>
-      <p class="font-regular text-xl mb-8 mt-4">
-       Empowering Cooperatives, <br></br>Uniting communities for development
-      </p>
-      <a
-        href="#contactUs"
-        class="px-6 py-3 bg-[#c8a876] text-white font-medium rounded-full hover:bg-[#c09858] transition duration-200"
-      >
-        Contact Us
-      </a>
-    </div> */}
-  </div>
-</div>
-
+        <div class="absolute inset-0 opacity-100">
+          <img
+            src={coverImage}
+            alt="Background Image"
+            class="object-cover object-center w-full h-full"
+          />
+        </div>
+        <div class="absolute inset-x-9 top-1/4 flex flex-col md:flex-row items-center justify-between opacity-100">
+          {/* <div class="md:w-1/2 mb-4 md:mb-0">
+              <h1 class="text-gray-700 font-medium text-4xl md:text-5xl leading-tight mb-2">
+              JuanKoop
+              </h1>
+              <p class="font-regular text-xl mb-8 mt-4">
+              Empowering Cooperatives, <br></br>Uniting communities for development
+              </p>
+              <a
+                href="#contactUs"
+                class="px-6 py-3 bg-[#c8a876] text-white font-medium rounded-full hover:bg-[#c09858] transition duration-200"
+              >
+                Contact Us
+              </a>
+            </div> */}
+        </div>
+      </div>
 
       <section class="py-10" id="services">
         <div className="w-full ml-0 mr-0 pl-0 pr-0">
@@ -44,11 +46,7 @@ const AboutUs = () => {
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                src="..\src\assets\img\1.png"
-               
-                class="w-full h-64 object-cover"
-              />
+              <img src={img1} class="w-full h-64 object-cover" />
               <div class="p-6 text-center">
                 <h3 class="text-xl font-medium text-gray-800 mb-2">
                   Online Payment & COD
@@ -63,8 +61,8 @@ const AboutUs = () => {
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
               <img
-                src="..\src\assets\img\3.png"
-                alt="Coffee"
+                src={img3}
+                alt="Real-Time Product Tracking"
                 class="w-full h-64 object-cover"
               />
               <div class="p-6 text-center">
@@ -81,8 +79,8 @@ const AboutUs = () => {
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
               <img
-                src="..\src\assets\img\4.png"
-                alt="Coffee"
+                src={img4}
+                alt="Product Listing & Management"
                 class="w-full h-64 object-cover"
               />
               <div class="p-6 text-center">
@@ -99,8 +97,8 @@ const AboutUs = () => {
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
               <img
-                src="..\src\assets\img\5.png"
-                alt="Coffee"
+                src={img5}
+                alt="Reviews with Sentiment Analysis"
                 class="w-full h-64 object-cover"
               />
               <div class="p-6 text-center">
@@ -117,8 +115,8 @@ const AboutUs = () => {
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
               <img
-                src="..\src\assets\img\6.png"
-                alt="Coffee"
+                src={img6}
+                alt="Community Forum"
                 class="w-full h-64 object-cover"
               />
               <div class="p-6 text-center">
@@ -133,11 +131,10 @@ const AboutUs = () => {
                 </p>
               </div>
             </div>
-
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
               <img
-                src="..\src\assets\img\2.png"
-                alt="papad"
+                src={img2}
+                alt="Data-Driven Insights"
                 class="w-full h-64 object-cover"
               />
               <div class="p-6 text-center">
@@ -183,7 +180,7 @@ const AboutUs = () => {
             </div>
             <div class="mt-12 md:mt-0">
               <img
-                src="..\src\assets\img\2.png"
+                src={img2}
                 alt="About Us Image"
                 class="object-cover rounded-lg shadow-md"
               />
@@ -310,9 +307,7 @@ const AboutUs = () => {
                     <h3 className="text-lg font-medium text-gray-900">
                       Our Address
                     </h3>
-                    <p className="mt-1 text-gray-600">
-                     Santa Maria, Bulacan 
-                    </p>
+                    <p className="mt-1 text-gray-600">Santa Maria, Bulacan</p>
                   </div>
                   <div className="border-t border-gray-200 px-6 py-4">
                     <h3 className="text-lg font-medium text-gray-900">Hours</h3>
@@ -325,14 +320,13 @@ const AboutUs = () => {
               <div className="rounded-lg overflow-hidden order-none sm:order-first">
                 <div className="rounded-lg overflow-hidden order-none sm:order-first h-[450px]">
                   <iframe
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7722.39630681948!2d120.9561085966795!3d14.831821530810835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397a8de24b249b9%3A0x293b12e1dc8b9c98!2sSanta%20Maria%2C%20Bulacan!5e0!3m2!1sen!2sph!4v1741091451503!5m2!1sen!2sph" 
-  className="w-full h-full"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7722.39630681948!2d120.9561085966795!3d14.831821530810835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397a8de24b249b9%3A0x293b12e1dc8b9c98!2sSanta%20Maria%2C%20Bulacan!5e0!3m2!1sen!2sph!4v1741091451503!5m2!1sen!2sph"
+                    className="w-full h-full"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                   ></iframe>
-                
                 </div>
               </div>
             </div>
