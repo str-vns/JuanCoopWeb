@@ -11,7 +11,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  background: #007bff;
+  background: #eef0f3;
   padding: 15px;
   position: relative; /* Changed from sticky to relative */
   margin-top: 20px; /* Pushes it lower */
@@ -27,7 +27,7 @@
   font-weight: bold;
 }
 .btn-add-address {
-  background-color: #007bff;
+  background-color:#eef0f3;
   color: #000000;
   font-weight: bold;
   padding: 10px 16px;
