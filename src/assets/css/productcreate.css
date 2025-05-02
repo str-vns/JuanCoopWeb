@@ -1,130 +1,203 @@
-/* Modal Styles */
+/* Modal Overlay */
 .product-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-
-.product-modal-container {
+  }
+  
+  /* Modal Container */
+  .product-modal-container {
     background-color: #fff;
-    padding: 30px;
+    padding: 35px 30px;
     border-radius: 12px;
-    width: 450px;
-    max-height: 80%;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 460px;
+    max-height: 85%;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
     overflow-y: auto;
-    transition: all 0.3s ease;
-}
-
-.product-modal-container h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* More spacing between elements */
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Modal Title */
+  .product-modal-container h2 {
+    font-size: 26px;
     color: #333;
     text-align: center;
-    font-weight: bold;
-}
-
-.product-form-group {
+    font-weight: bold; /* Bold title */
+    margin-bottom: 5px;
+  }
+  
+  /* Form Group Styling */
+  .product-form-group {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.product-form-group label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.product-form-group input,
-.product-form-group textarea,
-.product-form-group select {
+    flex-direction: column;
+    gap: 8px;
     width: 100%;
-    padding: 12px;
-    margin-top: 5px;
+  }
+  
+  .product-form-group label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #444;
+  }
+  
+  .product-form-group input,
+  .product-form-group textarea,
+  .product-form-group select {
+    width: 100%;
+    padding: 12px 15px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    font-size: 14px;
-    color: #333;
-    background-color: #fafaf8;  /* Updated to match color palette */
-}
-
-.product-form-group input[type="file"] {
-    padding: 0;
-}
-
-.product-form-group textarea {
+    font-size: 15px;
+    background-color: #fff;
+    transition: border 0.2s ease;
+  }
+  
+  .product-form-group input:focus,
+  .product-form-group textarea:focus,
+  .product-form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .product-form-group textarea {
     resize: vertical;
-    min-height: 120px;
-}
-
-.file-upload-btn {
-    background-color: #f9d958; /* Updated to match color palette */
-    color: white;
-    padding: 12px;
+    min-height: 100px;
+  }
+  
+  /* File Upload Button */
+  .file-upload-btn {
+    background-color: #ffd43b;
+    color: #333;
+    padding: 13px;
     border: none;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s;      
-}
-
-.product-btn-submit-product {
-    /* width: 100%; */
-    padding: 14px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #ffcc00; /* Updated to match color palette */
-    color: white;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-}
-
-.product-btn-submit-product:hover {
-    background-color: #f9e52b;
-}
-
-.product-btn-close-product {
-    background-color: #f76257;
-    margin-top: 10px;
-}
-
-.product-btn-close-product:hover {
-    background-color: #fa4946;
-}
-
-.product-image-preview {
-    margin-top: 15px;
     width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-upload-btn:hover {
+    background-color: #f9c900;
+  }
+  
+  /* Image Preview */
+  .product-image-preview {
+    margin-top: 12px;
     max-height: 200px;
     object-fit: cover;
     border-radius: 8px;
-    border: 2px solid #ddd;
-}
-
-.product-button-group {
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  /* Button Group Styling */
+  .product-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 28px; /* Extra space before buttons */
+  }
+  
+  /* Add Product Button */
+  .product-btn-submit-product {
+    background-color: #007bff;
+    color: white;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .product-btn-submit-product:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Close Button - now red */
+  .product-btn-close-product {
+    background-color: #dc3545;
+    color: white;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .product-btn-close-product:hover {
+    background-color: #a71d2a;
+  }
+  
+  /* Form Group Styling */
+.product-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 18px; /* <-- Add bottom margin to create space between fields */
+  }
+  
+  /* Extra spacing before Choose Images */
+  .product-form-group.image-upload {
+    margin-top: 12px; /* <-- Optional extra top spacing */
+  }
+  
+  .product-button-row {
     display: flex;
     justify-content: space-between;
+    gap: 12px;
     margin-top: 20px;
-}
-
-.product-btn-submit {
-    background-color: #ffcc00; /* Updated to match color palette */
-    margin-bottom: 5px;
-}
-
-.product-btn-close {
-    background-color: #f92b2b;
-}
+  }
+  
+  .product-btn-submit {
+    background-color: #007bff;
+    color: white;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+  }
+  
+  .product-btn-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  .product-btn-close {
+    background-color: #dc3545;
+    color: white;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+  }
+  
+  .product-btn-close:hover {
+    background-color: #a71d2a;
+  }
+  

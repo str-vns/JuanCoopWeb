@@ -20,7 +20,9 @@ const ProductCreate = ({ show, onClose }) => {
   const { categories } = useSelector((state) => state.categories);
   const { types } = useSelector((state) => state.types);
 
-  const selectedCategoryIds = selectedCategories.map((category) => category.value);
+  const selectedCategoryIds = selectedCategories.map(
+    (category) => category.value
+  );
   const selectedTypeIds = selectedTypes.map((type) => type.value);
 
   const token = getToken();
@@ -140,7 +142,7 @@ const ProductCreate = ({ show, onClose }) => {
                 placeholder="Select Types"
               />
             </div>
-            <div className="product-form-group">
+            <div className="product-form-group image-upload">
               <input
                 type="file"
                 name="images"
@@ -155,17 +157,33 @@ const ProductCreate = ({ show, onClose }) => {
               </label>
               <div className="image-preview">
                 {imagesPreview.map((img, index) => (
-                  <img src={img} key={index} alt={`Preview ${index}`} width="55" height="52" />
+                  <img
+                    src={img}
+                    key={index}
+                    alt={`Preview ${index}`}
+                    width="55"
+                    height="52"
+                  />
                 ))}
               </div>
             </div>
+
+            {/* <button type="submit" className="product-btn-submit">
+              Add Product
+            </button> */}
+            <div className="product-button-row">
             <button type="submit" className="product-btn-submit">
               Add Product
             </button>
+            <button className="product-btn-close" onClick={onClose}>
+              Close
+            </button>
+          </div>
           </form>
-          <button className="product-btn-close" onClick={onClose}>
+          {/* <button className="product-btn-close" onClick={onClose}>
             Close
-          </button>
+          </button> */}
+          
         </div>
       </div>
     )
