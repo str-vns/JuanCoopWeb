@@ -20,7 +20,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-
+  background: #eef0f3;
   padding: 25px;
   position: relative; /* Changed from sticky to relative */
   margin-top: 10px; /* Pushes it lower */
