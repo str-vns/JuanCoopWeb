@@ -155,7 +155,21 @@ const FarmerProfile = () => {
             <p>
               <strong>Location:</strong> {coopDetails.barangay}, {coopDetails.city}
             </p>
-            <button onClick={chatNow} className="chat-now-button">
+            <button
+              onClick={chatNow}
+              className="chat-now-button"
+              style={{
+                backgroundColor: "#007BFF", // Default blue color
+                color: "white",
+                padding: "10px 20px",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+                transition: "background-color 0.3s ease",
+              }}
+              onMouseDown={(e) => (e.target.style.backgroundColor = "#0056b3")} // Darker blue on press
+              onMouseUp={(e) => (e.target.style.backgroundColor = "#007BFF")} // Revert to default
+            >
               Chat Now <i className="fa-regular fa-message" style={{ marginLeft: "8px" }}></i>
             </button>
           </div>

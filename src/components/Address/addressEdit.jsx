@@ -292,12 +292,23 @@ function addressUpdate() {
         },
       }}
     >
-            <h2 className="text-black mt-10">Search Results</h2>
+            <h2 className="text-black text-center font-bold text-xl mb-4">
+              Search Results
+            </h2>
             <ul>
               {Array.isArray(location) && location.length > 0 ? (
                 location.map((result, index) => (
-                  <li key={index} className="text-center">
-                    <p className="text-black">{result?.address?.label}</p>
+                  <li
+                    key={index}
+                    className="text-center"
+                    style={{
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                      padding: "10px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <p className="text-black font-bold">{result?.address?.label}</p> {/* Bold full address */}
                     <p className="text-black">{result?.address?.district}</p>
                     <p className="text-black">{result?.address?.city}</p>
                     <p className="text-black">{result?.address?.postalCode}</p>
@@ -308,7 +319,7 @@ function addressUpdate() {
                           backgroundColor: "#007BFF", // Blue background
                           color: "white", // White text
                           padding: "10px 20px",
-                          border: "none",
+                          border: "1px solid #ccc", // Border around button
                           borderRadius: "5px",
                           cursor: "pointer",
                           textAlign: "center", // Center text
