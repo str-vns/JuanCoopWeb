@@ -1,8 +1,8 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
-import html2canvas from 'html2canvas-pro';
-import domtoimage from 'dom-to-image-more';
+import domtoimage from "dom-to-image-more";
+
 const QrPage = () => {
   const location = useLocation();
   const { order, trackId, userId } = location.state || {};
@@ -22,11 +22,13 @@ const QrPage = () => {
     console.log("Generated QR Code Data:", qrData); // Debugging output
     return qrData;
   };
+
   const downloadQRCode = () => {
     const qrElement = document.getElementById("qr-code");
-  
+
     if (qrElement) {
-      domtoimage.toPng(qrElement)
+      domtoimage
+        .toPng(qrElement)
         .then((dataUrl) => {
           const link = document.createElement("a");
           link.href = dataUrl;
@@ -88,7 +90,6 @@ const QrPage = () => {
 };
 
 const styles = {
-  
   qrPage: {
     textAlign: "center",
     padding: "20px",
