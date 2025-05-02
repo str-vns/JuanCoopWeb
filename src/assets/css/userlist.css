@@ -1,149 +1,108 @@
 .user-list-container {
-  width: calc(10%-100px); /* Adjust width to not overlap with sidebar */
   display: flex;
-  height: 100vh;
-  font-family: "Arial", sans-serif;
-  padding-left: 250px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  padding-top: 10px;
+}
+
+.user-list-content {
+  flex: 1;
+  padding: 5px ;
+  margin-left: 250px; /* Sidebar width */
 }
 
 .search-bar-container {
   display: flex;
-  justify-content: flex-end;  /* Align content to the right */
-  position: fixed;
-  top: 20px;
-  width: calc(10%-100px); /* Adjust width to not overlap with sidebar */
-  background-color: #fff;
-  z-index: 1000;
-  padding: 10px;
-  border-radius: 10px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  background-color: transparent; /* Remove gray background */
 }
+
 
 .search-bar {
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 400px;
-  justify-content: center;
-  align-items: center;
+  border-radius: 8px;
+  padding: 5px 10px;
+  width: 300px;
 }
-
 
 .search-input {
   border: none;
   outline: none;
-  padding: 5px;
+  padding: 8px;
+  font-size: 14px;
   flex: 1;
 }
-input.search-input {
-  transition: box-shadow 0.2s ease-in-out;
-}
-input.search-input:focus {
-  box-shadow: 0 0 0 2px #ffffff;
-}
+
 .search-icon {
-  margin-left: auto;  /* Push the search icon to the right */
-  color: #afafaf;
-  padding: 5px;
+  color: #888;
+  margin-left: 5px;
 }
+
 .user-list-table-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 80px;
+  overflow-x: auto;
 }
-.user-table thead {
-  position: sticky;
-  top: 0;
-  background: white; /* Keeps header visible */
-  z-index: 10;
-}
+
 .table-wrapper {
-  width: 800px;
-  height: 400px;
-  overflow-y: auto;
+  background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 .user-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #ffffff;
-  border-radius: 10px;
-  table-layout: fixed;
 }
 
-.user-table th,
-.user-table td {
+.user-table th, .user-table td {
   padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #e0e0e0;
-  word-wrap: break-word;
-  overflow: hidden;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
 }
 
 .user-table th {
-  background-color:  #ffcc00;;
+  background-color: #ffcc04;
   color: #000000;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .user-table tr:hover {
   background-color: #f1f1f1;
 }
 
-.user-table tbody tr:not(:last-child) {
-  border-bottom: 1px solid #ddd;
-}
-
-.user-table tbody:empty::before {
-  content: "No users found";
-  display: table-row;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  color: #999;
-  height: 100px;
-  line-height: 100px;
-}
-
 .deleted-user {
   background-color: #ffe6e6;
-  color: #999;
+  color: #a0a0a0;
 }
 
 .profile-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 45px;
+  height: 45px;
   object-fit: cover;
+  border-radius: 50%;
   border: 2px solid #ccc;
 }
 
-.delete-btn,
-.restore-btn {
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  color: #ffffff;
-  transition: all 0.3s ease-in-out;
+.action-btn {
   display: flex;
   align-items: center;
   gap: 5px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .delete-btn {
   background-color: #dc3545;
+  color: #fff;
 }
 
 .delete-btn:hover {
@@ -152,34 +111,34 @@ input.search-input:focus {
 
 .restore-btn {
   background-color: #28a745;
+  color: #fff;
 }
 
 .restore-btn:hover {
   background-color: #218838;
 }
 
-button:focus {
-  outline: none;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+.center-text {
+  text-align: center;
 }
 
-@media screen and (max-width: 1024px) {
+.error-text {
+  color: red;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .search-bar {
+    width: 100%;
+  }
+
   .user-list-content {
-    padding: 10px;
+    margin-left: 0;
+    padding: 20px;
   }
 
-  .user-table {
-    font-size: 14px;
-  }
-
-  .profile-image {
-    width: 40px;
-    height: 40px;
-  }
-
-  .delete-btn,
-  .restore-btn {
-    padding: 6px 10px;
+  .user-table th, .user-table td {
     font-size: 12px;
+    padding: 10px;
   }
 }

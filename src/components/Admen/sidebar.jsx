@@ -60,13 +60,13 @@ const Sidebar = () => {
             <li className="sidebar-item">
               <a className="sidebar-link" href="/bloglists">
                 <i className="fas fa-newspaper sidebar-icon"></i>
-                <span className="sidebar-text">News</span>
+                <span className="sidebar-text">Blogs</span>
               </a>
             </li>
             <li className="sidebar-item">
               <a className="sidebar-link" href="/postlist">
                 <i className="fas fa-pen-to-square sidebar-icon"></i>
-                <span className="sidebar-text">Community</span>
+                <span className="sidebar-text">Discussion</span>
               </a>
             </li>
             <li className="sidebar-item">
@@ -84,7 +84,7 @@ const Sidebar = () => {
             <li className="sidebar-item">
               <a className="sidebar-link" href="/withdrawlistAdmin">
                 <i className="fa-solid fa-wallet sidebar-icon"></i>
-                <span className="sidebar-text">Withdraws</span>
+                <span className="sidebar-text">Withdraw</span>
               </a>
             </li>
             <li className="sidebar-item">

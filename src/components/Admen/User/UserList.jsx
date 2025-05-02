@@ -22,7 +22,9 @@ const UserList = () => {
   }, [dispatch, token, isFetched]);
 
   const handleSoftDelete = (userId) => {
-    dispatch(softDeleteUser(userId, token));
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      dispatch(softDeleteUser(userId, token));
+    }
   };
 
   const handleRestore = (userId) => {
@@ -40,36 +42,34 @@ const UserList = () => {
       <div className="user-list-content">
         <div className="search-bar-container">
           <div className="search-bar">
-            <FontAwesomeIcon icon={faSearch} className="search-icon"/>
             <input
               type="text"
               placeholder="Search users by name"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="search-input"
-              style={{ outline: "none" }}
             />
           </div>
         </div>
         <div className="user-list-table-container">
-          <div className="table-wrapper" style={{ width: "100%", minHeight: "400px" }}>
-            <table className="user-table" style={{ width: "100%", tableLayout: "fixed" }}>
+          <div className="table-wrapper">
+            <table className="user-table">
               <thead>
                 <tr>
-                  <th style={{ width: "15%" }}>Profile</th>
-                  <th style={{ width: "25%" }}>Full Name</th>
-                  <th style={{ width: "25%" }}>Email</th>
-                  <th style={{ width: "20%" }}>Role</th>
-                  <th style={{ width: "15%" }}>Actions</th>
+                  <th>Profile</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
-                  <tr><td colSpan="5">Loading...</td></tr>
+                  <tr><td colSpan="5" className="center-text">Loading...</td></tr>
                 ) : error ? (
-                  <tr><td colSpan="5" style={{ color: "red" }}>Error: {error}</td></tr>
+                  <tr><td colSpan="5" className="center-text error-text">Error: {error}</td></tr>
                 ) : filteredUsers.length === 0 ? (
-                  <tr><td colSpan="5">No users found.</td></tr>
+                  <tr><td colSpan="5" className="center-text">No users found.</td></tr>
                 ) : (
                   filteredUsers.map((user) => (
                     <tr key={user._id} className={user.isDeleted ? "deleted-user" : ""}>
@@ -85,11 +85,11 @@ const UserList = () => {
                       <td>{Array.isArray(user.roles) ? user.roles.join(", ") : user.roles}</td>
                       <td>
                         {!user.isDeleted ? (
-                          <button onClick={() => handleSoftDelete(user._id)} className="delete-btn">
+                          <button onClick={() => handleSoftDelete(user._id)} className="action-btn delete-btn">
                             <FontAwesomeIcon icon={faTrash} /> Delete
                           </button>
                         ) : (
-                          <button onClick={() => handleRestore(user._id)} className="restore-btn">
+                          <button onClick={() => handleRestore(user._id)} className="action-btn restore-btn">
                             <FontAwesomeIcon icon={faUndo} /> Restore
                           </button>
                         )}

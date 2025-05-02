@@ -179,8 +179,48 @@ return (
         <p className="register-form-description">
           Let’s get you all set up so you can access your personal account.
         </p>
+        
+        <div className="register-form-group">
+  <label>Profile Picture</label>
+  <div className="flex items-center justify-between my-2">
+    <div className="flex items-center">
+      <figure className="avatar w-20 h-20 mr-4">
+        <img
+          src={avatarPreview}
+          className="rounded-full w-16 h-16 object-cover"
+          alt="Avatar Preview"
+        />
+      </figure>
+    </div>
+    <div className="custom-file relative">
+      <input
+        type="file"
+        name="avatar"
+        className="hidden"
+        id="customFile"
+        accept="image/*"
+        onChange={handleAvatarChange}
+      />
+    <label
+  htmlFor="customFile"
+  className="min-w-44 whitespace-nowrap text-center px-4 py-2 border-2 border-black rounded-md cursor-pointer bg-white text-black hover:bg-black hover:text-white"
+>
+  Choose Avatar
+</label>
+
+
+    </div>
+  </div>
+  {formik.touched.avatar && formik.errors.avatar && (
+    <span className="text-red-500 text-sm ml-3">
+      {formik.errors.avatar}
+    </span>
+  )}
+</div>
+
         <form onSubmit={formik.handleSubmit} className="register-form">
           <div className="register-form-row">
+            
             <div className="register-form-group">
               <label>First Name</label>
               <input
@@ -296,41 +336,6 @@ return (
               )}
             </div>
 
-            <div className="register-form-group">
-              <label>Profile Picture</label>
-              <div className="d-flex flex-wrap items-center my-2">
-                <div className="pr-3">
-                  <figure className="avatar w-20 h-20">
-                    <img
-                      src={avatarPreview}
-                      className="rounded-circle w-16 h-16 object-cover"
-                      alt="Avatar Preview"
-                    />
-                  </figure>
-                </div>
-                <div className="custom-file relative">
-                  <input
-                    type="file"
-                    name="avatar"
-                    className="hidden"
-                    id="customFile"
-                    accept="image/*"
-                    onChange={handleAvatarChange}
-                  />
-                  <label
-                    htmlFor="customFile"
-                    className="px-4 py-2 border-2 border-black rounded-md cursor-pointer bg-white text-black hover:bg-black hover:text-white"
-                  >
-                    Choose Avatar
-                  </label>
-                </div>
-              </div>
-              {formik.touched.avatar && formik.errors.avatar && (
-                <span className="text-red-500 text-sm ml-3">
-                  {formik.errors.avatar}
-                </span>
-              )}
-            </div>
 
            
             
@@ -477,7 +482,7 @@ return (
             checked={termsAndConditions}
             onChange={handleCheckboxChange}
           />
-          I accept the{" "}
+           I accept the{" "}
           <a
             href="https://www.example.com/terms-and-conditions"
             target="_blank"
