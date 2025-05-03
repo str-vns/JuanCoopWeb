@@ -4,6 +4,44 @@
   margin-left: 250px;
 }
 
+.forumlist-coop-modal-content h1 {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 12px;
+  color: #2c3e50; /* More formal color */
+}
+
+.forumlist-coop-modal-content h2 {
+  font-size: 15px;
+  text-align: justify;
+  line-height: 1.6;
+  color: #333;
+ 
+  margin-bottom: 20px;
+}
+
+.forumlist-coop-modal-content p {
+  text-align: justify;
+
+  font-size: 14px;
+  color: #555;
+}
+
+.sentiment-label {
+  font-size: 14px; /* Slightly smaller text */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.sentiment-label span {
+  font-size: 16px; /* Icon size slightly larger than text */
+  display: flex;
+  align-items: center;
+}
+
 .forumlist-coop-content {
   flex: 1;
   padding: 20px;
@@ -243,21 +281,36 @@
 }
 
 .positive {
-  background-color: #08cf3a; /* Light Green */
-  color: black;
-  display: flex;
+  background-color: #ffffff; /* Strong red */
+  color: rgb(35, 204, 57); /* Better contrast */
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  gap: 6px;
 }
 
 .neutral {
-  background-color: rgb(162, 161, 161); /* Light Yellow */
-  color: black;
-  display: flex;
+  background-color: #ffffff; /* Strong red */
+  color: rgb(70, 70, 70); /* Better contrast */
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  gap: 6px;
 }
 
 .negative {
-  background-color: #fd2537; /* Light Red */
-  display: flex;
-  color: black;
+  background-color: #ffffff; /* Strong red */
+  color: rgb(255, 0, 0); /* Better contrast */
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  gap: 6px;
 }
 
 .sentiment-label svg {
