@@ -130,6 +130,7 @@ import MemberDisplay from "./components/user/MemberDisplay";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
+import Tutorial from "./components/layout/tutorial";
 import WithdrawList from "./components/cooperative/Wallet/WithdrawList";
 import PaymentWithdraw from "./components/cooperative/Wallet/PaymentWithdraw";
 import GcashWithdrawForm from "./components/cooperative/Wallet/GcashWithdrawForm";
@@ -151,6 +152,7 @@ import RefundSuccessAdmin from "./components/Admen/Refund/RefundSuccessAdmin";
 import MemberForumList from "./components/user/MemberForumList";
 import ReasonCancelled from "./components/Cancelled/ReasonCancelled";
 import CoopEditProfile from "./components/cooperative/Profile/coopEditProfile";
+
 
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
@@ -233,6 +235,7 @@ function App() {
           <Route path="/googlelogin" element={<GoogleLogin/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
           <Route path="/aboutUs" element={<AboutUs/>} />
+          <Route path="/tutorial" element={<Tutorial/>} />
           {/* Order Routes */}
           <Route path="/product/:id" element={<ProductCard />} />
 

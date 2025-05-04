@@ -184,6 +184,10 @@ const Navbar = () => {
           <li>
             <a href="/aboutUs">About Us</a>
           </li>
+          <li>
+            <a href="/tutorial">Tutorial</a>
+          </li>
+         
           {isApprovedMember && (
             <li>
               <a href="/coopmemberforum">Discussions</a>
