@@ -17,6 +17,9 @@ import {
     INVENTORY_PRODUCTS_REQUEST,
   INVENTORY_PRODUCTS_SUCCESS,
   INVENTORY_PRODUCTS_FAIL,
+  INVENTORY_DASHBOARD_REQUEST,
+  INVENTORY_DASHBOARD_SUCCESS,
+  INVENTORY_DASHBOARD_FAIL,
 } from "@redux/Constants/inventoryConstants";
 
 export const inventoryCreateReducer = (state = {}, action) => {
@@ -62,3 +65,16 @@ export const singleInventoryReducer = (state = {}, action) => {
             return state;
     }
 }
+
+export const inventoryDashboardReducer = (state = { dashboardData: null }, action) => {
+    switch (action.type) {
+      case INVENTORY_DASHBOARD_REQUEST:
+        return { loading: true, dashboardData: null };
+      case INVENTORY_DASHBOARD_SUCCESS:
+        return { loading: false, dashboardData: action.payload };
+      case INVENTORY_DASHBOARD_FAIL:
+        return { loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };

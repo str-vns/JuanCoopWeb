@@ -17,6 +17,9 @@ import {
     INVENTORY_PRODUCTS_REQUEST,
     INVENTORY_PRODUCTS_SUCCESS,
     INVENTORY_PRODUCTS_FAIL,
+    INVENTORY_DASHBOARD_REQUEST,
+    INVENTORY_DASHBOARD_SUCCESS,
+    INVENTORY_DASHBOARD_FAIL,
   } from "@redux/Constants/inventoryConstants";
   import axios from "axios";
   import baseURL from '@Commons/baseUrl';
@@ -188,6 +191,35 @@ import {
       dispatch({
         type: INVENTORY_PRODUCTS_FAIL,
         payload: error.response?.data.message || error.message,
+      });
+    }
+  };
+
+  export const fetchInventoryDashboard = (coopId, type) => async (dispatch) => {
+    try {
+      dispatch({ type: INVENTORY_DASHBOARD_REQUEST });
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+  
+      const { data } = await axios.post(`${baseURL}inventory/coop/dashboard`, { user: coopId, type },config);
+      console.log('Fetched Inventory Data:', data);
+  
+      dispatch({
+        type: INVENTORY_DASHBOARD_SUCCESS,
+        payload: data.details
+      });
+      return data.details;
+    } catch (error) {
+      dispatch({
+        type: INVENTORY_DASHBOARD_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
       });
     }
   };

@@ -47,11 +47,37 @@ import {
       rankedProducts: [],
       salesTrends: {
         daily: 0,
-        weekly: 0,
         monthly: 0,
+        yearly: 0,
       },
     },
     
+  };
+
+  export const coopdashboardReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case COOP_DASHBOARD_REQUEST:
+        return { ...state, coopdashboardloading: true };
+      case COOP_DASHBOARD_SUCCESS:
+        return { ...state, coopdashboardloading: false, coopdashboards: action.payload, };
+      case COOP_DASHBOARD_FAIL:
+        return { ...state, coopdashboardloading: false, coopdashboarderror: action.payload };
+      default:
+        return state;
+    }
+  }; 
+  
+  export const overalldashboardReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case OVERALL_DASHBOARD_REQUEST:
+        return { ...state, overalldashboardloading: true };
+      case OVERALL_DASHBOARD_SUCCESS:
+        return { ...state, overalldashboardloading: false, overalldashboards: action.payload };
+      case OVERALL_DASHBOARD_FAIL:
+        return { ...state, overalldashboardloading: false, overalldashboarderror: action.payload };
+      default:
+        return state;
+    }
   };
   
   export const orderReducer = (state = initialState, action) => {
@@ -145,32 +171,9 @@ import {
         return state;
     }
   }
+ 
 
-  export const coopdashboardReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case COOP_DASHBOARD_REQUEST:
-        return { ...state, coopdashboardloading: true };
-      case COOP_DASHBOARD_SUCCESS:
-        return { ...state, coopdashboardloading: false, coopdashboards: action.payload };
-      case COOP_DASHBOARD_FAIL:
-        return { ...state, coopdashboardloading: false, coopdashboarderror: action.payload };
-      default:
-        return state;
-    }
-  };  
-
-  export const overalldashboardReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case OVERALL_DASHBOARD_REQUEST:
-        return { ...state, overalldashboardloading: true };
-      case OVERALL_DASHBOARD_SUCCESS:
-        return { ...state, overalldashboardloading: false, overalldashboards: action.payload };
-      case OVERALL_DASHBOARD_FAIL:
-        return { ...state, overalldashboardloading: false, overalldashboarderror: action.payload };
-      default:
-        return state;
-    }
-  };
+  
 
   export const getPaymentReducer = (state = { payment: {} }, action) => {
     switch (action.type) {

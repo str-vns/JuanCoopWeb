@@ -32,7 +32,7 @@ import {HereMapReducer,MapBoxRouteReducer} from "@redux/Reducers/locationReducer
 import { reducerProduct, reducerCoop, reducerCoopProduct, reducerCreateProduct, reducerEditProduct, reducerDelResProduct } from "@redux/Reducers/productReducers";
 import { categoryListReducer,categoryCreateReducer,categoryEditReducer} from "@redux/Reducers/categoryReducers";
 import { typeListReducer, typeCreateReducer,typeUpdateReducer,typeDeleteReducer} from "@redux/Reducers/typeReducers";
-import { inventoryCreateReducer, singleInventoryReducer } from "@redux/Reducers/inventoryReducers";
+import { inventoryCreateReducer, singleInventoryReducer, inventoryDashboardReducer } from "@redux/Reducers/inventoryReducers";
 import { reducerBlog, reducerSingleBlog, reducerCreateBlog, reducerEditBlog, reducerDelBlog } from "@redux/Reducers/blogReducer";
 import { driverApiReducer, driverListReducer, onlyApprovedDriverReducer, driverProfileReducer } from "@redux/Reducers/driverReducer";
 // import postReducer from "./Reducers/postReducer";
@@ -91,6 +91,7 @@ const reducers = combineReducers({
   typesDelete: typeDeleteReducer,
   invent: inventoryCreateReducer,
   sinvent: singleInventoryReducer,
+  inventoryDashboard: inventoryDashboardReducer,
   Geolocation: HereMapReducer,
   MapBoxRoute: MapBoxRouteReducer,
   otp: OTPReducer,
