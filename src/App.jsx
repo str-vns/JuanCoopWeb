@@ -131,6 +131,7 @@ import MemberDisplay from "./components/user/MemberDisplay";
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
 import Tutorial from "./components/layout/tutorial";
+import Terms from "./components/layout/terms";
 import WithdrawList from "./components/cooperative/Wallet/WithdrawList";
 import PaymentWithdraw from "./components/cooperative/Wallet/PaymentWithdraw";
 import GcashWithdrawForm from "./components/cooperative/Wallet/GcashWithdrawForm";
@@ -236,6 +237,7 @@ function App() {
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
           <Route path="/aboutUs" element={<AboutUs/>} />
           <Route path="/tutorial" element={<Tutorial/>} />
+          <Route path="/terms" element={<Terms/>} />
           {/* Order Routes */}
           <Route path="/product/:id" element={<ProductCard />} />
 
