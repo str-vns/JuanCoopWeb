@@ -441,3 +441,50 @@
   border-radius: 50%; /* Makes the image circular */
   object-fit: cover; /* Ensures the image covers the area without stretching */
 }
+
+/* Added to Cart Message */
+.cart-message {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #28a745; /* Green color for success */
+  background-color: #e6f4ea; /* Light green background */
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeInOut 3s ease-in-out; /* Fade in and out animation */
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Added to Wishlist Message */
+.wishlist-message {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ff4500; /* Orange color for wishlist success */
+  background-color: #ffe6d5; /* Light orange background */
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeInOut 3s ease-in-out; /* Fade in and out animation */
+}

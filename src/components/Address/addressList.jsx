@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchAddresses, deleteAddress } from "@redux/Actions/addressActions";
 import { MDBDataTable } from "mdbreact";
 import "mdbreact/dist/css/mdb.css";
+import "@assets/css/customConfirm.css";
 
 const addressList = () => {
   let { id } = useParams();
@@ -18,14 +19,29 @@ const addressList = () => {
   const loading = useSelector((state) => state.addresses.loading);
   const error = useSelector((state) => state.addresses.error);
 
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [confirmCallback, setConfirmCallback] = useState(null);
+
+  const showConfirm = (callback) => {
+    setIsConfirmVisible(true);
+    setConfirmCallback(() => callback);
+  };
+
+  const handleConfirm = () => {
+    if (confirmCallback) confirmCallback();
+    setIsConfirmVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsConfirmVisible(false);
+  };
+
   useEffect(() => {
     dispatch(fetchAddresses(user._id, token));
   }, [dispatch, user._id]);
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this address?")) {
-      dispatch(deleteAddress(id));
-    }
+    showConfirm(() => dispatch(deleteAddress(id)));
   };
 
   const addressList = () => {
@@ -140,6 +156,27 @@ const addressList = () => {
           </div>
         </div>
       </div>
+      {isConfirmVisible && (
+        <div className="custom-confirm-overlay">
+          <div className="custom-confirm-dialog">
+            <h2>Are you sure you want to delete this address?</h2>
+            <div className="confirm-buttons">
+              <button
+                className="confirm-button confirm bg-red-500 text-white hover:bg-red-700"
+                onClick={handleConfirm}
+              >
+                Yes
+              </button>
+              <button
+                className="confirm-button cancel bg-blue-500 text-white hover:bg-blue-700"
+                onClick={handleCancel}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Fragment>
   );
 };

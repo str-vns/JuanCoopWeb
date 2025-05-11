@@ -43,6 +43,8 @@ const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
     if (token || coopId) {
@@ -69,15 +71,25 @@ const ProductList = () => {
     setProductToUpdate(null);
   };
 
-  const handleDelete = (productId) => {
-    const confirm = window.confirm("Are you sure you want to delete this product?");
-    if (confirm) {
-      dispatch(soflDelProducts(productId)).then(() => {
+  const handleDeleteClick = (productId) => {
+    setProductToDelete(productId);
+    setIsDeleteModalVisible(true);
+  };
+
+  const confirmDelete = () => {
+    if (productToDelete) {
+      dispatch(soflDelProducts(productToDelete)).then(() => {
         dispatch(getCoopProducts(coopId, token));
       });
     }
+    setIsDeleteModalVisible(false);
+    setProductToDelete(null);
   };
-  
+
+  const cancelDelete = () => {
+    setIsDeleteModalVisible(false);
+    setProductToDelete(null);
+  };
 
   const filteredProducts =
     coopProducts
@@ -143,26 +155,24 @@ const ProductList = () => {
                     <td>{product.description}</td>
                     <td>{product.stock?.[0]?.price || "N/A"}</td>
                     <td>{product.stock?.[0]?.quantity || 0}</td>
-                    
-                      <td className="actions-column">
-                        <span
-                          className="icon-update"
-                          onClick={() => {
-                            console.log("Updating product:", product);
-                            setProductToUpdate(product);
-                            setIsUpdateModalOpen(true);
-                          }}
-                        >
-                          <i className="fa-solid fa-pen-to-square"></i>
-                        </span>
-                        <span
-                          className="icon-delete"
-                          onClick={() => handleDelete(product._id)}
-                        >
-                          <i className="fa-solid fa-trash"></i>
-                        </span>
-                      </td>
-                    
+                    <td className="actions-column">
+                      <span
+                        className="icon-update"
+                        onClick={() => {
+                          console.log("Updating product:", product);
+                          setProductToUpdate(product);
+                          setIsUpdateModalOpen(true);
+                        }}
+                      >
+                        <i className="fa-solid fa-pen-to-square"></i>
+                      </span>
+                      <span
+                        className="icon-delete"
+                        onClick={() => handleDeleteClick(product._id)}
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -207,6 +217,22 @@ const ProductList = () => {
               onSubmit={handleUpdateProduct}
               product={productToUpdate || {}}
             />
+          )}
+          {isDeleteModalVisible && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <h2>Confirm Deletion</h2>
+                <p>Are you sure you want to delete this product?</p>
+                <div className="modal-buttons">
+                  <button className="modal-ok-btn" onClick={confirmDelete}>
+                    Yes
+                  </button>
+                  <button className="modal-cancel-btn" onClick={cancelDelete}>
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
         </main>
       </div>

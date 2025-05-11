@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoPencil, IoTrash } from "react-icons/io5";
-import {
-  inventoryProducts,
-  deleteInventory,
-} from "@redux/Actions/inventoryActions";
+import { inventoryProducts, deleteInventory } from "@redux/Actions/inventoryActions";
 import { getToken } from "@utils/helpers";
 import Header from "../header";
 import Sidebar from "../sidebar";
@@ -13,6 +10,8 @@ import "@assets/css/inventorydetail.css";
 import InventoryCreate from "./InventoryCreate";
 import InventoryUpdate from "./InventoryUpdate";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify"; // Import toastify
+import "react-toastify/dist/ReactToastify.css"; // Import toastify styles
 
 const InventoryDetail = () => {
   const dispatch = useDispatch();
@@ -26,6 +25,8 @@ const InventoryDetail = () => {
   const [isInventoryCreateOpen, setInventoryCreateOpen] = useState(false);
   const [isInventoryUpdateOpen, setInventoryUpdateOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   useEffect(() => {
     if (!InvItem) {
@@ -44,12 +45,33 @@ const InventoryDetail = () => {
     setInventoryUpdateOpen(true);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this item?")) {
-      dispatch(deleteInventory(id, token)).then(() => {
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id);
+    setIsDeleteModalVisible(true); // Show the modal
+  };
+
+  const confirmDelete = () => {
+    if (itemToDelete) {
+      dispatch(deleteInventory(itemToDelete, token)).then(() => {
         dispatch(inventoryProducts(InvItem._id, token));
+        toast.success("Inventory item has been successfully deleted.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
     }
+    setIsDeleteModalVisible(false); // Hide the modal
+    setItemToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalVisible(false); // Hide the modal
+    setItemToDelete(null);
   };
 
   const handleCreateInventory = () => {
@@ -64,9 +86,6 @@ const InventoryDetail = () => {
         <main className="p-6">
           <div className="inventory-header">
             <h1>Inventory Detail</h1>
-            {/* <button className="btn-add-inventory" onClick={handleCreateInventory}>
-              Add Inventory
-            </button> */}
             <button className="btn-add-product" onClick={handleCreateInventory}>
               <i className="fa-solid fa-plus"></i>
             </button>
@@ -105,35 +124,14 @@ const InventoryDetail = () => {
                             : "Unknown"}
                         </span>
                       </td>
-                      {/* <td className="action-buttons">
-                        <span
-                          className="icon-update"
-                          onClick={() => handleEdit(item)}
-                        >
+                      <td className="actions-column">
+                        <span className="icon-update" onClick={() => handleEdit(item)}>
                           <FaEdit />
                         </span>
-                        <span
-                          className="icon-delete"
-                          onClick={() => handleDelete(item._id)}
-                        >
+                        <span className="icon-delete" onClick={() => handleDeleteClick(item._id)}>
                           <FaTrash />
                         </span>
-                      </td> */}
-                      <td className="actions-column">
-  <span
-    className="icon-update"
-    onClick={() => handleEdit(item)}
-  >
-    <FaEdit />
-  </span>
-  <span
-    className="icon-delete"
-    onClick={() => handleDelete(item._id)}
-  >
-    <FaTrash />
-  </span>
-</td>
-
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -144,17 +142,32 @@ const InventoryDetail = () => {
           )}
           {isInventoryCreateOpen && (
             <InventoryCreate
-              show={isInventoryCreateOpen} // ✅ Pass `show` prop
+              show={isInventoryCreateOpen}
               onClose={() => setInventoryCreateOpen(false)}
               productId={selectedItem?._id}
             />
           )}
-
           {isInventoryUpdateOpen && (
             <InventoryUpdate
               onClose={() => setInventoryUpdateOpen(false)}
               item={selectedItem}
             />
+          )}
+          {isDeleteModalVisible && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <h2>Confirm Deletion</h2>
+                <p>Are you sure you want to delete this inventory item?</p>
+                <div className="modal-buttons">
+                  <button className="modal-ok-btn" onClick={confirmDelete}>
+                    Yes
+                  </button>
+                  <button className="modal-cancel-btn" onClick={cancelDelete}>
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
         </main>
       </div>

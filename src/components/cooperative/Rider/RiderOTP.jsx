@@ -151,8 +151,8 @@ const RiderOTP = () => {
   return (
     <div className="container mx-auto p-6 flex flex-col items-center">
       <Sidebar />
-      <h2 className="text-xl font-bold">Phone Verification</h2>
-      <p className="text-gray-600 mb-4">Enter your OTP code</p>
+      <h2 className="text-xl font-bold">Email Verification</h2>
+      <p className="text-gray-600 mb-4">Enter the OTP code sent to your email</p>
       <div className="flex gap-2 mb-4">
         {otp.map((digit, index) => (
           <input

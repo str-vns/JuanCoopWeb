@@ -1,0 +1,65 @@
+/* Centered Confirm Dialog */
+.custom-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.custom-confirm-dialog {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.custom-confirm-dialog h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.custom-confirm-dialog .confirm-buttons {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  gap: 10px; /* Add spacing between the buttons */
+  margin-top: 20px;
+}
+
+.custom-confirm-dialog .confirm-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center; /* Ensure text is centered */
+}
+
+.custom-confirm-dialog .confirm-button.confirm {
+  background-color: #dc3545; /* Red background for "Yes" button */
+  color: white;
+}
+
+.custom-confirm-dialog .confirm-button.confirm:hover {
+  background-color: #a71d2a; /* Darker red on hover */
+}
+
+.custom-confirm-dialog .confirm-button.cancel {
+  background-color: #007bff; /* Blue background for "No" button */
+  color: white;
+}
+
+.custom-confirm-dialog .confirm-button.cancel:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}

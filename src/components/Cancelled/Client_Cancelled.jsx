@@ -49,6 +49,7 @@ const Client_Cancelled = () => {
   const [token, setToken] = useState(null);
   const [fcmToken, setFcmToken] = useState(null);
   const [refresh, setRefresh] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
   const reasons = [
     "Changed my mind",
     "Found a better deal",
@@ -76,9 +77,16 @@ const Client_Cancelled = () => {
   }, [coops, token]);
 
   const handleCancelOrder = () => {
-    if (window.confirm("Do you want to cancel this order?")) {
-      proceedWithCancellation();
-    }
+    setIsCancelModalVisible(true); // Show the modal
+  };
+
+  const confirmCancelOrder = () => {
+    setIsCancelModalVisible(false); // Hide the modal
+    proceedWithCancellation(); // Proceed with cancellation
+  };
+
+  const closeCancelModal = () => {
+    setIsCancelModalVisible(false); // Hide the modal
   };
 
   const proceedWithCancellation = () => {
@@ -178,13 +186,48 @@ const Client_Cancelled = () => {
       )}
 
       <div className="cancel-button-group">
-        <button className="cancel-confirm-btn" onClick={handleCancelOrder}>
-          Confirm
-        </button>
-        <button className="cancel-back-btn" onClick={() => navigate(-1)}>
+      <button
+          className="cancel-back-btn"
+          style={{ backgroundColor: "gray", color: "white" }}
+          onClick={() => navigate(-1)}
+        >
           Back
         </button>
+        <button
+          className="cancel-confirm-btn"
+          style={{ backgroundColor: "red", color: "white" }}
+          onClick={handleCancelOrder}
+        >
+          Confirm
+        </button>
+     
       </div>
+
+      {isCancelModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Confirm Cancellation</h2>
+            <p>Do you want to cancel this order?</p>
+            <div className="modal-buttons">
+            <button
+                className="modal-cancel-btn"
+                style={{ backgroundColor: "blue", color: "white" }}
+                onClick={closeCancelModal}
+              >
+                Back
+              </button>
+              <button
+                className="modal-ok-btn"
+                style={{ backgroundColor: "red", color: "white" }}
+                onClick={confirmCancelOrder}
+              >
+               Cancel
+              </button>
+             
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

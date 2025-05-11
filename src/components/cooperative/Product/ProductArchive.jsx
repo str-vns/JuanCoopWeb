@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
+import { toast } from "react-toastify"; // Import toastify
+import "react-toastify/dist/ReactToastify.css"; // Import toastify styles
 
 import Sidebar from "../sidebar";
 import { FaRedo, FaTrash } from "react-icons/fa";
@@ -26,6 +28,9 @@ const ProductArchive = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
+
   useEffect(() => {
     dispatch(archiveProducts(Coopid));
   }, [dispatch, Coopid]);
@@ -49,19 +54,33 @@ const ProductArchive = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      setRefresh(true);
-      try {
-        dispatch(deleteProducts(id)).then(() => {
-          dispatch(archiveProducts(Coopid));
+  const handleDeleteClick = (productId) => {
+    setProductToDelete(productId);
+    setIsDeleteModalVisible(true); // Show the modal
+  };
+
+  const confirmDelete = () => {
+    if (productToDelete) {
+      dispatch(deleteProducts(productToDelete)).then(() => {
+        dispatch(archiveProducts(Coopid));
+        toast.success("Product has been permanently deleted.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
-      } catch (error) {
-        console.error("Error deleting product:", error);
-      } finally {
-        setRefresh(false);
-      }
+      });
     }
+    setIsDeleteModalVisible(false); // Hide the modal
+    setProductToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalVisible(false); // Hide the modal
+    setProductToDelete(null);
   };
 
   // Pagination Logic
@@ -112,14 +131,6 @@ const ProductArchive = () => {
                         </td>
                         <td>{product.productName}</td>
                         <td>{product.description}</td>
-                        {/* <td>
-                            <button className="restore-button" onClick={() => handleRestore(product._id)}>
-                              <FaRedo />
-                            </button>
-                            <button className="delete-button" onClick={() => handleDelete(product._id)}>
-                              <FaTrash />
-                            </button>
-                          </td> */}
                         <td>
                           <i
                             className="fa-solid fa-rotate-right restore-icon"
@@ -127,7 +138,7 @@ const ProductArchive = () => {
                           ></i>
                           <i
                             className="fa-solid fa-trash delete-icon"
-                            onClick={() => handleDelete(product._id)}
+                            onClick={() => handleDeleteClick(product._id)}
                           ></i>
                         </td>
                       </tr>
@@ -165,6 +176,22 @@ const ProductArchive = () => {
           )}
         </div>
       </div>
+      {isDeleteModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to permanently delete this product?</p>
+            <div className="modal-buttons">
+              <button className="modal-ok-btn" onClick={confirmDelete}>
+                Yes
+              </button>
+              <button className="modal-cancel-btn" onClick={cancelDelete}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

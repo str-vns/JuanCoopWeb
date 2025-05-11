@@ -13,7 +13,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { memberDetails } from "@redux/Actions/memberActions";
 import { FaInfoCircle } from "react-icons/fa";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const SHIPPING_FEE = 75;
 const TAX_RATE = 0.12;
@@ -55,10 +55,14 @@ const Carts = () => {
     membering();
   }, []);
 
+  const [isTaxModalVisible, setIsTaxModalVisible] = useState(false); // State for modal visibility
+
   const handleTaxInfo = () => {
-    alert(
-      "This tax applies to users who are not members of any cooperative. If you want to save on future purchases, consider registering as a member."
-    );
+    setIsTaxModalVisible(true); // Show the modal
+  };
+
+  const closeTaxModal = () => {
+    setIsTaxModalVisible(false); // Hide the modal
   };
 
   const calculateShipping = () => {
@@ -295,6 +299,22 @@ const Carts = () => {
                 Shipping Fee: ₱ {calculateShipping().toFixed(2)}
               </p>
               <p className="total-text">Total: ₱ {calculateFinalTotal()}</p>
+            </div>
+          )}
+          {/* Tax Info Modal */}
+          {isTaxModalVisible && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <h2>Tax Information</h2>
+                <p>
+                  This tax applies to users who are not members of any
+                  cooperative. If you want to save on future purchases, consider
+                  registering as a member.
+                </p>
+                <button className="modal-ok-btn" onClick={closeTaxModal}>
+                  OK
+                </button>
+              </div>
             </div>
           )}
           <div className="button-row">

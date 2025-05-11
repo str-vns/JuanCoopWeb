@@ -19,6 +19,8 @@ const Address = () => {
   const loading = useSelector((state) => state.addresses.loading);
   const error = useSelector((state) => state.addresses.error);
   const [selectedLocationId, setSelectedLocationId] = useState(null);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [addressToDelete, setAddressToDelete] = useState(null);
 
   useEffect(() => {
     if (user?._id) {
@@ -26,12 +28,14 @@ const Address = () => {
     }
   }, [dispatch, user?._id]);
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this address?"
-    );
-    if (confirmDelete) {
-      dispatch(deleteAddress(id));
+  const handleDeleteClick = (addressId) => {
+    setAddressToDelete(addressId);
+    setIsDeleteModalVisible(true); // Show the delete confirmation modal
+  };
+
+  const confirmDelete = () => {
+    if (addressToDelete) {
+      dispatch(deleteAddress(addressToDelete));
       toast.success("Address deleted successfully.", {
         theme: "dark",
         position: "top-right",
@@ -45,6 +49,13 @@ const Address = () => {
         closeButton: false,
       });
     }
+    setIsDeleteModalVisible(false); // Hide the modal
+    setAddressToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalVisible(false); // Hide the modal
+    setAddressToDelete(null);
   };
 
   const handleAddressClick = (e) => {
@@ -112,7 +123,7 @@ const Address = () => {
                   </div>
                   <div className="addressdlt">
                     <button
-                      onClick={() => handleDelete(address._id)}
+                      onClick={() => handleDeleteClick(address._id)}
                       className="delete-button"
                     >
                       <i className="fa-solid fa-trash"></i>
@@ -129,17 +140,28 @@ const Address = () => {
         )}
         
         <div className="button-container">
-          {/* <button
-            onClick={() => navigate("/address/create")}
-            className="proceed-button"
-          >
-            Add Address
-          </button> */}
           <button onClick={handleAddressClick} className="proceed-button">
             Proceed To Payment
           </button>
         </div>
       </div>
+
+      {isDeleteModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this address?</p>
+            <div className="modal-buttons">
+              <button className="modal-ok-btn" onClick={confirmDelete}>
+                Yes
+              </button>
+              <button className="modal-cancel-btn" onClick={cancelDelete}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

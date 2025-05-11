@@ -35,6 +35,7 @@ const ProductCard = () => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [wishlist, setWishlist] = useState([]);
+  const [wishlistMessage, setWishlistMessage] = useState(""); // State for wishlist message
   const { coop } = useSelector((state) => state.singleCoop);
   const { user, error } = useSelector((state) => state.userOnly);
 
@@ -158,8 +159,14 @@ const ProductCard = () => {
       if (token) {
         await dispatch(WishlistUser(product?._id, userId?._id, token)); 
         await dispatch(Profileuser(userId?._id, token)); 
-  
-        // window.location.reload();
+
+        // Check if the product is already in the wishlist
+        const isInWishlist = wishlist.some((item) => item?.product === product?._id);
+
+        if (!isInWishlist) {
+          setWishlistMessage("Added to wishlist!"); // Show message only when added
+          setTimeout(() => setWishlistMessage(""), 3000); // Clear message after 3 seconds
+        }
       } else {
         console.log("No JWT token found.");
       }
@@ -201,21 +208,28 @@ const ProductCard = () => {
         </div>
 
         <div className="product-details">
-          <h2 className="product-title">{product.productName}
-          <button
-              className="wishlist-icon"
-              onClick={handleFavorite}
-              style={{
-                cursor: "pointer",
-                marginLeft: "10px",
-                background: "none",
-                border: "none",
-                outline: "none",
-                boxShadow: "none"
-              }}
-            >
-              <FaHeart color={wishlist.length > 0 ? "#ff6961" : "#ccc"} size={20} />
-            </button>
+          <h2 className="product-title">
+            {product.productName}
+            <div style={{ display: "inline-flex", alignItems: "center", marginLeft: "10px" }}>
+              <button
+                className="wishlist-icon"
+                onClick={handleFavorite}
+                style={{
+                  cursor: "pointer",
+                  background: "none",
+                  border: "none",
+                  outline: "none",
+                  boxShadow: "none",
+                }}
+              >
+                <FaHeart color={wishlist.length > 0 ? "#ff6961" : "#ccc"} size={20} />
+              </button>
+              {wishlistMessage && (
+                <span className="wishlist-message" style={{ marginLeft: "8px" }}>
+                  {wishlistMessage}
+                </span>
+              )}
+            </div>
           </h2>
           <div className="price-section">
             <span className="current-price">
