@@ -195,15 +195,15 @@ function addressUpdate() {
                 />
                 <button
                   onClick={handleSearchClick}
-                  className="search-btn"
-                  style={{
-                    backgroundColor: "#007BFF", // Blue background
-                    color: "white",
-                    padding: "10px 20px",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
+                  className="searchbtn"
+                  // style={{
+                  //   backgroundColor: "#007BFF", // Blue background
+                  //   color: "white",
+                  //   padding: "10px 20px",
+                  //   border: "none",
+                  //   borderRadius: "5px",
+                  //   cursor: "pointer",
+                  // }}
                 >
                   Search
                 </button>

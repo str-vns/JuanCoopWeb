@@ -110,7 +110,7 @@ const Address = () => {
                       {address.postalCode || "Postal Code not specified"}
                     </p>
                   </div>
-                  <div className="address-actions">
+                  <div className="addressdlt">
                     <button
                       onClick={() => handleDelete(address._id)}
                       className="delete-button"

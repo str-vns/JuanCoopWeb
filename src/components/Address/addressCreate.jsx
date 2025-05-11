@@ -170,7 +170,7 @@ function AddressCreate() {
                 placeholder="Search Address"
                 className="search-bar"
               />
-              <button onClick={handleSearchClick} className="search-btn">
+              <button onClick={handleSearchClick} className="searchbtn">
                 Search
               </button>
             </div>
