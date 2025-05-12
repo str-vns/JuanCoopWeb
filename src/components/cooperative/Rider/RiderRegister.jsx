@@ -6,7 +6,8 @@ import axios from "axios";
 import baseURL from "@Commons/baseUrl";
 import Sidebar from "../sidebar";
 import "@assets/css/riderregister.css";
-import { getCurrentUser} from "@utils/helpers";
+import { getCurrentUser } from "@utils/helpers";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons from react-icons
 
 const RiderRegister = () => {
   const dispatch = useDispatch();
@@ -28,30 +29,28 @@ const RiderRegister = () => {
   const [licenseImage, setLicenseImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for confirm password visibility
 
   // Handle image selection & preview
   const handleImageChange = (e, setImage, setImagePreview) => {
     const file = e.target.files[0];
     if (!file) {
-        setImage(null);
-        setImagePreview(null);
-        return;
+      setImage(null);
+      setImagePreview(null);
+      return;
     }
 
     setImage(file); // Store the actual File object
 
     const reader = new FileReader();
     reader.onload = () => {
-        if (reader.readyState === 2) {
-            setImagePreview(reader.result);
-        }
+      if (reader.readyState === 2) {
+        setImagePreview(reader.result);
+      }
     };
     reader.readAsDataURL(file);
-};
-
-
-  
-  
+  };
 
   // Handle input clearing & form reset
   const handleCancel = () => {
@@ -104,17 +103,17 @@ const RiderRegister = () => {
     e.preventDefault();
     setErrors(null);
     setLoading(true);
-  
+
     const errorMsg = await validateInputs();
     if (errorMsg) {
       setErrors(errorMsg);
       setLoading(false);
       return;
     }
-  
+
     dispatch(OTPregister({ email })); // No need for await
     console.log("OTP request dispatched"); // Debugging
-  
+
     navigate("/riderotp", {
       state: {
         riderRegister: {
@@ -131,14 +130,13 @@ const RiderRegister = () => {
         },
       },
     });
-  
+
     setLoading(false);
   };
-  
 
   return (
     <div className="rider-register">
-      <Sidebar/>
+    <Sidebar />
       <h2 className="rider-register-header">Register</h2>
       {errors && <p style={{ color: "red" }}>{errors}</p>}
       <form onSubmit={handleRegister}>
@@ -184,18 +182,46 @@ const RiderRegister = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+        <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+          <input
+            type={showPassword ? "text" : "password"} // Toggle input type based on state
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ paddingRight: "30px" }} // Add padding to avoid overlap with the icon
+          />
+          <span
+            onClick={() => setShowPassword(!showPassword)} // Toggle visibility on click
+            style={{
+              position: "absolute",
+              right: "10px",
+              cursor: "pointer",
+              color: "#888",
+            }}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+        <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+          <input
+            type={showConfirmPassword ? "text" : "password"} // Toggle input type for confirm password
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            style={{ paddingRight: "30px" }} // Add padding to avoid overlap with the icon
+          />
+          <span
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle visibility on click
+            style={{
+              position: "absolute",
+              right: "10px",
+              cursor: "pointer",
+              color: "#888",
+            }}
+          >
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
 
         <label>Upload Profile Image:</label>
         <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setProfileImage, setProfileImagePreview)} />
