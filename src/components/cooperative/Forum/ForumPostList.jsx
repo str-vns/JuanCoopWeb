@@ -25,6 +25,9 @@ const ForumPostList = () => {
   }, [userId, dispatch]);
 
   const handleDelete = (postId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) return;
+
     dispatch(deletePost(postId));
     alert("Post marked as deleted!");
     dispatch(getUserPost(userId));

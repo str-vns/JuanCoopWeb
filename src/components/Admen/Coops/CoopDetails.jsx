@@ -54,6 +54,11 @@ const CoopDetails = () => {
 
   // Handle approve coop
   const handleApprove = async (coopId, userId) => {
+    const confirmApprove = window.confirm(
+      "Are you sure you want to approve this cooperative?"
+    );
+    if (!confirmApprove) return;
+
     setIsLoading(true);
     try {
       await dispatch(activeCooperative(coopId, userId, token));
@@ -67,6 +72,11 @@ const CoopDetails = () => {
 
   // Handle delete coop
   const handleDelete = async (coopId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to decline this cooperative?"
+    );
+    if (!confirmDelete) return;
+
     setIsLoading(true);
     try {
       await dispatch(deleteCooperative(coopId, token));
@@ -98,8 +108,8 @@ const CoopDetails = () => {
 
   return (
     <div className="coopDetailsContainer">
-        <Sidebar />
-  
+      <Sidebar />
+
       <div className="coopContainer">
         <img
           src={coopData?.image?.[0]?.url || "https://via.placeholder.com/150"}
@@ -107,66 +117,78 @@ const CoopDetails = () => {
           className="coopImage"
         />
         <div className="coopDetails">
-          <h2 className="coopName">{coopData?.user?.firstName} {coopData?.user?.lastName}</h2>
+          <h2 className="coopName">
+            {coopData?.user?.firstName} {coopData?.user?.lastName}
+          </h2>
           <p className="farmName">Farm Name: {coopData?.farmName}</p>
           <p className="coopEmail">Email: {coopData?.user?.email}</p>
           <p className="address">Address: {coopData?.address}</p>
           <p className="address">Barangay: {coopData?.barangay}</p>
           <p className="address">City: {coopData?.city}</p>
           <p className="address">Tin Number: {coopData?.requirements?.tinNumber}</p>
-          <p className={`status ${coopData?.approvedAt === null ? "notApproved" : "approved"}`}>
-            Approval Status: {coopData?.approvedAt === null ? "Not Approved" : "Approved"}
+          <p
+            className={`status ${
+              coopData?.approvedAt === null ? "notApproved" : "approved"
+            }`}
+          >
+            Approval Status:{" "}
+            {coopData?.approvedAt === null ? "Not Approved" : "Approved"}
           </p>
         </div>
       </div>
 
       <div className="fileSection">
-  <div className="fileContainer">
-    <p className="fileLabel">Business Permit:</p>
-    {coopData?.requirements?.businessPermit?.url ? (
-      <button
-        className="fileButton"
-        onClick={() => handleFileOpen(coopData?.requirements?.businessPermit?.url)}
-      >
-        Download to view
-      </button>
-    ) : (
-      <p className="fileStatus">Not provided</p>
-    )}
-  </div>
+        <div className="fileContainer">
+          <p className="fileLabel">Business Permit:</p>
+          {coopData?.requirements?.businessPermit?.url ? (
+            <button
+              className="fileButton"
+              onClick={() =>
+                handleFileOpen(coopData?.requirements?.businessPermit?.url)
+              }
+            >
+              Download to view
+            </button>
+          ) : (
+            <p className="fileStatus">Not provided</p>
+          )}
+        </div>
 
-  <div className="fileContainer">
-    <p className="fileLabel">Cor CDA:</p>
-    {coopData?.requirements?.corCDA?.url ? (
-      <button
-        className="fileButton"
-        onClick={() => handleFileOpen(coopData?.requirements?.corCDA?.url)}
-      >
-        Download to view
-      </button>
-    ) : (
-      <p className="fileStatus">Not provided</p>
-    )}
-  </div>
+        <div className="fileContainer">
+          <p className="fileLabel">Cor CDA:</p>
+          {coopData?.requirements?.corCDA?.url ? (
+            <button
+              className="fileButton"
+              onClick={() =>
+                handleFileOpen(coopData?.requirements?.corCDA?.url)
+              }
+            >
+              Download to view
+            </button>
+          ) : (
+            <p className="fileStatus">Not provided</p>
+          )}
+        </div>
 
-  <div className="fileContainer">
-    <p className="fileLabel">Organize Structure:</p>
-    {coopData?.requirements?.orgStructure?.url ? (
-      <button
-        className="fileButton"
-        onClick={() => handleFileOpen(coopData?.requirements?.orgStructure?.url)}
-      >
-        Download to view
-      </button>
-    ) : (
-      <p className="fileStatus">Not provided</p>
-    )}
-  </div>
-</div>
-
+        <div className="fileContainer">
+          <p className="fileLabel">Organize Structure:</p>
+          {coopData?.requirements?.orgStructure?.url ? (
+            <button
+              className="fileButton"
+              onClick={() =>
+                handleFileOpen(coopData?.requirements?.orgStructure?.url)
+              }
+            >
+              Download to view
+            </button>
+          ) : (
+            <p className="fileStatus">Not provided</p>
+          )}
+        </div>
+      </div>
 
       {coopData?.approvedAt === null && (
-        <div className="actionButtons">
+        <div className="actionButtons centered">
           <button
             className="approveButton"
             onClick={() => handleApprove(coopData?._id, coopData?.user?._id)}

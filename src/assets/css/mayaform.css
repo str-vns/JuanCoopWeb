@@ -4,14 +4,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    height: 100vh; /* Full viewport height */
     background-color: #fff;
     font-family: "Inter", sans-serif;
     padding: 20px;
-    margin-left: 250px;
-  }
+    margin: 0; /* Remove left margin to center the form */
+}
   
-  .maya-withdraw__container {
+.maya-withdraw__container {
     background: white;
     padding: 2rem;
     border-radius: 12px;
@@ -19,24 +19,24 @@
     width: 100%;
     max-width: 350px;
     text-align: center;
-  }
+}
   
-  .maya-withdraw__title {
+.maya-withdraw__title {
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
     margin-bottom: 1rem;
-  }
+}
   
-  .maya-withdraw__label {
+.maya-withdraw__label {
     display: block;
     font-weight: bold;
     color: #444;
     text-align: left;
     margin-top: 1rem;
-  }
+}
   
-  .maya-withdraw__input {
+.maya-withdraw__input {
     width: 100%;
     padding: 10px;
     border: 2px solid #f4c430;
@@ -44,14 +44,14 @@
     font-size: 1rem;
     outline: none;
     transition: 0.3s;
-  }
+}
   
-  .maya-withdraw__input:focus {
+.maya-withdraw__input:focus {
     border-color: #d4a017;
     box-shadow: 0 0 5px rgba(244, 196, 48, 0.5);
-  }
+}
   
-  .maya-withdraw__button {
+.maya-withdraw__button {
     width: 100%;
     margin-top: 1.5rem;
     padding: 12px;
@@ -63,9 +63,56 @@
     cursor: pointer;
     font-size: 1rem;
     transition: background 0.3s;
-  }
+}
   
-  .maya-withdraw__button:hover {
+.maya-withdraw__button:hover {
     background: #d4a017;
-  }
-  
+}
+
+.confirm-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirm-dialog__content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+}
+
+.confirm-dialog__actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 10px; /* Add spacing between the buttons */
+}
+
+.confirm-dialog__button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.confirm-dialog__button--yes {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+.confirm-dialog__button--no {
+  background-color: #dc3545; /* Red */
+  color: white;
+}

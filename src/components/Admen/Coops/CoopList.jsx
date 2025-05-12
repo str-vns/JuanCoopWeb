@@ -62,7 +62,11 @@ const Cooplist = () => {
 
       {loading ? (
         <Spinner animation="border" variant="primary" className="loader" />
-      ) : coops?.length === 0 || error ? (
+      ) : error ? (
+        <div className="emptyContainer">
+          <p className="emptyText">Error loading cooperatives: {error}</p>
+        </div>
+      ) : !coops || coops.length === 0 ? (
         <div className="emptyContainer">
           <p className="emptyText">No cooperative found.</p>
         </div>
@@ -81,7 +85,9 @@ const Cooplist = () => {
                 <p className="userRole">Address: {item?.address}</p>
               </div>
               <button
-                onClick={() => navigate(`/coop-details/${item?._id}`, { state: { coopData: item } })}
+                onClick={() =>
+                  navigate(`/coop-details/${item?._id}`, { state: { coopData: item } })
+                }
                 className="viewButton"
               >
                 View
