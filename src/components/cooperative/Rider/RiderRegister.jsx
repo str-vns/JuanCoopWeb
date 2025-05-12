@@ -232,10 +232,32 @@ const RiderRegister = () => {
         {licenseImagePreview && <img src={licenseImagePreview} alt="License Preview" width="100" />}
 
         <div className="button-row">
-          <button type="submit" className="registerbtn" disabled={loading}>
+          <button
+            type="submit"
+            className="registerbtn"
+            disabled={loading}
+            style={{
+              backgroundColor: "green", // Green background for the register button
+              color: "white", // White text
+              border: "none",
+              padding: "10px 20px",
+              cursor: "pointer",
+            }}
+          >
             {loading ? "Registering..." : "Register"}
           </button>
-          <button type="button" className="back-btn" onClick={handleCancel}>
+          <button
+            type="button"
+            className="back-btn"
+            onClick={handleCancel}
+            style={{
+              backgroundColor: "blue", // Blue background for the back button
+              color: "white", // White text
+              border: "none",
+              padding: "10px 20px",
+              cursor: "pointer",
+            }}
+          >
             Back
           </button>
         </div>

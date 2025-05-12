@@ -108,7 +108,6 @@
       padding: 15px;
     }
   }
-
   /* Button Row */
   .button-row {
     display: flex;
@@ -120,11 +119,10 @@
   /* Register Button */
   .registerbtn {
     flex: 1;
-    background-color: #007bff; 
+    background-color: green; 
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -142,11 +140,10 @@
   /* Back Button */
   .back-btn {
     flex: 1;
-    background-color: #6c757d; /* Gray for Back */
+    background-color: blue; /* Gray for Back */
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
