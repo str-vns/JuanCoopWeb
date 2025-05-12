@@ -139,7 +139,7 @@ const RiderRegister = () => {
   return (
     <div className="rider-register">
       <Sidebar/>
-      <h2>Register</h2>
+      <h2 className="rider-register-header">Register</h2>
       {errors && <p style={{ color: "red" }}>{errors}</p>}
       <form onSubmit={handleRegister}>
         <input
@@ -205,10 +205,14 @@ const RiderRegister = () => {
         <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setLicenseImage, setLicenseImagePreview)} />
         {licenseImagePreview && <img src={licenseImagePreview} alt="License Preview" width="100" />}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Registering..." : "Register"}
-        </button>
-        <button type="button" onClick={handleCancel}>Cancel</button>
+        <div className="button-row">
+          <button type="submit" className="registerbtn" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
+          <button type="button" className="back-btn" onClick={handleCancel}>
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );

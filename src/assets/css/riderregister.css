@@ -18,6 +18,14 @@
     text-align: center;
   }
   
+  .rider-register-header {
+    font-size: 28px; /* Increase font size */
+    font-weight: bold; /* Make text bold */
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
   .rider-register form {
     display: flex;
     flex-direction: column;
@@ -99,4 +107,76 @@
       max-width: 90%;
       padding: 15px;
     }
-  }  
+  }
+
+  /* Button Row */
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  /* Register Button */
+  .registerbtn {
+    flex: 1;
+    background-color: #007bff; 
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .register-btn:hover {
+    background-color:  #0056b3; /* Darker red on hover */
+  }
+
+  .register-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* Back Button */
+  .back-btn {
+    flex: 1;
+    background-color: #6c757d; /* Gray for Back */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .back-btn:hover {
+    background-color: #495057; /* Darker gray on hover */
+  }
+
+  /* Password Container */
+  .password-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .password-container input {
+    width: 100%;
+    padding-right: 40px; /* Space for the icon */
+  }
+
+  .password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #007bff;
+    font-size: 18px;
+  }
+
+  .password-toggle-icon:hover {
+    color: #0056b3;
+  }
