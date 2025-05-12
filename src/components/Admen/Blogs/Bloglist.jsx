@@ -5,6 +5,8 @@ import Sidebar from "../sidebar";
 import "@assets/css/bloglists.css";
 import { getBlog, deleteBlog } from "@redux/Actions/blogActions";
 import BlogInfo from "../../cooperative/Blog/BlogInfo";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BlogLists = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const BlogLists = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // State for confirmation modal
+  const [blogToDelete, setBlogToDelete] = useState(null); // Track the blog to delete
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -24,19 +28,27 @@ const BlogLists = () => {
 
   useEffect(() => {
     if (deleteError) {
-      alert("Error deleting blog: " + deleteError);
+      toast.error("Error deleting blog: " + deleteError);
     }
   }, [deleteError]);
 
-  const handleDelete = async (blogId) => {
-    if (window.confirm("Are you sure you want to delete this blog?")) {
-      await dispatch(deleteBlog(blogId));
+  const handleDelete = async () => {
+    if (blogToDelete) {
+      await dispatch(deleteBlog(blogToDelete));
       dispatch(getBlog());
+      setIsConfirmModalOpen(false); // Close the modal
+      toast.success("Blog deleted successfully!");
     }
+  };
+
+  const openDeleteConfirmation = (blogId) => {
+    setBlogToDelete(blogId);
+    setIsConfirmModalOpen(true); // Open the modal
   };
 
   const handleEdit = (blog) => {
     navigate(`/blogupdate/${blog._id}`, { state: { blog } });
+    toast.info("Redirecting to edit blog...");
   };
 
   const handleOpenModal = (blog) => {
@@ -62,12 +74,12 @@ const BlogLists = () => {
         <div className="flex-1 bg-white-100 p-6">
           <div className="blog-list-header">
             <h1 className="blog-title">Blog List</h1>
-            {/* <button className="btn-primary" onClick={() => navigate("/blogcreate")}>
-              Add Blog
-            </button> */}
             <button
               className="btn-add-product"
-              onClick={() => navigate("/blogcreate")}
+              onClick={() => {
+                navigate("/blogcreate");
+                toast.info("Redirecting to create blog...");
+              }}
             >
               <i className="fa-solid fa-plus"></i>
             </button>
@@ -109,7 +121,7 @@ const BlogLists = () => {
                               title="Delete"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleDelete(blog._id);
+                                openDeleteConfirmation(blog._id);
                               }}
                             ></i>
                           </div>
@@ -149,6 +161,30 @@ const BlogLists = () => {
         onClose={handleCloseModal}
         post={selectedBlog}
       />
+
+      {/* Confirmation Modal */}
+      {isConfirmModalOpen && (
+        <div className="confirmation-modal">
+          <div className="confirmation-modal-content">
+            <h3>Confirmation</h3>
+            <p>Are you sure you want to delete this blog?</p>
+            <div className="confirmation-modal-actions">
+              <button
+                onClick={() => setIsConfirmModalOpen(false)}
+                className="cancel-btn"
+              >
+                Cancel
+              </button>
+              <button onClick={handleDelete} className="confirm-btn">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 };

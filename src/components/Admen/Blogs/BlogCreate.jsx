@@ -76,9 +76,9 @@ const BlogCreate = () => {
     <div style={styles.container}>
       <Sidebar />
 
-      <button onClick={() => navigate("/bloglists")} style={styles.backButton}>
+      {/* <button onClick={() => navigate("/bloglists")} style={styles.backButton}>
         <span style={{ fontSize: "24px" }}>Back</span>
-      </button>
+      </button> */}
 
       <h1 style={styles.title}>Create Blog</h1>
 

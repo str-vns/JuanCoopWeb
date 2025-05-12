@@ -252,7 +252,17 @@ const FarmRegistration = () => {
                 <input
                   type="text"
                   value={tinNumber}
-                  onChange={(e) => setTinNumber(e.target.value)}
+                  onChange={(e) => {
+                    let value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+                    if (value.length > 9) value = value.slice(0, 9); // Limit to 9 digits
+
+                    // Add dashes after every 3 digits
+                    const formattedValue = value
+                      .match(/.{1,3}/g) // Split into groups of 3 digits
+                      ?.join("-") || "";
+
+                    setTinNumber(formattedValue);
+                  }}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md"
                   required
                 />

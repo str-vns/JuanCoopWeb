@@ -131,7 +131,15 @@ const DriverDetails = () => {
 
       {/* Modal for Zooming License */}
       {isModalOpen && (
-        <div className="licenseModal">
+        <div
+          className="licenseModal"
+          onClick={(e) => {
+            // Close modal if the user clicks outside the modal content
+            if (e.target.className === "licenseModal") {
+              handleModalClose();
+            }
+          }}
+        >
           <div className="licenseModalContent">
             <span className="licenseModalClose" onClick={handleModalClose}>
               &times;
