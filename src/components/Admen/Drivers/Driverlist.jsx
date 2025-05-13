@@ -52,7 +52,10 @@ const DriverList = () => {
       </div>
 
       {loading ? (
-        <div className="loader">Loading...</div>
+        <div className="loaderContainer">
+          <div className="spinner"></div>
+    
+        </div>
       ) : drivers?.length === 0 || error ? (
         <div className="emptyContainer">
           <p className="emptyText">No Driver found.</p>

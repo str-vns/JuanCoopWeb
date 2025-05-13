@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { listDriverDisapproved } from "@redux/Actions/driverActions";
@@ -39,7 +39,6 @@ const DriverNotApproved = () => {
   return (
     <div className="rider-container">
       <Sidebar />
-      {/* <h1 className="header-title">Driver List</h1> */}
       <div className="tabContainer">
         <button
           className={`tabButton ${
@@ -66,7 +65,10 @@ const DriverNotApproved = () => {
       </div>
 
       {loading ? (
-        <div className="loader">Loading...</div>
+        <div className="loaderContainer">
+          <div className="spinner"></div>
+          <p className="loadingText">Loading drivers...</p>
+        </div>
       ) : drivers?.length === 0 || error ? (
         <div className="emptyContainer">
           <p className="emptyText">No Driver found.</p>

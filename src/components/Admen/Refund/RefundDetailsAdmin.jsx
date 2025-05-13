@@ -16,6 +16,8 @@ const RefundDetailsAdmin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState(null);
   const [fcmToken, setFcmToken] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [modalAction, setModalAction] = useState(null); // Track the action (approve/decline)
 
   useEffect(() => {
     const fetchJwt = () => {
@@ -29,45 +31,73 @@ const RefundDetailsAdmin = () => {
     fetchJwt();
   }, []);
 
-  // Debugging logs
-  useEffect(() => {
-    console.log("Full Transaction Data:", trans);
-    console.log("Cancelled ID Data:", trans?.cancelledId);
-    console.log("Refund Reason Content:", trans?.cancelledId?.content);
-  }, [trans]);
+  const handleApprove = async () => {
+    try {
+      setIsLoading(true);
+      const transData = {
+        transactionStatus: "SUCCESS",
+        fcmToken: fcmToken,
+      };
+      await dispatch(updateWithdraw(trans?._id, transData, token));
 
-  const handleApprove = async (transId) => {
-    if (window.confirm("Did You Send the Money to the User?")) {
-      try {
-        setIsLoading(true);
-        const transData = {
-          transactionStatus: "SUCCESS",
-          fcmToken: fcmToken,
-        };
-        dispatch(updateWithdraw(transId, transData, token));
+      const notification = {
+        title: "Refund Success",
+        content: `Hi! ${trans?.user?.firstName}, your refund request of ₱${
+          trans?.amount?.toFixed(2) || "0.00"
+        } has been processed.`,
+        user: trans?.user?._id,
+        fcmToken: fcmToken,
+        type: "order",
+      };
 
-        const notification = {
-          title: "Refund Success",
-          content: `Hi! ${trans?.user?.firstName}, your refund request of ₱${
-            trans?.amount?.toFixed(2) || "0.00"
-          } has been processed.`,
-          user: trans?.user?._id,
-          fcmToken: fcmToken,
-          type: "order",
-        };
+      socket.emit("sendNotification", {
+        senderName: "Admin",
+        receiverName: trans?.user?._id,
+        type: "order",
+      });
 
-        socket.emit("sendNotification", {
-          senderName: "Admin",
-          receiverName: trans?.user?._id,
-          type: "order",
-        });
-
-        dispatch(sendNotifications(notification, token));
-        navigate("/RefundSuccessAdmin");
-      } finally {
-        setIsLoading(false);
-      }
+      await dispatch(sendNotifications(notification, token));
+      navigate("/RefundSuccessAdmin", { replace: true }); // Navigate back and refresh
+    } finally {
+      setIsLoading(false);
+      setIsModalOpen(false); // Close the modal
     }
+  };
+
+  const handleDecline = async () => {
+    try {
+      setIsLoading(true);
+      const transData = {
+        transactionStatus: "FAILED",
+        fcmToken: fcmToken,
+      };
+      await dispatch(updateWithdraw(trans?._id, transData, token));
+
+      const notification = {
+        title: "Refund Declined",
+        content: `Hi! ${trans?.user?.firstName}, your refund request has been declined. Please contact the admin for more information.`,
+        user: trans?.user?._id,
+        fcmToken: fcmToken,
+        type: "order",
+      };
+
+      socket.emit("sendNotification", {
+        senderName: "Admin",
+        receiverName: trans?.user?._id,
+        type: "order",
+      });
+
+      await dispatch(sendNotifications(notification, token));
+      navigate("/RefundSuccessAdmin", { replace: true }); // Navigate back and refresh
+    } finally {
+      setIsLoading(false);
+      setIsModalOpen(false); // Close the modal
+    }
+  };
+
+  const openConfirmationModal = (action) => {
+    setModalAction(action);
+    setIsModalOpen(true); // Open the modal
   };
 
   return (
@@ -113,11 +143,51 @@ const RefundDetailsAdmin = () => {
         <div className="flex space-x-4 mt-6">
           <button
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            onClick={() => handleApprove(trans?._id)}
+            onClick={() => openConfirmationModal("approve")}
             disabled={isLoading}
           >
             {isLoading ? "Processing..." : "Approve Refund"}
           </button>
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onClick={() => openConfirmationModal("decline")}
+            disabled={isLoading}
+          >
+            {isLoading ? "Processing..." : "Decline Refund"}
+          </button>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 className="font-bold">Confirmation</h3>
+            <p>
+              Are you sure you want to{" "}
+              {modalAction === "approve" ? "approve" : "decline"} this refund?
+            </p>
+            <div className="modal-actions">
+              <button
+                className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className={`px-4 py-2 rounded text-white ${
+                  modalAction === "approve"
+                    ? "bg-green-500 hover:bg-green-600"
+                    : "bg-red-500 hover:bg-red-600"
+                }`}
+                onClick={
+                  modalAction === "approve" ? handleApprove : handleDecline
+                }
+              >
+                {modalAction === "approve" ? "Approve" : "Decline"}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
