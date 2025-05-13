@@ -490,12 +490,30 @@ function Register() {
                 />
                 I accept the{" "}
                 <a
-  href="/terms"
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{ color: 'blue', textDecoration: 'underline' }}
->
+                  href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "blue", textDecoration: "underline" }}
+                >
                   Terms & Conditions
+                </a>
+              </label>
+            </div>
+              <div>
+              <label className="text-black">
+                <input
+                  type="checkbox"
+                  checked={termsAndConditions}
+                  onChange={handleCheckboxChange}
+                />
+                I agree to the{" "}
+                <a
+                  href="/policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "blue", textDecoration: "underline" }}
+                >
+                  Privacy Policy
                 </a>
               </label>
             </div>

@@ -80,7 +80,7 @@ const PaymayaForm = () => {
              const paymentResult = await dispatch(onlinePayment(paymentData, token));
        
              if (paymentResult?.attributes?.next_action?.redirect?.url) {
-               alert("Gcash payment details submitted successfully!");
+               alert("Paymaya payment details submitted successfully!");
                dispatch(addPaymentData(paymentData));
                window.location.href = paymentResult.attributes.next_action.redirect.url; 
        
@@ -155,10 +155,12 @@ const PaymayaForm = () => {
             onBlur={formik.handleBlur}
           />
 
-          <label className="paymaya-label">Phone Number (Paymaya):{" "}
+          <label className="paymaya-label">
+            Phone Number (Paymaya):{" "}
             {formik.touched.phone && formik.errors.phone && (
               <span className="text-red-500 text-sm ml-3">{formik.errors.phone}</span>
-            )}</label>
+            )}
+          </label>
           <input
             type="tel"
             name="phone"
@@ -166,6 +168,12 @@ const PaymayaForm = () => {
             value={formik.values.phone}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            onInput={(e) => {
+              if (e.target.value.length > 11) {
+                e.target.value = e.target.value.slice(0, 11); // Limit input to 11 digits
+              }
+            }}
+            maxLength="11" // Ensure the input field doesn't accept more than 11 characters
           />
 
           <label className="paymaya-label">Amount (₱):{" "}
