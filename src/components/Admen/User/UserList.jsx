@@ -10,7 +10,7 @@ import { faTrash, faUndo, faSearch } from "@fortawesome/free-solid-svg-icons";
 const UserList = () => {
   const dispatch = useDispatch();
   const token = getToken();
-  const { loading, users = [], error } = useSelector((state) => state.allUsers); // Ensure users is always an array
+  const { loading, users, error } = useSelector((state) => state.allUsers);
   const [isFetched, setIsFetched] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
