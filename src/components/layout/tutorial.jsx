@@ -5,12 +5,21 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const Tutorial = () => {
   const videos = [
-    { id: "ognBjIx28JY", title: "Managing Your Coop Profile and Settings" },
-    { id: "nMQ2i94TUtI", title: "How to Leave Feedback on Coop Products and Sellers" },
-    { id: "l6mobZ2vSgU", title: "Joining Conversations in the Coop Forum" },
-    { id: "YSFNpktR7uY", title: "Exploring the User Dashboard" },
-    { id: "AJb6H_fUM08", title: "How to Find Products Easily on Coop" },
-    { id: "77W48qHKPrk", title: "Step-by-Step Guide: Buying Products on Coop" },
+    { id: "Zuanhh_BLX8", title: "Website Community Discussion" },
+    { id: "UWNQQ8r7Upg", title: "Add reviews" },
+    { id: "Tmv6TkTERak", title: "Placing an Order" },
+    { id: "K583VdD5xIU", title: "Search and Product filtering" },
+    { id: "cxK5EebSJIs", title: "Navigation of User Dashboard" },
+    { id: "oeWZ3pKyDpQ", title: "Create User account" },
+
+     { id: "MW6j7VXs4dw", title: "Rating and Review list" },
+    { id: "HRc5yjoVaGE", title: "Wallet and Payment" },
+    { id: "KXoLvCRjZWI", title: "Update order status" },
+    { id: "CQCBT8Sz58A", title: "Managing Product and Inventory" },
+    { id: "IiHLCRZyReg", title: "Cooperative Dashboard" },
+    { id: "Qi7-5HM6SOY", title: "Rider Management" },
+    { id: "Y9X1ti4Dgl4", title: "Membership Application" },
+    { id: "pAWqrzcobmI", title: "Blogs and Discussion" },
     // Add more videos if needed
   ];
 
@@ -18,9 +27,13 @@ const Tutorial = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [scrollX, setScrollX] = useState(0);
 
-  const filteredVideos = videos.filter(video =>
-    video.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredVideos = videos.filter(video => {
+    const title = video.title.toLowerCase();
+    return searchTerm
+      .toLowerCase()
+      .split(" ")
+      .every(word => title.includes(word));
+  });
 
   const scrollContainerRef = React.useRef(null);
 
