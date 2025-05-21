@@ -56,7 +56,7 @@ const PaymayaRefund = () => {
     console.log("🚀 Navigating with:", { paymentMethod, cancelledData, paymentData, others });
     
     // navigate("/confirm-cancelled", { state: { paymentMethod, cancelledData, paymentData, others } });
-    navigate("/confirm-cancelled", {
+    navigate("/confirm_cancelled", {
         state: {
           paymentMethod,
           cancelledData: { ...cancelledData, reason }, // Include reason in cancelledData
