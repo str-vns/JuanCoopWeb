@@ -11,7 +11,7 @@ const OnlinePayRefund = () => {
   const handleSelectPaymentMethod = (method) => {
     setPaymentMethod(method);
     if (method === "paymaya") {
-      navigate("/paymaya-cancelled", { state: { paymentMethod: method, cancelledData, others } });
+      navigate("/paymaya_cancelled", { state: { paymentMethod: method, cancelledData, others } });
     } else if (method === "gcash") {
       navigate("/gcash_cancelled", { state: { paymentMethod: method, cancelledData, others } });
     }
