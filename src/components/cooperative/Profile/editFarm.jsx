@@ -211,7 +211,7 @@ const EditFarm = () => {
             Edit Farm
           </h2> */}
           <div className="coop-list-header">
-            <h1>Edit Farm</h1>
+            <h1>Edit Cooperative Details</h1>
            
           </div>
 
