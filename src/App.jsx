@@ -130,6 +130,7 @@ import MemberDisplay from "./components/user/MemberDisplay";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
+import Landing from "./components/layout/landing";
 import Tutorial from "./components/layout/tutorial";
 import Terms from "./components/layout/terms";
 import PrivacyPolicy from "./components/layout/privacy";
@@ -238,6 +239,7 @@ function App() {
           <Route path="/googlelogin" element={<GoogleLogin/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
           <Route path="/aboutUs" element={<AboutUs/>} />
+          <Route path="/landing" element={<Landing/>} />
           <Route path="/tutorial" element={<Tutorial/>} />
           <Route path="/terms" element={<Terms/>} />
           <Route path="/policy" element={<PrivacyPolicy/>} />

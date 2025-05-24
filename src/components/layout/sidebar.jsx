@@ -12,7 +12,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/");
+    navigate("/landing");
 
     dispatch(logoutUser());
     localStorage.removeItem("jwt");

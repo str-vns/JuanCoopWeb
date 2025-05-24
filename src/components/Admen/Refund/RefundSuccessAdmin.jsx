@@ -82,7 +82,8 @@ const RefundSuccessAdmin = () => {
         {refund.map((item) => (
           <div key={item?._id} className="refundCard">
             <div className="refundDetails">
-              <p className="refundId">{item?._id}</p>
+              <p className="refundId">{item?.user?.firstName} {item?.user?.lastName}</p>
+              <p className="refundAmount">Request By: {item?.accountName}</p>
               <p className="refundStatus">Status: <span className={item?.transactionStatus === "SUCCESS" ? "status-success" : "status-pending"}>
                 {item?.transactionStatus}
               </span></p>

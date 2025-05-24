@@ -116,7 +116,7 @@ const CoopLogin = () => {
           alt="Website Logo"
           className="w-80 h-70 mb-6"
         />
-        <h3 className="text-4xl font-bold mb-4">Welcome to JuanCoop</h3>
+        <h3 className="text-4xl font-bold mb-4">Welcome to JuanKoop</h3>
         <p className="text-center text-lg leading-relaxed">
           Your one-stop shop for cooperative products and more. Experience
           hassle-free shopping today!

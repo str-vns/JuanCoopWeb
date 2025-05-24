@@ -56,7 +56,7 @@ const Login = () => {
     if (currentUser && currentUser.roles) {
       const roles = currentUser.roles;
       if (roles.includes("Customer") && roles.includes("Member")) {
-        navigate('/');
+        navigate('/landing');
       } else if (roles.includes("Admin")) {
         navigate('/overalldashboard');
       } else if (roles.includes("Cooperative") && roles.includes("Customer")) {
@@ -69,7 +69,7 @@ const Login = () => {
 
   const handleGoogleLogin = (response) => {
     dispatch(googleLogin1(response));
-    navigate('/');
+    navigate('/landing');
   }
   return (
     <div className="login-container">

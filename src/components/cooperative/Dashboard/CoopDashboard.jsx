@@ -4,6 +4,9 @@ import { fetchCoopDashboardData} from "@redux/Actions/orderActions";
 import { fetchInventoryDashboard} from "@redux/Actions/inventoryActions";
 import { getToken, getCurrentUser } from "@utils/helpers";
 import { jsPDF } from "jspdf";
+import { getSingleCoop } from "@redux/Actions/productActions";
+import logoImg from '../../../assets/img/logo.png';
+import pesoImg from '../../../assets/img/peso.png';
 import Sidebar from "../sidebar";
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
@@ -21,6 +24,7 @@ const CoopDashboard = () => {
   );
   const { dashboardData} = useSelector((state) => state.inventoryDashboard);
   console.log("Dashboard Data:", dashboardData);
+  const { coop } = useSelector((state) => state.singleCoop);
 
   const [selectedPeriod, setSelectedPeriod] = useState("daily");
 
@@ -30,6 +34,7 @@ const CoopDashboard = () => {
       dispatch(fetchInventoryDashboard(coopId, selectedPeriod)).then(response => {
         console.log("Fetched Inventory Dashboard:", response);
       });
+      dispatch(getSingleCoop(coopId));
     }
   }, [dispatch, coopId, token, selectedPeriod]);  
 
@@ -92,174 +97,277 @@ const downloadPDF = () => {
   const doc = new jsPDF("p", "mm", "a4");
   let y = 20;
 
-  // Header
-  doc.setFontSize(22);
-  doc.setFont("helvetica", "bold");
-  doc.text("Coop Dashboard Report", 14, y);
-  y += 10;
+  // Load logo and peso images
+  const logo = new window.Image();
+  logo.src = logoImg;
+  const peso = new window.Image();
+  peso.src = pesoImg;
 
-  const drawDivider = () => {
-    doc.setDrawColor(200);
-    doc.line(14, y, 196, y);
-    y += 5;
-  };
+  logo.onload = () => {
+    // Draw logo at the top center
+    const logoWidth = 25;
+    const logoHeight = 25;
+    const logoX = (210 - logoWidth) / 2; // Centered on A4 width (210mm)
+    doc.addImage(logo, 'PNG', logoX, 10, logoWidth, logoHeight);
+    y = 12 + logoHeight + 4; // Space after logo
 
-  // Dashboard Overview Section
-  doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
-  doc.text("Dashboard Overview", 14, y);
-  y += 8;
+    // Farm Name - Centered
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${coop?.farmName || ""}`, 105, y, { align: "center" });
+    y += 10;
 
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
-  doc.text(`• Total Revenue: ${dashboard?.totalRevenue?.toLocaleString() || 0}`, 14, y);
-  y += 6;
-  doc.text(`• Total Orders: ${dashboard?.totalOrders || 0}`, 14, y);
-  y += 6;
-  doc.text(`• Total Customers: ${dashboard?.totalCustomers || 0}`, 14, y);
-  y += 10;
+    // Address - Centered
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "normal");
+    doc.text(`${coop?.address || ""}`, 105, y, { align: "center" });
+    y += 12;
 
-  drawDivider();
+    // "Coop Dashboard Report" (left) and Date+Time (right) on the same line
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("Coop Dashboard Report", 14, y);
 
-  // Inventory Overview Table
-  doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
-  doc.text("Inventory Overview", 14, y);
-  y += 8;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "italic");
+    const now = new Date();
+    const dateTimeString = now.toLocaleDateString() + " " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+   doc.text("Generated:", 160, y, { align: "right" });
+    doc.text(dateTimeString, 196, y, { align: "right" });
 
-  if (dashboardData?.length > 0 && dashboardData[0].products?.length > 0) {
+    y += 10;
+
+    // Divider
+    const drawDivider = () => {
+      doc.setDrawColor(255, 215, 0); // Gold
+      doc.setLineWidth(1);
+      doc.line(14, y, 196, y);
+      y += 6;
+    };
+
+    drawDivider();
+
+    // Dashboard Overview Section
+    doc.setFontSize(15);
+    doc.setFont("helvetica", "bold");
+    doc.text("Dashboard Overview", 14, y);
+    y += 9;
+
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
+    doc.text(`• Total Revenue:`, 18, y);
 
-    // Draw Table Header
-    doc.setFontSize(14);
-    doc.text("Product", 14, y);
-    doc.text("Unit", 80, y);
-    doc.text("Stock", 100, y);
-    doc.text("Delivered", 140, y);
-    y += 8;
+    // Peso image and revenue value
+    const pesoImgWidth = 4;
+    const pesoImgHeight = 4;
+    const pesoImgX = 65;
+    const pesoImgY = y - 3.5;
 
-    // Table Rows
-    dashboardData[0].products.forEach((product, idx) => {
-      if (y > 260) {
-        doc.addPage();
-        y = 20;
+    peso.onload = () => {
+      // Draw peso image
+      doc.addImage(peso, 'PNG', pesoImgX, pesoImgY, pesoImgWidth, pesoImgHeight);
+
+      // Draw revenue value with two decimal points, right after the peso image
+      const revenue = Number(dashboard?.totalRevenue || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      doc.text(revenue, pesoImgX + pesoImgWidth + 2, y);
+
+      // Continue with the rest of the PDF logic after the image is loaded
+
+      y += 6;
+      doc.text(`• Total Orders:`, 18, y);
+      doc.text(`${dashboard?.totalOrders || 0}`, 70, y, { align: "right" });
+      y += 6;
+      doc.text(`• Total Customers:`, 18, y);
+      doc.text(`${dashboard?.totalCustomers || 0}`, 70, y, { align: "right" });
+      y += 10;
+
+      drawDivider();
+
+      // Inventory Overview Table
+      doc.setFontSize(15);
+      doc.setFont("helvetica", "bold");
+      doc.text("Inventory Overview", 14, y);
+      y += 9;
+
+      if (dashboardData?.length > 0 && dashboardData[0].products?.length > 0) {
+        // Table Header
+        doc.setFillColor(255, 250, 141); // Light yellow
+        doc.rect(14, y - 5, 182, 8, "F");
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text("Product", 16, y);
+        doc.text("Unit", 80, y);
+        doc.text("Stock", 110, y);
+        doc.text("Delivered", 160, y);
+        y += 8;
+
+        doc.setFont("helvetica", "normal");
+        dashboardData[0].products.forEach((product, idx) => {
+          if (y > 260) {
+            doc.addPage();
+            y = 20;
+          }
+          product.variations.forEach((variation, vIdx) => {
+            doc.text(vIdx === 0 ? product.productName : "", 16, y);
+            doc.text(String(variation.unitName), 85, y);
+            doc.text(String(variation.currentStock), 120, y, { align: "right" });
+            doc.text(String(variation.quantityDelivered), 170, y, { align: "right" });
+            y += 6;
+          });
+        });
+      } else {
+        doc.setFontSize(12);
+        doc.text("No inventory data available", 14, y);
+        y += 10;
       }
 
+      drawDivider();
+
+      // Order Status Summary Section as Table
+      doc.setFontSize(15);
+      doc.setFont("helvetica", "bold");
+      doc.text("Order Status Summary", 14, y);
+      y += 9;
+
+      doc.setFillColor(255, 250, 141);
+      doc.rect(14, y - 5, 60, 8, "F");
+      doc.rect(80, y - 5, 30, 8, "F");
       doc.setFontSize(12);
-      doc.text(product.productName, 14, y);
-      product.variations.forEach((variation) => {
-        if (y > 260) {
+      doc.setFont("helvetica", "bold");
+      doc.text("Status", 16, y);
+      doc.text("Count", 90, y);
+      y += 8;
+
+      orderStatusData.forEach((status) => {
+        if (y > 270) {
           doc.addPage();
           y = 20;
         }
-
-        doc.text(variation.unitName, 80, y);
-        doc.text(variation.currentStock.toString(), 100, y);
-        doc.text(variation.quantityDelivered.toString(), 140, y);
+        doc.setFont("helvetica", "normal");
+        doc.text(status.name, 16, y);
+        doc.text(String(status.value), 90, y);
         y += 6;
       });
-    });
-  } else {
-    doc.setFontSize(12);
-    doc.text("No inventory data available", 14, y);
-    y += 10;
-  }
 
-  drawDivider();
+      y += 4;
+      drawDivider();
 
-  // Order Status Summary Section as Table
-  doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
-  doc.text("Order Status Summary", 14, y);
-  y += 8;
+      // Sales Data Section as Table
+      const salesData = getChartData();
+      const labelKey = getLabelKey();
 
-  doc.setFontSize(12);
-  doc.text("Status", 14, y);
-  doc.text("Count", 100, y);
-  y += 8;
+      doc.setFontSize(15);
+      doc.setFont("helvetica", "bold");
+      doc.text("Sales Data", 14, y);
+      y += 9;
 
-  // Table Rows for Order Status
-  orderStatusData.forEach((status) => {
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    if (y > 270) {
-      doc.addPage();
-      y = 20;
-    }
-    doc.text(status.name, 14, y);
-    doc.text(status.value.toString(), 100, y);
-    y += 6;
-  });
+      doc.setFillColor(255, 250, 141);
+      doc.rect(14, y - 5, 60, 8, "F");
+      doc.rect(80, y - 5, 30, 8, "F");
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Period", 16, y);
+      doc.text("Total Sales", 90, y);
+      y += 8;
 
-  y += 4;
-  drawDivider();
+      if (salesData.length > 0) {
+        doc.setFont("helvetica", "normal");
+        let totalSalesSum = 0;
+        salesData.forEach((sale) => {
+          if (y > 270) {
+            doc.addPage();
+            y = 20;
+          }
+          doc.text(sale[labelKey] || "N/A", 16, y);
+          doc.text(
+            Number(sale.totalSales || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+            90,
+            y
+          );
+          totalSalesSum += Number(sale.totalSales || 0);
+          y += 6;
+        });
 
-  // Sales Data Section as Table
-  const salesData = getChartData();
-  const labelKey = getLabelKey();
+        // Add Total row at the bottom
+        y += 2;
+        doc.setFont("helvetica", "bold");
+        doc.text("Total", 16, y);
 
-  doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
-  doc.text("Sales Data", 14, y);
-  y += 8;
+        // Peso image before total value
+        const pesoImgWidth = 4;
+        const pesoImgHeight = 4;
+        const pesoImgX = 80;
+        const pesoImgY = y - 3.5;
 
-  doc.text( "", 14, y);
-  doc.text("Total Sales", 100, y);
-  y += 8;
-
-  // Table Rows for Sales Data
-  if (salesData.length > 0) {
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    salesData.forEach((sale) => {
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
+        doc.addImage(peso, 'PNG', pesoImgX, pesoImgY, pesoImgWidth, pesoImgHeight);
+        doc.text(
+          Number(totalSalesSum).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+          pesoImgX + pesoImgWidth + 2,
+          y
+        );
+        y += 6;
+      } else {
+        doc.text("No sales data available", 14, y);
+        y += 10;
       }
-      doc.text(sale[labelKey] || "N/A", 14, y);
-      doc.text(`${sale.totalSales?.toLocaleString() || 0}`, 100, y);
-      y += 6;
-    });
-  } else {
-    doc.text("No sales data available", 14, y);
-    y += 10;
-  }
 
-  drawDivider();
+      drawDivider();
 
-  // Top Selling Products Table
-  doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
-  doc.text("Top Selling Products", 14, y);
-  y += 8;
+      // Top Selling Products Table
+      doc.setFontSize(15);
+      doc.setFont("helvetica", "bold");
+      doc.text("Top Selling Products", 14, y);
+      y += 9;
 
-  if (dashboard?.topSellingProducts?.length > 0) {
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
+      if (dashboard?.topSellingProducts?.length > 0) {
+        doc.setFillColor(255, 250, 141);
+        doc.rect(14, y - 5, 20, 8, "F");
+        doc.rect(40, y - 5, 80, 8, "F");
+        doc.rect(130, y - 5, 30, 8, "F");
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text("Rank", 16, y);
+        doc.text("Product", 50, y);
+        doc.text("Total Sold", 140, y);
+        y += 8;
 
-    // Table Header
-    doc.text("Rank", 14, y);
-    doc.text("Product", 60, y);
-    doc.text("Total Sold", 140, y);
-    y += 8;
-
-    dashboard.topSellingProducts.forEach((product, idx) => {
-      if (y > 260) {
-        doc.addPage();
-        y = 20;
+        doc.setFont("helvetica", "normal");
+        dashboard.topSellingProducts.forEach((product, idx) => {
+          if (y > 260) {
+            doc.addPage();
+            y = 20;
+          }
+          doc.text(String(idx + 1), 16, y);
+          doc.text(product.productName, 50, y);
+          doc.text(String(product.totalSold), 140, y);
+          y += 6;
+        });
+      } else {
+        doc.text("No top-selling product data available", 14, y);
+        y += 10;
       }
-      doc.text(`${idx + 1}`, 14, y);
-      doc.text(product.productName, 60, y);
-      doc.text(`${product.totalSold}`, 140, y);
-      y += 6;
-    });
-  } else {
-    doc.text("No top-selling product data available", 14, y);
-    y += 10;
-  }
 
-  doc.save("dashboard_report.pdf");
+      // --- At the very end, after all pages are generated ---
+
+      // Footer with page number
+      const pageCount = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(10);
+        doc.setTextColor(150);
+        doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: "center" });
+      }
+
+      // Add "JuanKooP" at the bottom center of the last page
+      doc.setPage(pageCount);
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(255, 193, 7); // Gold color
+      doc.text("JuanKooP", 105, 285, { align: "center" });
+
+      doc.save("dashboard_report.pdf");
+    };
+  };
 };
 
 

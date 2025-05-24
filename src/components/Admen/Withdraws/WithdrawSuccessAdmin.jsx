@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getSuccessTransactions } from "@redux/Actions/transactionActions";
 import "@assets/css/withdrawAdmin.css"; //
 import Sidebar from "../sidebar";
+import { allCoops } from "@redux/Actions/coopActions";
 
 const WithdrawsSuccessAdmin = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const WithdrawsSuccessAdmin = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Success");
   const [token, setToken] = useState(null);
+  const { loading, coops, error } = useSelector((state) => state.allofCoops);
 
   const { withdrawloading, withdraw = [], withdrawerror } = useSelector(
     (state) => state.transaction || {}
@@ -32,6 +34,7 @@ const WithdrawsSuccessAdmin = () => {
   useEffect(() => {
     if (token) {
       dispatch(getSuccessTransactions(token));
+      dispatch(allCoops(token));
     }
   }, [token, dispatch]);
 
@@ -39,6 +42,7 @@ const WithdrawsSuccessAdmin = () => {
     setRefreshing(true);
     try {
       dispatch(getSuccessTransactions(token));
+      dispatch(allCoops(token));
     } catch (err) {
       console.error("Error refreshing transactions:", err);
     } finally {
@@ -84,7 +88,10 @@ const WithdrawsSuccessAdmin = () => {
         {withdraw.map((item) => (
           <div key={item._id} className="withdrawUserItem">
             <div className="withdrawUserDetails">
-              <p className="withdrawUserID">{item._id}</p>
+            <p className="adminWithdrawId">
+              {coops?.find((coop) => coop.user?._id === item.user?._id)?.farmName || "Farm Name Not Found"}
+            </p>
+            <p className="adminWithdrawAmount">Request By: {item?.accountName}</p>
               <p className="withdrawUserStatus">
                 Status:{" "}
                 <span

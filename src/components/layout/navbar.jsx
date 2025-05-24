@@ -134,7 +134,7 @@ const Navbar = () => {
   }, [socket]);
 
   const handleLogout = () => {
-    navigate("/");
+    navigate("/landing");
 
     dispatch(logoutUser());
     localStorage.removeItem("jwt");
@@ -175,7 +175,10 @@ const Navbar = () => {
       <div className="navbar-center">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a href="/">Home</a>
+            <a href="/landing">Home</a>
+          </li>
+          <li>
+            <a href="/">Product</a>
           </li>
           <li>
             <a href="/location">Location</a>

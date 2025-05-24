@@ -91,7 +91,8 @@ const RefundProcessAdmin = () => {
           {refund.map((item) => (
             <li key={item._id} className="processCard">
               <div className="processDetails">
-                <p className="processId">{item._id}</p>
+                <p className="refundId">{item?.user?.firstName} {item?.user?.lastName}</p>
+              <p className="refundAmount">Request By: {item?.accountName}</p>
                 <p className="processStatus">
                   Status:{" "}
                   <span
