@@ -2,8 +2,6 @@ import React from "react";
 import Navbar from "../layout/navbar";
 import logo from "../../assets/img/logo.png";
 import { Link } from "react-router-dom";
-
-// Import react-slick components and styles
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
