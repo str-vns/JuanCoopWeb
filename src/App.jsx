@@ -228,7 +228,8 @@ function App() {
       <div>
         {/* <Sidebar /> Uncomment if you need the Sidebar */}
         <Routes>
-          <Route path="/" element={<RoleBaseRoute/>} />
+           <Route path="/" element={<Landing/>}/>
+          {/* <Route path="/" element={<RoleBaseRoute/>} />  */}
           <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Login/>} />
          
@@ -239,7 +240,7 @@ function App() {
           <Route path="/googlelogin" element={<GoogleLogin/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
           <Route path="/aboutUs" element={<AboutUs/>} />
-          <Route path="/landing" element={<Landing/>} />
+          {/* <Route path="/landing" element={<Landing/>} /> */}
           <Route path="/tutorial" element={<Tutorial/>} />
           <Route path="/terms" element={<Terms/>} />
           <Route path="/policy" element={<PrivacyPolicy/>} />

@@ -104,9 +104,183 @@ const Landing = () => {
           </Link>
         </div>
       </section>
+       {/* Featured Product Teaser Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-8 text-green-700">Featured Product Teaser</h2>
+          <div className="flex justify-center">
+            <div className="w-full max-w-2xl aspect-video rounded-xl overflow-hidden shadow-lg border border-gray-200">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/1WZ4CEtPixc?start=10"
+                title="Featured Product Teaser"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-80"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* How We Built This Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto text-center px-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-green-700">How We Built This</h2>
+          <p className="text-gray-700 text-lg mb-10 max-w-3xl mx-auto">
+            JuanKooP was built using modern web technologies such as React, Node.js, and cloud services. Our team collaborated closely with local cooperatives to ensure the platform meets real-world needs, focusing on transparency, accessibility, and community empowerment.
+          </p>
+          <Slider
+            dots={true}
+            infinite={true}
+            speed={500}
+            slidesToShow={3}
+            slidesToScroll={1}
+            arrows={true}
+            responsive={[
+              {
+                breakpoint: 1024,
+                settings: { slidesToShow: 2, slidesToScroll: 1, dots: true },
+              },
+              {
+                breakpoint: 640,
+                settings: { slidesToShow: 1, slidesToScroll: 1, dots: true },
+              },
+            ]}
+            className="max-w-4xl mx-auto"
+          >
+            <div>
+              <img
+                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/2_egsec0.png"
+                alt="Development Process"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              <p className="text-gray-600 text-sm">Cloud-based analytics and reporting</p>
+            </div>
+            <div>
+              <img
+                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/4_v8uox7.png"
+                alt="Product Management"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              <p className="text-gray-600 text-sm">Modern product management tools</p>
+            </div>
+            <div>
+              <img
+                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/1_c7n4dv.png"
+                alt="Payment Integration"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              <p className="text-gray-600 text-sm">Secure payment integration</p>
+            </div>
+            <div>
+              <img
+                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/3_pv0cmm.png"
+                alt="Tracking"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              <p className="text-gray-600 text-sm">Real-time product tracking</p>
+            </div>
+            <div>
+              <img
+                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167517/5_ontrp2.png"
+                alt="Sentiment Analysis"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              <p className="text-gray-600 text-sm">Customer feedback & sentiment analysis</p>
+            </div>
+            <div>
+              <img
+                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/6_ampffm.png"
+                alt="Community Forum"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              <p className="text-gray-600 text-sm">Community collaboration tools</p>
+            </div>
+          </Slider>
+        </div>
+      </section>
+
+{/* Meet the Creators Section */}
+			<section className="py-16 bg-gray-50">
+				<div className="max-w-6xl mx-auto px-4">
+					<h2 className="text-3xl font-bold text-center mb-10 text-green-700">Meet the Creators</h2>
+					<div className="flex flex-wrap justify-center gap-8">
+						{/* Example creator card */}
+						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+							<img
+								src="https://randomuser.me/api/portraits/men/32.jpg"
+								alt="Alexandra Aquino"
+								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+							/>
+							<h3 className="text-lg font-semibold mb-1">Alexandra Aquino</h3>
+							{/* <p className="text-gray-600 text-sm text-center">Lead Developer & Cooperative Advocate</p> */}
+						</div>
+						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+							<img
+								src="https://randomuser.me/api/portraits/women/44.jpg"
+								alt="Melgie Balongcas"
+								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+							/>
+							<h3 className="text-lg font-semibold mb-1">Melgie Balongcas</h3>
+							{/* <p className="text-gray-600 text-sm text-center">UI/UX Designer & Community Builder</p> */}
+						</div>
+            	<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+							<img
+								src="https://randomuser.me/api/portraits/men/32.jpg"
+								alt="Steven Barrantes"
+								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+							/>
+							<h3 className="text-lg font-semibold mb-1">Steven Barrantes</h3>
+							{/* <p className="text-gray-600 text-sm text-center">Lead Developer & Cooperative Advocate</p> */}
+						</div>
+						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+							<img
+								src="https://randomuser.me/api/portraits/women/44.jpg"
+								alt="Princess Romero"
+								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+							/>
+							<h3 className="text-lg font-semibold mb-1">Princess Romero</h3>
+							{/* <p className="text-gray-600 text-sm text-center">UI/UX Designer & Community Builder</p> */}
+						</div>
+						{/* Add more creators as needed */}
+					</div>
+				</div>
+			</section>
+
+
+{/* Participating Cooperatives Section */}
+			<section className="py-16 bg-gray-50">
+				<div className="max-w-6xl mx-auto px-4">
+					<h2 className="text-3xl font-bold text-center mb-10 text-green-700">Participating Cooperatives</h2>
+					<div className="flex flex-wrap justify-center gap-8">
+						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+							<img
+								src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/1_c7n4dv.png"
+								alt="AgriCoop Farmers"
+								className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+							/>
+							<h3 className="text-lg font-semibold mb-1">AgriCoop Farmers</h3>
+							<p className="text-gray-600 text-sm text-center">Empowering local farmers through technology.</p>
+						</div>
+						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+							<img
+								src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/4_v8uox7.png"
+								alt="Juan Producers Coop"
+								className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+							/>
+							<h3 className="text-lg font-semibold mb-1">Juan Producers Coop</h3>
+							<p className="text-gray-600 text-sm text-center">Supporting sustainable production and fair trade.</p>
+						</div>
+						{/* Add more cooperatives as needed */}
+					</div>
+				</div>
+			</section>
 
       {/* Services Section with Carousel */}
-      <section id="services" className="py-12 bg-gray-50">
+      {/* <section id="services" className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">
             Our Services
@@ -134,7 +308,7 @@ const Landing = () => {
             ))}
           </Slider>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action */}
       <section
