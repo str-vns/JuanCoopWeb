@@ -1,6 +1,29 @@
 import React from "react";
 import Navbar from "../layout/navbar";
 import logo from "../../assets/img/logo.png";
+import one from "../../assets/img/one.jpg";
+import two from "../../assets/img/two.jpg";
+import three from "../../assets/img/three.jpg";
+import four from "../../assets/img/four.jpg";
+import five from "../../assets/img/five.jpg";
+import six from "../../assets/img/six.jpg";
+import seven from "../../assets/img/seven.jpg";
+import eight from "../../assets/img/eight.jpg";
+import nine from "../../assets/img/nine.jpg";
+import a from "../../assets/img/a.jpg";
+import b from "../../assets/img/b.jpg"; 
+import c from "../../assets/img/c.jpg";
+import d from "../../assets/img/d.jpg";
+import e from "../../assets/img/e.jpg";
+import f from "../../assets/img/f.jpg";
+import g from "../../assets/img/g.jpg";
+import h from "../../assets/img/h.jpg";
+import i from "../../assets/img/i.jpg";   
+import j from "../../assets/img/j.jpg";
+import melgie from "../../assets/img/melgie.jpg";
+import stevens from "../../assets/img/stevens.jpg";
+import alexandra from "../../assets/img/alex.jpg";
+import princess from "../../assets/img/princess.jpg";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -153,51 +176,75 @@ const Landing = () => {
           >
             <div>
               <img
-                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/2_egsec0.png"
+                src={one}
                 alt="Development Process"
                 className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
               />
-              <p className="text-gray-600 text-sm">Cloud-based analytics and reporting</p>
+              {/* <p className="text-gray-600 text-sm">Cloud-based analytics and reporting</p> */}
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/4_v8uox7.png"
+                src={two}
                 alt="Product Management"
                 className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
               />
-              <p className="text-gray-600 text-sm">Modern product management tools</p>
+              {/* <p className="text-gray-600 text-sm">Modern product management tools</p> */}
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/1_c7n4dv.png"
+                src={three}
                 alt="Payment Integration"
                 className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
               />
-              <p className="text-gray-600 text-sm">Secure payment integration</p>
+              {/* <p className="text-gray-600 text-sm">Secure payment integration</p> */}
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/3_pv0cmm.png"
+                src={four}
                 alt="Tracking"
                 className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
               />
-              <p className="text-gray-600 text-sm">Real-time product tracking</p>
+              {/* <p className="text-gray-600 text-sm">Real-time product tracking</p> */}
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167517/5_ontrp2.png"
+                src={five}
                 alt="Sentiment Analysis"
                 className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
               />
-              <p className="text-gray-600 text-sm">Customer feedback & sentiment analysis</p>
+              {/* <p className="text-gray-600 text-sm">Customer feedback & sentiment analysis</p> */}
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/6_ampffm.png"
+                src={six}
                 alt="Community Forum"
                 className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
               />
-              <p className="text-gray-600 text-sm">Community collaboration tools</p>
+              {/* <p className="text-gray-600 text-sm">Community collaboration tools</p> */}
+            </div>
+            <div>
+              <img
+                src={seven}
+                alt="Community Forum"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              {/* <p className="text-gray-600 text-sm">Community collaboration tools</p> */}
+            </div>
+            <div>
+              <img
+                src={eight}
+                alt="Community Forum"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              {/* <p className="text-gray-600 text-sm">Community collaboration tools</p> */}
+            </div>
+            <div>
+              <img
+                src={nine}
+                alt="Community Forum"
+                className="mx-auto w-60 h-60 object-contain rounded shadow mb-4"
+              />
+              {/* <p className="text-gray-600 text-sm">Community collaboration tools</p> */}
             </div>
           </Slider>
         </div>
@@ -211,7 +258,7 @@ const Landing = () => {
 						{/* Example creator card */}
 						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
 							<img
-								src="https://randomuser.me/api/portraits/men/32.jpg"
+								src={alexandra}
 								alt="Alexandra Aquino"
 								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
 							/>
@@ -220,7 +267,7 @@ const Landing = () => {
 						</div>
 						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
 							<img
-								src="https://randomuser.me/api/portraits/women/44.jpg"
+								src={melgie}
 								alt="Melgie Balongcas"
 								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
 							/>
@@ -229,7 +276,7 @@ const Landing = () => {
 						</div>
             	<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
 							<img
-								src="https://randomuser.me/api/portraits/men/32.jpg"
+								src={stevens}
 								alt="Steven Barrantes"
 								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
 							/>
@@ -238,7 +285,7 @@ const Landing = () => {
 						</div>
 						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
 							<img
-								src="https://randomuser.me/api/portraits/women/44.jpg"
+								src={princess}
 								alt="Princess Romero"
 								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
 							/>
@@ -256,26 +303,88 @@ const Landing = () => {
 				<div className="max-w-6xl mx-auto px-4">
 					<h2 className="text-3xl font-bold text-center mb-10 text-green-700">Participating Cooperatives</h2>
 					<div className="flex flex-wrap justify-center gap-8">
-						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
-							<img
-								src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/1_c7n4dv.png"
-								alt="AgriCoop Farmers"
-								className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
-							/>
-							<h3 className="text-lg font-semibold mb-1">AgriCoop Farmers</h3>
-							<p className="text-gray-600 text-sm text-center">Empowering local farmers through technology.</p>
-						</div>
-						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
-							<img
-								src="https://res.cloudinary.com/dgcitse7c/image/upload/v1746167518/4_v8uox7.png"
-								alt="Juan Producers Coop"
-								className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
-							/>
-							<h3 className="text-lg font-semibold mb-1">Juan Producers Coop</h3>
-							<p className="text-gray-600 text-sm text-center">Supporting sustainable production and fair trade.</p>
-						</div>
-						{/* Add more cooperatives as needed */}
-					</div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={c}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Abangan Multipurpose Cooperative</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={a}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Catmon Multipurpose Cooperative</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={d}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Gabay Kaunlaran ng Bulacan Multipurpose Cooperative</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={h}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Kooperatibang Pangkabuhayan ng Sta. Maria</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={b}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Mag Asawang Sapa MPC</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={j}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Mahabang Parang Waterworks Cooperative</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={e}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">San Miguel de Marilao Multipurpose Cooperative</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={i}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Silangan Multipurpose Cooperative</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={f}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Sto. Niño De Parada Multipurpose Cooperative</h3>
+  </div>
+  <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+    <img
+      src={g}
+      alt="AgriCoop Farmers"
+      className="w-20 h-20 rounded-full mb-4 object-cover border-4 border-green-200"
+    />
+    <h3 className="text-lg font-semibold mb-1">Vitarich Employees Cooperative Association</h3>
+  </div>
+</div>
+
 				</div>
 			</section>
 
