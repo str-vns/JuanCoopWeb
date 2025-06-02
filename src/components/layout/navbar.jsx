@@ -175,7 +175,10 @@ const Navbar = () => {
       <div className="navbar-center">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a href="/home">Home</a>
+            <a href="/landing">Home</a>
+          </li>
+          <li>
+            <a href="/home">Product</a>
           </li>
          
           <li>

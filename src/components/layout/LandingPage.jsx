@@ -62,7 +62,7 @@ const services = [
   },
 ];
 
-const Landing = () => {
+const LandingPage = () => {
   // Slider settings for react-slick
   const settings = {
     dots: true,
@@ -251,58 +251,58 @@ const Landing = () => {
       </section>
 
 {/* Meet the Creators Section */}
-			<section className="py-16 bg-gray-50">
-				<div className="max-w-6xl mx-auto px-4">
-					<h2 className="text-3xl font-bold text-center mb-10 text-green-700">Meet the Creators</h2>
-					<div className="flex flex-wrap justify-center gap-8">
-						{/* Example creator card */}
-						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
-							<img
-								src={alexandra}
-								alt="Alexandra Aquino"
-								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
-							/>
-							<h3 className="text-lg font-semibold mb-1">Alexandra Aquino</h3>
-							{/* <p className="text-gray-600 text-sm text-center">Lead Developer & Cooperative Advocate</p> */}
-						</div>
-						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
-							<img
-								src={melgie}
-								alt="Melgie Balongcas"
-								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
-							/>
-							<h3 className="text-lg font-semibold mb-1">Melgie Balongcas</h3>
-							{/* <p className="text-gray-600 text-sm text-center">UI/UX Designer & Community Builder</p> */}
-						</div>
-            	<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
-							<img
-								src={stevens}
-								alt="Steven Barrantes"
-								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
-							/>
-							<h3 className="text-lg font-semibold mb-1">Steven Barrantes</h3>
-							{/* <p className="text-gray-600 text-sm text-center">Lead Developer & Cooperative Advocate</p> */}
-						</div>
-						<div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
-							<img
-								src={princess}
-								alt="Princess Romero"
-								className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
-							/>
-							<h3 className="text-lg font-semibold mb-1">Princess Romero</h3>
-							{/* <p className="text-gray-600 text-sm text-center">UI/UX Designer & Community Builder</p> */}
-						</div>
-						{/* Add more creators as needed */}
-					</div>
-				</div>
-			</section>
+            <section className="py-16 bg-gray-50">
+                <div className="max-w-6xl mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center mb-10 text-green-700">Meet the Creators</h2>
+                    <div className="flex flex-wrap justify-center gap-8">
+                        {/* Example creator card */}
+                        <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+                            <img
+                                src={alexandra}
+                                alt="Alexandra Aquino"
+                                className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+                            />
+                            <h3 className="text-lg font-semibold mb-1">Alexandra Aquino</h3>
+                            {/* <p className="text-gray-600 text-sm text-center">Lead Developer & Cooperative Advocate</p> */}
+                        </div>
+                        <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+                            <img
+                                src={melgie}
+                                alt="Melgie Balongcas"
+                                className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+                            />
+                            <h3 className="text-lg font-semibold mb-1">Melgie Balongcas</h3>
+                            {/* <p className="text-gray-600 text-sm text-center">UI/UX Designer & Community Builder</p> */}
+                        </div>
+                <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+                            <img
+                                src={stevens}
+                                alt="Steven Barrantes"
+                                className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+                            />
+                            <h3 className="text-lg font-semibold mb-1">Steven Barrantes</h3>
+                            {/* <p className="text-gray-600 text-sm text-center">Lead Developer & Cooperative Advocate</p> */}
+                        </div>
+                        <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
+                            <img
+                                src={princess}
+                                alt="Princess Romero"
+                                className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-green-200"
+                            />
+                            <h3 className="text-lg font-semibold mb-1">Princess Romero</h3>
+                            {/* <p className="text-gray-600 text-sm text-center">UI/UX Designer & Community Builder</p> */}
+                        </div>
+                        {/* Add more creators as needed */}
+                    </div>
+                </div>
+            </section>
 
 
 {/* Participating Cooperatives Section */}
-			<section className="py-16 bg-gray-50">
-				<div className="max-w-6xl mx-auto px-4">
-					<h2 className="text-3xl font-bold text-center mb-10 text-green-700">Participating Cooperatives</h2>
-					<div className="flex flex-wrap justify-center gap-8">
+            <section className="py-16 bg-gray-50">
+                <div className="max-w-6xl mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center mb-10 text-green-700">Participating Cooperatives</h2>
+                    <div className="flex flex-wrap justify-center gap-8">
   <div className="bg-white rounded-xl shadow-md p-6 w-64 flex flex-col items-center">
     <img
       src={c}
@@ -385,8 +385,8 @@ const Landing = () => {
   </div>
 </div>
 
-				</div>
-			</section>
+                </div>
+            </section>
 
       {/* Services Section with Carousel */}
       {/* <section id="services" className="py-12 bg-gray-50">
@@ -468,4 +468,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default LandingPage;

@@ -130,7 +130,6 @@ import MemberDisplay from "./components/user/MemberDisplay";
 
 import EditFarm from "./components/cooperative/Profile/editFarm";
 import AboutUs from "./components/layout/aboutUs";
-import Landing from "./components/layout/Landing";
 import Tutorial from "./components/layout/tutorial";
 import Terms from "./components/layout/terms";
 import PrivacyPolicy from "./components/layout/privacy";
@@ -157,7 +156,7 @@ import MemberForumList from "./components/user/MemberForumList";
 import ReasonCancelled from "./components/Cancelled/ReasonCancelled";
 import CoopEditProfile from "./components/cooperative/Profile/coopEditProfile";
 import ReplyReview from "./components/cooperative/Review/ReplyReview";
-
+import LandingPage from "./components/layout/LandingPage";
 
 const isTokenExpired = () => {
   const tokenExpire = localStorage.getItem("token_expiry");
@@ -229,7 +228,6 @@ function App() {
       <div>
         {/* <Sidebar /> Uncomment if you need the Sidebar */}
         <Routes>
-           {/* <Route path="/landing" element={<Landing/>}/> */}
           <Route path="/" element={<RoleBaseRoute/>} /> 
           <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Login/>} />
@@ -240,8 +238,8 @@ function App() {
           <Route path="/m" element={<Messenger/>}/> 
           <Route path="/googlelogin" element={<GoogleLogin/>} />
           <Route path="/forgotpassword" element={<ForgotPassword/>} />
+          <Route path="/landing" element={<LandingPage/>} />
           <Route path="/aboutUs" element={<AboutUs/>} />
-          <Route path="/landing" element={<Landing/>} />
           <Route path="/tutorial" element={<Tutorial/>} />
           <Route path="/terms" element={<Terms/>} />
           <Route path="/policy" element={<PrivacyPolicy/>} />
