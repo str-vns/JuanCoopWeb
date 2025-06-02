@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { replyComment } from "@src/redux/Actions/commentActions";
 import { getCurrentUser, getToken } from "@utils/helpers";
 import Sidebar from "../sidebar";
-import "@assets/css/replyreview.css";
 
 const ReplyReview = () => {
   const { state } = useLocation();
