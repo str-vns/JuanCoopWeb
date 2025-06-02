@@ -361,40 +361,117 @@ const ProductCard = () => {
 
 
       <div className="comment-reviews-container">
-        <h3>Reviews</h3>
-        {product.reviews.length > 0 ? (
-          product.reviews.map(
-            (review, index) => (
-              console.log(review.user.image.url),
-              (
-                <div className="review" key={index}>
-                  <div className="review-header-user">
-                    <div className="reviewer-info">
-                      <img
-                        src={
-                          review.user?.image?.url
-                            ? review.user?.image?.url
-                            : "/default-profile.jpg"
-                        }
-                        alt={`${review.user?.firstName || "Anonymous"} profile`}
-                        className="reviewer-profile-picture"
-                      />
-                      <h4>
-                        {review.user?.firstName || "Anonymous"}{" "}
-                        {review.user?.lastName || "Anonymous"}
-                      </h4>
-                    </div>
-                    <Stars count={review.rating} />
-                  </div>
-                  <p>{review.comment}</p>
-                </div>
-              )
-            )
-          )
-        ) : (
-          <p>No reviews yet.</p>
-        )}
+  <h3>Reviews</h3>
+  {product.reviews.length > 0 ? (
+    product.reviews.map((review, index) => (
+      <div className="review" key={index}>
+        <div className="review-header-user">
+          <div className="reviewer-info">
+            <img
+              src={
+                review.user?.image?.url
+                  ? review.user.image.url
+                  : "/default-profile.jpg"
+              }
+              alt={`${review.user?.firstName || "Anonymous"} profile`}
+              className="reviewer-profile-picture"
+            />
+            <h4>
+              {review.user?.firstName || "Anonymous"}{" "}
+              {review.user?.lastName || ""}
+            </h4>
+          </div>
+          <Stars count={review.rating} />
+        </div>
+
+        <p>{review.comment}</p>
+
+        {/* Display replies if any */}
+        {review.replyComment && review.replyComment.length > 0 && (
+  <div
+    className="review-replies"
+    style={{
+      marginTop: "1rem",
+      background: "#f6f8fa",
+      borderRadius: "10px",
+      padding: "14px 14px 6px 14px",
+      border: "1px solid #ececec",
+      boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
+    }}
+  >
+    <h5 style={{ marginBottom: "12px", fontWeight: 600, color: "#7c5c2c", textAlign: "center" }}>
+      Replies from Cooperative:
+    </h5>
+    {Array.isArray(review.replyComment) &&
+      review.replyComment.map((reply, i) => (
+        <div
+          key={i}
+          className="review-reply"
+          style={{
+            marginBottom: "18px",
+            padding: "10px 0 10px 0",
+            borderBottom: i !== review.replyComment.length - 1 ? "1px solid #eee" : "none",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {coopDetails?.user?.image?.url ? (
+              <img
+                src={coopDetails.user.image.url}
+                alt="Cooperative"
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  border: "2px solid #c8a876",
+                  background: "#fff",
+                  marginBottom: "4px",
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  background: "#e0e0e0",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "20px",
+                  color: "#a88a4c",
+                  border: "2px solid #c8a876",
+                  marginBottom: "4px",
+                }}
+              >
+                <i className="fas fa-store"></i>
+              </div>
+            )}
+            <div style={{ fontWeight: 600, fontSize: "15px", color: "#a88a4c", marginBottom: "2px", textAlign: "center" }}>
+              {coopDetails?.farmName || "Farm Name"}
+            </div>
+          </div>
+          <div style={{ color: "#333", fontSize: "14px", marginBottom: "2px", textAlign: "center" }}>
+            {reply.commenting}
+          </div>
+          <div style={{ fontSize: "12px", color: "#aaa", textAlign: "center" }}>
+            {reply.createdAt ? new Date(reply.createdAt).toLocaleString() : ""}
+          </div>
+        </div>
+      ))}
+  </div>
+)}
       </div>
+    ))
+  ) : (
+    <p>No reviews yet.</p>
+  )}
+</div>
+
     </>
   );
 };
