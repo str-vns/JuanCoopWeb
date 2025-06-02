@@ -1,0 +1,82 @@
+.reply-review-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f9fc;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.reply-review-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  border-radius: 0.75rem;
+  margin-top: 2rem;
+}
+
+.reply-review-title {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.reply-review-title span {
+  color: #4caf50;
+}
+
+.reply-review-details {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  background-color: #f1f1f1;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.reply-review-form-group {
+  margin-bottom: 1rem;
+}
+
+.reply-review-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.reply-review-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.reply-review-textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.reply-review-error {
+  color: #d32f2f;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.reply-review-submit {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reply-review-submit:hover {
+  background-color: #388e3c;
+}
