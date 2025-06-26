@@ -24,7 +24,7 @@ It allows the users to purchase product, login, joining in membership and for co
 ## 📚 Technologies Used
 
 **Frontend Mobile:**
-- React-native
+- React Vite
 - Axios
 - Open Street Map
 - Socket IO
