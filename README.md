@@ -1,13 +1,13 @@
 # 🗃️  JuanKoop: Empowering cooperatives,uniting communities for development (Capstone Project) - Online marketPlace
 This is a Capstone Project Developed as part of project for course Bachelor of Science in Information Technology at Technological University of the Philippines - Taguig
-It a full - stack development Online Marketplace build using For mobile React-Native Expo For FrontEnd and For Backend using MERN (Mongodb, Express, React, Nodejs.)
+It a full - stack development Online Marketplace build using For React Vite For FrontEnd and For Backend using MERN (Mongodb, Express, React, Nodejs.)
 
 It allows the users to purchase product, login, joining in membership and for cooperative they a able to track inventory, Crud for products.
 
 ## 🖥️ Programming Languages Used
 
-**Frontend (Mobile):**
-- JavaScript (React Native with Expo)
+**Frontend (Web):**
+- JavaScript (React Vite)
 
 **Backend:**
 - JavaScript (Node.js with Express)
@@ -26,14 +26,9 @@ It allows the users to purchase product, login, joining in membership and for co
 **Frontend Mobile:**
 - React-native
 - Axios
-- FireBase
-- Notifee
-- Native-base
-- Mapbox
 - Open Street Map
 - Socket IO
 - HereMap
-- Expo
   
 **Backend:**
 - React
@@ -67,7 +62,7 @@ It allows the users to purchase product, login, joining in membership and for co
 
 ## ✍️ Reflection
 
-As **str_vns**, I took on the role of a **Full Stack Developer** for this capstone project. I focused more on the **mobile development**, as I was the only one in the group confident enough to handle it. My groupmates supported me in some areas, such as design, but the core backend logic and integration were mostly handled by me—I contributed about **90% of the backend development**.
+As **str_vns**, I took on the role of a **Full Stack Developer** for this capstone project. I focused more on the **mobile development**, as I was the only one in the group confident enough to handle it. My groupmates supported me in some areas, such as design, but the core backend logic and integration were mostly handled by me—I contributed about **90% of the backend development** and in **Web development** i just implement the **realtime Notification and Message** and to **Login** because my groupmate cant do it and im only one that has idea to do it and cart i upgrade it and i add the **Online Payment** too in the cart navigation and i refactor some logic on the web .
 
 Being the only one responsible for building the **real-time messaging system** was particularly challenging. It required complex logic, and I had no one to rely on for that part. But through the struggle, I gained a much deeper understanding of what it means to be a Full Stack Developer.
 
